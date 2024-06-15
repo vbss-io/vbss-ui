@@ -1,4 +1,4 @@
-import "./index.scss";
+import "./index.css";
 /* eslint-disable react-refresh/only-export-components */
 export * from "./components/Button";
 export * from "./components/Chip";
