@@ -11,7 +11,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/components/index.tsx"),
+      entry: path.resolve(__dirname, "src/index.tsx"),
       name: "vbss/ui",
       fileName: "vbss-ui",
     },
