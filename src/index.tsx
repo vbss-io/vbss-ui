@@ -3,5 +3,6 @@ import "./index.css";
 export * from "./components/Button";
 export * from "./components/Chip";
 export * from "./components/Input";
+export * from "./components/InputNumber";
 export * from "./components/Switch";
 export * from "./components/Tooltip";
