@@ -29,7 +29,11 @@ const argTypes: any = {
     control: { type: "select" },
   },
   font: {
-    options: ["regular", "bold", "extrabold"],
+    options: ["regular", "medium", "bold"],
+    control: { type: "select" },
+  },
+  fontSize: {
+    options: ["sm", "md", "lg"],
     control: { type: "select" },
   },
   side: {
@@ -46,6 +50,7 @@ export const Primary: Story = {
     size: "md",
     rounded: "md",
     font: "regular",
+    fontSize: "md",
     side: "top",
   },
   argTypes,
