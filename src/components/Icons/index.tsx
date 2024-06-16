@@ -13,7 +13,6 @@ import {
 import React from "react";
 
 export type Icons =
-  | ""
   | "github"
   | "linkedin"
   | "hamburger"
@@ -32,7 +31,6 @@ export type IconsMap = {
 const cn = "w-full h-full";
 
 export const IconsMap: Record<Icons, React.ReactNode> = {
-  "": "",
   github: <GithubLogo className={cn} />,
   linkedin: <LinkedinLogo className={cn} />,
   hamburger: <Hamburger className={cn} />,
