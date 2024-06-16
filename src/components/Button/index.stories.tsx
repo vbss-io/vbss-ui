@@ -23,15 +23,23 @@ const argTypes: any = {
     control: { type: "select" },
   },
   icon: {
-    options: Object.keys(IconsMap),
+    options: [null, ...Object.keys(IconsMap)],
     control: { type: "select" },
   },
   size: {
-    options: ["sm", "md", "lg", "icon"],
+    options: ["sm", "md", "lg", "icon-sm", "icon-md", "icon-lg"],
     control: { type: "select" },
   },
   rounded: {
     options: ["sm", "md", "lg", "full"],
+    control: { type: "select" },
+  },
+  font: {
+    options: ["regular", "medium", "bold"],
+    control: { type: "select" },
+  },
+  fontSize: {
+    options: ["sm", "md", "lg"],
     control: { type: "select" },
   },
   disabled: {
@@ -46,6 +54,9 @@ export const Primary: Story = {
     size: "md",
     rounded: "md",
     disabled: false,
+    icon: "",
+    font: "regular",
+    fontSize: "md",
   },
   argTypes,
 };
@@ -54,7 +65,6 @@ export const Secondary: Story = {
   args: {
     children: "Click Me",
     variant: "secondary",
-    size: "md",
   },
   argTypes,
 };
@@ -63,7 +73,6 @@ export const Outline: Story = {
   args: {
     children: "Click Me",
     variant: "outline",
-    size: "md",
   },
   argTypes,
 };
@@ -72,7 +81,6 @@ export const OutlineSolid: Story = {
   args: {
     children: "Click Me",
     variant: "outline-solid",
-    size: "md",
   },
   argTypes,
 };
@@ -81,7 +89,6 @@ export const Ghost: Story = {
   args: {
     children: "Click Me",
     variant: "ghost",
-    size: "md",
   },
   argTypes,
 };
@@ -94,7 +101,6 @@ export const WithIcon: Story = {
       </>
     ),
     variant: "primary",
-    size: "md",
   },
   argTypes,
 };
