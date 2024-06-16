@@ -4,7 +4,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { ComponentProps, forwardRef } from "react";
 
 const buttonStyles = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors",
   {
     variants: {
       variant: {
@@ -14,16 +14,17 @@ const buttonStyles = cva(
           "border-2 border-secondary bg-secondary text-white hover:bg-primary hover:border-primary",
         outline:
           "border-2 border-primary text-primary bg-background hover:bg-primary/10",
-        outlineSolid:
+        "outline-solid":
           "border-2 border-primary text-primary bg-background hover:bg-primary hover:text-white",
-        ghost:
-          "border-2 border-background hover:bg-primary/10 hover:border-primary/10",
+        ghost: "border-background hover:bg-primary/10 hover:border-primary/10",
       },
       size: {
         sm: "h-8 px-3 text-xs",
         md: "h-9 px-4 py-2",
         lg: "h-10 px-8",
-        icon: "h-9 w-9",
+        "icon-sm": "h-8 w-8",
+        "icon-md": "h-9 w-9",
+        "icon-lg": "h-10 w-10",
       },
       rounded: {
         sm: "rounded-sm",
@@ -31,14 +32,26 @@ const buttonStyles = cva(
         lg: "rounded-lg",
         full: "rounded-full",
       },
+      font: {
+        regular: "font-normal",
+        medium: "font-medium",
+        bold: "font-bold",
+      },
+      fontSize: {
+        sm: "text-xs",
+        md: "text-sm",
+        lg: "text-md",
+      },
       disabled: {
-        true: "cursor-not-allowed bg-gray-400 border-gray-400 hover:bg-gray-300 hover:border-gray-300",
+        true: "disabled:pointer-events-none disabled:opacity-50",
       },
     },
     defaultVariants: {
       variant: "primary",
       size: "md",
       rounded: "md",
+      font: "medium",
+      fontSize: "md",
       disabled: false,
     },
   }
@@ -50,15 +63,41 @@ type ButtonProps = ComponentProps<"button"> &
   };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, size, rounded, className, icon, ...props }, ref) => {
+  (
+    {
+      variant,
+      size,
+      rounded,
+      font,
+      fontSize,
+      disabled,
+      className,
+      icon,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <button
         ref={ref}
-        className={cn(buttonStyles({ variant, size, rounded, className }))}
+        className={cn(
+          buttonStyles({
+            variant,
+            size,
+            rounded,
+            font,
+            fontSize,
+            disabled,
+            className,
+          })
+        )}
+        disabled={disabled}
         {...props}
       >
         {typeof icon === "string" && (
-          <div className={`${size === "icon" ? "w-9/12" : ""}`}>
+          <div
+            className={`${size?.includes("icon") ? "w-9/12" : "w-[1.25rem]"}`}
+          >
             {IconsMap[icon]}
           </div>
         )}
