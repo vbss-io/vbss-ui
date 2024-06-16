@@ -71,7 +71,7 @@ export const Outline: Story = {
 export const OutlineSolid: Story = {
   args: {
     children: "Click Me",
-    variant: "outlineSolid",
+    variant: "outline-solid",
     size: "md",
   },
   argTypes,
@@ -102,7 +102,7 @@ export const WithIcon: Story = {
 export const Icon: Story = {
   args: {
     variant: "primary",
-    size: "icon",
+    size: "icon-md",
     rounded: "full",
     icon: "github",
   },
@@ -111,8 +111,8 @@ export const Icon: Story = {
 
 export const OutlineSolidIcon: Story = {
   args: {
-    variant: "outlineSolid",
-    size: "icon",
+    variant: "outline-solid",
+    size: "icon-md",
     rounded: "full",
     icon: "github",
   },
