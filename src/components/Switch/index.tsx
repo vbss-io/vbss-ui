@@ -31,10 +31,14 @@ type SwitchProps = React.ComponentPropsWithoutRef<
     label?: string;
   };
 
+// ADD HTML FOR
+
 const Switch = forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
   SwitchProps
 >(({ className, variant, onChange, iconOn, iconOff, label, ...props }, ref) => {
+  const inputId = props.id ?? Math.random().toString();
+
   return (
     <div className="flex items-center space-x-2">
       <SwitchPrimitives.Root
@@ -42,6 +46,7 @@ const Switch = forwardRef<
         {...props}
         ref={ref}
         onCheckedChange={onChange ?? props.onCheckedChange}
+        id={inputId}
       >
         {iconOn && (
           <div
@@ -68,7 +73,10 @@ const Switch = forwardRef<
         )}
       </SwitchPrimitives.Root>
       {label && (
-        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+        <label
+          htmlFor={inputId}
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
           {label}
         </label>
       )}
