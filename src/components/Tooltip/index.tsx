@@ -13,9 +13,9 @@ const tooltipStyles = cva(
         outline: "bg-background border border-primary text-primary",
       },
       size: {
-        sm: "px-2.5 pb-0.5 text-xs",
-        md: "px-3 pb-0.5 pt-0.5 text-sm",
-        lg: "px-4 pb-1.5 pt-1 text-md",
+        sm: "px-2.5 py-0.5",
+        md: "px-3 py-1",
+        lg: "px-4 py-2",
       },
       rounded: {
         sm: "rounded-sm",
@@ -25,8 +25,13 @@ const tooltipStyles = cva(
       },
       font: {
         regular: "font-normal",
-        bold: "font-semibold",
-        extrabold: "font-extrabold",
+        medium: "font-medium",
+        bold: "font-bold",
+      },
+      fontSize: {
+        sm: "text-xs",
+        md: "text-sm",
+        lg: "text-md",
       },
     },
     defaultVariants: {
@@ -34,6 +39,7 @@ const tooltipStyles = cva(
       size: "md",
       rounded: "md",
       font: "regular",
+      fontSize: "md",
     },
   }
 );
@@ -41,13 +47,22 @@ const tooltipStyles = cva(
 type TooltipProps = ComponentProps<"div"> &
   VariantProps<typeof tooltipStyles> & {
     trigger: React.ReactNode;
-    sideOffset?: number;
     side?: "top" | "right" | "bottom" | "left";
   };
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   (
-    { trigger, variant, size, rounded, font, side, className, ...props },
+    {
+      trigger,
+      side,
+      variant,
+      size,
+      rounded,
+      font,
+      fontSize,
+      className,
+      ...props
+    },
     ref
   ) => (
     <TooltipPrimitive.Provider>
@@ -58,7 +73,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           ref={ref}
           sideOffset={4}
           className={cn(
-            tooltipStyles({ variant, size, rounded, font, className })
+            tooltipStyles({ variant, size, rounded, font, fontSize, className })
           )}
           {...props}
         >
