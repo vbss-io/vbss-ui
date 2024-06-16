@@ -54,7 +54,6 @@ export const Primary: Story = {
     size: "md",
     rounded: "md",
     disabled: false,
-    icon: "",
     font: "regular",
     fontSize: "md",
   },
