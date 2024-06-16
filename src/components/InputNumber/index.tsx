@@ -52,8 +52,10 @@ const inputStyles = cva("", {
 type InputNumberProps = Omit<ComponentProps<"input">, "type"> &
   VariantProps<typeof inputStyles> & {
     label?: string;
-    showControls?: boolean;
-    controlsVariant?: ButtonProps["variant"];
+    controlsProps?: Omit<
+      ButtonProps,
+      "rounded" | "onClick" | "disabled" | "size" | "icon"
+    >;
   };
 
 export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
@@ -68,8 +70,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       disabled,
       placeholder,
       label,
-      showControls = false,
-      controlsVariant,
+      controlsProps,
       onChange,
       ...props
     },
@@ -135,11 +136,10 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           )}
           {...props}
         />
-        {showControls && (
+        {controlsProps && (
           <div className={`select-none absolute w-auto self-end bottom-0`}>
             <Button
               className={`${buttonWidth} border relative bottom-[0.2rem] right-1.5`}
-              variant={controlsVariant ?? variant}
               rounded={rounded}
               disabled={disabled}
               size="icon-sm"
@@ -147,14 +147,14 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
               onClick={() => {
                 dispatchInputOnChangeEvent();
               }}
+              {...controlsProps}
             />
           </div>
         )}
-        {showControls && (
+        {controlsProps && (
           <div className={`select-none absolute w-auto self-start bottom-0`}>
             <Button
               className={`${buttonWidth} border relative bottom-[0.15rem] left-1.5`}
-              variant={controlsVariant ?? variant}
               rounded={rounded}
               disabled={disabled}
               size="icon-sm"
@@ -162,6 +162,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
               onClick={() => {
                 dispatchInputOnChangeEvent(true);
               }}
+              {...controlsProps}
             />
           </div>
         )}
