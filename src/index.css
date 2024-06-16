@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,20 +11,11 @@
     --secondary: 248 53% 58%;
     --highlight: 271 76% 53%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-  }
-
-  .dark {
+    font-family: "Inter";
   }
 }
 
 @layer base {
-  * {
-  }
   body {
     @apply bg-background;
   }
