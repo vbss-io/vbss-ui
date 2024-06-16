@@ -2,17 +2,17 @@ import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import { ComponentProps, forwardRef } from "react";
 
-const chipStyles = cva("inline-flex items-center transition-colors", {
+const chipStyles = cva("leading-none inline-flex items-center", {
   variants: {
     variant: {
-      primary: "border bg-primary text-white",
-      secondary: "border bg-secondary text-white",
+      primary: "border border-primary bg-primary text-white",
+      secondary: "border border-secondary bg-secondary text-white",
       outline: "border border-primary text-primary",
     },
     size: {
-      sm: "px-2.5 pb-0.5 text-xs",
-      md: "px-3 pb-1 pt-0.5 text-sm",
-      lg: "px-4 pb-1.5 pt-1 text-md",
+      sm: "px-2.5 py-0.5",
+      md: "px-3 py-1",
+      lg: "px-4 py-2",
     },
     rounded: {
       sm: "rounded-sm",
@@ -22,25 +22,33 @@ const chipStyles = cva("inline-flex items-center transition-colors", {
     },
     font: {
       regular: "font-normal",
-      bold: "font-semibold",
-      extrabold: "font-extrabold",
+      medium: "font-medium",
+      bold: "font-bold",
+    },
+    fontSize: {
+      sm: "text-xs",
+      md: "text-sm",
+      lg: "text-base",
     },
   },
   defaultVariants: {
-    variant: "outline",
+    variant: "primary",
     size: "sm",
     rounded: "md",
     font: "regular",
+    fontSize: "sm",
   },
 });
 
 type ChipProps = ComponentProps<"div"> & VariantProps<typeof chipStyles>;
 
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(
-  ({ variant, size, rounded, font, className, ...props }) => {
+  ({ variant, size, rounded, font, fontSize, className, ...props }) => {
     return (
       <div
-        className={cn(chipStyles({ variant, size, rounded, font, className }))}
+        className={cn(
+          chipStyles({ variant, size, rounded, font, fontSize, className })
+        )}
         {...props}
       />
     );
