@@ -57,7 +57,7 @@ const buttonStyles = cva(
   }
 );
 
-type ButtonProps = ComponentProps<"button"> &
+export type ButtonProps = ComponentProps<"button"> &
   VariantProps<typeof buttonStyles> & {
     icon?: keyof typeof IconsMap;
   };
