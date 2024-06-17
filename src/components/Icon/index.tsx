@@ -1,4 +1,4 @@
-import { IconsMap } from "@/components/Icons/icons";
+import { IconsMap } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import { ComponentProps, forwardRef } from "react";
 

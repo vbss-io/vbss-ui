@@ -1,4 +1,4 @@
-import { IconsMap } from "@/components/Icons/icons";
+import { IconsMap } from "@/components/Icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Icon } from ".";
 
