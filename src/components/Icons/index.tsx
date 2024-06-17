@@ -1,4 +1,14 @@
 import {
+  ArrowArcLeft,
+  ArrowArcRight,
+  ArrowCircleLeft,
+  ArrowCircleRight,
+  ArrowLeft,
+  ArrowRight,
+  ArrowSquareLeft,
+  ArrowSquareRight,
+  CaretLeft,
+  CaretRight,
   Eye,
   EyeSlash,
   GithubLogo,
@@ -22,7 +32,17 @@ export type Icons =
   | "plus"
   | "minus"
   | "eye"
-  | "eye-slash";
+  | "eye-slash"
+  | "arrow-arc-left"
+  | "arrow-arc-right"
+  | "arrow-circle-left"
+  | "arrow-circle-right"
+  | "arrow-left"
+  | "arrow-right"
+  | "arrow-square-left"
+  | "arrow-square-right"
+  | "caret-left"
+  | "caret-right";
 
 export type IconsMap = {
   [key in Icons]: React.ReactNode;
@@ -41,4 +61,14 @@ export const IconsMap: Record<Icons, React.ReactNode> = {
   minus: <Minus className={cn} />,
   eye: <Eye className={cn} />,
   "eye-slash": <EyeSlash className={cn} />,
+  "arrow-arc-left": <ArrowArcLeft className={cn} />,
+  "arrow-arc-right": <ArrowArcRight className={cn} />,
+  "arrow-circle-left": <ArrowCircleLeft className={cn} />,
+  "arrow-circle-right": <ArrowCircleRight className={cn} />,
+  "arrow-left": <ArrowLeft className={cn} />,
+  "arrow-right": <ArrowRight className={cn} />,
+  "arrow-square-left": <ArrowSquareLeft className={cn} />,
+  "arrow-square-right": <ArrowSquareRight className={cn} />,
+  "caret-left": <CaretLeft className={cn} />,
+  "caret-right": <CaretRight className={cn} />,
 };
