@@ -40,7 +40,7 @@ const chipStyles = cva("leading-none inline-flex items-center", {
   },
 });
 
-type ChipProps = ComponentProps<"div"> & VariantProps<typeof chipStyles>;
+export type ChipProps = ComponentProps<"div"> & VariantProps<typeof chipStyles>;
 
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(
   ({ variant, size, rounded, font, fontSize, className, ...props }) => {
