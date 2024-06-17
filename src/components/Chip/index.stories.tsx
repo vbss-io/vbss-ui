@@ -42,10 +42,10 @@ export const Primary: Story = {
   args: {
     children: "Content",
     variant: "primary",
-    size: "md",
+    size: "sm",
     rounded: "md",
-    font: "medium",
-    fontSize: "md",
+    font: "regular",
+    fontSize: "sm",
   },
   argTypes,
 };
