@@ -9,6 +9,8 @@ import {
   ArrowSquareRight,
   CaretLeft,
   CaretRight,
+  Check,
+  Checks,
   Eye,
   EyeSlash,
   GithubLogo,
@@ -42,7 +44,9 @@ export type Icons =
   | "arrow-square-left"
   | "arrow-square-right"
   | "caret-left"
-  | "caret-right";
+  | "caret-right"
+  | "check"
+  | "checks";
 
 export type IconsMap = {
   [key in Icons]: React.ReactNode;
@@ -71,4 +75,6 @@ export const IconsMap: Record<Icons, React.ReactNode> = {
   "arrow-square-right": <ArrowSquareRight className={cn} />,
   "caret-left": <CaretLeft className={cn} />,
   "caret-right": <CaretRight className={cn} />,
+  check: <Check className={cn} />,
+  checks: <Checks className={cn} />,
 };
