@@ -31,8 +31,6 @@ type SwitchProps = React.ComponentPropsWithoutRef<
     label?: string;
   };
 
-// ADD HTML FOR
-
 const Switch = forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
   SwitchProps
