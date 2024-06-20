@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import { ComponentProps, forwardRef } from "react";
 
-const buttonStyles = cva(
+export const buttonStyles = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors",
   {
     variants: {
