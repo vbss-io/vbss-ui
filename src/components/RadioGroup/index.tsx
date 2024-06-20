@@ -4,7 +4,7 @@ import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
 
-const inputStyles = cva("aspect-square border", {
+const radioStyles = cva("aspect-square border", {
   variants: {
     variant: {
       primary: `border-primary data-[state=checked]:bg-primary data-[state=checked]:text-white`,
@@ -43,7 +43,7 @@ type RadioValue = {
 type CheckboxProps = React.ComponentPropsWithoutRef<
   typeof RadioGroupPrimitive.Root
 > &
-  VariantProps<typeof inputStyles> & {
+  VariantProps<typeof radioStyles> & {
     label?: string;
     icon?: keyof typeof IconsMap;
     values: RadioValue[];
@@ -88,7 +88,7 @@ export const Radio = forwardRef<
               key={item.value}
               value={item.value}
               className={cn(
-                inputStyles({ variant, rounded, size, disabled, className })
+                radioStyles({ variant, rounded, size, disabled, className })
               )}
               {...itemProps}
             >
