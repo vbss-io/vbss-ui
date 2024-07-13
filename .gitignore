@@ -24,3 +24,9 @@ dist-ssr
 *.sw?
 
 *storybook.log
+
+components.json
+index.html
+src/*App.tsx
+src/main.tsx
+ui/
