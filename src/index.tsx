@@ -5,6 +5,8 @@ export * from "./components/Calendar";
 export * from "./components/Checkbox";
 export * from "./components/Chip";
 export * from "./components/Chips";
+export * from "./components/DataTable";
+export * from "./components/DropdownMenu";
 export * from "./components/HistoryNav";
 export * from "./components/Icon";
 export * from "./components/Input";
