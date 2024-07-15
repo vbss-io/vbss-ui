@@ -104,6 +104,19 @@ export const WithIcon: Story = {
   argTypes,
 };
 
+export const WithIconInverted: Story = {
+  args: {
+    children: (
+      <>
+        <GithubLogo className="w-full h-full" /> Click Me
+      </>
+    ),
+    variant: "primary",
+    inverted: true,
+  },
+  argTypes,
+};
+
 export const Icon: Story = {
   args: {
     variant: "primary",

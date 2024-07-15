@@ -4,7 +4,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { ComponentProps, forwardRef } from "react";
 
 export const buttonStyles = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors",
+  "outline-none inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors",
   {
     variants: {
       variant: {
@@ -42,6 +42,9 @@ export const buttonStyles = cva(
         md: "text-sm",
         lg: "text-md",
       },
+      inverted: {
+        true: "flex-row-reverse",
+      },
       disabled: {
         true: "disabled:pointer-events-none disabled:opacity-50",
       },
@@ -52,6 +55,7 @@ export const buttonStyles = cva(
       rounded: "md",
       font: "medium",
       fontSize: "md",
+      inverted: false,
       disabled: false,
     },
   }
@@ -70,6 +74,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       rounded,
       font,
       fontSize,
+      inverted,
       disabled,
       className,
       icon,
@@ -87,6 +92,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             rounded,
             font,
             fontSize,
+            inverted,
             disabled,
             className,
           })
