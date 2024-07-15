@@ -9,7 +9,14 @@ export type IconProps = ComponentProps<"div"> & {
 export const Icon = forwardRef<HTMLDivElement, IconProps>(
   ({ className, icon, ...props }, ref) => {
     return (
-      <div ref={ref} className={cn("flex w-full", className)} {...props}>
+      <div
+        ref={ref}
+        className={cn(
+          "flex w-full h-full align-middle justify-center",
+          className
+        )}
+        {...props}
+      >
         {IconsMap[icon]}
       </div>
     );
