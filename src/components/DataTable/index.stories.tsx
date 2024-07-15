@@ -164,7 +164,7 @@ const formattedHeaders: ColumnDef<Payment>[] = [
   },
 ];
 
-export const FormattedHeaders: Story = {
+export const FormattedRows: Story = {
   args: {
     // @ts-expect-error storybook types are not up to date
     headers: formattedHeaders,
