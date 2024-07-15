@@ -3,16 +3,22 @@ import {
   ArrowArcRight,
   ArrowCircleLeft,
   ArrowCircleRight,
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
+  ArrowsDownUp,
   ArrowSquareLeft,
   ArrowSquareRight,
   ArrowsVertical,
+  ArrowUp,
   CaretLeft,
   CaretRight,
   Check,
   Checks,
   Circle,
+  DotsThree,
+  DotsThreeCircle,
+  DotsThreeOutline,
   Eye,
   EyeSlash,
   GithubLogo,
@@ -21,6 +27,7 @@ import {
   Minus,
   Moon,
   Plus,
+  SlidersHorizontal,
   Sun,
   X,
 } from "@phosphor-icons/react";
@@ -45,12 +52,19 @@ export type Icons =
   | "arrow-right"
   | "arrow-square-left"
   | "arrow-square-right"
+  | "arrow-up"
+  | "arrow-down"
+  | "arrows-down-up"
   | "caret-left"
   | "caret-right"
   | "arrows-vertical"
   | "check"
   | "checks"
-  | "circle";
+  | "circle"
+  | "dots-three"
+  | "dots-three-circle"
+  | "dots-three-outline"
+  | "sliders-horizontal";
 
 export type IconsMap = {
   [key in Icons]: React.ReactNode;
@@ -83,4 +97,11 @@ export const IconsMap: Record<Icons, React.ReactNode> = {
   check: <Check className={cn} />,
   checks: <Checks className={cn} />,
   circle: <Circle className={cn} />,
+  "dots-three": <DotsThree className={cn} />,
+  "dots-three-circle": <DotsThreeCircle className={cn} />,
+  "dots-three-outline": <DotsThreeOutline className={cn} />,
+  "arrow-up": <ArrowUp className={cn} />,
+  "arrow-down": <ArrowDown className={cn} />,
+  "arrows-down-up": <ArrowsDownUp className={cn} />,
+  "sliders-horizontal": <SlidersHorizontal className={cn} />,
 };
