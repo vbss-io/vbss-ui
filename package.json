@@ -11,11 +11,13 @@
   "module": "dist/vbss-ui.js",
   "exports": {
     ".": {
+      "types": "./dist/vbss-ui.d.ts",
       "import": "./dist/vbss-ui.js",
       "require": "./dist/vbss-ui-umd.cjs"
     },
     "./dist/style.css": "./dist/style.css"
   },
+  "types": "./dist/vbss-ui.d.ts",
   "sideEffects": false,
   "repository": {
     "type": "git",
