@@ -11,6 +11,7 @@ import {
   ArrowSquareRight,
   ArrowsVertical,
   ArrowUp,
+  CalendarDots,
   CaretLeft,
   CaretRight,
   Check,
@@ -64,7 +65,8 @@ export type Icons =
   | "dots-three"
   | "dots-three-circle"
   | "dots-three-outline"
-  | "sliders-horizontal";
+  | "sliders-horizontal"
+  | "calendar-dots";
 
 export type IconsMap = {
   [key in Icons]: React.ReactNode;
@@ -104,4 +106,5 @@ export const IconsMap: Record<Icons, React.ReactNode> = {
   "arrow-down": <ArrowDown className={cn} />,
   "arrows-down-up": <ArrowsDownUp className={cn} />,
   "sliders-horizontal": <SlidersHorizontal className={cn} />,
+  "calendar-dots": <CalendarDots className={cn} />,
 };
