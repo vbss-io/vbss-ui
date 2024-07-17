@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { VariantProps, cva } from "class-variance-authority";
-import { ComponentProps, forwardRef } from "react";
+import { forwardRef } from "react";
 
 const tooltipStyles = cva(
   "z-50 overflow-hidden bg-primary animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
@@ -44,13 +44,17 @@ const tooltipStyles = cva(
   }
 );
 
-type TooltipProps = ComponentProps<"div"> &
+type TooltipProps = React.ComponentPropsWithoutRef<
+  typeof TooltipPrimitive.Content
+> &
   VariantProps<typeof tooltipStyles> & {
     trigger: React.ReactNode;
-    side?: "top" | "right" | "bottom" | "left";
   };
 
-export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
+export const Tooltip = forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  TooltipProps
+>(
   (
     {
       trigger,
