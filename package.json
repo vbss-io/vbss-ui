@@ -27,7 +27,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "patch-deploy": "npm version patch && npm publish"
+    "patch-deploy": "npm version patch && npm publish",
+    "minor-deploy": "npm version minor && npm publish"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.6",
