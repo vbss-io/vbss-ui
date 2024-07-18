@@ -1,4 +1,5 @@
-import { Button, ButtonProps } from "@/components/Button";
+import { Button } from "@/components/Button";
+import { ExtendableButtonProps } from "@/components/Button/types";
 import { DropdownMenu } from "@/components/DropdownMenu";
 import { cn } from "@/lib/utils";
 import {
@@ -14,7 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { VariantProps, cva } from "class-variance-authority";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, ElementType, useState } from "react";
 import { Input } from "../Input";
 
 const variantTable = cva("text-black", {
@@ -88,31 +89,31 @@ const rowStyle: { [key: string]: string } = {
   ghost: "hover:bg-secondary/5 data-[state=selected]:bg-primary/10",
 };
 
-type DataTableProps<TData, TValue> = {
-  headers: ColumnDef<TData, TValue>[];
-  rows: TData[];
-  paginationProps?:
-    | (Omit<ButtonProps, "onClick" | "disabled"> & {
-        previousText?: string;
-        nextText?: string;
-        pageSize?: number;
-        pageIndex?: number;
-      })
-    | null;
-  filterProps?:
-    | (Omit<ComponentProps<typeof Input>, "value" | "onChange" | "type"> & {
-        columnId: string;
-      })
-    | null;
-  columnToggleProps?:
-    | (Omit<ComponentProps<typeof Button>, "onClick" | "icon"> & {
-        title?: string;
-      })
-    | null;
-} & ComponentProps<"table"> &
+type DataTableProps<TData, TValue> = ComponentProps<"table"> &
   VariantProps<typeof tableStyles> &
   VariantProps<typeof variantTable> &
-  VariantProps<typeof heightTable>;
+  VariantProps<typeof heightTable> & {
+    headers: ColumnDef<TData, TValue>[];
+    rows: TData[];
+    paginationProps?:
+      | (Omit<ExtendableButtonProps<ElementType>, "onClick" | "disabled"> & {
+          previousText?: string;
+          nextText?: string;
+          pageSize?: number;
+          pageIndex?: number;
+        })
+      | null;
+    filterProps?:
+      | (Omit<ComponentProps<typeof Input>, "value" | "onChange" | "type"> & {
+          columnId: string;
+        })
+      | null;
+    columnToggleProps?:
+      | (Omit<ComponentProps<typeof Button>, "onClick" | "icon"> & {
+          title?: string;
+        })
+      | null;
+  };
 
 export function DataTable<TData, TValue>({
   variant = "primary",
@@ -122,11 +123,18 @@ export function DataTable<TData, TValue>({
   fontSize,
   headers,
   rows,
-  paginationProps = null,
+  paginationProps,
   filterProps = null,
   columnToggleProps = null,
   ...props
 }: DataTableProps<TData, TValue>) {
+  const {
+    previousText,
+    nextText,
+    pageSize,
+    pageIndex,
+    ...paginationButtonProps
+  } = paginationProps || {};
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -142,7 +150,8 @@ export function DataTable<TData, TValue>({
       : undefined,
     initialState: {
       pagination: {
-        pageSize: paginationProps?.pageSize || 10,
+        pageSize: pageSize || 10,
+        pageIndex: pageIndex || 0,
       },
     },
     state: {
@@ -300,9 +309,9 @@ export function DataTable<TData, TValue>({
                   variant={variant}
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
-                  {...paginationProps}
+                  {...paginationButtonProps}
                 >
-                  {paginationProps.previousText || "Previous"}
+                  {previousText || "Previous"}
                 </Button>
                 <Button
                   variant={
@@ -310,9 +319,9 @@ export function DataTable<TData, TValue>({
                   }
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
-                  {...paginationProps}
+                  {...paginationButtonProps}
                 >
-                  {paginationProps.nextText || "Next"}
+                  {nextText || "Next"}
                 </Button>
               </>
             )}
