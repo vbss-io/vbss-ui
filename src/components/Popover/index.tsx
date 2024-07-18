@@ -66,6 +66,7 @@ export const Popover = forwardRef<
       fontSize,
       className,
       align = "center",
+      sideOffset = 4,
       ...props
     },
     ref
@@ -77,7 +78,7 @@ export const Popover = forwardRef<
           side={side}
           ref={ref}
           align={align}
-          sideOffset={4}
+          sideOffset={sideOffset}
           className={cn(
             popoverStyles({ variant, size, rounded, font, fontSize, className })
           )}
