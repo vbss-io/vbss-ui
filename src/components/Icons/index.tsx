@@ -17,19 +17,24 @@ import {
   Check,
   Checks,
   Circle,
+  Database,
   DotsThree,
   DotsThreeCircle,
   DotsThreeOutline,
   Eye,
   EyeSlash,
+  Gear,
   GithubLogo,
   Hamburger,
+  Invoice,
   LinkedinLogo,
   Minus,
   Moon,
   Plus,
+  FloppyDisk as Save,
   SlidersHorizontal,
   Sun,
+  Warning,
   X,
 } from "@phosphor-icons/react";
 import React from "react";
@@ -66,7 +71,12 @@ export type Icons =
   | "dots-three-circle"
   | "dots-three-outline"
   | "sliders-horizontal"
-  | "calendar-dots";
+  | "calendar-dots"
+  | "settings"
+  | "database"
+  | "invoice"
+  | "warning"
+  | "save";
 
 export type IconsMap = {
   [key in Icons]: React.ReactNode;
@@ -107,4 +117,9 @@ export const IconsMap: Record<Icons, React.ReactNode> = {
   "arrows-down-up": <ArrowsDownUp className={cn} />,
   "sliders-horizontal": <SlidersHorizontal className={cn} />,
   "calendar-dots": <CalendarDots className={cn} />,
+  settings: <Gear className={cn} />,
+  database: <Database className={cn} />,
+  invoice: <Invoice className={cn} />,
+  warning: <Warning className={cn} />,
+  save: <Save className={cn} />,
 };
