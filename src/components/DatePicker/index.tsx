@@ -8,10 +8,17 @@ import { Button } from "../Button";
 
 type DatePickerProps = ComponentProps<"div"> & {
   variant?: "primary" | "secondary" | "outline";
+  selected?: Date;
+  onSelect?: (date: unknown) => void;
   buttonProps?: Omit<ComponentProps<typeof Button>, "icon">;
-  popoverProps?: ComponentProps<typeof Popover>;
-  calendarProps?: ComponentProps<typeof Calendar>;
-  label: string;
+  popoverProps?: Omit<ComponentProps<typeof Popover>, "trigger">;
+  calendarProps?: Omit<
+    ComponentProps<typeof Calendar>,
+    "selected" | "onSelect"
+  >;
+  label?: string;
+  text: string;
+  error?: string;
   fnsFormatStr?: string;
   fnsLocale?: Locale;
 };
@@ -19,8 +26,12 @@ type DatePickerProps = ComponentProps<"div"> & {
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   (
     {
-      variant,
+      variant = "primary",
+      selected,
+      onSelect,
       label,
+      text,
+      error,
       className,
       buttonProps,
       popoverProps,
@@ -40,15 +51,23 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         side={popoverProps?.side ?? "top"}
         variant={popoverProps?.variant ?? variant}
         trigger={
-          <Button
-            className={cn("justify-start")}
-            icon="calendar-dots"
-            {...buttonProps}
-          >
-            {date
-              ? format(date, fnsFormatStr, { locale: fnsLocale as Locale })
-              : label}
-          </Button>
+          <div className="flex flex-col items-start gap-1">
+            {label && (
+              <label className={"pl-0.5 font-medium text-sm"}>{label}</label>
+            )}
+            <Button
+              className={cn("justify-start")}
+              icon="calendar-dots"
+              {...buttonProps}
+            >
+              {date
+                ? format(date, fnsFormatStr, { locale: fnsLocale as Locale })
+                : text}
+            </Button>
+            {error && (
+              <span className="pl-0.5 text-red-500 text-xs">{error}</span>
+            )}
+          </div>
         }
         className={cn("text-unset px-0 py-0", className)}
         {...popoverProps}
@@ -56,9 +75,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         <Calendar
           className={cn(calendarBackground, "py-2 px-1")}
           mode="single"
-          selected={date}
+          selected={selected ?? date}
           // @ts-expect-error - `setDate` is not assignable to `onSelect`
-          onSelect={setDate}
+          onSelect={onSelect ?? setDate}
           initialFocus
           {...calendarProps}
         />
