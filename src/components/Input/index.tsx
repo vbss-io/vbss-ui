@@ -1,11 +1,12 @@
-import { Button, ButtonProps } from "@/components/Button";
+import { Button } from "@/components/Button";
+import { ExtendableButtonProps } from "@/components/Button/types";
 import { IconsMap } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
-import { ComponentProps, forwardRef, useState } from "react";
+import { ComponentProps, ElementType, forwardRef, useState } from "react";
 
 const defaultInput =
-  "flex w-full border px-3 py-2 focus-visible:outline-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
+  "flex border px-3 py-2 focus-visible:outline-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
 
 const inputStyles = cva("", {
   variants: {
@@ -55,7 +56,8 @@ type InputProps = ComponentProps<"input"> &
     type?: "text" | "password" | "number";
     label?: string;
     showPasswordSwitch?: boolean;
-    buttonProps?: ButtonProps;
+    buttonProps?: ExtendableButtonProps<ElementType>;
+    error?: string;
   };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -71,6 +73,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       placeholder,
       label,
+      error,
       showPasswordSwitch,
       buttonProps,
       ...props
@@ -87,7 +90,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <div className="flex w-full flex-col gap-1">
+      <div className="flex flex-col gap-1">
         {label && (
           <label
             htmlFor={inputId}
@@ -162,6 +165,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             />
           )}
         </div>
+        {error && (
+          <span
+            className={cn(
+              "pl-0.5 text-red-500",
+              inputStyles({
+                variant: null,
+                height: null,
+                rounded: null,
+                font,
+                fontSize: "sm",
+              })
+            )}
+          >
+            {error}
+          </span>
+        )}
       </div>
     );
   }
