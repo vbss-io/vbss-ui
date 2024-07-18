@@ -1,7 +1,8 @@
-import { Button, ButtonProps } from "@/components/Button";
+import { Button } from "@/components/Button";
+import { ExtendableButtonProps } from "@/components/Button/types";
 import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
-import { ComponentProps, forwardRef } from "react";
+import { ComponentProps, ElementType, forwardRef } from "react";
 
 const defaultInput =
   "flex w-full border px-3 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
@@ -53,7 +54,7 @@ type InputNumberProps = Omit<ComponentProps<"input">, "type"> &
   VariantProps<typeof inputStyles> & {
     label?: string;
     controlsProps?: Omit<
-      ButtonProps,
+      ExtendableButtonProps<ElementType>,
       "rounded" | "onClick" | "disabled" | "size" | "icon"
     >;
   };
