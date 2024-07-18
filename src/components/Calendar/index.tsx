@@ -1,7 +1,7 @@
+import { buttonStyles } from "@/components/Button/styles";
 import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import { DayPicker } from "react-day-picker";
-import { buttonStyles } from "../Button";
 import { IconsMap } from "../Icons";
 
 const calendarStyles = cva(
