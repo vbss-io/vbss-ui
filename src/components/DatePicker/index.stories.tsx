@@ -21,14 +21,18 @@ const argTypes: any = {
     options: ["primary", "secondary", "outline"],
     control: { type: "select" },
   },
+  text: { control: { type: "text" } },
   label: { control: { type: "text" } },
+  error: { control: { type: "text" } },
   fnsFormatStr: { control: { type: "text" }, description: "date-fns format" },
   fnsLocale: { control: { type: "object" }, description: "date-fns locale" },
 };
 
 export const Primary: Story = {
   args: {
-    label: "Pick a date",
+    text: "Pick a date",
+    label: "Date:",
+    error: "Invalid date",
     variant: "primary",
     popoverProps: { variant: "primary" },
     buttonProps: { variant: "primary" },
@@ -41,7 +45,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    label: "Pick a date",
+    text: "Pick a date",
     variant: "secondary",
     popoverProps: { variant: "secondary", side: "bottom" },
     buttonProps: { variant: "secondary" },
@@ -54,7 +58,7 @@ export const Secondary: Story = {
 
 export const Outline: Story = {
   args: {
-    label: "Pick a date",
+    text: "Pick a date",
     variant: "outline",
     popoverProps: { variant: "outline", side: "right" },
     buttonProps: { variant: "outline" },
