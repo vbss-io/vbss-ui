@@ -23,9 +23,9 @@ type ChipsProps = ComponentProps<"div"> &
   };
 
 export const Chips = forwardRef<HTMLDivElement, ChipsProps>(
-  ({ gap, className, chipsProps, ...props }) => {
+  ({ gap, className, chipsProps, ...props }, ref) => {
     return (
-      <div className={cn(chipsStyles({ gap, className }))} {...props}>
+      <div className={cn(chipsStyles({ gap, className }))} ref={ref} {...props}>
         {props.chips.map((chip, index) => (
           <Chip key={index} {...chipsProps}>
             {chip}

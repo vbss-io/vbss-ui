@@ -43,12 +43,13 @@ const chipStyles = cva("leading-none inline-flex items-center", {
 export type ChipProps = ComponentProps<"div"> & VariantProps<typeof chipStyles>;
 
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(
-  ({ variant, size, rounded, font, fontSize, className, ...props }) => {
+  ({ variant, size, rounded, font, fontSize, className, ...props }, ref) => {
     return (
       <div
         className={cn(
           chipStyles({ variant, size, rounded, font, fontSize, className })
         )}
+        ref={ref}
         {...props}
       />
     );
