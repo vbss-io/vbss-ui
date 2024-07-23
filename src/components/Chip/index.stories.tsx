@@ -40,6 +40,7 @@ const argTypes: any = {
 
 export const Primary: Story = {
   args: {
+    as: "div",
     children: "Content",
     variant: "primary",
     size: "sm",
