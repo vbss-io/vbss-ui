@@ -1,66 +1,11 @@
 import { Button } from "@/components/Button";
-import { ExtendableButtonProps } from "@/components/Button/types";
 import { IconsMap } from "@/components/Icons";
 import { cn } from "@/lib/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import { ComponentProps, ElementType, forwardRef, useState } from "react";
+import { forwardRef, useState } from "react";
+import { inputErrorStyles, inputLabelStyles, inputStyles } from "./styles";
+import { InputComponent, InputProps } from "./types";
 
-const defaultInput =
-  "flex border px-3 py-2 focus-visible:outline-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
-
-const inputStyles = cva("", {
-  variants: {
-    variant: {
-      primary: `${defaultInput} focus-visible:border-primary`,
-      secondary: `${defaultInput} focus-visible:border-secondary`,
-      outline: `${defaultInput} border-primary focus-visible:border-secondary`,
-      ghost: `${defaultInput} focus-visible:ring-0`,
-    },
-    height: {
-      sm: "h-8",
-      md: "h-9",
-      lg: "h-10",
-    },
-    rounded: {
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      full: "rounded-full",
-    },
-    font: {
-      regular: "font-normal",
-      medium: "font-medium",
-      bold: "font-bold",
-    },
-    fontSize: {
-      sm: "text-xs",
-      md: "text-sm",
-      lg: "text-md",
-    },
-    disabled: {
-      true: "cursor-not-allowed disabled:pointer-events-none disabled:opacity-50",
-    },
-  },
-  defaultVariants: {
-    variant: "primary",
-    height: "md",
-    rounded: "md",
-    font: "medium",
-    fontSize: "md",
-    disabled: false,
-  },
-});
-
-type InputProps = ComponentProps<"input"> &
-  VariantProps<typeof inputStyles> & {
-    type?: "text" | "password" | "number";
-    label?: string;
-    showPasswordSwitch?: boolean;
-    buttonProps?: ExtendableButtonProps<ElementType>;
-    error?: string;
-  };
-
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input: InputComponent = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       variant,
@@ -94,16 +39,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className={cn(
-              "pl-0.5",
-              inputStyles({
-                variant: null,
-                height: null,
-                rounded: null,
-                font,
-                fontSize,
-              })
-            )}
+            className={cn("pl-0.5", inputLabelStyles({ font, fontSize }))}
           >
             {label}
           </label>
@@ -167,16 +103,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         </div>
         {error && (
           <span
-            className={cn(
-              "pl-0.5 text-red-500",
-              inputStyles({
-                variant: null,
-                height: null,
-                rounded: null,
-                font,
-                fontSize: "sm",
-              })
-            )}
+            className={cn("pl-0.5 text-red-500", inputErrorStyles({ font }))}
           >
             {error}
           </span>
