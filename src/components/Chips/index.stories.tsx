@@ -27,6 +27,7 @@ const argTypes: any = {
 
 export const Primary: Story = {
   args: {
+    as: "div",
     chips: ["Content", "Content", "Content"],
     gap: "md",
     chipsProps: {
