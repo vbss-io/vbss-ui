@@ -37,3 +37,4 @@ export type ExtendableComponentProps<
 > = PolymorphicComponentPropsWithRef<C, D>;
 
 export type DivComponentProps = ComponentProps<"div">;
+export type TableComponentProps = ComponentProps<"table">;
