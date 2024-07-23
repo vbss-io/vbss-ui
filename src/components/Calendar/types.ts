@@ -1,5 +1,5 @@
 import { VariantProps } from "class-variance-authority";
-import { ComponentProps } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { DayPicker } from "react-day-picker";
 import { calendarStyles } from "./styles";
 
@@ -25,3 +25,5 @@ export type ButtonExtraProps = {
 export type CalendarProps = CalendarComponentProps &
   CalendarVariantProps &
   ButtonExtraProps;
+
+export type CalendarComponent = (props: CalendarProps) => ReactNode;

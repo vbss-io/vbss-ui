@@ -3,9 +3,9 @@ import { IconsMap } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import { DayPicker } from "react-day-picker";
 import { calendarStyles, DayTodayStyles } from "./styles";
-import { CalendarProps } from "./types";
+import { CalendarComponent, CalendarProps } from "./types";
 
-export const Calendar = ({
+export const Calendar: CalendarComponent = ({
   variant = "primary",
   rounded,
   disabled,
