@@ -1,6 +1,6 @@
 import { VariantProps } from "class-variance-authority";
-import { ComponentProps, ReactNode } from "react";
-import { DayPicker } from "react-day-picker";
+import { ReactNode } from "react";
+import { DayPickerMultipleProps, DayPickerRangeProps, DayPickerSingleProps } from "react-day-picker";
 import { calendarStyles } from "./styles";
 
 export type Icons =
@@ -15,7 +15,7 @@ export type Icons =
   | "caret"
   | "caret";
 
-export type CalendarComponentProps = ComponentProps<typeof DayPicker>;
+export type CalendarComponentProps = DayPickerSingleProps | DayPickerMultipleProps | DayPickerRangeProps
 export type CalendarVariantProps = VariantProps<typeof calendarStyles>;
 export type ButtonExtraProps = {
   rounded?: "sm" | "md" | "lg" | "full";
