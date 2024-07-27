@@ -1,4 +1,4 @@
-import { IconProps } from "@/components/Icon/types";
+import { IconsProps } from "@/components/Icon/types";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { VariantProps } from "class-variance-authority";
 import { ComponentPropsWithoutRef, ReactNode } from "react";
@@ -10,8 +10,8 @@ export type SwitchComponentProps = ComponentPropsWithoutRef<
 export type SwitchVariantProps = VariantProps<typeof switchStyles>;
 export type SwitchExtraProps = {
   onChange?: (checked: boolean) => void;
-  iconOn?: IconProps;
-  iconOff?: IconProps;
+  iconOn?: IconsProps;
+  iconOff?: IconsProps;
   label?: string;
 };
 

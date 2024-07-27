@@ -20,13 +20,13 @@ export const Switch: SwitchComponent = forwardRef<
         onCheckedChange={onChange ?? props.onCheckedChange}
         id={inputId}
       >
-        {typeof iconOn === "string" && (
+        {iconOn && (
           <div
             className={cn(
               "p-1 text-background absolute top-1/3 right-1/3 transform -translate-x-[3px] -translate-y-[0.475rem]"
             )}
           >
-            {IconsMap[iconOn]}
+            {typeof iconOn === "string" ? IconsMap[iconOn] : iconOn}
           </div>
         )}
         <SwitchPrimitives.Thumb
@@ -34,13 +34,13 @@ export const Switch: SwitchComponent = forwardRef<
             "pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0 z-50"
           )}
         />
-        {typeof iconOff === "string" && (
+        {iconOff && (
           <div
             className={cn(
               "p-1 text-black absolute top-1/3 left-1/3 transform -translate-x-[-3px] -translate-y-[0.475rem]"
             )}
           >
-            {IconsMap[iconOff]}
+            {typeof iconOff === "string" ? IconsMap[iconOff] : iconOff}
           </div>
         )}
       </SwitchPrimitives.Root>
