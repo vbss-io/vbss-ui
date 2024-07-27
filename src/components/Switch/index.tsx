@@ -1,37 +1,11 @@
 import { IconsMap } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
-import { VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
+import { switchStyles } from "./styles";
+import { SwitchComponent, SwitchProps } from "./types";
 
-const switchStyles = cva(
-  "peer inline-flex relative h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50  data-[state=unchecked]:bg-gray-200",
-  {
-    variants: {
-      variant: {
-        primary: "border-transparent data-[state=checked]:bg-primary",
-        secondary: "border-transparent data-[state=checked]:bg-secondary",
-        outline: "border-primary data-[state=checked]:bg-primary",
-        bw: "border-transparent data-[state=checked]:bg-black",
-      },
-    },
-    defaultVariants: {
-      variant: "primary",
-    },
-  }
-);
-
-type SwitchProps = React.ComponentPropsWithoutRef<
-  typeof SwitchPrimitives.Root
-> &
-  VariantProps<typeof switchStyles> & {
-    onChange?: (checked: boolean) => void;
-    iconOn?: keyof typeof IconsMap;
-    iconOff?: keyof typeof IconsMap;
-    label?: string;
-  };
-
-const Switch = forwardRef<
+export const Switch: SwitchComponent = forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
   SwitchProps
 >(({ className, variant, onChange, iconOn, iconOff, label, ...props }, ref) => {
@@ -81,7 +55,3 @@ const Switch = forwardRef<
     </div>
   );
 });
-
-Switch.displayName = SwitchPrimitives.Root.displayName;
-
-export { Switch };

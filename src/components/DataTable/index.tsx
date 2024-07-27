@@ -1,9 +1,7 @@
-import { Button, ButtonProps } from "@/components/Button";
+import { Button } from "@/components/Button";
 import { DropdownMenu } from "@/components/DropdownMenu";
 import { cn } from "@/lib/utils";
 import {
-  Column,
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   flexRender,
@@ -13,108 +11,19 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { VariantProps, cva } from "class-variance-authority";
-import { ComponentProps, useState } from "react";
+import { useState } from "react";
 import { Input } from "../Input";
+import { DataTableColumnHeader as DataTableColumnHeaderComponent } from "./header";
+import {
+  headerStyles,
+  heightStyles,
+  rowStyles,
+  tableStyles,
+  variantStyles,
+} from "./styles";
+import { DataTableComponent, DataTableProps } from "./types";
 
-const variantTable = cva("text-black", {
-  variants: {
-    variant: {
-      primary: ``,
-      secondary: ``,
-      outline: ``,
-      ghost: ``,
-    },
-    fontSize: {
-      sm: "text-xs",
-      md: "text-sm",
-      lg: "text-md",
-    },
-  },
-  defaultVariants: {
-    variant: "primary",
-    fontSize: "md",
-  },
-});
-
-const heightTable = cva("", {
-  variants: {
-    height: {
-      sm: "h-8",
-      md: "h-10",
-      lg: "h-14",
-    },
-  },
-  defaultVariants: {
-    height: "md",
-  },
-});
-
-const tableStyles = cva("", {
-  variants: {
-    variant: {
-      primary: ``,
-      secondary: ``,
-      outline: `border-primary`,
-      ghost: ``,
-    },
-    rounded: {
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-    },
-    outBorder: {
-      true: "border",
-    },
-  },
-  defaultVariants: {
-    variant: "primary",
-    rounded: "lg",
-    outBorder: false,
-  },
-});
-
-const headerStyle: { [key: string]: string } = {
-  primary: "bg-primary text-white",
-  secondary: "bg-secondary text-white",
-  outline: "bg-white text-primary",
-};
-
-const rowStyle: { [key: string]: string } = {
-  primary: "hover:bg-secondary/5 data-[state=selected]:bg-secondary/10",
-  secondary: "hover:bg-primary/5 data-[state=selected]:bg-primary/10",
-  outline:
-    "border-primary hover:bg-secondary/5 data-[state=selected]:bg-primary/10",
-  ghost: "hover:bg-secondary/5 data-[state=selected]:bg-primary/10",
-};
-
-type DataTableProps<TData, TValue> = {
-  headers: ColumnDef<TData, TValue>[];
-  rows: TData[];
-  paginationProps?:
-    | (Omit<ButtonProps, "onClick" | "disabled"> & {
-        previousText?: string;
-        nextText?: string;
-        pageSize?: number;
-        pageIndex?: number;
-      })
-    | null;
-  filterProps?:
-    | (Omit<ComponentProps<typeof Input>, "value" | "onChange" | "type"> & {
-        columnId: string;
-      })
-    | null;
-  columnToggleProps?:
-    | (Omit<ComponentProps<typeof Button>, "onClick" | "icon"> & {
-        title?: string;
-      })
-    | null;
-} & ComponentProps<"table"> &
-  VariantProps<typeof tableStyles> &
-  VariantProps<typeof variantTable> &
-  VariantProps<typeof heightTable>;
-
-export function DataTable<TData, TValue>({
+export const DataTable: DataTableComponent = <TData, TValue>({
   variant = "primary",
   height,
   rounded,
@@ -122,16 +31,25 @@ export function DataTable<TData, TValue>({
   fontSize,
   headers,
   rows,
-  paginationProps = null,
+  paginationProps,
   filterProps = null,
   columnToggleProps = null,
   ...props
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>) => {
+  const {
+    previousText,
+    nextText,
+    pageSize,
+    pageIndex,
+    ...paginationButtonProps
+  } = paginationProps ?? {};
+  const { columnId, ...filterInputProps } = filterProps ?? {};
+  const { title, ...columnToggleButtonProps } = columnToggleProps ?? {};
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data: rows,
-    columns: headers || [],
+    columns: headers ?? [],
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
@@ -142,7 +60,8 @@ export function DataTable<TData, TValue>({
       : undefined,
     initialState: {
       pagination: {
-        pageSize: paginationProps?.pageSize || 10,
+        pageSize: pageSize ?? 10,
+        pageIndex: pageIndex ?? 0,
       },
     },
     state: {
@@ -171,22 +90,18 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      {(filterProps || columnToggleProps) && (
+      {(columnId || columnToggleProps) && (
         <div className="flex gap-4 items-center justify-between">
-          {filterProps && (
+          {columnId && (
             <Input
-              placeholder={filterProps.placeholder || "Buscar..."}
+              placeholder={filterProps?.placeholder ?? "Search..."}
               value={
-                (table
-                  .getColumn(filterProps.columnId)
-                  ?.getFilterValue() as string) ?? ""
+                (table.getColumn(columnId)?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table
-                  .getColumn(filterProps.columnId)
-                  ?.setFilterValue(event.target.value)
+                table.getColumn(columnId)?.setFilterValue(event.target.value)
               }
-              {...filterProps}
+              {...filterInputProps}
             />
           )}
 
@@ -194,12 +109,16 @@ export function DataTable<TData, TValue>({
             <DropdownMenu
               className="flex items-start"
               trigger={
-                <Button {...columnToggleProps} icon="sliders-horizontal">
-                  {columnToggleProps.title ?? "Columns"}
+                <Button
+                  as="span"
+                  {...columnToggleButtonProps}
+                  icon="sliders-horizontal"
+                >
+                  {title ?? "Columns"}
                 </Button>
               }
               menus={toggleColumn}
-              variant={variant || "primary"}
+              variant={variant ?? "primary"}
             />
           )}
         </div>
@@ -213,7 +132,7 @@ export function DataTable<TData, TValue>({
         <table
           className={cn(
             "w-full caption-bottom",
-            variantTable({ variant, fontSize })
+            variantStyles({ variant, fontSize })
           )}
           {...props}
         >
@@ -222,7 +141,7 @@ export function DataTable<TData, TValue>({
               <tr
                 className={cn(
                   "border-b transition-colors",
-                  variant && rowStyle[variant]
+                  variant && rowStyles[variant]
                 )}
                 key={headerGroup.id}
               >
@@ -231,8 +150,8 @@ export function DataTable<TData, TValue>({
                     <th
                       className={cn(
                         "px-4 text-left align-middle font-semibold [&:has([role=checkbox])]:pr-0",
-                        variant && headerStyle[variant],
-                        heightTable({ height })
+                        variant && headerStyles[variant],
+                        heightStyles({ height })
                       )}
                       key={header.id}
                     >
@@ -254,7 +173,7 @@ export function DataTable<TData, TValue>({
                 <tr
                   className={cn(
                     "border-b transition-colors",
-                    variant && rowStyle[variant]
+                    variant && rowStyles[variant]
                   )}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
@@ -264,7 +183,7 @@ export function DataTable<TData, TValue>({
                       key={cell.id}
                       className={cn(
                         "px-4 align-middle [&:has([role=checkbox])]:pr-0",
-                        heightTable({ height })
+                        heightStyles({ height })
                       )}
                       data-state={row.getIsSelected() && "selected"}
                     >
@@ -300,9 +219,9 @@ export function DataTable<TData, TValue>({
                   variant={variant}
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
-                  {...paginationProps}
+                  {...paginationButtonProps}
                 >
-                  {paginationProps.previousText || "Previous"}
+                  {previousText ?? "Previous"}
                 </Button>
                 <Button
                   variant={
@@ -310,9 +229,9 @@ export function DataTable<TData, TValue>({
                   }
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
-                  {...paginationProps}
+                  {...paginationButtonProps}
                 >
-                  {paginationProps.nextText || "Next"}
+                  {nextText ?? "Next"}
                 </Button>
               </>
             )}
@@ -321,115 +240,6 @@ export function DataTable<TData, TValue>({
       </div>
     </div>
   );
-}
-
-type DataTableColumnHeaderProps<TData, TValue> = {
-  column: Column<TData, TValue>;
-  title: string;
-  menuLabel?: string;
-  headerProps?: Omit<ComponentProps<typeof Button>, "onClick" | "icon">;
-  itemsProps?: Omit<ComponentProps<typeof Button>, "onClick" | "icon">;
-  itemsToHide?: ["asc" | "desc" | "clear" | "hide"];
 };
 
-export function DataTableColumnHeader<TData, TValue>({
-  column,
-  title,
-  menuLabel,
-  headerProps,
-  itemsProps,
-  itemsToHide,
-}: DataTableColumnHeaderProps<TData, TValue>) {
-  const icon =
-    column.getIsSorted() === "desc"
-      ? "arrow-down"
-      : column.getIsSorted() === "asc"
-        ? "arrow-up"
-        : "arrows-down-up";
-
-  const menus = [];
-
-  !itemsToHide?.includes("asc") &&
-    menus.push({
-      item: (
-        <Button
-          className="flex w-full items-center"
-          onClick={() => column.toggleSorting(false)}
-          icon="arrow-up"
-          inverted={true}
-          variant={itemsProps?.variant || "ghost"}
-          {...itemsProps}
-        >
-          Asc
-        </Button>
-      ),
-    });
-
-  !itemsToHide?.includes("desc") &&
-    menus.push({
-      item: (
-        <Button
-          className="flex w-full items-center"
-          onClick={() => column.toggleSorting(true)}
-          icon="arrow-down"
-          inverted={true}
-          variant={itemsProps?.variant || "ghost"}
-          {...itemsProps}
-        >
-          Desc
-        </Button>
-      ),
-    });
-
-  !itemsToHide?.includes("clear") &&
-    menus.push({
-      item: (
-        <Button
-          className="flex w-full items-center"
-          onClick={() => column.toggleSorting(undefined)}
-          icon="arrows-down-up"
-          inverted={true}
-          variant={itemsProps?.variant || "ghost"}
-          {...itemsProps}
-        >
-          Limpar
-        </Button>
-      ),
-    });
-
-  !itemsToHide?.includes("hide") &&
-    menus.push({
-      item: "separator",
-    }) &&
-    menus.push({
-      item: (
-        <Button
-          className="flex w-full items-center"
-          onClick={() => column.toggleVisibility(false)}
-          icon="eye-slash"
-          inverted={true}
-          variant={itemsProps?.variant || "ghost"}
-          {...itemsProps}
-        >
-          Esconder
-        </Button>
-      ),
-    });
-
-  return (
-    <DropdownMenu
-      menuLabel={menuLabel}
-      trigger={
-        <Button
-          className="border-0 bg-transparent hover:bg-transparent"
-          icon={icon}
-          inverted={true}
-          {...headerProps}
-        >
-          {title}
-        </Button>
-      }
-      menus={menus}
-    />
-  );
-}
+export const DataTableColumnHeader = DataTableColumnHeaderComponent;

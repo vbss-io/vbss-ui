@@ -404,7 +404,12 @@ export const WithActions: Story = {
           return (
             <DropdownMenu
               trigger={
-                <Button icon="dots-three-outline" variant={"ghost"} size="sm" />
+                <Button
+                  as="span"
+                  icon="dots-three-outline"
+                  variant={"ghost"}
+                  size="sm"
+                />
               }
               menuLabel={"Actions"}
               menus={[
@@ -516,7 +521,12 @@ const fullHeaders: ColumnDef<Payment>[] = [
       return (
         <DropdownMenu
           trigger={
-            <Button icon="dots-three-outline" variant={"ghost"} size="sm" />
+            <Button
+              as="span"
+              icon="dots-three-outline"
+              variant={"ghost"}
+              size="sm"
+            />
           }
           menuLabel={"Actions"}
           menus={[

@@ -1,15 +1,17 @@
 import { IconsMap } from "@/components/Icons";
+import { PolymorphicRef } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { ComponentProps, forwardRef } from "react";
+import { forwardRef } from "react";
+import { ExtendableIconProps, IconComponent } from "./types";
 
-export type IconProps = ComponentProps<"div"> & {
-  icon: keyof typeof IconsMap;
-};
-
-export const Icon = forwardRef<HTMLDivElement, IconProps>(
-  ({ className, icon, ...props }, ref) => {
+export const Icon: IconComponent = forwardRef(
+  <C extends React.ElementType = "div">(
+    { as, icon, className, ...props }: ExtendableIconProps<C>,
+    ref?: PolymorphicRef<C>
+  ) => {
+    const Component = as ?? "div";
     return (
-      <div
+      <Component
         ref={ref}
         className={cn(
           "flex w-full h-full align-middle justify-center",
@@ -18,7 +20,7 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>(
         {...props}
       >
         {IconsMap[icon]}
-      </div>
+      </Component>
     );
   }
 );

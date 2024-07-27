@@ -49,6 +49,7 @@ const argTypes: any = {
 
 export const Primary: Story = {
   args: {
+    as: "button",
     children: "Click Me",
     variant: "primary",
     size: "md",

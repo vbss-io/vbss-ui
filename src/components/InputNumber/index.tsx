@@ -1,64 +1,13 @@
-import { Button, ButtonProps } from "@/components/Button";
+import { Button } from "@/components/Button";
 import { cn } from "@/lib/utils";
-import { VariantProps, cva } from "class-variance-authority";
-import { ComponentProps, forwardRef } from "react";
+import { forwardRef } from "react";
+import { inputNumberLabelStyles, inputNumberStyles } from "./styles";
+import { InputNumberComponent, InputNumberProps } from "./types";
 
-const defaultInput =
-  "flex w-full border px-3 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
-
-const inputStyles = cva("", {
-  variants: {
-    variant: {
-      primary: `${defaultInput} focus-visible:ring-primary`,
-      secondary: `${defaultInput} focus-visible:ring-secondary`,
-      outline: `${defaultInput} border-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0`,
-      ghost: `${defaultInput} focus-visible:ring-0`,
-    },
-    height: {
-      sm: "h-8",
-      md: "h-9",
-      lg: "h-10",
-    },
-    rounded: {
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      full: "rounded-full",
-    },
-    font: {
-      regular: "font-normal",
-      medium: "font-medium",
-      bold: "font-bold",
-    },
-    fontSize: {
-      sm: "text-xs",
-      md: "text-sm",
-      lg: "text-md",
-    },
-    disabled: {
-      true: "cursor-not-allowed disabled:pointer-events-none disabled:opacity-50",
-    },
-  },
-  defaultVariants: {
-    variant: "primary",
-    height: "md",
-    rounded: "md",
-    font: "medium",
-    fontSize: "md",
-    disabled: false,
-  },
-});
-
-type InputNumberProps = Omit<ComponentProps<"input">, "type"> &
-  VariantProps<typeof inputStyles> & {
-    label?: string;
-    controlsProps?: Omit<
-      ButtonProps,
-      "rounded" | "onClick" | "disabled" | "size" | "icon"
-    >;
-  };
-
-export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
+export const InputNumber: InputNumberComponent = forwardRef<
+  HTMLInputElement,
+  InputNumberProps
+>(
   (
     {
       variant,
@@ -103,16 +52,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className={cn(
-              "pl-0.5",
-              inputStyles({
-                variant: null,
-                height: null,
-                rounded: null,
-                font,
-                fontSize,
-              })
-            )}
+            className={cn("pl-0.5", inputNumberLabelStyles({ font, fontSize }))}
           >
             {label}
           </label>
@@ -126,7 +66,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           onChange={InputOnChange}
           className={cn(
             `text-center`,
-            inputStyles({
+            inputNumberStyles({
               variant,
               height,
               font,
