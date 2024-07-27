@@ -38,49 +38,7 @@ import {
   X,
 } from "@phosphor-icons/react";
 import React from "react";
-
-export type Icons =
-  | "github"
-  | "linkedin"
-  | "hamburger"
-  | "x"
-  | "sun"
-  | "moon"
-  | "plus"
-  | "minus"
-  | "eye"
-  | "eye-slash"
-  | "arrow-arc-left"
-  | "arrow-arc-right"
-  | "arrow-circle-left"
-  | "arrow-circle-right"
-  | "arrow-left"
-  | "arrow-right"
-  | "arrow-square-left"
-  | "arrow-square-right"
-  | "arrow-up"
-  | "arrow-down"
-  | "arrows-down-up"
-  | "caret-left"
-  | "caret-right"
-  | "arrows-vertical"
-  | "check"
-  | "checks"
-  | "circle"
-  | "dots-three"
-  | "dots-three-circle"
-  | "dots-three-outline"
-  | "sliders-horizontal"
-  | "calendar-dots"
-  | "settings"
-  | "database"
-  | "invoice"
-  | "warning"
-  | "save";
-
-export type IconsMap = {
-  [key in Icons]: React.ReactNode;
-};
+import { Icons } from "./types";
 
 const cn = "w-full h-full";
 
