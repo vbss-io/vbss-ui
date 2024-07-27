@@ -1,62 +1,13 @@
 import { IconsMap } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
+import { radioStyles } from "./styles";
+import { RadioComponent, RadioProps, RadioValue } from "./types";
 
-const radioStyles = cva("aspect-square border", {
-  variants: {
-    variant: {
-      primary: `border-primary data-[state=checked]:bg-primary data-[state=checked]:text-white`,
-      secondary: `border-secondary data-[state=checked]:bg-secondary data-[state=checked]:text-white`,
-      outline: `border-primary data-[state=checked]:bg-white data-[state=checked]:text-primary`,
-      ghost: `border-black`,
-    },
-    size: {
-      sm: "w-4 h-4",
-      md: "w-5 h-5",
-      lg: "w-6 h-6",
-    },
-    rounded: {
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      full: "rounded-full",
-    },
-    disabled: {
-      true: "cursor-not-allowed disabled:pointer-events-none disabled:opacity-50",
-    },
-  },
-  defaultVariants: {
-    variant: "primary",
-    size: "sm",
-    rounded: "lg",
-    disabled: false,
-  },
-});
-
-type RadioValue = {
-  value: string;
-  label: string;
-};
-
-type CheckboxProps = React.ComponentPropsWithoutRef<
-  typeof RadioGroupPrimitive.Root
-> &
-  VariantProps<typeof radioStyles> & {
-    label?: string;
-    icon?: keyof typeof IconsMap;
-    values: RadioValue[];
-    defaultValue?: string;
-    itemProps?: Omit<
-      React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>,
-      "value" | "id" | "key"
-    >;
-  };
-
-export const Radio = forwardRef<
+export const Radio: RadioComponent = forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
-  CheckboxProps
+  RadioProps
 >(
   (
     {
