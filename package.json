@@ -21,7 +21,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/vitorbss12/vbss-ui"
+    "url": "git+https://github.com/vitorbss12/vbss-ui.git"
   },
   "scripts": {
     "dev": "vite",
