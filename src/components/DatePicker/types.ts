@@ -8,11 +8,14 @@ import { ElementType, ReactNode } from "react";
 export type DatePickerComponentProps = DivComponentProps;
 export type DatePickerExtraProps = {
   variant?: "primary" | "secondary" | "outline";
-  selected?: Date;
-  onSelect?: (date: unknown) => void;
+  mode?: "single" | "multiple" | "range";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  selectedDate: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSelectDate: any;
   buttonProps?: Omit<ExtendableButtonProps<ElementType>, "icon">;
   popoverProps?: Omit<PopoverProps, "trigger">;
-  calendarProps?: Omit<CalendarProps, "selected" | "onSelect">;
+  calendarProps?: Omit<CalendarProps, 'mode' | 'selected' | 'onSelect'>
   label?: string;
   text: string;
   error?: string;
