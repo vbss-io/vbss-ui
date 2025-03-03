@@ -1,37 +1,47 @@
-import React, { ComponentProps, ElementType } from "react";
-import clsx, { ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { JSXElementConstructor, ComponentPropsWithoutRef, ComponentPropsWithRef, ElementType } from "react";
+
+type ClassValue = string | false | null | undefined
+
+export const twMerge = (...classLists: string[]): string => {
+  const allClasses = classLists.join(" ").split(/\s+/);
+  const uniqueClasses = Array.from(new Set(allClasses));
+  return uniqueClasses.join(" ");
+}
+
+export const clsx = (...classes: (string | false | null | undefined)[]): string => {
+  return classes.filter(Boolean).join(" ");
+}
 
 export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
-export type PropsOf<
-  C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<unknown>,
-> = JSX.LibraryManagedAttributes<C, React.ComponentPropsWithoutRef<C>>;
+type PropsOf<
+  C extends keyof JSX.IntrinsicElements | JSXElementConstructor<unknown>,
+> = JSX.LibraryManagedAttributes<C, ComponentPropsWithoutRef<C>>;
 
-type AsProp<C extends React.ElementType> = {
+type AsProp<C extends ElementType> = {
   as?: C;
 };
 
-export type ExtendableProps<
+type ExtendableProps<
   ExtendedProps = object,
   OverrideProps = object,
 > = OverrideProps & Omit<ExtendedProps, keyof OverrideProps>;
 
-export type InheritableElementProps<
-  C extends React.ElementType,
+type InheritableElementProps<
+  C extends ElementType,
   Props = object,
 > = ExtendableProps<PropsOf<C>, Props>;
 
-export type PolymorphicComponentProps<
-  C extends React.ElementType,
+type PolymorphicComponentProps<
+  C extends ElementType,
   Props = object,
 > = InheritableElementProps<C, Props & AsProp<C>>;
 
-export type PolymorphicRef<C extends React.ElementType> =
-  React.ComponentPropsWithRef<C>["ref"];
+export type PolymorphicRef<C extends ElementType> =
+  ComponentPropsWithRef<C>["ref"];
 
-export type PolymorphicComponentPropsWithRef<
-  C extends React.ElementType,
+type PolymorphicComponentPropsWithRef<
+  C extends ElementType,
   Props = object,
 > = PolymorphicComponentProps<C, Props> & { ref?: PolymorphicRef<C> };
 
@@ -39,6 +49,3 @@ export type ExtendableComponentProps<
   C extends ElementType,
   D,
 > = PolymorphicComponentPropsWithRef<C, D>;
-
-export type DivComponentProps = ComponentProps<"div">;
-export type TableComponentProps = ComponentProps<"table">;

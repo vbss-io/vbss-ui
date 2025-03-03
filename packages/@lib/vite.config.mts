@@ -7,18 +7,19 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "vbss-ui/lib",
-      formats: ['es', 'umd'],
+      name: "@vbss-ui/lib",
+      formats: ['es'],
       fileName: (format) => `vbss-ui-lib.${format}.js`
     },
     rollupOptions: {
-      external: ["react"],
+      external: ["react", "react-dom"],
       output: {
         globals: {
           react: "React",
+          "react-dom": "ReactDOM"
         },
       },
-    },
+    }
   },
   plugins: [react(), dts({ rollupTypes: true })],
 });

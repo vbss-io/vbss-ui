@@ -1,17 +1,15 @@
 {
-  "name": "vbss-ui-lib",
+  "name": "@vbss-ui/lib",
   "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
   ],
   "module": "dist/vbss-ui-lib.es.js",
-  "main": "dist/vbss-ui-lib.umd.js",
   "exports": {
     ".": {
       "types": "./dist/vbss-ui-lib.d.ts",
-      "import": "./dist/vbss-ui-lib.es.js",
-      "require": "./dist/vbss-ui-lib.umd.js"
+      "import": "./dist/vbss-ui-lib.es.js"
     }
   },
   "types": "dist/vbss-ui-lib.d.ts",
@@ -20,9 +18,5 @@
   },
   "peerDependencies": {
     "react": "^18.0.0"
-  },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.0.1"
   }
 }
