@@ -24,9 +24,9 @@
   "types": "dist/vbss-ui-chip.d.ts",
   "scripts": {
     "build": "tsc && vite build",
-    "patch-deploy": "npm version patch && npm publish",
-    "minor-deploy": "npm version minor && npm publish",
-    "major-deploy": "npm version major && npm publish"
+    "publish:patch": "npm version patch && npm publish",
+    "publish:minor": "npm version minor && npm publish",
+    "publish:major": "npm version major && npm publish"
   },
   "peerDependencies": {
     "react": "^18.0.0"
