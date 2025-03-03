@@ -1,10 +1,17 @@
 {
-  "name": "vbss-ui-chip",
-  "version": "1.0.0",
+  "name": "@vbss-ui/chip-test",
+  "description": "The Chip component is similar to a badge and can be used to display categorized information, labels, or status indicators.",
+  "keywords": ["react", "component", "ui", "chip", "badge", "vbss-ui"],
+  "license": "MIT",
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io/chip",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbss-io/vbss-ui/tree/main/packages/chip"
+  },
+  "version": "0.0.0",
   "type": "module",
-  "files": [
-    "dist"
-  ],
+  "files": [ "dist" ],
   "module": "dist/vbss-ui-chip.es.js",
   "main": "dist/vbss-ui-chip.umd.js",
   "exports": {
@@ -16,7 +23,10 @@
   },
   "types": "dist/vbss-ui-chip.d.ts",
   "scripts": {
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "patch-deploy": "npm version patch && npm publish",
+    "minor-deploy": "npm version minor && npm publish",
+    "major-deploy": "npm version major && npm publish"
   },
   "peerDependencies": {
     "react": "^18.0.0"
