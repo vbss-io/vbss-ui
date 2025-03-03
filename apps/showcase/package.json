@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vbss-ui/chip": "*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^7.1.5",
-    "vbss-ui-chip": "*"
+    "react-router-dom": "^7.1.5"
   }
 }
