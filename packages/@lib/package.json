@@ -1,5 +1,13 @@
 {
   "name": "@vbss-ui/lib",
+  "license": "MIT",
+  "private": false,
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
+  },
   "version": "1.0.0",
   "type": "module",
   "files": [
