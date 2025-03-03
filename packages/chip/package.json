@@ -14,7 +14,7 @@
   "homepage": "https://ui.vbss.io/chip",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vbss-io/vbss-ui/tree/main/packages/chip"
+    "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
   },
   "version": "0.0.0",
   "type": "module",
