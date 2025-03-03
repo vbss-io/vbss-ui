@@ -14,7 +14,7 @@ export const Chip: ChipComponent = forwardRef(
       variant,
       size,
       rounded,
-      font,
+      fontWeight,
       fontSize,
       className,
       ...props
@@ -25,7 +25,7 @@ export const Chip: ChipComponent = forwardRef(
     return (
       <Component
         className={cn(
-          chipStyles({ variant, size, rounded, font, fontSize, className })
+          chipStyles({ variant, size, rounded, fontWeight, fontSize, className })
         )}
         ref={ref}
         {...props}

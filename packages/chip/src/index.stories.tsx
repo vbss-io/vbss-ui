@@ -25,35 +25,35 @@ const argTypes: any = {
     control: { type: "select" },
   },
   rounded: {
-    options: ["sm", "md", "lg", "full"],
-    control: { type: "select" },
-  },
-  font: {
-    options: ["regular", "medium", "bold"],
+    options: ["none", "sm", "md", "lg", "full"],
     control: { type: "select" },
   },
   fontSize: {
-    options: ["sm", "md", "lg"],
+    options: ["xs", "sm", "md", "lg", "xl"],
     control: { type: "select" },
   },
+  fontWeight: {
+    options: ["thin", "light", "normal", "medium", "bold", "extrabold"],
+    control: { type: "select" },
+  }
 };
 
 export const Primary: Story = {
   args: {
     as: "div",
-    children: "Content",
+    children: "Chip",
     variant: "primary",
     size: "sm",
     rounded: "md",
-    font: "regular",
-    fontSize: "sm",
+    fontSize: "xs",
+    fontWeight: "normal",
   },
   argTypes,
 };
 
 export const Secondary: Story = {
   args: {
-    children: "Content",
+    children: "Chip",
     variant: "secondary",
   },
   argTypes,
@@ -61,7 +61,7 @@ export const Secondary: Story = {
 
 export const Outline: Story = {
   args: {
-    children: "Content",
+    children: "Chip",
     variant: "outline",
   },
   argTypes,
