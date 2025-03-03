@@ -1,7 +1,14 @@
 {
   "name": "@vbss-ui/chip-test",
   "description": "The Chip component is similar to a badge and can be used to display categorized information, labels, or status indicators.",
-  "keywords": ["react", "component", "ui", "chip", "badge", "vbss-ui"],
+  "keywords": [
+    "react",
+    "component",
+    "ui",
+    "chip",
+    "badge",
+    "vbss-ui"
+  ],
   "license": "MIT",
   "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
   "homepage": "https://ui.vbss.io/chip",
@@ -11,7 +18,9 @@
   },
   "version": "0.0.0",
   "type": "module",
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "module": "dist/vbss-ui-chip.es.js",
   "main": "dist/vbss-ui-chip.umd.js",
   "exports": {
