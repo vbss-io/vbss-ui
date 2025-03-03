@@ -1,0 +1,34 @@
+{
+  "name": "vbss-ui-chip",
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "module": "dist/vbss-ui-chip.es.js",
+  "main": "dist/vbss-ui-chip.umd.js",
+  "exports": {
+    ".": {
+      "types": "./dist/vbss-ui-chip.d.ts",
+      "import": "./dist/vbss-ui-chip.es.js",
+      "require": "./dist/vbss-ui-chip.umd.js"
+    }
+  },
+  "types": "dist/vbss-ui-chip.d.ts",
+  "scripts": {
+    "build": "tsc && vite build"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "vbss-ui-lib": "*"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.17",
+    "vite-plugin-css-injected-by-js": "^3.5.2"
+  }
+}
