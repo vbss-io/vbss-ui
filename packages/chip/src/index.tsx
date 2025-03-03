@@ -1,4 +1,4 @@
-import './index.css'
+import "./index.css"
 import { PolymorphicRef, cn } from "vbss-ui-lib";
 import { forwardRef } from "react";
 import { chipStyles } from "./styles";
@@ -7,7 +7,7 @@ import { ChipComponent, ExtendableChipProps } from "./types";
 /**
  * To-Do
  */
-export const Chip = forwardRef(
+export const Chip: ChipComponent = forwardRef(
   <C extends React.ElementType>(
     {
       as,
@@ -32,4 +32,6 @@ export const Chip = forwardRef(
       />
     );
   }
-) as ChipComponent
+)
+
+Chip.displayName = "Chip"
