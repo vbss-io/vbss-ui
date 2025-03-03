@@ -1,4 +1,3 @@
-import { fileURLToPath, URL } from "url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -9,24 +8,20 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.tsx"),
-      name: "vbss-ui/chip",
-      formats: ['es', 'umd'],
+      name: "@vbss-ui/chip",
+      formats: ['es'],
       fileName: (format) => `vbss-ui-chip.${format}.js`
     },
     rollupOptions: {
-      external: ["react"],
+      external: ["react", "react-dom"],
       output: {
         globals: {
           react: "React",
+          "react-dom": "ReactDOM"
         },
       },
     },
-    cssCodeSplit: false
-  },
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL("./src", import.meta.url)),
-    }
+    cssCodeSplit: false,
   },
   plugins: [
     react(),

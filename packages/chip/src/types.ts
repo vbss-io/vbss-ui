@@ -1,7 +1,7 @@
-import { ExtendableComponentProps } from "vbss-ui-lib";
+import { ExtendableComponentProps } from "@vbss-ui/lib";
 import { VariantProps } from "class-variance-authority";
 import { ComponentProps, ElementType, ForwardRefExoticComponent, RefAttributes } from "react";
-import { chipStyles } from "./styles";
+import { chipStyles } from "./index";
 
 type ChipComponentProps = ComponentProps<"div">;
 type ChipVariantProps = VariantProps<typeof chipStyles>;

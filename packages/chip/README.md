@@ -1,19 +1,21 @@
-# vbss-ui Chip
+# @vbss-ui/chip
 
 The Chip component is similar to a badge and can be used to display categorized information, labels, or status indicators.
 
 ## **Installation**
 
 ```bash
-npm install vbss-ui-chip
+npm install @vbss-ui/chip
 # or
-yarn add vbss-ui-chip
+yarn add @vbss-ui/chip
 ```
+
+---
 
 ## **Usage**
 
 ```jsx
-import { Chip } from "vbss-ui-chip"
+import { Chip } from "@vbss-ui/chip"
 
 function Example() {
   return (
@@ -22,18 +24,22 @@ function Example() {
 }
 ```
 
-## **Chip Props**
+---
 
-| Prop         | Type                                                                 | Description                                      | Default   |
-|--------------|----------------------------------------------------------------------|--------------------------------------------------|-----------|
-| `variant`    | `"primary" \| "secondary" \| "outline"`                              | Defines the visual style of the chip.            | `primary` |
-| `size`       | `"sm" \| "md" \| "lg"`                                               | Specifies the size of the chip.                  | `md`      |
-| `rounded`    | `"none" \| "sm" \| "md" \| "lg" \| "full"`                           | Determines the border radius of the chip.        | `md`      |
-| `fontSize`   | `"xs" \| "sm" \| "md" \| "lg" \| "xl"`                               | Sets the font size of the chip text.             | `md`      |
-| `fontWeight` | `"thin" \| "light" \| "normal" \| "medium" \| "bold" \| "extrabold"` | Specifies the font weight of the chip text.      | `normal`  |
-| `as`         | `React.ElementType`                                                  | Defines the HTML element or component to render. | `div`     |
-| `children`   | `string \| React.ReactNode`                                          | Content to be displayed inside the chip.         | `-`       |
-| `className`  | `string`                                                             | Additional CSS classes for custom styling.       | `-`       |
+## **Props**
+
+| Prop         | Type                                                               | Description                                      | Default   |
+|--------------|--------------------------------------------------------------------|--------------------------------------------------|-----------|
+| `variant`    | `primary` \| `secondary` \| `outline`                              | Defines the visual style of the chip.            | `primary` |
+| `size`       | `sm` \| `md` \| `lg`                                               | Specifies the size of the chip.                  | `md`      |
+| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Determines the border radius of the chip.        | `md`      |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the chip text.             | `md`      |
+| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the chip text.      | `normal`  |
+| `as`         | `React.ElementType`                                                | Defines the HTML element or component to render. | `div`     |
+| `children`   | `string` \| `React.ReactNode`                                      | Content to be displayed inside the chip.         | `-`       |
+| `className`  | `string`                                                           | Additional CSS classes for custom styling.       | `-`       |
+
+---
 
 ## **Customizing Colors (Optional)**
 
@@ -55,7 +61,9 @@ import "./custom-colors.css";
 
 This will override the default colors with your custom colors.
 
-### More
+---
+
+### **More**
 
 For more information, please visit the [repository](https://github.com/vbss-io/vbss-ui) or check out the documentation at [ui.vbss.io/chip](https://ui.vbss.io/chip).  
 

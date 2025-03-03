@@ -1,5 +1,5 @@
 {
-  "name": "@vbss-ui/chip-test",
+  "name": "@vbss-ui/chip",
   "description": "The Chip component is similar to a badge and can be used to display categorized information, labels, or status indicators.",
   "keywords": [
     "react",
@@ -10,6 +10,7 @@
     "vbss-ui"
   ],
   "license": "MIT",
+  "private": false,
   "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
   "homepage": "https://ui.vbss.io/chip",
   "repository": {
@@ -21,13 +22,12 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "module": "dist/vbss-ui-chip.es.js",
-  "main": "dist/vbss-ui-chip.umd.js",
   "exports": {
     ".": {
       "types": "./dist/vbss-ui-chip.d.ts",
-      "import": "./dist/vbss-ui-chip.es.js",
-      "require": "./dist/vbss-ui-chip.umd.js"
+      "import": "./dist/vbss-ui-chip.es.js"
     }
   },
   "types": "dist/vbss-ui-chip.d.ts",
@@ -41,13 +41,7 @@
     "react": "^18.0.0"
   },
   "dependencies": {
-    "class-variance-authority": "^0.7.0",
-    "vbss-ui-lib": "*"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.17",
-    "vite-plugin-css-injected-by-js": "^3.5.2"
+    "@vbss-ui/lib": "*",
+    "class-variance-authority": "^0.7.0"
   }
 }
