@@ -6,10 +6,8 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --text: 0 0% 0%;
     --primary: 248 39% 39%;
     --secondary: 248 53% 58%;
-    --highlight: 271 76% 53%;
 
     font-family: "Inter";
   }
