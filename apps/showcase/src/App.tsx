@@ -1,9 +1,15 @@
 import { Chip } from "@vbss-ui/chip";
+import { Chips } from "@vbss-ui/chips";
 
 function App() {
   return (
     <div>
-      <Chip>Chip</Chip>
+      <div>
+        <Chip>Chip</Chip>
+      </div>
+      <div>
+        <Chips chips={["Chip", "Chip", "Chip"]}/>
+      </div>
     </div>
   );
 }
