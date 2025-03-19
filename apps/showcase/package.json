@@ -8,10 +8,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.7",
+    "@vbss-ui/button": "*",
     "@vbss-ui/chip": "*",
     "@vbss-ui/chips": "*",
+    "@vbss-ui/switch": "*",
+    "@vbss-ui/table": "*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^7.1.5"
+    "react-router-dom": "^7.1.5",
+    "react-syntax-highlighter": "^15.6.1",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@types/react-syntax-highlighter": "^15.5.13"
   }
 }
