@@ -1,16 +1,24 @@
-import { Chip } from "@vbss-ui/chip";
-import { Chips } from "@vbss-ui/chips";
+import styled from "styled-components";
+import { RouterProvider } from "react-router-dom";
+import { Header } from "@/presentation/components/Header";
+import { Sidebar } from "@/presentation/components/Sidebar";
+import { DarkModeProvider } from "@/presentation/contexts/dark-mode-context";
+import { router } from "@/presentation/router";
+
+const Main = styled.div`
+  display: flex;
+  padding-top: 3rem;
+`
 
 function App() {
   return (
-    <div>
-      <div>
-        <Chip>Chip</Chip>
-      </div>
-      <div>
-        <Chips chips={["Chip", "Chip", "Chip"]}/>
-      </div>
-    </div>
+    <DarkModeProvider>
+      <Header />
+      <Main>
+        <Sidebar />
+        <RouterProvider router={router} />
+      </Main>
+    </DarkModeProvider>
   );
 }
 
