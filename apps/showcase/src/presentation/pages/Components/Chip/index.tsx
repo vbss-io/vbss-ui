@@ -6,6 +6,7 @@ import { ContentSidebar } from "@/presentation/components/ContentSidebar";
 
 import * as S from "../../styles"
 import { sections } from "./sections";
+import "./style.css"
 
 export const ChipDocs = () => {
   return (
@@ -127,7 +128,14 @@ export const ChipDocs = () => {
               <S.SectionAnchor id='props'/>
               Props
             </S.SectionTitle>
-            <Table variant="primary" headers={propsTableHeaders} rows={propsTableRows}/>
+            <S.TableSection>
+              <Table
+                variant="primary"
+                headers={propsTableHeaders}
+                rows={propsTableRows.map((row) => ({...row, style: { color: "white" }}))}
+                fontSize="sm"
+              />
+            </S.TableSection>
           </section>
           <section>
             <S.SectionTitle>
@@ -135,12 +143,20 @@ export const ChipDocs = () => {
               Customization
             </S.SectionTitle>
             <S.Paragraph>
-              You can extend the default styles by passing custom class names using <code>className</code> or <code>style</code>.
+              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or <code>style</code>.
             </S.Paragraph>
             <ExampleContainer code={customizingExampleCode}>
               <Chip style={{ backgroundColor: "red", border: "1px solid red" }}>Example</Chip>
               <Chip style={{ backgroundColor: "green", border: "1px solid green" }}>Example</Chip>
               <Chip style={{ backgroundColor: "blue", border: "1px solid blue" }}>Example</Chip>
+            </ExampleContainer>
+            <S.Paragraph>
+              Or you can use the default component className <code>chip</code>.
+            </S.Paragraph>
+            <ExampleContainer code={customizingClassExampleCode}>
+              <div className='custom-chip'>
+                <Chip>Example</Chip>
+              </div>
             </ExampleContainer>
           </section>
         </S.ContentWrapper>
@@ -164,6 +180,16 @@ const fontWeightExampleCode = "<Chip fontWeight=\"normal\">Example Chip</Chip>"
 const customizingExampleCode = `<Chip style={{ backgroundColor: "red", border: "1px solid red" }}>Example</Chip>
 <Chip style={{ backgroundColor: "green", border: "1px solid green" }}>Example</Chip>
 <Chip style={{ backgroundColor: "blue", border: "1px solid blue" }}>Example</Chip>`
+const customizingClassExampleCode = `// CSS
+.custom-chip {
+  .chip {
+    background-color: purple;
+  }
+}
+
+<div className='custom-chip'>
+  <Chip>Example</Chip>
+</div>`
 
 const propsTableHeaders = [
   { content: "Props" },
@@ -173,12 +199,13 @@ const propsTableHeaders = [
 ]
 
 const propsTableRows = [
-  { variant: "variant", Type: "primary | secondary | outline", Description: "Defines the visual style of the chip.", Default: "primary" },
-  { variant: "size", Type: "sm | md | lg", Description: "Specifies the size of the chip.", Default: "md" },
-  { variant: "rounded", Type: "none | sm | md | lg | full", Description: "Determines the border radius of the chip.", Default: "md" },
-  { variant: "fontSize", Type: "xs | sm | md | lg | xl", Description: "Sets the font size of the chip text.", Default: "md" },
-  { variant: "as", Type: "React.ElementType", Description: "Defines the HTML element or component to render.", Default: "div" },
-  { variant: "children", Type: "string | React.ReactNode", Description: "Content to be displayed inside the chip.", Default: "-" },
-  { variant: "className", Type: "string", Description: "Additional CSS classes for custom styling.", Default: "-" },
-  { variant: "style", Type: "React.CSSProperties", Description: "Additional style for custom styling.", Default: "-" },
+  { prop: "variant", Type: "primary | secondary | outline", Description: "Defines the visual style of the chip.", Default: "primary" },
+  { prop: "size", Type: "sm | md | lg", Description: "Specifies the size of the chip.", Default: "md" },
+  { prop: "rounded", Type: "none | xs | sm | md | lg | full", Description: "Determines the border radius of the chip.", Default: "md" },
+  { prop: "fontSize", Type: "xs | sm | md | lg | xl", Description: "Sets the font size of the chip text.", Default: "md" },
+  { prop: "fontWeight", Type: "thin | light | normal | medium | bold | extrabold", Description: "Specifies the font weight of the chip text.", Default: "md" },
+  { prop: "as", Type: "React.ElementType", Description: "Defines the HTML element or component to render.", Default: "div" },
+  { prop: "children", Type: "string | React.ReactNode", Description: "Content to be displayed inside the chip.", Default: "-" },
+  { prop: "className", Type: "string", Description: "Additional CSS classes for custom styling.", Default: "-" },
+  { prop: "style", Type: "React.CSSProperties", Description: "Additional style for custom styling.", Default: "-" },
 ]
