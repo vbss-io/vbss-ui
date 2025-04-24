@@ -1,8 +1,12 @@
 # @vbss-ui/chip
 
-The Chip component is similar to a badge and can be used to display categorized information, labels, or status indicators.
+> component for labels, categories, and status indicators.
+
+The Chip component is a small, customizable UI element used to display categorized information, labels, or status indicators. It supports different variants, sizes, and styles, making it highly flexible for various use cases.
 
 ## **Installation**
+
+To install only the Chip component, run one of the following commands:
 
 ```bash
 npm install @vbss-ui/chip
@@ -15,12 +19,10 @@ yarn add @vbss-ui/chip
 ## **Usage**
 
 ```jsx
-import { Chip } from "@vbss-ui/chip"
+import { Chip } from "@vbss-ui/chip";
 
-function Example() {
-  return (
-    <Chip>Example Chip</Chip>
-  )
+export const App = () => {
+  return <Chip>Example Chip</Chip>;
 }
 ```
 
@@ -32,14 +34,46 @@ function Example() {
 |--------------|--------------------------------------------------------------------|--------------------------------------------------|-----------|
 | `variant`    | `primary` \| `secondary` \| `outline`                              | Defines the visual style of the chip.            | `primary` |
 | `size`       | `sm` \| `md` \| `lg`                                               | Specifies the size of the chip.                  | `md`      |
-| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Determines the border radius of the chip.        | `md`      |
+| `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                   | Determines the border radius of the chip.        | `md`      |
 | `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the chip text.             | `md`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the chip text.      | `normal`  |
 | `as`         | `React.ElementType`                                                | Defines the HTML element or component to render. | `div`     |
 | `children`   | `string` \| `React.ReactNode`                                      | Content to be displayed inside the chip.         | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.       | `-`       |
+| `style`      | `React.CSSProperties`                                              | Additional style for custom styling.             | `-`       |
 
 ---
+
+## **Customization**
+
+You can extend the default styles by passing custom styles names using className or style.
+
+```jsx
+import { Chip } from "@vbss-ui/chip";
+
+export const App = () => {
+  return <Chip style={{ backgroundColor: "red" }}>Example</Chip>;
+}
+```
+
+Or you can use the default component className chip.
+
+```css
+.custom-chip {
+  .chip {
+    background-color: purple;
+  }
+}
+```
+
+```jsx
+import { Chip } from "@vbss-ui/chip";
+import "./custom.css";
+
+export const App = () => {
+  return <Chip>Example</Chip>;
+}
+```
 
 ## **Customizing Colors (Optional)**
 
