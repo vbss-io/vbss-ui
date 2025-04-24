@@ -72,9 +72,16 @@ export const SectionDivider = styled.div`
   height: 1px;
   opacity: 0.5;
   background-color: ${({ theme }) => theme.colors.secondary};
-`
+`;
+
 export const List = styled.ol`
   list-style: inside;
   padding-left: 1.5rem;
   margin-bottom: 1.5rem;
+`;
+
+export const TableSection = styled.div`
+  .td {
+    color: ${({ theme }) => theme.colors.foreground} !important;
+  }
 `
