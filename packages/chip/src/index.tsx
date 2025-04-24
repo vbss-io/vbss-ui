@@ -33,7 +33,7 @@ export const Chip: ChipComponent = forwardRef(
     return (
       <Component
         className={cn(
-          chipStyles({ variant, size, rounded, fontWeight, fontSize, className })
+          "chip", chipStyles({ variant, size, rounded, fontWeight, fontSize, className })
         )}
         ref={ref}
         {...props}
@@ -58,6 +58,7 @@ export const chipStyles = cva("leading-none inline-flex items-center", {
     },
     rounded: {
       none: "rounded-none",
+      xs: "rounded-xs",
       sm: "rounded-sm",
       md: "rounded-md",
       lg: "rounded-lg",
