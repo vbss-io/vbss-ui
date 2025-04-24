@@ -25,7 +25,7 @@ const argTypes: any = {
     control: { type: "select" },
   },
   rounded: {
-    options: ["none", "sm", "md", "lg", "full"],
+    options: ["none", "xs", "sm", "md", "lg", "full"],
     control: { type: "select" },
   },
   fontSize: {
