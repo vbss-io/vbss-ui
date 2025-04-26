@@ -38,7 +38,8 @@ export const App = () => {
 | `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the chip text.             | `md`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the chip text.      | `normal`  |
 | `as`         | `React.ElementType`                                                | Defines the HTML element or component to render. | `div`     |
-| `children`   | `string` \| `React.ReactNode`                                      | Content to be displayed inside the chip.         | `-`       |
+| `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.     | `-`       |
+| `children`   | `string` \| `number` \| `React.ReactNode`                          | Content to be displayed inside the chip.         | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.       | `-`       |
 | `style`      | `React.CSSProperties`                                              | Additional style for custom styling.             | `-`       |
 
@@ -59,10 +60,8 @@ export const App = () => {
 Or you can use the default component className chip.
 
 ```css
-.custom-chip {
-  .chip {
-    background-color: purple;
-  }
+.chip {
+  background-color: purple;
 }
 ```
 
