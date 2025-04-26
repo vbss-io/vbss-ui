@@ -34,7 +34,7 @@ export const Chips: ChipsComponent = forwardRef(
     const Component = as ?? "div";
     return (
       <Component
-        className={cn(chipsStyles({ gap, flexDirection, className }))}
+        className={cn("chips", chipsStyles({ gap, flexDirection, className }))}
         ref={ref}
         {...props}
       >
