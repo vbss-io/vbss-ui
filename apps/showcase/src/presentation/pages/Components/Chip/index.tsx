@@ -32,7 +32,7 @@ export const ChipDocs = () => {
               Installation
             </S.SectionTitle>
             <S.Paragraph>
-            To install only the <strong>Chip</strong> component, run one of the following commands:
+              To install only the <strong>Chip</strong> component, run one of the following commands:
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id='using-npm'/>
@@ -100,7 +100,6 @@ export const ChipDocs = () => {
               Font
             </S.SectionSubTitle>
             <S.Paragraph>
-              Define the border radius using the <code>rounded</code> prop:
               Change the font styles of the <strong>Chip</strong> using the <code>fontWeight</code> and <code>fontSize</code> props:
             </S.Paragraph>
             <S.List><li>fontSize:</li></S.List>
@@ -203,9 +202,10 @@ const propsTableRows = [
   { prop: "size", Type: "sm | md | lg", Description: "Specifies the size of the chip.", Default: "md" },
   { prop: "rounded", Type: "none | xs | sm | md | lg | full", Description: "Determines the border radius of the chip.", Default: "md" },
   { prop: "fontSize", Type: "xs | sm | md | lg | xl", Description: "Sets the font size of the chip text.", Default: "md" },
-  { prop: "fontWeight", Type: "thin | light | normal | medium | bold | extrabold", Description: "Specifies the font weight of the chip text.", Default: "md" },
+  { prop: "fontWeight", Type: "thin | light | normal | medium | bold | extrabold", Description: "Specifies the font weight of the chip text.", Default: "normal" },
   { prop: "as", Type: "React.ElementType", Description: "Defines the HTML element or component to render.", Default: "div" },
-  { prop: "children", Type: "string | React.ReactNode", Description: "Content to be displayed inside the chip.", Default: "-" },
+  { prop: "ref", Type: "React.Ref", Description: "Allows accessing the underlying DOM element.", Default: "-" },
+  { prop: "children", Type: "string | number | React.ReactNode", Description: "Content to be displayed inside the chip.", Default: "-" },
   { prop: "className", Type: "string", Description: "Additional CSS classes for custom styling.", Default: "-" },
   { prop: "style", Type: "React.CSSProperties", Description: "Additional style for custom styling.", Default: "-" },
 ]
