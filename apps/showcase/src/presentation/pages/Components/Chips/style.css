@@ -1,0 +1,11 @@
+.custom-chips {
+  .chips {
+    background-color: blue;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .chip {
+    background-color: red;
+  }
+}
