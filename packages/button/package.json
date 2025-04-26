@@ -1,0 +1,40 @@
+{
+  "name": "@vbss-ui/button",
+  "description": "To Do",
+  "keywords": ["To Do"],
+  "license": "MIT",
+  "private": false,
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io/button",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
+  },
+  "version": "1.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "module": "dist/vbss-ui-button.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/vbss-ui-button.d.ts",
+      "import": "./dist/vbss-ui-button.es.js"
+    }
+  },
+  "types": "dist/vbss-ui-button.d.ts",
+  "scripts": {
+    "build": "tsc && vite build",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "dependencies": {
+    "@vbss-ui/lib": "*",
+    "class-variance-authority": "^0.7.0"
+  }
+}
