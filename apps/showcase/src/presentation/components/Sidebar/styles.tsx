@@ -7,6 +7,7 @@ interface SidebarProps {
 
 interface NavLinkProps {
   active?: boolean;
+  disabled?: boolean;
 }
 
 export const SidebarContainer = styled.aside<SidebarProps>`
@@ -64,9 +65,18 @@ export const NavLink = styled.div<NavLinkProps>`
     background-color: ${({ active, theme }) => (active ? theme.colors.secondary : "transparent")};
     border: none;
 
+    pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+    opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+
     &:hover {
       background-color: ${({ theme }) => theme.colors.accent};
       color: white
+    }
+
+    span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: ${({ theme }) => theme.colors.muted};
     }
   }
 `;
