@@ -5,16 +5,16 @@ export const sections = [
     subsections: [
       {
         title: "Default Color Palette",
-        anchor: "default-color-palette"
+        anchor: "default-color-palette",
       },
       {
         title: "Customizing Colors",
-        anchor: "customizing-colors"
+        anchor: "customizing-colors",
       },
       {
         title: "How It Works",
-        anchor: "how-it-works"
-      }
-    ]
+        anchor: "how-it-works",
+      },
+    ],
   },
 ]

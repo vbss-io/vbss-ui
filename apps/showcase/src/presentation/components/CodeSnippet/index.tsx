@@ -1,5 +1,5 @@
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism"
 
 import * as S from "./styles"
 
@@ -11,11 +11,11 @@ interface CodeSnippet {
 export const CodeSnippet = ({ code, language = "tsx" }: CodeSnippet) => {
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(code);
+      await navigator.clipboard.writeText(code)
     } catch (err) {
-      console.error("Failed to copy code", err);
+      console.error("Failed to copy code", err)
     }
-  };
+  }
 
   return (
     <S.CodeWrapper>
@@ -27,6 +27,5 @@ export const CodeSnippet = ({ code, language = "tsx" }: CodeSnippet) => {
         {code}
       </SyntaxHighlighter>
     </S.CodeWrapper>
-  );
-};
-
+  )
+}

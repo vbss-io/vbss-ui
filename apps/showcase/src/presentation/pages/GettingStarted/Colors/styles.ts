@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const ColorContainer = styled.div`
   width: 10rem;

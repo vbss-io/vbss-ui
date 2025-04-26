@@ -9,13 +9,12 @@ interface SidebarProps {
 export const Sidebar = ({ isMobile = false }: SidebarProps) => {
   const currentPath = window.location.pathname
 
-  const sortedComponents = components
-  .sort((a, b) => {
+  const sortedComponents = components.sort((a, b) => {
     if ((a.dev ?? false) !== (b.dev ?? false)) {
-      return (a.dev ?? false) ? 1 : -1;
+      return (a.dev ?? false) ? 1 : -1
     }
-    return a.name.localeCompare(b.name);
-  });
+    return a.name.localeCompare(b.name)
+  })
 
   return (
     <S.SidebarContainer isMobile={isMobile}>
@@ -23,26 +22,34 @@ export const Sidebar = ({ isMobile = false }: SidebarProps) => {
         <S.Section>
           <S.Title>Getting Started</S.Title>
           <S.NavLink active={currentPath === "/introduction"}>
-            <Button as='a'href="/introduction">Introduction</Button>
+            <Button as="a" href="/introduction">
+              Introduction
+            </Button>
           </S.NavLink>
           <S.NavLink active={currentPath === "/installation"}>
-            <Button as='a' href="/installation">Installation</Button>
+            <Button as="a" href="/installation">
+              Installation
+            </Button>
           </S.NavLink>
           <S.NavLink active={currentPath === "/colors"}>
-            <Button as='a' href="/colors">Colors</Button>
+            <Button as="a" href="/colors">
+              Colors
+            </Button>
           </S.NavLink>
         </S.Section>
         <S.Section>
           <S.Title>Components</S.Title>
-          {
-            sortedComponents.map((component) => (
-              <S.NavLink key={component.path} active={currentPath === component.path} disabled={component.dev}>
-                <Button as='a' href={component.path}>
-                  {component.name} {component.dev && <span>Dev</span>}
-                </Button>
-              </S.NavLink>
-            ))
-          }
+          {sortedComponents.map((component) => (
+            <S.NavLink
+              key={component.path}
+              active={currentPath === component.path}
+              disabled={component.dev}
+            >
+              <Button as="a" href={component.path}>
+                {component.name} {component.dev && <span>Dev</span>}
+              </Button>
+            </S.NavLink>
+          ))}
         </S.Section>
       </S.Nav>
     </S.SidebarContainer>
@@ -146,5 +153,5 @@ const components = [
     name: "Tooltip",
     path: "/tooltip",
     dev: true,
-  }
+  },
 ]

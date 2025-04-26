@@ -1,9 +1,10 @@
-import styled from "styled-components";
-import { RouterProvider } from "react-router-dom";
-import { Header } from "@/presentation/components/Header";
-import { Sidebar } from "@/presentation/components/Sidebar";
-import { DarkModeProvider } from "@/presentation/contexts/dark-mode-context";
-import { router } from "@/presentation/router";
+import { RouterProvider } from "react-router-dom"
+import styled from "styled-components"
+
+import { Header } from "@/presentation/components/Header"
+import { Sidebar } from "@/presentation/components/Sidebar"
+import { DarkModeProvider } from "@/presentation/contexts/dark-mode-context"
+import { router } from "@/presentation/router"
 
 const Main = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ function App() {
         <RouterProvider router={router} />
       </Main>
     </DarkModeProvider>
-  );
+  )
 }
 
-export default App;
+export default App

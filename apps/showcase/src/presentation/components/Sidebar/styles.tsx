@@ -1,13 +1,13 @@
-import styled, { css } from "styled-components";
+import styled, { css } from "styled-components"
 
 interface SidebarProps {
-  isOpen?: boolean;
+  isOpen?: boolean
   isMobile?: boolean
 }
 
 interface NavLinkProps {
-  active?: boolean;
-  disabled?: boolean;
+  active?: boolean
+  disabled?: boolean
 }
 
 export const SidebarContainer = styled.aside<SidebarProps>`
@@ -25,18 +25,18 @@ export const SidebarContainer = styled.aside<SidebarProps>`
   }
 
   ${({ isMobile }) =>
-    isMobile && css`
+    isMobile &&
+    css`
       display: block;
       top: 0rem;
       width: 100%;
       padding: 3rem 1rem;
-    `
-  }
-`;
+    `}
+`
 
 export const Nav = styled.nav`
   padding: 0.5rem 1rem;
-`;
+`
 
 export const Section = styled.div`
   display: flex;
@@ -47,13 +47,13 @@ export const Section = styled.div`
   &:first-child {
     margin-top: 0;
   }
-`;
+`
 
 export const Title = styled.h3`
   font-size: 0.875rem;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.primary};
-`;
+`
 
 export const NavLink = styled.div<NavLinkProps>`
   a {
@@ -70,7 +70,7 @@ export const NavLink = styled.div<NavLinkProps>`
 
     &:hover {
       background-color: ${({ theme }) => theme.colors.accent};
-      color: white
+      color: white;
     }
 
     span {
@@ -79,4 +79,4 @@ export const NavLink = styled.div<NavLinkProps>`
       color: ${({ theme }) => theme.colors.muted};
     }
   }
-`;
+`

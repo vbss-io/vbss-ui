@@ -7,7 +7,7 @@ export const Container = styled.header`
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 50;
   width: 100%;
-`;
+`
 
 export const Content = styled.div`
   padding: 0 1rem;
@@ -15,7 +15,7 @@ export const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
+`
 
 export const LogoSection = styled.div`
   display: flex;
@@ -31,9 +31,8 @@ export const LogoSection = styled.div`
   svg {
     width: 2rem;
     height: 2rem;
-    
   }
-`;
+`
 
 export const Nav = styled.nav`
   display: none;
@@ -43,7 +42,7 @@ export const Nav = styled.nav`
     align-items: center;
     gap: 1.5rem;
   }
-`;
+`
 
 export const ConfigSection = styled.div`
   display: flex;
@@ -52,10 +51,10 @@ export const ConfigSection = styled.div`
 
   @media ${({ theme }) => theme.media.lg} {
     .menu {
-      display: none
+      display: none;
     }
   }
-`;
+`
 
 export const MobileContainer = styled.header`
   background-color: ${({ theme }) => theme.colors.background};
@@ -70,16 +69,16 @@ export const MobileContainer = styled.header`
     top: 0;
     right: 0;
     margin: 0.7rem 1rem;
-    z-index: 1
+    z-index: 1;
   }
-`;
+`
 
 export const MobileContent = styled(Content)`
   flex-direction: column;
   justify-content: flex-start;
   padding: 1rem;
-  gap: 1rem
-`;
+  gap: 1rem;
+`
 
 export const MobileNav = styled.nav`
   display: flex;
@@ -94,6 +93,6 @@ export const MobileNav = styled.nav`
   }
 
   @media ${({ theme }) => theme.media.md} {
-    display: none
+    display: none;
   }
-`;
+`

@@ -1,4 +1,4 @@
-import * as S from "./styles";
+import * as S from "./styles"
 
 export const NotFound = () => {
   return (
@@ -7,5 +7,5 @@ export const NotFound = () => {
       <S.NotFound404>404</S.NotFound404>
       <S.NotFound404Text>Page Not Found</S.NotFound404Text>
     </S.Container>
-  );
-};
+  )
+}

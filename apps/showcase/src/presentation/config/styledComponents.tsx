@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components"
 
 const sizes = {
   media: {
@@ -21,7 +21,7 @@ export const lightTheme = {
     accent: "hsl(248, 55%, 70%)",
     shadow: "hsl(248, 30%, 20%)",
   },
-};
+}
 
 export const darkTheme = {
   ...sizes,
@@ -34,7 +34,7 @@ export const darkTheme = {
     accent: "hsl(248, 45%, 50%)",
     shadow: "hsl(248, 30%, 10%)",
   },
-};
+}
 
 export const GlobalStyles = createGlobalStyle`
   html {

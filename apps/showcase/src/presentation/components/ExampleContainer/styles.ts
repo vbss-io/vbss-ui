@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const Container = styled.div`
   width: 100%;
-`;
+`
 
 export const Content = styled.div`
   background-color: white;
@@ -12,8 +12,8 @@ export const Content = styled.div`
   display: flex;
   place-content: center;
   place-items: center;
-  gap: 1rem
-`;
+  gap: 1rem;
+`
 
 export const ShowCodeButton = styled.button`
   width: 5.5rem;
@@ -25,4 +25,4 @@ export const ShowCodeButton = styled.button`
   color: white;
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 8px 0 8px 0;
-`;
+`

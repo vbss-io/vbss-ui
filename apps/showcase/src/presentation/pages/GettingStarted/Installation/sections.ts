@@ -5,16 +5,16 @@ export const sections = [
     subsections: [
       {
         title: "Using npm",
-        anchor: "using-npm"
+        anchor: "using-npm",
       },
       {
         title: "Using yarn",
-        anchor: "using-yarn"
+        anchor: "using-yarn",
       },
       {
         title: "Usage",
-        anchor: "usage"
-      }
-    ]
+        anchor: "usage",
+      },
+    ],
   },
 ]

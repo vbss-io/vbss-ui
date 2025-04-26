@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const CodeWrapper = styled.div`
   position: relative;
@@ -7,7 +7,7 @@ export const CodeWrapper = styled.div`
   overflow: hidden;
   font-size: 14px;
   margin: 16px 0;
-`;
+`
 
 export const Header = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ export const Header = styled.div`
   color: #f8f8f2;
   font-size: 12px;
   font-weight: bold;
-`;
+`
 
 export const CopyButton = styled.button`
   background: none;
@@ -29,4 +29,4 @@ export const CopyButton = styled.button`
   &:hover {
     text-decoration: underline;
   }
-`;
+`

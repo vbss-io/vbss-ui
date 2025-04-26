@@ -1,35 +1,37 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react"
+import { ThemeProvider } from "styled-components"
 
 import { darkTheme, GlobalStyles, lightTheme } from "@/presentation/config/styledComponents"
-import { ThemeProvider } from "styled-components";
 
-export const DarkModeContext = createContext({} as {
-  darkMode: boolean;
-  setDarkMode: (mode: boolean) => void;
-});
+export const DarkModeContext = createContext(
+  {} as {
+    darkMode: boolean
+    setDarkMode: (mode: boolean) => void
+  }
+)
 
 interface DarkModeProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const getModeFromLocalStorage = () => {
-  const isDark = localStorage.getItem("darkMode");
-  return isDark ? JSON.parse(isDark) : false;
+  const isDark = localStorage.getItem("darkMode")
+  return isDark ? JSON.parse(isDark) : false
 }
 
 const saveModeToLocalStorage = (isDark: boolean) => {
-  localStorage.setItem("darkMode", JSON.stringify(isDark));
+  localStorage.setItem("darkMode", JSON.stringify(isDark))
 }
 
 export const DarkModeProvider = ({ children }: DarkModeProviderProps) => {
-  const [darkMode, setDarkMode] = useState(getModeFromLocalStorage());
-  
+  const [darkMode, setDarkMode] = useState(getModeFromLocalStorage())
+
   useEffect(() => {
     const applyDarkMode = (isDark: boolean) => {
-      saveModeToLocalStorage(isDark);
-    };
+      saveModeToLocalStorage(isDark)
+    }
 
-    applyDarkMode(darkMode);
+    applyDarkMode(darkMode)
   }, [darkMode])
 
   return (
@@ -39,5 +41,5 @@ export const DarkModeProvider = ({ children }: DarkModeProviderProps) => {
         {children}
       </ThemeProvider>
     </DarkModeContext.Provider>
-  );
+  )
 }

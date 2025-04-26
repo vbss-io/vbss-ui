@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const Sidebar = styled.aside`
   display: none;
@@ -14,26 +14,26 @@ export const Sidebar = styled.aside`
     overflow-y: auto;
     padding: 1rem;
   }
-`;
+`
 
 export const Title = styled.h3`
   font-size: 1rem;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.primary};
-  margin-bottom: 0.5rem
-`;
+  margin-bottom: 0.5rem;
+`
 
 export const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`;
+`
 
 export const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`;
+`
 
 export const NavLink = styled.a<{ indented?: boolean }>`
   font-size: 0.875rem;
@@ -45,4 +45,4 @@ export const NavLink = styled.a<{ indented?: boolean }>`
   &:hover {
     color: ${({ theme }) => theme.colors.secondary};
   }
-`;
+`
