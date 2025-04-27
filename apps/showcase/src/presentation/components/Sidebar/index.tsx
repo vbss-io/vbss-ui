@@ -72,12 +72,10 @@ const components = [
   {
     name: "Switch",
     path: "/switch",
-    dev: true,
   },
   {
     name: "Table",
     path: "/table",
-    dev: true,
   },
   {
     name: "Calendar",
