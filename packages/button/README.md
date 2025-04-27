@@ -19,10 +19,10 @@ yarn add @vbss-ui/button
 ## **Usage**
 
 ```jsx
-import { Button } from "@vbss-ui/button";
+import { Button } from "@vbss-ui/button"
 
 export const App = () => {
-  return <Button>Click Me</Button>;
+  return <Button>Click Me</Button>
 }
 ```
 
@@ -52,11 +52,13 @@ export const App = () => {
 You can extend the default styles by passing custom styles names using className or style.
 
 ```jsx
-import { Button } from "@vbss-ui/button";
-
-export const App = () => {
-  return <Button style={{ backgroundColor: "red" }}>Click Me</Button>;
-}
+  <Button
+    style={{
+      backgroundColor: "red"
+    }}
+  >
+    Click Me
+  </Button>
 ```
 
 Or you can use the default component className chip.
@@ -68,7 +70,6 @@ Or you can use the default component className chip.
 ```
 
 ```jsx
-import { Chip } from "@vbss-ui/chip";
 import "./custom.css";
 
 export const App = () => {
@@ -106,6 +107,4 @@ To see the components in action, run Storybook locally. Navigate to the reposito
 
 ```bash
 npm run storybook
-# or
-yarn storybook
 ```
