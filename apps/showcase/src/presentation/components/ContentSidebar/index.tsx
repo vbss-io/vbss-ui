@@ -3,7 +3,7 @@ import * as S from "./styles"
 interface Section {
   title: string
   anchor: string
-  subsections: {
+  subsections?: {
     title: string
     anchor: string
   }[]
@@ -24,7 +24,7 @@ export const ContentSidebar = ({ title, sections }: ContentSidebarProps) => {
         {sections?.map((section) => (
           <S.Nav key={section.anchor}>
             <S.NavLink href={`#${section.anchor}`}>{section.title}</S.NavLink>
-            {section.subsections?.map((subsection) => (
+            {section?.subsections?.map((subsection) => (
               <S.NavLink key={subsection.anchor} href={`#${subsection.anchor}`} indented>
                 {subsection.title}
               </S.NavLink>
