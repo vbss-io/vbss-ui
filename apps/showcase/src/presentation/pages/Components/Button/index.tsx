@@ -10,18 +10,12 @@ import * as S from "../../styles"
 import {
   customizingClassExampleCode,
   customizingExampleCode,
-  disabledExampleCode,
-  fontSizeExampleCode,
-  fontWeightExampleCode,
   iconSizeExampleCode,
   invertedExampleCode,
   propsTableHeaders,
   propsTableRows,
-  roundedExampleCode,
   sections,
-  sizeExampleCode,
   usageExampleCode,
-  variantsExampleCode,
 } from "./consts"
 import "./style.css"
 
@@ -34,9 +28,8 @@ export const ButtonDocs = () => {
           <S.SubTitle>A customizable and accessible Button component.</S.SubTitle>
           <section>
             <S.Paragraph>
-              The <strong>Button</strong> component is a flexible UI element used to trigger actions
-              or events. It supports various visual styles, sizes, shapes, and states, making it
-              suitable for a wide range of interfaces.
+              The <strong>Button</strong> component is a flexible UI element used to trigger actions or events. It supports various visual styles,
+              sizes, shapes, and states, making it suitable for a wide range of interfaces.
             </S.Paragraph>
             <ExampleContainer code="<Button>Click Me</Button>">
               <Button>Click Me</Button>
@@ -48,8 +41,7 @@ export const ButtonDocs = () => {
               Installation
             </S.SectionTitle>
             <S.Paragraph>
-              To install only the <strong>Button</strong> component, run one of the following
-              commands:
+              To install only the <strong>Button</strong> component, run one of the following commands:
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="using-npm" />
@@ -67,17 +59,14 @@ export const ButtonDocs = () => {
               <S.SectionAnchor id="usage" />
               Usage
             </S.SectionTitle>
-            <S.Paragraph>
-              After installation, import the component and use it in your project:
-            </S.Paragraph>
+            <S.Paragraph>After installation, import the component and use it in your project:</S.Paragraph>
             <CodeSnippet code={usageExampleCode} language="tsx" />
             <S.SectionSubTitle>
               <S.SectionAnchor id="variants" />
               Variant
             </S.SectionSubTitle>
             <S.Paragraph>
-              Change the visual style of the <strong>Button</strong> using the <code>variant</code>{" "}
-              prop:
+              Change the visual style of the <strong>Button</strong> using the <code>variant</code> prop:
             </S.Paragraph>
             <ExampleContainer>
               <Button variant="primary">Primary</Button>
@@ -86,9 +75,9 @@ export const ButtonDocs = () => {
               <Button variant="outlineSolid">Outline Solid</Button>
               <Button variant="ghost">Ghost</Button>
             </ExampleContainer>
-            <CodeSnippet code={variantsExampleCode} language="tsx" />
+            <CodeSnippet code='<Button variant="primary">Example Button</Button>' language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="size" />
               Size
             </S.SectionSubTitle>
             <S.Paragraph>
@@ -106,7 +95,7 @@ export const ButtonDocs = () => {
                 lg
               </Button>
             </ExampleContainer>
-            <CodeSnippet code={sizeExampleCode} language="tsx" />
+            <CodeSnippet code='<Button size="sm">Example Button</Button>' language="tsx" />
             <S.Paragraph>You can also use size for icon buttons:</S.Paragraph>
             <ExampleContainer>
               <Button size="icon-xs">
@@ -124,7 +113,7 @@ export const ButtonDocs = () => {
             </ExampleContainer>
             <CodeSnippet code={iconSizeExampleCode} language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="rounded" />
               Rounded
             </S.SectionSubTitle>
             <S.Paragraph>
@@ -146,18 +135,14 @@ export const ButtonDocs = () => {
                 full
               </Button>
             </ExampleContainer>
-            <CodeSnippet code={roundedExampleCode} language="tsx" />
+            <CodeSnippet code='<Button rounded="md">Example Button</Button>' language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
-              Font
+              <S.SectionAnchor id="font-size" />
+              Font Size
             </S.SectionSubTitle>
             <S.Paragraph>
-              Change the font styles of the <strong>Button</strong> using the{" "}
-              <code>fontWeight</code> and <code>fontSize</code> props:
+              Change the font size of the <strong>Button</strong> using the <code>fontSize</code> prop:
             </S.Paragraph>
-            <S.List>
-              <li>fontSize:</li>
-            </S.List>
             <ExampleContainer>
               <Button fontSize="xs">xs</Button>
               <Button fontSize="sm" variant="secondary">
@@ -171,10 +156,14 @@ export const ButtonDocs = () => {
               </Button>
               <Button fontSize="xl">xl</Button>
             </ExampleContainer>
-            <CodeSnippet code={fontSizeExampleCode} language="tsx" />
-            <S.List>
-              <li>fontWeight:</li>
-            </S.List>
+            <CodeSnippet code='<Button fontSize="xs">Example Button</Button>' language="tsx" />
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="font-weight" />
+              Font Weight
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              Change the font weight of the <strong>Button</strong> using the <code>fontWeight</code> prop:
+            </S.Paragraph>
             <ExampleContainer>
               <Button fontWeight="thin">thin</Button>
               <Button fontWeight="light" variant="secondary">
@@ -191,9 +180,9 @@ export const ButtonDocs = () => {
                 extrabold
               </Button>
             </ExampleContainer>
-            <CodeSnippet code={fontWeightExampleCode} language="tsx" />
+            <CodeSnippet code='<Button fontWeight="normal">Example Button</Button>' language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="inverted" />
               Inverted
             </S.SectionSubTitle>
             <S.Paragraph>
@@ -211,7 +200,7 @@ export const ButtonDocs = () => {
             </ExampleContainer>
             <CodeSnippet code={invertedExampleCode} language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="disabled" />
               Disabled
             </S.SectionSubTitle>
             <S.Paragraph>
@@ -234,7 +223,7 @@ export const ButtonDocs = () => {
                 Button
               </Button>
             </ExampleContainer>
-            <CodeSnippet code={disabledExampleCode} language="tsx" />
+            <CodeSnippet code="<Button disabled>Example Button</Button>" language="tsx" />
           </section>
           <section>
             <S.SectionTitle>
@@ -256,18 +245,24 @@ export const ButtonDocs = () => {
               Customization
             </S.SectionTitle>
             <S.Paragraph>
-              You can extend the default styles by passing custom <code>styles</code> names using{" "}
-              <code>className</code> or <code>style</code>.
+              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or <code>style</code>.
             </S.Paragraph>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="custom-style" />
+              Using style
+            </S.SectionSubTitle>
+            <S.Paragraph>You can pass custom styles directly to the component:</S.Paragraph>
             <ExampleContainer code={customizingExampleCode}>
               <Button style={{ backgroundColor: "red", border: "1px solid red" }}>Example</Button>
-              <Button style={{ backgroundColor: "green", border: "1px solid green" }}>
-                Example
-              </Button>
+              <Button style={{ backgroundColor: "green", border: "1px solid green" }}>Example</Button>
               <Button style={{ backgroundColor: "blue", border: "1px solid blue" }}>Example</Button>
             </ExampleContainer>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="custom-classname" />
+              Using className
+            </S.SectionSubTitle>
             <S.Paragraph>
-              Or you can use the default component className <code>chip</code>.
+              You can use the default component className <code>button</code>:
             </S.Paragraph>
             <ExampleContainer code={customizingClassExampleCode}>
               <div className="custom-button">

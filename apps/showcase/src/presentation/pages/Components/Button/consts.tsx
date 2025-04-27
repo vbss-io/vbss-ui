@@ -1,44 +1,88 @@
-export const sections = []
+export const sections = [
+  {
+    title: "Installation",
+    anchor: "installation",
+    subsections: [
+      {
+        title: "Using npm",
+        anchor: "using-npm",
+      },
+      {
+        title: "Using yarn",
+        anchor: "using-yarn",
+      },
+    ],
+  },
+  {
+    title: "Usage",
+    anchor: "usage",
+    subsections: [
+      {
+        title: "Variant",
+        anchor: "variants",
+      },
+      {
+        title: "Size",
+        anchor: "size",
+      },
+      {
+        title: "Rounded",
+        anchor: "rounded",
+      },
+      {
+        title: "Font Size",
+        anchor: "font-size",
+      },
+      {
+        title: "Font Weight",
+        anchor: "font-weight",
+      },
+      {
+        title: "Inverted",
+        anchor: "inverted",
+      },
+      {
+        title: "Disabled",
+        anchor: "disabled",
+      },
+    ],
+  },
+  {
+    title: "Props",
+    anchor: "props",
+  },
+  {
+    title: "Customization",
+    anchor: "customization",
+    subsections: [
+      {
+        title: "Using style",
+        anchor: "custom-style",
+      },
+      {
+        title: "Using className",
+        anchor: "custom-classname",
+      },
+    ],
+  },
+]
 
-export const usageExampleCode = `import { Button } from "@vbss-ui/button";
+export const usageExampleCode = `import { Button } from "@vbss-ui/button"
 
 export export const App = () => {
-  return <Button>Example Button</Button>;
+  return <Button>Example Button</Button>
 }`
-export const variantsExampleCode = '<Button variant="primary">Example Button</Button>'
-export const sizeExampleCode = '<Button size="sm">Example Button</Button>'
+
 export const iconSizeExampleCode = `<Button size="icon-md">
-  <At/>
+  <Icon/>
 </Button>`
-export const roundedExampleCode = '<Button rounded="md">Example Button</Button>'
-export const fontSizeExampleCode = '<Button fontSize="xs">Example Button</Button>'
-export const fontWeightExampleCode = '<Button fontWeight="normal">Example Button</Button>'
+
 export const invertedExampleCode = `<Button inverted>
   Example Button
-  <At/>
+  <Icon/>
 </Button>`
-export const disabledExampleCode = "<Button disabled>Example Button</Button>"
-export const customizingExampleCode = `<Button style={{ backgroundColor: "red", border: "1px solid red" }}>Example</Button>
-<Button style={{ backgroundColor: "green", border: "1px solid green" }}>Example</Button>
-<Button style={{ backgroundColor: "blue", border: "1px solid blue" }}>Example</Button>`
-export const customizingClassExampleCode = `// CSS
-.custom-button {
-  .button {
-    background-color: purple;
-    border: 1px solid purple
-  }
-}
 
-<div className='custom-button'>
-  <Button>Example</Button>
-</div>`
-
-export const propsTableHeaders = [
-  { content: "Props" },
-  { content: "Type" },
-  { content: "Description" },
-  { content: "Default" },
-]
+export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
   {
@@ -114,3 +158,24 @@ export const propsTableRows = [
     Default: "-",
   },
 ]
+
+export const customizingExampleCode = `<Button
+  style={{
+    backgroundColor: "red",
+    border: "1px solid red"
+  }}
+>
+  Example
+</Button>`
+
+export const customizingClassExampleCode = `// CSS
+.custom-button {
+  .button {
+    background-color: purple;
+    border: 1px solid purple
+  }
+}
+
+<div className='custom-button'>
+  <Button>Example</Button>
+</div>`
