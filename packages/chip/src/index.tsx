@@ -1,44 +1,24 @@
+import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cva, VariantProps } from "class-variance-authority"
+import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, RefAttributes } from "react"
 import "./index.css"
-import { ExtendableComponentProps, PolymorphicRef, cn } from "@vbss-ui/lib";
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, RefAttributes } from "react";
-import { cva, VariantProps } from "class-variance-authority";
 
-type ChipProps = ComponentProps<"div"> & VariantProps<typeof chipStyles>;
+type ChipProps = ComponentProps<"div"> & VariantProps<typeof chipStyles>
 
-export type ExtendableChipProps<C extends ElementType> =
-  ExtendableComponentProps<C, ChipProps>;
+export type ExtendableChipProps<C extends ElementType> = ExtendableComponentProps<C, ChipProps>
 
-export type ChipComponent = ForwardRefExoticComponent<
-  ExtendableChipProps<ElementType> & RefAttributes<ElementType>
->;
+export type ChipComponent = ForwardRefExoticComponent<ExtendableChipProps<ElementType> & RefAttributes<ElementType>>
 
 /**
  * The Chip component is similar to a badge and can be used to display categorized information, labels, or status indicators.
  */
 export const Chip: ChipComponent = forwardRef(
   <C extends ElementType>(
-    {
-      as,
-      variant,
-      size,
-      rounded,
-      fontWeight,
-      fontSize,
-      className,
-      ...props
-    }: ExtendableChipProps<C>,
+    { as, variant, size, rounded, fontWeight, fontSize, className, ...props }: ExtendableChipProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
-    const Component = as ?? "div";
-    return (
-      <Component
-        className={cn(
-          "chip", chipStyles({ variant, size, rounded, fontWeight, fontSize, className })
-        )}
-        ref={ref}
-        {...props}
-      />
-    );
+    const Component = as ?? "div"
+    return <Component className={cn("chip", chipStyles({ variant, size, rounded, fontWeight, fontSize, className }))} ref={ref} {...props} />
   }
 )
 
@@ -87,4 +67,4 @@ export const chipStyles = cva("leading-none inline-flex items-center", {
     fontSize: "xs",
     fontWeight: "normal",
   },
-});
+})
