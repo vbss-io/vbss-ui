@@ -1,41 +1,37 @@
+import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cva, VariantProps } from "class-variance-authority"
+import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, RefAttributes } from "react"
 import "./index.css"
-import { ExtendableComponentProps, PolymorphicRef, cn } from "@vbss-ui/lib";
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, RefAttributes } from "react";
-import { cva, VariantProps } from "class-variance-authority";
 
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>
 
-export type ExtendableButtonProps<C extends ElementType> =
-  ExtendableComponentProps<C, ButtonProps>;
+export type ExtendableButtonProps<C extends ElementType> = ExtendableComponentProps<C, ButtonProps>
 
-export type ButtonComponent = ForwardRefExoticComponent<
-  ExtendableButtonProps<ElementType> & RefAttributes<ElementType>
->;
+export type ButtonComponent = ForwardRefExoticComponent<ExtendableButtonProps<ElementType> & RefAttributes<ElementType>>
 
 /**
  * A customizable and accessible Button component.
  */
 export const Button: ButtonComponent = forwardRef(
   <C extends ElementType>(
-    {
-      as,
-      variant,
-      size,
-      rounded,
-      fontWeight,
-      fontSize,
-      inverted,
-      disabled,
-      className,
-      ...props
-    }: ExtendableButtonProps<C>,
+    { as, variant, size, rounded, fontWeight, fontSize, inverted, disabled, className, ...props }: ExtendableButtonProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
-    const Component = as ?? "button";
+    const Component = as ?? "button"
     return (
       <Component
         className={cn(
-          "button", buttonStyles({ variant, size, rounded, fontWeight, fontSize, inverted, disabled, className })
+          "button",
+          buttonStyles({
+            variant,
+            size,
+            rounded,
+            fontWeight,
+            fontSize,
+            inverted,
+            disabled,
+            className,
+          })
         )}
         ref={ref}
         disabled={disabled}
@@ -43,7 +39,7 @@ export const Button: ButtonComponent = forwardRef(
       >
         {props.children}
       </Component>
-    );
+    )
   }
 )
 
@@ -56,7 +52,7 @@ export const buttonStyles = cva("outline-none inline-flex items-center justify-c
       secondary: "border-2 border-secondary bg-secondary text-white hover:bg-primary hover:border-primary",
       outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary/10",
       outlineSolid: "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white",
-      ghost: "border-background hover:bg-primary/10 hover:border-primary/10"
+      ghost: "border-background hover:bg-primary/10 hover:border-primary/10",
     },
     size: {
       xs: "h-6 px-2",
@@ -96,7 +92,7 @@ export const buttonStyles = cva("outline-none inline-flex items-center justify-c
     },
     disabled: {
       true: "disabled:pointer-events-none disabled:opacity-50",
-    }
+    },
   },
   defaultVariants: {
     variant: "primary",
@@ -105,6 +101,6 @@ export const buttonStyles = cva("outline-none inline-flex items-center justify-c
     fontSize: "md",
     fontWeight: "normal",
     inverted: false,
-    disabled: false
+    disabled: false,
   },
-});
+})
