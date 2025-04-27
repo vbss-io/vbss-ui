@@ -39,6 +39,7 @@ export default [
       "no-relative-import-paths": pluginNoRelativeImports,
     },
     rules: {
+      "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       quotes: "off",
       "prettier/prettier": [
@@ -48,7 +49,7 @@ export default [
           semi: false,
           tabWidth: 2,
           trailingComma: "es5",
-          printWidth: 100,
+          printWidth: 150,
           endOfLine: "auto",
         },
       ],
@@ -70,6 +71,14 @@ export default [
     languageOptions: {
       parserOptions: {
         project: ["./apps/*/tsconfig.json", "./packages/*/tsconfig.json"],
+      },
+    },
+  },
+  {
+    files: ["packages/@stories/**/*.{ts,tsx}"],
+    languageOptions: {
+      parserOptions: {
+        project: null,
       },
     },
   },
