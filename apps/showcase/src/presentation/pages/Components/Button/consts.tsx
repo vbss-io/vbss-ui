@@ -87,13 +87,13 @@ export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { c
 export const propsTableRows = [
   {
     prop: "variant",
-    Type: "primary | secondary | outline | outlineSolid",
+    Type: "primary | secondary | outline | outlineSolid | ghost",
     Description: "Defines the visual style of the Button.",
     Default: "primary",
   },
   {
     prop: "size",
-    Type: "xs | sm | md | lg | icon-sm | icon-md | icon-lg",
+    Type: "xs | sm | md | lg | icon-xs | icon-sm | icon-md | icon-lg",
     Description: "Defines the size or icon-specific size of the Button.",
     Default: "md",
   },
