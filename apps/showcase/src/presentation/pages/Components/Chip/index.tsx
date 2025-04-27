@@ -6,19 +6,7 @@ import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 
 import * as S from "../../styles"
-import {
-  customizingClassExampleCode,
-  customizingExampleCode,
-  fontSizeExampleCode,
-  fontWeightExampleCode,
-  propsTableHeaders,
-  propsTableRows,
-  roundedExampleCode,
-  sections,
-  sizeExampleCode,
-  usageExampleCode,
-  variantsExampleCode,
-} from "./consts"
+import { customizingClassExampleCode, customizingExampleCode, propsTableHeaders, propsTableRows, sections, usageExampleCode } from "./consts"
 import "./style.css"
 
 export const ChipDocs = () => {
@@ -30,9 +18,8 @@ export const ChipDocs = () => {
           <S.SubTitle>Component for labels, categories, and status indicators.</S.SubTitle>
           <section>
             <S.Paragraph>
-              The <strong>Chip</strong> component is a small, customizable UI element used to
-              display categorized information, labels, or status indicators. It supports different
-              variants, sizes, and styles, making it highly flexible for various use cases.
+              The <strong>Chip</strong> component is a small, customizable UI element used to display categorized information, labels, or status
+              indicators. It supports different variants, sizes, and styles, making it highly flexible for various use cases.
             </S.Paragraph>
             <ExampleContainer code="<Chip>Hello World</Chip>">
               <Chip>Hello World</Chip>
@@ -44,8 +31,7 @@ export const ChipDocs = () => {
               Installation
             </S.SectionTitle>
             <S.Paragraph>
-              To install only the <strong>Chip</strong> component, run one of the following
-              commands:
+              To install only the <strong>Chip</strong> component, run one of the following commands:
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="using-npm" />
@@ -63,26 +49,23 @@ export const ChipDocs = () => {
               <S.SectionAnchor id="usage" />
               Usage
             </S.SectionTitle>
-            <S.Paragraph>
-              After installation, import the component and use it in your project:
-            </S.Paragraph>
+            <S.Paragraph>After installation, import the component and use it in your project:</S.Paragraph>
             <CodeSnippet code={usageExampleCode} language="tsx" />
             <S.SectionSubTitle>
               <S.SectionAnchor id="variants" />
               Variant
             </S.SectionSubTitle>
             <S.Paragraph>
-              Change the visual style of the <strong>Chip</strong> using the <code>variant</code>{" "}
-              prop:
+              Change the visual style of the <strong>Chip</strong> using the <code>variant</code> prop:
             </S.Paragraph>
             <ExampleContainer>
               <Chip variant="primary">Primary</Chip>
               <Chip variant="secondary">Secondary</Chip>
               <Chip variant="outline">Outline</Chip>
             </ExampleContainer>
-            <CodeSnippet code={variantsExampleCode} language="tsx" />
+            <CodeSnippet code='<Chip variant="primary">Example Chip</Chip>' language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="size" />
               Size
             </S.SectionSubTitle>
             <S.Paragraph>
@@ -93,9 +76,9 @@ export const ChipDocs = () => {
               <Chip size="md">md</Chip>
               <Chip size="lg">lg</Chip>
             </ExampleContainer>
-            <CodeSnippet code={sizeExampleCode} language="tsx" />
+            <CodeSnippet code='<Chip size="sm">Example Chip</Chip>' language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="rounded" />
               Rounded
             </S.SectionSubTitle>
             <S.Paragraph>
@@ -108,18 +91,14 @@ export const ChipDocs = () => {
               <Chip rounded="lg">lg</Chip>
               <Chip rounded="full">full</Chip>
             </ExampleContainer>
-            <CodeSnippet code={roundedExampleCode} language="tsx" />
+            <CodeSnippet code='<Chip rounded="md">Example Chip</Chip>' language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
-              Font
+              <S.SectionAnchor id="font-size" />
+              Font Size
             </S.SectionSubTitle>
             <S.Paragraph>
-              Change the font styles of the <strong>Chip</strong> using the <code>fontWeight</code>{" "}
-              and <code>fontSize</code> props:
+              Change the font size of the <strong>Chip</strong> using the <code>fontSize</code> prop:
             </S.Paragraph>
-            <S.List>
-              <li>fontSize:</li>
-            </S.List>
             <ExampleContainer>
               <Chip fontSize="xs">xs</Chip>
               <Chip fontSize="sm">sm</Chip>
@@ -127,10 +106,14 @@ export const ChipDocs = () => {
               <Chip fontSize="lg">lg</Chip>
               <Chip fontSize="xl">xl</Chip>
             </ExampleContainer>
-            <CodeSnippet code={fontSizeExampleCode} language="tsx" />
-            <S.List>
-              <li>fontWeight:</li>
-            </S.List>
+            <CodeSnippet code='<Chip fontSize="xs">Example Chip</Chip>' language="tsx" />
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="font-weight" />
+              Font Weight
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              Change the font weight of the <strong>Chip</strong> using the <code>fontWeight</code> prop:
+            </S.Paragraph>
             <ExampleContainer>
               <Chip fontWeight="thin">thin</Chip>
               <Chip fontWeight="light">light</Chip>
@@ -139,7 +122,7 @@ export const ChipDocs = () => {
               <Chip fontWeight="bold">bold</Chip>
               <Chip fontWeight="extrabold">extrabold</Chip>
             </ExampleContainer>
-            <CodeSnippet code={fontWeightExampleCode} language="tsx" />
+            <CodeSnippet code='<Chip fontWeight="normal">Example Chip</Chip>' language="tsx" />
           </section>
           <section>
             <S.SectionTitle>
@@ -161,16 +144,24 @@ export const ChipDocs = () => {
               Customization
             </S.SectionTitle>
             <S.Paragraph>
-              You can extend the default styles by passing custom <code>styles</code> names using{" "}
-              <code>className</code> or <code>style</code>.
+              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or <code>style</code>.
             </S.Paragraph>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="custom-style" />
+              Using style
+            </S.SectionSubTitle>
+            <S.Paragraph>You can pass custom styles directly to the component:</S.Paragraph>
             <ExampleContainer code={customizingExampleCode}>
               <Chip style={{ backgroundColor: "red", border: "1px solid red" }}>Example</Chip>
               <Chip style={{ backgroundColor: "green", border: "1px solid green" }}>Example</Chip>
               <Chip style={{ backgroundColor: "blue", border: "1px solid blue" }}>Example</Chip>
             </ExampleContainer>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="custom-classname" />
+              Using className
+            </S.SectionSubTitle>
             <S.Paragraph>
-              Or you can use the default component className <code>chip</code>.
+              You can use the default component className <code>button</code>:
             </S.Paragraph>
             <ExampleContainer code={customizingClassExampleCode}>
               <div className="custom-chip">

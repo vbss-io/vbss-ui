@@ -1,35 +1,71 @@
-export const sections = []
+export const sections = [
+  {
+    title: "Installation",
+    anchor: "installation",
+    subsections: [
+      {
+        title: "Using npm",
+        anchor: "using-npm",
+      },
+      {
+        title: "Using yarn",
+        anchor: "using-yarn",
+      },
+    ],
+  },
+  {
+    title: "Usage",
+    anchor: "usage",
+    subsections: [
+      {
+        title: "Variant",
+        anchor: "variants",
+      },
+      {
+        title: "Size",
+        anchor: "size",
+      },
+      {
+        title: "Rounded",
+        anchor: "rounded",
+      },
+      {
+        title: "Font Size",
+        anchor: "font-size",
+      },
+      {
+        title: "Font Weight",
+        anchor: "font-weight",
+      },
+    ],
+  },
+  {
+    title: "Props",
+    anchor: "props",
+  },
+  {
+    title: "Customization",
+    anchor: "customization",
+    subsections: [
+      {
+        title: "Using style",
+        anchor: "custom-style",
+      },
+      {
+        title: "Using className",
+        anchor: "custom-classname",
+      },
+    ],
+  },
+]
 
-export const usageExampleCode = `import { Chip } from "@vbss-ui/chip";
+export const usageExampleCode = `import { Chip } from "@vbss-ui/chip"
 
 export export const App = () => {
-  return <Chip>Example Chip</Chip>;
+  return <Chip>Example Chip</Chip>
 }`
-export const variantsExampleCode = '<Chip variant="primary">Example Chip</Chip>'
-export const sizeExampleCode = '<Chip size="sm">Example Chip</Chip>'
-export const roundedExampleCode = '<Chip rounded="md">Example Chip</Chip>'
-export const fontSizeExampleCode = '<Chip fontSize="xs">Example Chip</Chip>'
-export const fontWeightExampleCode = '<Chip fontWeight="normal">Example Chip</Chip>'
-export const customizingExampleCode = `<Chip style={{ backgroundColor: "red", border: "1px solid red" }}>Example</Chip>
-<Chip style={{ backgroundColor: "green", border: "1px solid green" }}>Example</Chip>
-<Chip style={{ backgroundColor: "blue", border: "1px solid blue" }}>Example</Chip>`
-export const customizingClassExampleCode = `// CSS
-.custom-chip {
-  .chip {
-    background-color: purple;
-  }
-}
 
-<div className='custom-chip'>
-  <Chip>Example</Chip>
-</div>`
-
-export const propsTableHeaders = [
-  { content: "Props" },
-  { content: "Type" },
-  { content: "Description" },
-  { content: "Default" },
-]
+export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
   {
@@ -93,3 +129,23 @@ export const propsTableRows = [
     Default: "-",
   },
 ]
+
+export const customizingExampleCode = `<Chip
+  style={{
+    backgroundColor: "red",
+    border: "1px solid red" 
+  }}
+>
+  Example
+</Chip>`
+
+export const customizingClassExampleCode = `// CSS
+.custom-chip {
+  .chip {
+    background-color: purple;
+  }
+}
+
+<div className='custom-chip'>
+  <Chip>Example</Chip>
+</div>`
