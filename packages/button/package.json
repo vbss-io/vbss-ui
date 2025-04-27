@@ -1,7 +1,13 @@
 {
   "name": "@vbss-ui/button",
-  "description": "To Do",
-  "keywords": ["To Do"],
+  "description": "A customizable and accessible Button component.",
+  "keywords": [
+    "react",
+    "component",
+    "ui",
+    "button",
+    "vbss-ui"
+  ],
   "license": "MIT",
   "private": false,
   "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
@@ -10,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
   },
-  "version": "1.0.1",
+  "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
