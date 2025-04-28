@@ -79,6 +79,13 @@ export const List = styled.ol`
   padding-left: 1.5rem;
   margin-bottom: 1.5rem;
 `
+export const StateExampleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+`
 
 export const TableSection = styled.div`
   .td {
