@@ -18,7 +18,13 @@ export const Chip: ChipComponent = forwardRef(
     ref?: PolymorphicRef<C>
   ) => {
     const Component = as ?? "div"
-    return <Component className={cn("chip", chipStyles({ variant, size, rounded, fontWeight, fontSize, className }))} ref={ref} {...props} />
+    return (
+      <Component
+        className={cn("chip", chipStyles({ variant, size, rounded, fontWeight, fontSize, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
   }
 )
 
