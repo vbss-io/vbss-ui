@@ -88,7 +88,7 @@ export const StateExampleContainer = styled.div`
 `
 
 export const TableSection = styled.div`
-  .td {
+  .btd {
     color: ${({ theme }) => theme.colors.foreground} !important;
   }
 `
