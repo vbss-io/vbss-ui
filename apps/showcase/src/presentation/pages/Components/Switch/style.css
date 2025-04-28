@@ -1,0 +1,14 @@
+.customSwitch {
+  .switchContainer {
+    .switchRoot {
+      .switchIconOnContainer {}
+      .switchThumb {
+        background-color: red;
+      }
+      .switchIconOffContainer {}
+    }
+    .switchLabel {
+      color: blue
+    }
+  }
+}
