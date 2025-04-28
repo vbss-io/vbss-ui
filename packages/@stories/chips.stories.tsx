@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Chips } from "../chips/src";
+import type { Meta, StoryObj } from "@storybook/react"
+import { Chips } from "../chips/src"
 
 const meta: Meta<typeof Chips> = {
   title: "Components/Chips",
@@ -8,11 +8,11 @@ const meta: Meta<typeof Chips> = {
     layout: "centered",
   },
   tags: ["autodocs"],
-};
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof Chips>;
+type Story = StoryObj<typeof Chips>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const argTypes: any = {
@@ -27,7 +27,7 @@ const argTypes: any = {
   chipsProps: {
     control: { type: "object" },
   },
-};
+}
 
 export const Primary: Story = {
   args: {
@@ -40,7 +40,7 @@ export const Primary: Story = {
     },
   },
   argTypes,
-};
+}
 
 export const Secondary: Story = {
   args: {
@@ -50,7 +50,7 @@ export const Secondary: Story = {
     },
   },
   argTypes,
-};
+}
 
 export const Outline: Story = {
   args: {
@@ -60,4 +60,4 @@ export const Outline: Story = {
     },
   },
   argTypes,
-};
+}
