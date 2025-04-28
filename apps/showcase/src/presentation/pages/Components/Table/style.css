@@ -1,0 +1,26 @@
+.customTable {
+  .tableContainer {
+    .table {
+      .thead {
+        .htr {
+          .hth {
+            background-color: blue;
+            color: red
+          }
+        }
+      }
+      .tbody {
+        .btr {
+          .btd {
+            color: green
+          }
+        }
+      }
+      .tfoot {
+        .ftd {
+          color: purple
+        }
+      }
+    }
+  }
+}
