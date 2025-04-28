@@ -19,10 +19,10 @@ yarn add @vbss-ui/chip
 ## **Usage**
 
 ```jsx
-import { Chip } from "@vbss-ui/chip";
+import { Chip } from "@vbss-ui/chip"
 
 export const App = () => {
-  return <Chip>Example Chip</Chip>;
+  return <Chip>Example Chip</Chip>
 }
 ```
 
@@ -50,11 +50,13 @@ export const App = () => {
 You can extend the default styles by passing custom styles names using className or style.
 
 ```jsx
-import { Chip } from "@vbss-ui/chip";
-
-export const App = () => {
-  return <Chip style={{ backgroundColor: "red" }}>Example</Chip>;
-}
+<Chip
+  style={{
+    backgroundColor: "red"
+  }}
+>
+  Example
+</Chip>
 ```
 
 Or you can use the default component className chip.
@@ -66,11 +68,10 @@ Or you can use the default component className chip.
 ```
 
 ```jsx
-import { Chip } from "@vbss-ui/chip";
-import "./custom.css";
+import "./custom.css"
 
 export const App = () => {
-  return <Chip>Example</Chip>;
+  return <Chip>Example</Chip>
 }
 ```
 
@@ -104,6 +105,4 @@ To see the components in action, run Storybook locally. Navigate to the reposito
 
 ```bash
 npm run storybook
-# or
-yarn storybook
 ```
