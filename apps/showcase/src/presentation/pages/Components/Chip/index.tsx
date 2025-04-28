@@ -6,7 +6,14 @@ import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 
 import * as S from "../../styles"
-import { customizingClassExampleCode, customizingExampleCode, propsTableHeaders, propsTableRows, sections, usageExampleCode } from "./consts"
+import {
+  customizingClassExampleCode,
+  customizingExampleCode,
+  propsTableHeaders,
+  propsTableRows,
+  sections,
+  usageExampleCode,
+} from "./consts"
 import "./style.css"
 
 export const ChipDocs = () => {
@@ -18,8 +25,9 @@ export const ChipDocs = () => {
           <S.SubTitle>Component for labels, categories, and status indicators.</S.SubTitle>
           <section>
             <S.Paragraph>
-              The <strong>Chip</strong> component is a small, customizable UI element used to display categorized information, labels, or status
-              indicators. It supports different variants, sizes, and styles, making it highly flexible for various use cases.
+              The <strong>Chip</strong> component is a small, customizable UI element used to display categorized information,
+              labels, or status indicators. It supports different variants, sizes, and styles, making it highly flexible for
+              various use cases.
             </S.Paragraph>
             <ExampleContainer code="<Chip>Hello World</Chip>">
               <Chip>Hello World</Chip>
@@ -144,7 +152,8 @@ export const ChipDocs = () => {
               Customization
             </S.SectionTitle>
             <S.Paragraph>
-              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or <code>style</code>.
+              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or{" "}
+              <code>style</code>.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="custom-style" />

@@ -17,12 +17,10 @@ export const Installation = () => {
               Install only what you need
             </S.SectionTitle>
             <S.Paragraph>
-              Since each component is distributed as a separate package, you can install only the
-              components required for your project.
+              Since each component is distributed as a separate package, you can install only the components required for your
+              project.
             </S.Paragraph>
-            <S.Paragraph>
-              For example, to install the Button component, use one of the following commands:
-            </S.Paragraph>
+            <S.Paragraph>For example, to install the Button component, use one of the following commands:</S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="using-npm" />
               Using npm
@@ -37,9 +35,7 @@ export const Installation = () => {
               <S.SectionAnchor id="usage" />
               Usage
             </S.SectionSubTitle>
-            <S.Paragraph>
-              After installation, import the component and use it in your project:
-            </S.Paragraph>
+            <S.Paragraph>After installation, import the component and use it in your project:</S.Paragraph>
             <CodeSnippet code={usageExampleCode} language="tsx" />
           </section>
         </S.ContentWrapper>

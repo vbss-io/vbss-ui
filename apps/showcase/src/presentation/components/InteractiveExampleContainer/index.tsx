@@ -20,19 +20,13 @@ export const InteractiveExampleContainer = <T extends string>({
 }: InteractiveExampleContainerProps<T>) => {
   const [selectedProp, setSelectedProp] = useState<T>(props[0])
   const updatedCode = code?.replace(`'${targetProp}'`, `'${selectedProp}'`)
-  const enhancedChildren = isValidElement(children)
-    ? cloneElement(children, { [targetProp]: selectedProp })
-    : children
+  const enhancedChildren = isValidElement(children) ? cloneElement(children, { [targetProp]: selectedProp }) : children
 
   return (
     <S.Container>
       <S.Controls>
         {props.map((prop) => (
-          <Button
-            key={prop}
-            variant={selectedProp === prop ? "primary" : "secondary"}
-            onClick={() => setSelectedProp(prop)}
-          >
+          <Button key={prop} variant={selectedProp === prop ? "primary" : "secondary"} onClick={() => setSelectedProp(prop)}>
             {prop}
           </Button>
         ))}

@@ -17,9 +17,7 @@ export const ExampleContainer = ({ code, children }: ExampleContainerProps) => {
       <S.Content>
         {children}
         {code && (
-          <S.ShowCodeButton onClick={() => setShowCode(!showCode)}>
-            {showCode ? "Hide Code" : "Show Code"}
-          </S.ShowCodeButton>
+          <S.ShowCodeButton onClick={() => setShowCode(!showCode)}>{showCode ? "Hide Code" : "Show Code"}</S.ShowCodeButton>
         )}
       </S.Content>
       {code && showCode && <CodeSnippet code={code} />}

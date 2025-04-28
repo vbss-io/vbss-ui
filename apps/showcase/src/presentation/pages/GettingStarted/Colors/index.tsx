@@ -14,9 +14,9 @@ export const Colors = () => {
           <S.SubTitle>Customize Your Component Colors</S.SubTitle>
           <section>
             <S.Paragraph>
-              <strong>vbss-ui</strong> allows you to easily customize the color scheme of the
-              components to match your brand or design system. By default, the library provides a
-              clean and modern palette, but you can override these values to create a unique look.
+              <strong>vbss-ui</strong> allows you to easily customize the color scheme of the components to match your brand or
+              design system. By default, the library provides a clean and modern palette, but you can override these values to
+              create a unique look.
             </S.Paragraph>
           </section>
           <section>
@@ -63,15 +63,13 @@ export const Colors = () => {
               Customizing Colors
             </S.SectionTitle>
             <S.Paragraph>
-              To override these defaults, create a CSS file (e.g. <code>custom-colors.css</code>)
-              and define your custom colors using <strong>HSL format</strong>:
+              To override these defaults, create a CSS file (e.g. <code>custom-colors.css</code>) and define your custom colors
+              using <strong>HSL format</strong>:
             </S.Paragraph>
             <CodeSnippet code={customColorsCode} language="css" />
             <S.Paragraph>Then, import this file into your project:</S.Paragraph>
             <CodeSnippet code={customColorsImportCode} language="tsx" />
-            <S.Paragraph>
-              This will override the default colors with your custom values.
-            </S.Paragraph>
+            <S.Paragraph>This will override the default colors with your custom values.</S.Paragraph>
           </section>
           <S.SectionDivider />
           <section>
@@ -80,20 +78,18 @@ export const Colors = () => {
               How It Works
             </S.SectionTitle>
             <S.Paragraph>
-              To override these defaults, create a CSS file (e.g. <code>custom-colors.css</code>)
-              and define your custom colors using <strong>HSL format</strong>:
+              To override these defaults, create a CSS file (e.g. <code>custom-colors.css</code>) and define your custom colors
+              using <strong>HSL format</strong>:
             </S.Paragraph>
             <S.List>
               <li>These colors are automatically applied to all vbss-ui components.</li>
               <li>You only need to define the variables you want to change.</li>
               <li>
-                The <strong>HSL format</strong> makes it easy to adjust hue, saturation, and
-                lightness for fine-tuned color control.
+                The <strong>HSL format</strong> makes it easy to adjust hue, saturation, and lightness for fine-tuned color
+                control.
               </li>
             </S.List>
-            <S.Paragraph>
-              Now your vbss-ui components will seamlessly match your brand&apos;s visual identity!
-            </S.Paragraph>
+            <S.Paragraph>Now your vbss-ui components will seamlessly match your brand&apos;s visual identity!</S.Paragraph>
           </section>
         </S.ContentWrapper>
       </S.Container>

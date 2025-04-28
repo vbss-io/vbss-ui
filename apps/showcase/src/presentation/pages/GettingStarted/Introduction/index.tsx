@@ -12,14 +12,13 @@ export const Introduction = () => {
           <S.SubTitle>Build beautiful UIs with minimal effort</S.SubTitle>
           <section>
             <S.Paragraph>
-              <strong>vbss-ui</strong> is a modern and customizable UI components library designed
-              to simplify the process of building web applications. With <strong>vbss-ui</strong>,
-              you can create responsive and attractive interfaces using a minimal setup, just import
-              the components you need, and you&apos;re ready to go!
+              <strong>vbss-ui</strong> is a modern and customizable UI components library designed to simplify the process of
+              building web applications. With <strong>vbss-ui</strong>, you can create responsive and attractive interfaces using
+              a minimal setup, just import the components you need, and you&apos;re ready to go!
             </S.Paragraph>
             <S.Paragraph>
-              Each component is available as an independent package, allowing you to keep your
-              project lightweight by installing only what you need.
+              Each component is available as an independent package, allowing you to keep your project lightweight by installing
+              only what you need.
             </S.Paragraph>
           </section>
           <S.SectionDivider />
@@ -29,8 +28,8 @@ export const Introduction = () => {
               Built with Modern Technologies
             </S.SectionTitle>
             <S.Paragraph>
-              <strong>vbss-ui</strong> is built with the latest frontend technologies to ensure
-              performance, maintainability, and ease of use:
+              <strong>vbss-ui</strong> is built with the latest frontend technologies to ensure performance, maintainability, and
+              ease of use:
             </S.Paragraph>
             <S.List>
               <li>
@@ -58,8 +57,8 @@ export const Introduction = () => {
             </S.SectionTitle>
             <S.Paragraph>
               No need to install additional type definitions, <strong>vbss-ui</strong> comes with{" "}
-              <strong>built-in TypeScript support</strong>. This ensures a seamless development
-              experience with autocompletion and type checking out of the box.
+              <strong>built-in TypeScript support</strong>. This ensures a seamless development experience with autocompletion and
+              type checking out of the box.
             </S.Paragraph>
           </section>
           <S.SectionDivider />
@@ -73,8 +72,8 @@ export const Introduction = () => {
               <a href="https://github.com/vbss-io/vbss-ui" target="_blank" rel="noreferrer">
                 GitHub
               </a>
-              . Contributions and feature requests are always welcome! If you have suggestions,
-              issues, or ideas, feel free to open a pull request or an issue on the repository.
+              . Contributions and feature requests are always welcome! If you have suggestions, issues, or ideas, feel free to
+              open a pull request or an issue on the repository.
             </S.Paragraph>
           </section>
         </S.ContentWrapper>

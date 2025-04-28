@@ -49,7 +49,7 @@ export default [
           semi: false,
           tabWidth: 2,
           trailingComma: "es5",
-          printWidth: 150,
+          printWidth: 130,
           endOfLine: "auto",
         },
       ],

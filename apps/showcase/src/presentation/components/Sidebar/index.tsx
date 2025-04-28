@@ -40,11 +40,7 @@ export const Sidebar = ({ isMobile = false }: SidebarProps) => {
         <S.Section>
           <S.Title>Components</S.Title>
           {sortedComponents.map((component) => (
-            <S.NavLink
-              key={component.path}
-              active={currentPath === component.path}
-              disabled={component.dev}
-            >
+            <S.NavLink key={component.path} active={currentPath === component.path} disabled={component.dev}>
               <Button as="a" href={component.path}>
                 {component.name} {component.dev && <span>Dev</span>}
               </Button>

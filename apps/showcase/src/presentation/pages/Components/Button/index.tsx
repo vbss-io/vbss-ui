@@ -28,8 +28,8 @@ export const ButtonDocs = () => {
           <S.SubTitle>A customizable and accessible Button component.</S.SubTitle>
           <section>
             <S.Paragraph>
-              The <strong>Button</strong> component is a flexible UI element used to trigger actions or events. It supports various visual styles,
-              sizes, shapes, and states, making it suitable for a wide range of interfaces.
+              The <strong>Button</strong> component is a flexible UI element used to trigger actions or events. It supports
+              various visual styles, sizes, shapes, and states, making it suitable for a wide range of interfaces.
             </S.Paragraph>
             <ExampleContainer code="<Button>Click Me</Button>">
               <Button>Click Me</Button>
@@ -245,7 +245,8 @@ export const ButtonDocs = () => {
               Customization
             </S.SectionTitle>
             <S.Paragraph>
-              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or <code>style</code>.
+              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or{" "}
+              <code>style</code>.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="custom-style" />

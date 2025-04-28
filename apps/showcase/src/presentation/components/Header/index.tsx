@@ -43,12 +43,7 @@ export const Header = () => {
             checked={darkMode}
             onChange={() => setDarkMode(!darkMode)}
           />
-          <Button
-            className="menu"
-            size="icon-xs"
-            rounded="full"
-            onClick={() => setShowMobile(!showMobile)}
-          >
+          <Button className="menu" size="icon-xs" rounded="full" onClick={() => setShowMobile(!showMobile)}>
             <List />
           </Button>
         </S.ConfigSection>
