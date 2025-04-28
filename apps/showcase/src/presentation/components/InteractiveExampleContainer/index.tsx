@@ -9,16 +9,18 @@ interface InteractiveExampleContainerProps<T> {
   props: T[]
   targetProp: string
   children: ReactNode
+  initIndex?: number
   code?: string
 }
 
 export const InteractiveExampleContainer = <T extends string>({
-  children,
-  code,
   props,
   targetProp,
+  children,
+  initIndex = 0,
+  code,
 }: InteractiveExampleContainerProps<T>) => {
-  const [selectedProp, setSelectedProp] = useState<T>(props[0])
+  const [selectedProp, setSelectedProp] = useState<T>(props[initIndex])
   const updatedCode = code?.replace(`'${targetProp}'`, `'${selectedProp}'`)
   const enhancedChildren = isValidElement(children) ? cloneElement(children, { [targetProp]: selectedProp }) : children
 
@@ -26,7 +28,13 @@ export const InteractiveExampleContainer = <T extends string>({
     <S.Container>
       <S.Controls>
         {props.map((prop) => (
-          <Button key={prop} variant={selectedProp === prop ? "primary" : "secondary"} onClick={() => setSelectedProp(prop)}>
+          <Button
+            key={prop}
+            variant={selectedProp === prop ? "primary" : "outline"}
+            size="xs"
+            fontSize="sm"
+            onClick={() => setSelectedProp(prop)}
+          >
             {prop}
           </Button>
         ))}
