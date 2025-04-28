@@ -17,10 +17,10 @@ yarn add @vbss-ui/chips
 ## **Usage**
 
 ```jsx
-import { Chips } from "@vbss-ui/chips";
+import { Chips } from "@vbss-ui/chips"
 
 export const App = () => {
-  return <Chips chips={["Design", "Development", "Marketing"]} />;
+  return <Chips chips={["Design", "Development", "Marketing"]} />
 };
 ```
 
@@ -42,17 +42,13 @@ export const App = () => {
 ### **chipsProps Example**
 
 ```jsx
-function Example() {
-  return (
-    <Chips
-      chips={["Chip"]}
-      chipsProps={{
-        as: "span",
-        variant: "primary"
-      }}
-    />
-  )
-}
+<Chips
+  chips={["Chip"]}
+  chipsProps={{
+    as: "span",
+    variant: "primary"
+  }}
+/>
 ```
 
 ---
@@ -62,13 +58,14 @@ function Example() {
 You can extend the default styles by passing custom styles names using className or style.
 
 ```jsx
-import { Chips } from "@vbss-ui/chips";
-
-export const App = () => {
-  return (
-  <Chips chips={["Chip 1", "Chip 2"]} style={{ backgroundColor: "gray", padding: "1rem", borderRadius: "1rem" }} />;
-  )
-}
+<Chips
+  chips={["Chip 1", "Chip 2"]}
+  style={{
+    backgroundColor: "gray",
+    padding: "1rem",
+    borderRadius: "1rem" 
+  }}
+/>;
 ```
 
 Or you can use the default component className chip.
@@ -86,11 +83,10 @@ Or you can use the default component className chip.
 ```
 
 ```jsx
-import { Chips } from "@vbss-ui/chips";
-import "./custom.css";
+import "./custom.css"
 
 export const App = () => {
-  return <Chips chips={["Chip 1", "Chip 2"]} />;
+  return <Chips chips={["Chip 1", "Chip 2"]} />
 }
 ```
 
@@ -124,6 +120,4 @@ To see the components in action, run Storybook locally. Navigate to the reposito
 
 ```bash
 npm run storybook
-# or
-yarn storybook
 ```
