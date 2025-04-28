@@ -1,56 +1,69 @@
-export const sections = []
+export const sections = [
+  {
+    title: "Installation",
+    anchor: "installation",
+    subsections: [
+      {
+        title: "Using npm",
+        anchor: "using-npm",
+      },
+      {
+        title: "Using yarn",
+        anchor: "using-yarn",
+      },
+    ],
+  },
+  {
+    title: "Usage",
+    anchor: "usage",
+    subsections: [
+      {
+        title: "Gap",
+        anchor: "gap",
+      },
+      {
+        title: "Flex Direction",
+        anchor: "flex-direction",
+      },
+      {
+        title: "Chip Props",
+        anchor: "chip-props",
+      },
+    ],
+  },
+  {
+    title: "Props",
+    anchor: "props",
+  },
+  {
+    title: "Customization",
+    anchor: "customization",
+    subsections: [
+      {
+        title: "Using style",
+        anchor: "custom-style",
+      },
+      {
+        title: "Using className",
+        anchor: "custom-classname",
+      },
+    ],
+  },
+]
 
-export const usageExampleCode = `import { Chips } from "@vbss-ui/chips";
+export const usageExampleCode = `import { Chips } from "@vbss-ui/chips"
+
 export export const App = () => {
-  return <Chips chips={["Design", "Development", "Marketing"]} />;
+  return <Chips chips={["Design", "Development", "Marketing"]} />
 }`
-export const gapExampleCode = '<Chips gap="md" chips={["Design", "Development", "Marketing"]} />;'
-export const flexDirectionExampleCode =
-  '<Chips flexDirection="col" chips={["Design", "Development", "Marketing"]} />;'
+
 export const chipPropsExampleCode = `<Chips chipsProps={{
   variant: "outline"
   // ... other props
 }}
 chips={["Chip 1", "Chip 2"]} />`
-export const customizingExampleCode = `<Chips
-  chips={["Chip 1", "Chip 2"]}
-  style={{
-    backgroundColor: "red",
-    padding: "1rem",
-    borderRadius: "1rem"
-  }}
-/>
-<Chips
-  chips={["Chip 1", "Chip 2"]}
-  style={{
-    backgroundColor: "green",
-    padding: "1rem",
-    borderRadius: "1rem"
-    }}
-/>`
-export const customizingClassExampleCode = `// CSS
-.custom-chips {
-  .chips {
-    background-color: blue;
-    padding: 10px;
-    border-radius: 5px;
-  }
 
-  .chip {
-    background-color: red;
-  }
-}
-
-<div className='custom-chip'>
-  <Chips chips={["Chip 1", "Chip 2"]} />
-</div>`
-
-export const propsTableHeaders = [
-  { content: "Props" },
-  { content: "Type" },
-  { content: "Description" },
-  { content: "Default" },
-]
+export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
   {
@@ -102,3 +115,29 @@ export const propsTableRows = [
     Default: "-",
   },
 ]
+
+export const customizingExampleCode = `<Chips
+  chips={["Example", "Example"]}
+  style={{
+    backgroundColor: "red",
+    padding: "1rem",
+    borderRadius: "1rem"
+    }}
+/>`
+
+export const customizingClassExampleCode = `// CSS
+.custom-chips {
+  .chips {
+    background-color: blue;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .chip {
+    background-color: red;
+  }
+}
+
+<div className='custom-chip'>
+  <Chips chips={["Example", "Example"]} />
+</div>`

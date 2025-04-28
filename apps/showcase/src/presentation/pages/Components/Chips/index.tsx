@@ -4,14 +4,13 @@ import { Table } from "@vbss-ui/table"
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
 
 import * as S from "../../styles"
 import {
   chipPropsExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
-  flexDirectionExampleCode,
-  gapExampleCode,
   propsTableHeaders,
   propsTableRows,
   sections,
@@ -28,9 +27,9 @@ export const ChipsDocs = () => {
           <S.SubTitle>Wrapper component for multiple Chip elements.</S.SubTitle>
           <section>
             <S.Paragraph>
-              The <strong>Chips</strong> component is a flexible container designed to render
-              multiple <strong>Chip</strong> components in a customizable layout. It supports layout
-              direction, spacing between chips, and allows passing shared props to chips.
+              The <strong>Chips</strong> component is a flexible container designed to render multiple <strong>Chip</strong>{" "}
+              components in a customizable layout. It supports layout direction, spacing between chips, and allows passing shared
+              props to chips.
             </S.Paragraph>
             <ExampleContainer code='<Chips chips={["Design", "Development", "Marketing"]} />'>
               <Chips chips={["Design", "Development", "Marketing"]} />
@@ -42,8 +41,7 @@ export const ChipsDocs = () => {
               Installation
             </S.SectionTitle>
             <S.Paragraph>
-              To install only the <strong>Chips</strong> component, run one of the following
-              commands:
+              To install only the <strong>Chips</strong> component, run one of the following commands:
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="using-npm" />
@@ -61,42 +59,46 @@ export const ChipsDocs = () => {
               <S.SectionAnchor id="usage" />
               Usage
             </S.SectionTitle>
-            <S.Paragraph>
-              After installation, import the component and use it in your project:
-            </S.Paragraph>
+            <S.Paragraph>After installation, import the component and use it in your project:</S.Paragraph>
             <CodeSnippet code={usageExampleCode} language="tsx" />
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="gap" />
               Gap
             </S.SectionSubTitle>
             <S.Paragraph>
               Adjust the space between the <strong>Chips</strong> using the <code>gap</code> prop:
             </S.Paragraph>
-            <ExampleContainer>
-              <Chips chips={["sm", "sm"]} gap="sm" />
-              <Chips chips={["md", "md"]} gap="md" />
-              <Chips chips={["lg", "lg"]} gap="lg" />
-            </ExampleContainer>
-            <CodeSnippet code={gapExampleCode} language="tsx" />
+            <InteractiveExampleContainer
+              props={["xs", "sm", "md", "lg", "xl"]}
+              targetProp="gap"
+              code={`<Chips chips={['Design', 'Development', 'Marketing']} gap='gap' />`}
+              initIndex={2}
+            >
+              <Chips chips={["Design", "Development", "Marketing"]} />
+            </InteractiveExampleContainer>
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="flex-direction" />
               Flex Direction
             </S.SectionSubTitle>
             <S.Paragraph>
-              Defines the layout direction of the <strong>Chips</strong> (horizontal or vertical)
-              using the <code>flexDirection</code> prop:
+              Defines the layout direction of the <strong>Chips</strong> (horizontal or vertical) using the{" "}
+              <code>flexDirection</code> prop:
             </S.Paragraph>
-            <ExampleContainer>
-              <Chips flexDirection="col" chips={["Chip 1", "Chip 2"]} />
-            </ExampleContainer>
-            <CodeSnippet code={flexDirectionExampleCode} language="tsx" />
+            <InteractiveExampleContainer
+              props={["row", "col"]}
+              targetProp="flexDirection"
+              code={`<Chips chips={['Design', 'Development', 'Marketing']} flexDirection='flexDirection' />`}
+              initIndex={1}
+            >
+              <Chips chips={["Design", "Development", "Marketing"]} />
+            </InteractiveExampleContainer>
             <S.SectionSubTitle>
-              <S.SectionAnchor id="using-variants" />
+              <S.SectionAnchor id="chip-props" />
               Chip Props
             </S.SectionSubTitle>
             <S.Paragraph>
-              Defines the props applied to each individual <strong>Chip</strong> using the{" "}
-              <code>chipProps</code> (See <a href="chip">Chip Props</a>) prop:
+              Defines the props applied to each individual <strong>Chip</strong> using the <code>chipProps</code> (See{" "}
+              <a href="chip">Chip Props</a>) prop:
             </S.Paragraph>
             <ExampleContainer>
               <Chips
@@ -128,25 +130,28 @@ export const ChipsDocs = () => {
               Customization
             </S.SectionTitle>
             <S.Paragraph>
-              You can extend the default styles by passing custom <code>styles</code> names using{" "}
-              <code>className</code> or <code>style</code>.
+              You can extend the default styles by passing custom <code>styles</code> names using <code>className</code> or{" "}
+              <code>style</code>.
             </S.Paragraph>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="custom-style" />
+              Using style
+            </S.SectionSubTitle>
+            <S.Paragraph>You can pass custom styles directly to the component:</S.Paragraph>
             <ExampleContainer code={customizingExampleCode}>
-              <Chips
-                chips={["Chip 1", "Chip 2"]}
-                style={{ backgroundColor: "red", padding: "1rem", borderRadius: "1rem" }}
-              />
-              <Chips
-                chips={["Chip 1", "Chip 2"]}
-                style={{ backgroundColor: "green", padding: "1rem", borderRadius: "1rem" }}
-              />
+              <Chips chips={["Example", "Example"]} style={{ backgroundColor: "red", padding: "1rem", borderRadius: "1rem" }} />
+              <Chips chips={["Example", "Example"]} style={{ backgroundColor: "green", padding: "1rem", borderRadius: "1rem" }} />
             </ExampleContainer>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="custom-classname" />
+              Using className
+            </S.SectionSubTitle>
             <S.Paragraph>
-              Or you can use the default component className <code>chip</code>.
+              You can use the default component className <code>button</code>:
             </S.Paragraph>
             <ExampleContainer code={customizingClassExampleCode}>
               <div className="custom-chips">
-                <Chips chips={["Chip 1", "Chip 2"]} />
+                <Chips chips={["Example", "Example"]} />
               </div>
             </ExampleContainer>
           </section>
