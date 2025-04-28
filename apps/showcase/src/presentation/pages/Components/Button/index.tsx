@@ -262,9 +262,7 @@ export const ButtonDocs = () => {
               <S.SectionAnchor id="custom-classname" />
               Using className
             </S.SectionSubTitle>
-            <S.Paragraph>
-              You can use the default component className <code>button</code>:
-            </S.Paragraph>
+            <S.Paragraph>You can use the default component classNames:</S.Paragraph>
             <ExampleContainer code={customizingClassExampleCode}>
               <div className="custom-button">
                 <Button>Example</Button>
