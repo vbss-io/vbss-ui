@@ -30,20 +30,20 @@ export const App = () => {
 
 ## **Props**
 
-| Prop         | Type                                                                             | Description                                           | Default   |
-|--------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`    | `primary` \| `secondary` \| `outline` \| `outlineSolid` \| `ghost`               | Defines the visual style of the Button.               | `primary` |
-| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `icon-xs` \| `icon-sm` \| `icon-md` \| `icon-lg` | Defines the size or icon-specific size of the Button. | `md`      |
-| `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                                 | Sets the border radius of the Button.                 | `md`      |
-| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the Button text.                | `md`      |
-| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the Button text.         | `normal`  |
-| `inverted`   | `boolean`                                                                        | Inverts the Button's direction.                       | `false`   |
-| `disabled`   | `boolean`                                                                        | Disables the Button interaction.                      | `false`   |
-| `as`         | `React.ElementType`                                                              | Defines the HTML element or component to render.      | `button`  |
-| `ref`        | `React.Ref`                                                                      | Allows accessing the underlying DOM element.          | `-`       |
-| `children`   | `string` \| `number` \| `React.ReactNode`                                        | Content to be displayed inside the button.            | `-`       |
-| `className`  | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop         | Type                                                                                                  | Description                                           | Default   |
+|--------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
+| `variant`    | `primary` \| `secondary` \| `outline` \| `outlineSolid` \| `ghost`                                    | Defines the visual style of the Button.               | `primary` |
+| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `icon-xs` \| `icon-sm` \| `icon-md` \| `icon-lg` \| `icon-xl` | Defines the size or icon-specific size of the Button. | `md`      |
+| `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                                                      | Sets the border radius of the Button.                 | `md`      |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                                                  | Sets the font size of the Button text.                | `md`      |
+| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`                                    | Specifies the font weight of the Button text.         | `normal`  |
+| `inverted`   | `boolean`                                                                                             | Inverts the Button's direction.                       | `false`   |
+| `disabled`   | `boolean`                                                                                             | Disables the Button interaction.                      | `false`   |
+| `as`         | `React.ElementType`                                                                                   | Defines the HTML element or component to render.      | `button`  |
+| `ref`        | `React.Ref`                                                                                           | Allows accessing the underlying DOM element.          | `-`       |
+| `children`   | `string` \| `number` \| `React.ReactNode`                                                             | Content to be displayed inside the button.            | `-`       |
+| `className`  | `string`                                                                                              | Additional CSS classes for custom styling.            | `-`       |
+| `style`      | `React.CSSProperties`                                                                                 | Additional style for custom styling.                  | `-`       |
 
 ---
 

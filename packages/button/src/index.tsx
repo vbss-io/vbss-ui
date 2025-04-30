@@ -61,10 +61,12 @@ export const buttonStyles = cva(
         sm: "h-8 px-3",
         md: "h-9 px-4 py-2",
         lg: "h-10 px-8",
+        xl: "h-12 px-10",
         "icon-xs": "[&_*]:w-full [&_*]:h-full h-7 w-7 p-1",
         "icon-sm": "[&_*]:w-full [&_*]:h-full h-8 w-8 p-1",
         "icon-md": "[&_*]:w-full [&_*]:h-full h-9 w-9 p-1",
         "icon-lg": "[&_*]:w-full [&_*]:h-full h-10 w-10 p-1",
+        "icon-xl": "[&_*]:w-full [&_*]:h-full h-12 w-12 p-1",
       },
       rounded: {
         none: "rounded-none",
