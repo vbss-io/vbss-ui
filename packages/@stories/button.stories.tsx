@@ -23,7 +23,7 @@ const argTypes: any = {
     control: { type: "select" },
   },
   size: {
-    options: ["xs", "sm", "md", "lg", "icon-xs", "icon-sm", "icon-md", "icon-lg"],
+    options: ["xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon-md", "icon-lg", "icon-xl"],
     control: { type: "select" },
   },
   rounded: {
