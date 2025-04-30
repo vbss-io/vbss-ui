@@ -5,4 +5,4 @@ export default {
   content: ["../**/src/**/*.{js,ts,jsx,tsx}"],
   theme: baseConfig.theme,
   plugins: [],
-};
+}
