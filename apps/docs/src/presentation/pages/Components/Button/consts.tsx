@@ -93,7 +93,7 @@ export const propsTableRows = [
   },
   {
     prop: "size",
-    Type: "xs | sm | md | lg | icon-xs | icon-sm | icon-md | icon-lg",
+    Type: "xs | sm | md | lg | xl | icon-xs | icon-sm | icon-md | icon-lg | icon-xl",
     Description: "Defines the size or icon-specific size of the Button.",
     Default: "md",
   },

@@ -94,6 +94,7 @@ export const ButtonDocs = () => {
               <Button size="lg" variant="outlineSolid">
                 lg
               </Button>
+              <Button size="xl">xl</Button>
             </ExampleContainer>
             <CodeSnippet code='<Button size="sm">Example Button</Button>' language="tsx" />
             <S.Paragraph>You can also use size for icon buttons:</S.Paragraph>
@@ -108,6 +109,9 @@ export const ButtonDocs = () => {
                 <At />
               </Button>
               <Button size="icon-lg" variant="outlineSolid">
+                <At />
+              </Button>
+              <Button size="icon-xl">
                 <At />
               </Button>
             </ExampleContainer>
