@@ -41,7 +41,7 @@ export const App = () => {
 | `disabled`   | `boolean`                                                                                             | Disables the Button interaction.                      | `false`   |
 | `as`         | `React.ElementType`                                                                                   | Defines the HTML element or component to render.      | `button`  |
 | `ref`        | `React.Ref`                                                                                           | Allows accessing the underlying DOM element.          | `-`       |
-| `children`   | `string` \| `number` \| `React.ReactNode`                                                             | Content to be displayed inside the button.            | `-`       |
+| `children`   | `React.ReactNode`                                                                                     | Content to be displayed inside the button.            | `-`       |
 | `className`  | `string`                                                                                              | Additional CSS classes for custom styling.            | `-`       |
 | `style`      | `React.CSSProperties`                                                                                 | Additional style for custom styling.                  | `-`       |
 
