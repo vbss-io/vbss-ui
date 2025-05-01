@@ -16,13 +16,13 @@ export const Container = styled.main`
 export const ContentWrapper = styled.div`
   max-width: 55rem;
   margin: 0 auto;
-  color: ${({ theme }) => theme.colors.foreground};
 `
 
 export const Title = styled.h1`
   font-size: 2.5rem;
   line-height: 2.75rem;
   font-weight: bold;
+  color: ${({ theme }) => theme.colors.foreground};
 `
 
 export const SubTitle = styled.p`
@@ -39,6 +39,7 @@ export const SectionTitle = styled.h2`
   margin-top: 2rem;
   margin-bottom: 1rem;
   position: relative;
+  color: ${({ theme }) => theme.colors.foreground};
 `
 
 export const SectionSubTitle = styled.h3`
@@ -48,6 +49,7 @@ export const SectionSubTitle = styled.h3`
   margin-top: 2rem;
   margin-bottom: 1rem;
   position: relative;
+  color: ${({ theme }) => theme.colors.foreground};
 `
 
 export const SectionAnchor = styled.div`
@@ -85,6 +87,9 @@ export const StateExampleContainer = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
 `
 
 export const TableSection = styled.div`
