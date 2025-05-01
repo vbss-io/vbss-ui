@@ -164,17 +164,30 @@ You can extend the default styles by passing custom styles using className or st
 Or you can use the default component classNames.
 
 ```css
-.table {
-  background-color: purple;
-}
-
-.thead {
-  background-color: darkblue;
-}
-
-.htd {
-  padding: 1rem;
-}
+  .tableContainer {
+    .table {
+      .thead {
+        .htr {
+          .hth {
+            background-color: blue;
+            color: red
+          }
+        }
+      }
+      .tbody {
+        .btr {
+          .btd {
+            color: green
+          }
+        }
+      }
+      .tfoot {
+        .ftd {
+          color: purple
+        }
+      }
+    }
+  }
 ```
 
 ```jsx
