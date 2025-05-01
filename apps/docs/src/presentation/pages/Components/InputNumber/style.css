@@ -1,0 +1,27 @@
+.customInputNumber {
+  .inputNumberContainer {
+    .inputNumberLabel {
+      color: purple;
+    }
+    .inputNumberContent {
+      .inputNumberLeftControlContainer {
+        .inputNumberLeftControl {
+          .button {
+            /* ...Button classNames */
+          }
+        }
+      }
+      .inputNumber {
+        background-color: red;
+        color: white
+      }
+      .inputNumberRightControlContainer {
+        .inputNumberRightControl {
+          .button {
+            /* ...Button classNames */
+          }
+        }
+      }
+    }
+  }
+}
