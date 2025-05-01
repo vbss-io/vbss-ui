@@ -240,7 +240,7 @@ export const TableDocs = () => {
           </section>
         </S.ContentWrapper>
       </S.Container>
-      <ContentSidebar title="TableDocs" sections={sections} />
+      <ContentSidebar title="Table" sections={sections} />
     </>
   )
 }

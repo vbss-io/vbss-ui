@@ -275,7 +275,7 @@ export const ButtonDocs = () => {
           </section>
         </S.ContentWrapper>
       </S.Container>
-      <ContentSidebar title="ButtonDocs" sections={sections} />
+      <ContentSidebar title="Button" sections={sections} />
     </>
   )
 }

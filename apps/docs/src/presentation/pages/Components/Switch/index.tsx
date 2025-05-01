@@ -229,7 +229,7 @@ export const SwitchDocs = () => {
           </section>
         </S.ContentWrapper>
       </S.Container>
-      <ContentSidebar title="SwitchDocs" sections={sections} />
+      <ContentSidebar title="Switch" sections={sections} />
     </>
   )
 }

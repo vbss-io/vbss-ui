@@ -178,7 +178,7 @@ export const ChipDocs = () => {
           </section>
         </S.ContentWrapper>
       </S.Container>
-      <ContentSidebar title="ChipDocs" sections={sections} />
+      <ContentSidebar title="Chip" sections={sections} />
     </>
   )
 }
