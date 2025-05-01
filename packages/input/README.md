@@ -126,24 +126,37 @@ You can extend the default styles by passing custom styles using className or st
 Or you can use the default component classNames.
 
 ```css
-.input {
-  background-color: purple;
-}
-
-.input-label {
-  color: white;
-}
-
-.input-error {
-  color: red;
-}
+  .inputRoot {
+    .inputLabel {
+      color: purple
+    }
+    .inputContainer {
+      .inputContent {
+        .input {
+          background-color: red !important;
+        }
+        .inputIconOnContainer {
+          .inputIconOn {}
+        }
+        .inputIconOffContainer {
+          .inputIconOff {}
+        }
+        .button {
+          /* ...Button classNames */
+        }
+      }
+    }
+    .inputError {
+      color: blue
+    }
+  }
 ```
 
 ```jsx
 import "./custom.css"
 
 export const App = () => {
-  return <Input />
+  return <Input label="Label:" />
 }
 ```
 
