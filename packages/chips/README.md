@@ -30,7 +30,7 @@ export const App = () => {
 
 | Prop            | Type                                            | Description                                                                   | Default |
 |-----------------|-------------------------------------------------|-------------------------------------------------------------------------------|---------|
-| `chips`         | `string[]` \| `number[]` \| `React.ReactNode[]` | List of chip contents to render.                                              | `[]`    |
+| `chips`         | `React.ReactNode[]`                             | List of chip contents to render.                                              | `[]`    |
 | `gap`           | `xs` \| `sm` \| `md` \| `lg` \| `xl`            | Defines the spacing between chips.                                            | `md`    |
 | `flexDirection` | `row` \| `col`                                  | Determines the layout direction of the chips.                                 | `row`   |
 | `chipsProps`    | `ChipProps`                                     | Props applied to `Chip` components. See [Chip Props](https://ui.vbss.io/chip) | `-`     |
