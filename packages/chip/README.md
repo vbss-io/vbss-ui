@@ -39,7 +39,7 @@ export const App = () => {
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the chip text.      | `normal`  |
 | `as`         | `React.ElementType`                                                | Defines the HTML element or component to render. | `div`     |
 | `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.     | `-`       |
-| `children`   | `string` \| `number` \| `React.ReactNode`                          | Content to be displayed inside the chip.         | `-`       |
+| `children`   | `React.ReactNode`                                                  | Content to be displayed inside the chip.         | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.       | `-`       |
 | `style`      | `React.CSSProperties`                                              | Additional style for custom styling.             | `-`       |
 
