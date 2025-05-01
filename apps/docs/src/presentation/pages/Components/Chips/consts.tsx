@@ -68,7 +68,7 @@ export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { c
 export const propsTableRows = [
   {
     prop: "chips",
-    Type: "string[] | number[] | React.ReactNode[]",
+    Type: "React.ReactNode[]",
     Description: "List of chip contents to render.",
     Default: "[]",
   },

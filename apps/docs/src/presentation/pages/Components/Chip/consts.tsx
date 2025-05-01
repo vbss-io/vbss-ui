@@ -112,7 +112,7 @@ export const propsTableRows = [
   },
   {
     prop: "children",
-    Type: "string | number | React.ReactNode",
+    Type: "React.ReactNode",
     Description: "Content to be displayed inside the chip.",
     Default: "-",
   },

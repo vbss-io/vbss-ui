@@ -140,13 +140,13 @@ export const propsTableRows = [
   },
   {
     prop: "iconOn",
-    type: "ReactNode",
+    type: "React.ReactNode",
     description: "Icon to display when Switch is on",
     default: "-",
   },
   {
     prop: "iconOff",
-    type: "ReactNode",
+    type: "React.ReactNode",
     description: "Icon to display when Switch is off",
     default: "-",
   },

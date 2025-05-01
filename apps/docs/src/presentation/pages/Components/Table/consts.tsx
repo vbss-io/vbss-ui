@@ -176,19 +176,19 @@ export const propsTableRows = [
   },
   {
     prop: "headers",
-    type: "Array<{ content: string | number | ReactNode, className?: string, style?: CSSProperties }>",
+    type: "Array<{ content: React.ReactNode, className?: string, style?: CSSProperties }>",
     description: "Table headers configuration",
     default: "-",
   },
   {
     prop: "rows",
-    type: "Array<{ [key: string]: string | number | ReactNode | CSSProperties }>",
+    type: "Array<{ [key: string]: React.ReactNode | CSSProperties }>",
     description: "Table rows data",
     default: "-",
   },
   {
     prop: "footer",
-    type: "{ content: Array<string | ReactNode>, className?: string, style?: CSSProperties }",
+    type: "{ content: Array<React.ReactNode>, className?: string, style?: CSSProperties }",
     description: "Table footer configuration",
     default: "-",
   },
