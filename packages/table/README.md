@@ -140,9 +140,9 @@ export const App = () => {
 | `height`     | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                                           | Sets the height of table rows.                  | `md`      |
 | `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `xl`                                                 | Sets the border radius of the Table.            | `md`      |
 | `outline`    | `boolean`                                                                                      | Adds a border around the Table.                 | `true`    |
-| `headers`    | `Array<{ content: string \| number \| ReactNode, className?: string, style?: CSSProperties }>` | Table headers configuration.                    | `-`       |
-| `rows`       | `Array<{ [key: string]: string \| number \| ReactNode \| CSSProperties }>`                     | Table rows data.                                | `-`       |
-| `footer`     | `{ content: Array<string \| ReactNode>, className?: string, style?: CSSProperties }`           | Table footer configuration.                     | `-`       |
+| `headers`    | `Array<{ content: React.ReactNode, className?: string, style?: CSSProperties }>`               | Table headers configuration.                    | `-`       |
+| `rows`       | `Array<{ [key: string]: React.ReactNode \| CSSProperties }>`                                   | Table rows data.                                | `-`       |
+| `footer`     | `{ content: Array<React.ReactNode>, className?: string, style?: CSSProperties }`               | Table footer configuration.                     | `-`       |
 | `ref`        | `React.Ref`                                                                                    | Allows accessing the underlying DOM element.    | `-`       |
 | `className`  | `string`                                                                                       | Additional CSS classes for custom styling.      | `-`       |
 | `style`      | `React.CSSProperties`                                                                          | Additional style for custom styling.            | `-`       |
