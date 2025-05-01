@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --primary: 248 39% 39%;
+    --secondary: 248 53% 58%;
+
+    font-family: "Inter";
+  }
+}
