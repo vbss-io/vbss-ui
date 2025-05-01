@@ -26,24 +26,26 @@ export const InteractiveExampleContainer = <T extends string>({
 
   return (
     <S.Container>
-      <S.Controls>
-        {props.map((prop) => (
-          <Button
-            key={prop}
-            variant={selectedProp === prop ? "primary" : "outline"}
-            size="xs"
-            fontSize="sm"
-            onClick={() => setSelectedProp(prop)}
-          >
-            {prop}
-          </Button>
-        ))}
-      </S.Controls>
-      {enhancedChildren}
+      <S.Content>
+        <S.Controls>
+          {props.map((prop) => (
+            <Button
+              key={prop}
+              variant={selectedProp === prop ? "primary" : "outline"}
+              size="xs"
+              fontSize="sm"
+              onClick={() => setSelectedProp(prop)}
+            >
+              {prop}
+            </Button>
+          ))}
+        </S.Controls>
+        {enhancedChildren}
+      </S.Content>
       {updatedCode && (
-        <S.Content>
+        <S.CodeContainer>
           <CodeSnippet code={updatedCode} language="tsx" />
-        </S.Content>
+        </S.CodeContainer>
       )}
     </S.Container>
   )

@@ -7,6 +7,18 @@ export const Container = styled.div`
   align-items: center;
   gap: 0.5rem;
 `
+export const Content = styled.div`
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  gap: 1rem;
+`
 
 export const Controls = styled.div`
   width: 100%;
@@ -17,8 +29,7 @@ export const Controls = styled.div`
   padding: 1rem;
 `
 
-export const Content = styled.div`
-  display: flex;
+export const CodeContainer = styled.div`
   width: 100%;
   flex-direction: column;
   gap: 1rem;
