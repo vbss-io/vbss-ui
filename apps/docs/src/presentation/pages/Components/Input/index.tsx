@@ -171,7 +171,7 @@ export const InputDocs = () => {
               Input With Button
             </S.SectionSubTitle>
             <S.Paragraph>
-              Add a <strong>Button</strong> to the <strong>Input</strong> component:
+              Add a <strong>Button</strong> to the <strong>Input</strong> component, see <a href="button">ButtonProps</a>:
             </S.Paragraph>
             <ExampleContainer>
               <Input
