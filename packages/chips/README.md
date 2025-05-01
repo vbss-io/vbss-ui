@@ -75,11 +75,12 @@ Or you can use the default component className chip.
   background-color: blue;
   padding: 10px;
   border-radius: 5px;
+
+  .chip {
+    background-color: red;
+  }
 }
 
-.chip {
-  background-color: red;
-}
 ```
 
 ```jsx
