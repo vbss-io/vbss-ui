@@ -1,0 +1,11 @@
+.customTextarea {
+  .textareaContainer {
+    .textareaLabel {
+      color: red;
+    }
+    .textarea {
+      background-color: purple;
+      color: white
+    }
+  }
+}
