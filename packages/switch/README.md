@@ -93,8 +93,8 @@ const [isEnabled, setIsEnabled] = useState(false)
 | `inverted`   | `boolean`                                                                        | Inverts the Switch's direction.                       | `false`   |
 | `disabled`   | `boolean`                                                                        | Disables the Switch interaction.                      | `false`   |
 | `label`      | `string`                                                                         | Text label for the Switch.                            | `-`       |
-| `iconOn`     | `ReactNode`                                                                      | Icon to display when Switch is on.                    | `-`       |
-| `iconOff`    | `ReactNode`                                                                      | Icon to display when Switch is off.                   | `-`       |
+| `iconOn`     | `React.ReactNode`                                                                      | Icon to display when Switch is on.                    | `-`       |
+| `iconOff`    | `React.ReactNode`                                                                      | Icon to display when Switch is off.                   | `-`       |
 | `ref`        | `React.Ref`                                                                      | Allows accessing the underlying DOM element.          | `-`       |
 | `className`  | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
 | `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
