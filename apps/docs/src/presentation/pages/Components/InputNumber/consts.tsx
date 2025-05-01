@@ -1,7 +1,7 @@
 export const sections = [
   {
     title: "Installation",
-    target: "installation",
+    anchor: "installation",
     subsections: [
       {
         title: "Using npm",
@@ -15,23 +15,23 @@ export const sections = [
   },
   {
     title: "Usage",
-    target: "usage",
+    anchor: "usage",
     subsections: [
-      { title: "State Management", target: "state-management" },
-      { title: "Variant", target: "variants" },
-      { title: "Rounded", target: "rounded" },
-      { title: "Height", target: "height" },
-      { title: "Label", target: "label" },
-      { title: "Controls", target: "controls" },
-      { title: "Font Size", target: "font-size" },
-      { title: "Font Weight", target: "font-weight" },
-      { title: "Disabled", target: "disabled" },
+      { title: "State Management", anchor: "state-management" },
+      { title: "Variant", anchor: "variants" },
+      { title: "Rounded", anchor: "rounded" },
+      { title: "Height", anchor: "height" },
+      { title: "Label", anchor: "label" },
+      { title: "Controls", anchor: "controls" },
+      { title: "Font Size", anchor: "font-size" },
+      { title: "Font Weight", anchor: "font-weight" },
+      { title: "Disabled", anchor: "disabled" },
     ],
   },
-  { title: "Props", target: "props" },
+  { title: "Props", anchor: "props" },
   {
     title: "Customization",
-    target: "customization",
+    anchor: "customization",
     subsections: [
       {
         title: "Using style",
@@ -63,7 +63,7 @@ export const App = () => {
     <InputNumber
       label="Quantity:"
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => setValue(e.anchor.value)}
       placeholder="Type a number..."
       plusIcon={<Plus />}
       minusIcon={<Minus />}
