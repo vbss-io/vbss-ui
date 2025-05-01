@@ -1,0 +1,26 @@
+.customInput {
+  .inputRoot {
+    .inputLabel {
+      color: purple
+    }
+    .inputContainer {
+      .inputContent {
+        .input {
+          background-color: red !important;
+        }
+        .inputIconOnContainer {
+          .inputIconOn {}
+        }
+        .inputIconOffContainer {
+          .inputIconOff {}
+        }
+        .button {
+          /* ...Button classNames */
+        }
+      }
+    }
+    .inputError {
+      color: blue
+    }
+  }
+}
