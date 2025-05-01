@@ -100,13 +100,7 @@ export const Input: InputComponent = forwardRef(
             )}
           </div>
           {buttonProps && (
-            <Button
-              className={cn("rounded-s-none", inputButtonStyles({ height }))}
-              rounded={rounded}
-              disabled={disabled}
-              size={height}
-              {...buttonProps}
-            />
+            <Button className={"rounded-s-none"} rounded={rounded} disabled={disabled} size={height} {...buttonProps} />
           )}
         </div>
         {error && <span className={cn("inputError pl-0.5 text-red-500", inputErrorStyles({ fontWeight }))}>{error}</span>}
@@ -186,11 +180,6 @@ export const inputIconStyles = cva("relative opacity-50", {
     height: "md",
   },
 })
-
-export const inputButtonStyles = ({ height }: Partial<InputProps>) =>
-  inputStyles({
-    height,
-  })
 
 export const inputLabelStyles = ({ fontSize, fontWeight }: Partial<InputProps>) =>
   inputStyles({
