@@ -116,20 +116,25 @@ You can extend the default styles by passing custom styles using className or st
 Or you can use the default component classNames.
 
 ```css
-.switch {
-  background-color: purple;
-}
-
-.switch-thumb {
-  background-color: white;
-}
+  .switchContainer {
+    .switchRoot {
+      .switchIconOnContainer {}
+      .switchThumb {
+        background-color: red;
+      }
+      .switchIconOffContainer {}
+    }
+    .switchLabel {
+      color: blue
+    }
+  }
 ```
 
 ```jsx
 import "./custom.css";
 
 export const App = () => {
-  return <Switch />;
+  return <Switch label="Label:" />;
 }
 ```
 
