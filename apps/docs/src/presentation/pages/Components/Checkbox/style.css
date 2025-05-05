@@ -1,0 +1,13 @@
+.customCheckbox {
+  .checkboxContainer {
+    .checkboxRoot {
+      background-color: blue;
+      .checkboxIconContainer {
+        color: red;
+      }
+    }
+    .checkboxLabel {
+      color: red;
+    }
+  }
+}
