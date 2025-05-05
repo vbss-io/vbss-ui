@@ -44,8 +44,5 @@
     "@radix-ui/react-checkbox": "1.0.4",
     "@vbss-ui/lib": "*",
     "class-variance-authority": "^0.7.0"
-  },
-  "devDependencies": {
-    "vite-plugin-svgr": "^4.2.0"
   }
 }
