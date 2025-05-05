@@ -1,0 +1,51 @@
+{
+  "name": "@vbss-ui/checkbox",
+  "description": "A customizable and accessible Checkbox component with label support.",
+  "keywords": [
+    "react",
+    "component",
+    "ui",
+    "checkbox",
+    "vbss-ui"
+  ],
+  "license": "MIT",
+  "private": false,
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io/checkbox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
+  },
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "src/**/*.svg"
+  ],
+  "sideEffects": false,
+  "module": "dist/vbss-ui-checkbox.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/vbss-ui-checkbox.d.ts",
+      "import": "./dist/vbss-ui-checkbox.es.js"
+    }
+  },
+  "types": "dist/vbss-ui-checkbox.d.ts",
+  "scripts": {
+    "build": "tsc && vite build",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-checkbox": "1.0.4",
+    "@vbss-ui/lib": "*",
+    "class-variance-authority": "^0.7.0"
+  },
+  "devDependencies": {
+    "vite-plugin-svgr": "^4.2.0"
+  }
+}
