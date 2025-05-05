@@ -232,7 +232,7 @@ export const CheckboxDocs = () => {
           </section>
         </S.ContentWrapper>
       </S.Container>
-      <ContentSidebar title="CheckboxDocs" sections={sections} />
+      <ContentSidebar title="Checkbox" sections={sections} />
     </>
   )
 }
