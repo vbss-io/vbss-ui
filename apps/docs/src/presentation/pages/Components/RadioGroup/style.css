@@ -1,0 +1,18 @@
+.customRadioGroup {
+  .radioGroupContainer {
+    .radioGroupLabel {
+      color: red;
+    }
+    .radioGroupRoot {
+      .radioGroupItemContainer {
+        .radioGroupItem {
+          .radioGroupIndicator {
+          }
+        }
+        .radioGroupItemLabel {
+          color: blue;
+        }
+      }
+    }
+  }
+}
