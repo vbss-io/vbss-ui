@@ -1,0 +1,8 @@
+.customHistoryNav {
+  .historyNavContainer {
+    .button {
+      /* ...Button classNames */
+      background-color: red;
+    }
+  }
+}
