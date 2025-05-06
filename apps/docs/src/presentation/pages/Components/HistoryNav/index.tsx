@@ -139,7 +139,7 @@ export const HistoryNavDocs = () => {
           </section>
         </S.ContentWrapper>
       </S.Container>
-      <ContentSidebar title="HistoryNavDocs" sections={sections} />
+      <ContentSidebar title="History Navigation" sections={sections} />
     </>
   )
 }
