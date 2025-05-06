@@ -1,0 +1,11 @@
+.customTooltip {
+  .tooltipTrigger {
+    background-color: purple;
+    color: white;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  .tooltipContent {
+    background-color: red;
+  }
+}
