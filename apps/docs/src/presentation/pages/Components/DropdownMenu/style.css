@@ -1,0 +1,19 @@
+.customDropdownMenu {
+  .dropdownMenuTrigger {
+    background-color: red;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+  }
+}
+
+.dropdownMenu {
+  background-color: red !important;
+
+  .dropdownMenuLabel {
+    background-color: blue;
+  }
+  .dropdownMenuSeparator {}
+  .dropdownMenuItem {
+    background-color: purple;
+  }
+}
