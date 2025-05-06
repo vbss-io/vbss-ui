@@ -97,3 +97,8 @@ export const TableSection = styled.div`
     color: ${({ theme }) => theme.colors.foreground} !important;
   }
 `
+export const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`

@@ -82,12 +82,12 @@ export const CheckboxDocs = () => {
               Change the visual style of the <strong>Checkbox</strong> using the <code>variant</code> prop:
             </S.Paragraph>
             <ExampleContainer>
-              <div className="flex flex-col gap-4">
-                <Checkbox variant="primary" label="Primary" />
-                <Checkbox variant="secondary" label="Secondary" />
-                <Checkbox variant="outline" label="Outline" />
-                <Checkbox variant="ghost" label="Ghost" />
-              </div>
+              <S.ColumnContainer>
+                <Checkbox checked variant="primary" label="Primary" />
+                <Checkbox checked variant="secondary" label="Secondary" />
+                <Checkbox checked variant="outline" label="Outline" />
+                <Checkbox checked variant="ghost" label="Ghost" />
+              </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<Checkbox variant="primary" />' language="tsx" />
             <S.SectionSubTitle>
@@ -98,13 +98,13 @@ export const CheckboxDocs = () => {
               Define the border radius using the <code>rounded</code> prop:
             </S.Paragraph>
             <ExampleContainer>
-              <div className="flex flex-col gap-4">
+              <S.ColumnContainer>
                 <Checkbox rounded="none" label="None" />
                 <Checkbox rounded="sm" label="Small" />
                 <Checkbox rounded="md" label="Medium" />
                 <Checkbox rounded="lg" label="Large" />
                 <Checkbox rounded="full" label="Full" />
-              </div>
+              </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<Checkbox rounded="md" />' language="tsx" />
             <S.SectionSubTitle>
@@ -115,13 +115,13 @@ export const CheckboxDocs = () => {
               Adjust the size of the <strong>Checkbox</strong> using the <code>size</code> prop:
             </S.Paragraph>
             <ExampleContainer>
-              <div className="flex flex-col gap-4">
+              <S.ColumnContainer>
                 <Checkbox size="xs" label="Extra Small" />
                 <Checkbox size="sm" label="Small" />
                 <Checkbox size="md" label="Medium" />
                 <Checkbox size="lg" label="Large" />
                 <Checkbox size="xl" label="Extra Large" />
-              </div>
+              </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<Checkbox size="sm" />' language="tsx" />
             <S.SectionSubTitle>
@@ -143,13 +143,13 @@ export const CheckboxDocs = () => {
               Change the font size of the <strong>Checkbox</strong> label using the <code>fontSize</code> prop:
             </S.Paragraph>
             <ExampleContainer>
-              <div className="flex flex-col gap-4">
+              <S.ColumnContainer>
                 <Checkbox fontSize="xs" label="Extra Small" />
                 <Checkbox fontSize="sm" label="Small" />
                 <Checkbox fontSize="md" label="Medium" />
                 <Checkbox fontSize="lg" label="Large" />
                 <Checkbox fontSize="xl" label="Extra Large" />
-              </div>
+              </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<Checkbox fontSize="sm" />' language="tsx" />
             <S.SectionSubTitle>
@@ -160,14 +160,14 @@ export const CheckboxDocs = () => {
               Change the font weight of the <strong>Checkbox</strong> label using the <code>fontWeight</code> prop:
             </S.Paragraph>
             <ExampleContainer>
-              <div className="flex flex-col gap-4">
+              <S.ColumnContainer>
                 <Checkbox fontWeight="thin" label="Thin" />
                 <Checkbox fontWeight="light" label="Light" />
                 <Checkbox fontWeight="normal" label="Normal" />
                 <Checkbox fontWeight="medium" label="Medium" />
                 <Checkbox fontWeight="bold" label="Bold" />
                 <Checkbox fontWeight="extrabold" label="Extra Bold" />
-              </div>
+              </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<Checkbox fontWeight="normal" />' language="tsx" />
             <S.SectionSubTitle>
