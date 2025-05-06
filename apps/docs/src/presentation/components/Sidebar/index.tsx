@@ -74,14 +74,44 @@ const components = [
     path: "/table",
   },
   {
-    name: "Calendar",
-    path: "/calendar",
-    dev: true,
-  },
-  {
     name: "Checkbox",
     path: "/checkbox",
-    dev: true,
+  },
+  {
+    name: "Dialog",
+    path: "/dialog",
+  },
+  {
+    name: "Dropdown",
+    path: "/dropdown-menu",
+  },
+  {
+    name: "History Nav",
+    path: "/history-nav",
+  },
+  {
+    name: "Input",
+    path: "/input",
+  },
+  {
+    name: "Input Number",
+    path: "/input-number",
+  },
+  {
+    name: "Popover",
+    path: "/popover",
+  },
+  {
+    name: "Radio Group",
+    path: "/radio-group",
+  },
+  {
+    name: "Textarea",
+    path: "/textarea",
+  },
+  {
+    name: "Tooltip",
+    path: "/tooltip",
   },
   {
     name: "Data Table",
@@ -94,58 +124,8 @@ const components = [
     dev: true,
   },
   {
-    name: "Dialog",
-    path: "/dialog",
-    dev: true,
-  },
-  {
-    name: "Dropdown",
-    path: "/dropdown",
-    dev: true,
-  },
-  {
-    name: "History Nav",
-    path: "/history-nav",
-    dev: true,
-  },
-  {
-    name: "Icon",
-    path: "/icon",
-    dev: true,
-  },
-  {
-    name: "Icons",
-    path: "/icons",
-    dev: true,
-  },
-  {
-    name: "Input",
-    path: "/input",
-    dev: true,
-  },
-  {
-    name: "Input Number",
-    path: "/input-number",
-    dev: true,
-  },
-  {
-    name: "Popover",
-    path: "/popover",
-    dev: true,
-  },
-  {
-    name: "Radio Group",
-    path: "/radio-group",
-    dev: true,
-  },
-  {
-    name: "Textarea",
-    path: "/textarea",
-    dev: true,
-  },
-  {
-    name: "Tooltip",
-    path: "/tooltip",
+    name: "Calendar",
+    path: "/calendar",
     dev: true,
   },
 ]
