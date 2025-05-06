@@ -165,7 +165,7 @@ export const propsTableRows = [
   },
   {
     prop: "buttonProps",
-    Type: <a href="button">ButtonProps</a>,
+    type: <a href="button">ButtonProps</a>,
     description: "Props for the attached button.",
     default: "-",
   },
@@ -203,7 +203,7 @@ export const customizingExampleCode = `<Input
   placeholder="Custom style"
 />`
 
-export const customizingClassExampleCode = `//CSS
+export const customizingClassExampleCode = `// CSS
 .customInput {
   .inputRoot {
     .inputLabel {
