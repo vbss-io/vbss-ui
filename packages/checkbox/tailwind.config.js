@@ -1,8 +1,14 @@
-import baseConfig from "../../tailwind.config"
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["../**/src/**/*.{js,ts,jsx,tsx}"],
-  theme: baseConfig.theme,
+  theme: {
+    extend: {
+      colors: {
+        background: "hsl(var(--background))",
+        primary: "hsl(var(--primary))",
+        secondary: "hsl(var(--secondary))",
+      },
+    },
+  },
   plugins: [],
 }
