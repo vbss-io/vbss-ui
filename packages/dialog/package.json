@@ -1,0 +1,49 @@
+{
+  "name": "@vbss-ui/dialog",
+  "description": "A customizable and accessible Dialog component with support for triggers, overlays, and various content sections.",
+  "keywords": [
+    "react",
+    "component",
+    "ui",
+    "dialog",
+    "vbss-ui"
+  ],
+  "license": "MIT",
+  "private": false,
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io/dialog",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
+  },
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist",
+    "src/**/*.svg"
+  ],
+  "sideEffects": false,
+  "module": "dist/vbss-ui-dialog.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/vbss-ui-dialog.d.ts",
+      "import": "./dist/vbss-ui-dialog.es.js"
+    }
+  },
+  "types": "dist/vbss-ui-dialog.d.ts",
+  "scripts": {
+    "build": "tsc && vite build",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "1.1.1",
+    "@vbss-ui/lib": "*",
+    "class-variance-authority": "^0.7.0"
+  }
+}
