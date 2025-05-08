@@ -1,0 +1,18 @@
+.customDialog {
+  .dialogTrigger {
+    background-color: red;
+    padding: 1rem;
+  }
+}
+
+.dialogOverlay {}
+.dialogContent {
+  .dialogInfo {
+    .dialogTitle {}
+    .dialogDescription {}
+  }
+  .dialogFooter {}
+  .dialogCloseContainer {
+    .dialogCloseIcon {}
+  }
+}
