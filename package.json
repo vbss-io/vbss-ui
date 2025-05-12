@@ -11,6 +11,9 @@
     "apps/*"
   ],
   "scripts": {
+    "build": "lerna run build",
+    "docs:dev": "cd apps/docs && npm run dev",
+    "docs:build": "cd apps/docs && npm run build",
     "eslint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6006"
   },
