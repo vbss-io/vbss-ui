@@ -98,24 +98,20 @@ export const Colors = () => {
   )
 }
 
-const defaultColorsCode = `
-:root {
+const defaultColorsCode = `:root {
   --primary: 248 39% 39%;
   --secondary: 248 53% 58%;
   --highlight: 271 76% 53%;
   --text: 0 0% 0%;
   --background: 0 0% 100%;
-}
-`
+}`
 
-const customColorsCode = `
-:root {
+const customColorsCode = `:root {
   --primary: 200 100% 50%;     /* Bright blue primary */
   --secondary: 340 82% 52%;    /* Pink secondary */
   --highlight: 45 100% 51%;    /* Yellow highlight */
   --text: 0 0% 100%;           /* Light text */
   --background: 220 15% 20%;   /* Dark background */
-}
-`
+}`
 
 const customColorsImportCode = "import './custom-colors.css'"
