@@ -12,17 +12,17 @@ import {
 import "./index.css"
 
 type TableHeaderProps = {
-  content: string | number | ReactNode
+  content: ReactNode
   className?: string
   style?: CSSProperties
 }
 
 type RowProps = {
-  [key: string]: string | number | ReactNode | CSSProperties
+  [key: string]: ReactNode | CSSProperties
 }
 
 type FooterProps = {
-  content: Array<string | ReactNode>
+  content: Array<ReactNode>
   className?: string
   style?: CSSProperties
 }
@@ -115,15 +115,17 @@ export const Table: TableComponent = forwardRef(
                 variant && footerStyle[variant]
               )}
             >
-              {footer.content.map((foot, index) => (
-                <td
-                  key={`foot-${index}`}
-                  className={cn("ftd px-4 [&:has([role=checkbox])]:pr-0", heightTable({ height }), footer?.className)}
-                  style={footer?.style}
-                >
-                  {foot}
-                </td>
-              ))}
+              <tr className={cn("ftr", variant && rowStyle[variant])}>
+                {footer.content.map((foot, index) => (
+                  <td
+                    key={`foot-${index}`}
+                    className={cn("ftd px-4 [&:has([role=checkbox])]:pr-0", heightTable({ height }), footer?.className)}
+                    style={footer?.style}
+                  >
+                    {foot}
+                  </td>
+                ))}
+              </tr>
             </tfoot>
           )}
         </table>
@@ -152,7 +154,10 @@ export const variantTable = cva("text-black", {
       extrabold: "font-extrabold",
     },
   },
-  defaultVariants: {},
+  defaultVariants: {
+    fontSize: "md",
+    fontWeight: "normal",
+  },
 })
 
 export const heightTable = cva("", {
@@ -193,7 +198,7 @@ export const tableStyles = cva("", {
 export const headerStyle: { [key: string]: string } = {
   primary: "bg-primary text-white",
   secondary: "bg-secondary text-white",
-  outline: "bg-white text-primary",
+  outline: "bg-transparent text-primary",
 }
 
 export const rowStyle: { [key: string]: string } = {
