@@ -3,15 +3,22 @@ import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
 import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
 import "./index.css"
+import Minus from "./minus.svg"
+import Plus from "./plus.svg"
 
 type InputNumberControlsProps = Omit<ExtendableButtonProps<ElementType>, "rounded" | "onClick" | "disabled" | "size" | "icon">
 
 type InputNumberProps = ComponentProps<"input"> &
   VariantProps<typeof inputNumberStyles> & {
     label?: string
+    disableControls?: boolean
     controlsProps?: InputNumberControlsProps
     plusIcon?: ReactNode
     minusIcon?: ReactNode
+    error?: string
+    isFloat?: boolean
+    step?: number
+    denyNegative?: boolean
   }
 
 export type ExtendableInputNumberProps<C extends ElementType> = ExtendableComponentProps<C, InputNumberProps>
@@ -33,10 +40,15 @@ export const InputNumber: InputNumberComponent = forwardRef(
       disabled,
       placeholder,
       label,
+      disableControls = false,
       controlsProps,
       plusIcon,
       minusIcon,
       onChange,
+      error,
+      isFloat = false,
+      step = 1,
+      denyNegative = false,
       ...props
     }: ExtendableInputNumberProps<C>,
     ref?: PolymorphicRef<C>
@@ -45,20 +57,48 @@ export const InputNumber: InputNumberComponent = forwardRef(
 
     const InputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (onChange) {
+        const value = e.target.value
+        if (value !== "") {
+          if (isFloat && (value === "-" || value === "." || value === "-.")) {
+            onChange(e)
+            return
+          }
+          if (!/^-?\d*\.?\d*$/.test(value)) {
+            return
+          }
+          const numValue = parseFloat(value)
+          if (!isNaN(numValue)) {
+            if (denyNegative && numValue < 0) {
+              e.target.value = "0"
+            } else if (isFloat) {
+              e.target.value = value
+            } else {
+              e.target.value = Math.round(numValue).toString()
+            }
+          }
+        }
         onChange(e)
       }
     }
 
     const dispatchInputOnChangeEvent = (plus = false) => {
       const element = document.getElementById(inputId) as HTMLInputElement
-      const operation = plus ? 1 : -1
+      const currentValue = element.value ? parseFloat(element.value) : 0
+      const operation = plus ? step : -step
+      const newValue = isFloat ? Number((currentValue + operation).toFixed(10)) : currentValue + operation
+      if (denyNegative && newValue < 0) {
+        return
+      }
+
+      const formattedValue = isFloat ? newValue.toString() : Math.round(newValue).toString()
+
       InputOnChange({
         target: {
-          value: String(Number(element.value) - operation),
+          value: formattedValue,
         } as EventTarget & HTMLInputElement,
       } as React.ChangeEvent<HTMLInputElement>)
 
-      element.value = String(Number(element.value) - operation)
+      element.value = formattedValue
     }
 
     return (
@@ -69,30 +109,32 @@ export const InputNumber: InputNumberComponent = forwardRef(
           </label>
         )}
         <div className="inputNumberContent flex relative w-full">
-          {minusIcon && (
+          {!disableControls && (
             <div className={`inputNumberLeftControlContainer select-none absolute left-1 top-1/2 -translate-y-1/2`}>
               <Button
                 className={`inputNumberLeftControl`}
                 variant={controlsProps?.variant ?? variant}
                 rounded={rounded}
-                disabled={disabled}
+                disabled={disabled || (denyNegative && props.value ? parseFloat(props.value.toString()) - step < 0 : false)}
                 size="icon-xs"
-                onClick={() => dispatchInputOnChangeEvent(true)}
+                onClick={() => dispatchInputOnChangeEvent(false)}
                 {...controlsProps}
               >
-                {minusIcon}
+                {minusIcon ? minusIcon : <Minus />}
               </Button>
             </div>
           )}
           <input
             id={inputId}
-            type="number"
+            type={isFloat ? "text" : "number"}
             disabled={disabled}
             placeholder={placeholder}
             ref={ref}
             onChange={InputOnChange}
+            step={isFloat ? step : 1}
+            min={denyNegative ? 0 : undefined}
             className={cn(
-              `inputNumber text-center ${minusIcon && "pl-8"} ${plusIcon && "pr-8"}`,
+              `inputNumber w-full text-center ${minusIcon && "pl-8"} ${plusIcon && "pr-8"}`,
               inputNumberStyles({
                 variant,
                 height,
@@ -104,7 +146,7 @@ export const InputNumber: InputNumberComponent = forwardRef(
             )}
             {...props}
           />
-          {plusIcon && (
+          {!disableControls && (
             <div className={`inputNumberRightControlContainer select-none absolute right-1 top-1/2 -translate-y-1/2`}>
               <Button
                 className={`inputNumberRightControl`}
@@ -112,14 +154,17 @@ export const InputNumber: InputNumberComponent = forwardRef(
                 rounded={rounded}
                 disabled={disabled}
                 size="icon-xs"
-                onClick={() => dispatchInputOnChangeEvent(false)}
+                onClick={() => dispatchInputOnChangeEvent(true)}
                 {...controlsProps}
               >
-                {plusIcon}
+                {plusIcon ? plusIcon : <Plus />}
               </Button>
             </div>
           )}
         </div>
+        {error && (
+          <span className={cn("inputNumberError pl-0.5 text-red-500", inputNumberErrorStyles({ fontWeight }))}>{error}</span>
+        )}
       </div>
     )
   }
@@ -188,5 +233,14 @@ export const inputNumberLabelStyles = ({ fontSize, fontWeight }: Partial<InputNu
     height: null,
     rounded: null,
     fontSize,
+    fontWeight,
+  })
+
+export const inputNumberErrorStyles = ({ fontWeight }: Partial<InputNumberProps>) =>
+  inputNumberStyles({
+    variant: null,
+    height: null,
+    rounded: null,
+    fontSize: "sm",
     fontWeight,
   })

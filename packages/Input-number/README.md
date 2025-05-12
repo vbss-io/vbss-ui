@@ -90,21 +90,26 @@ export const App = () => {
 
 ## **Props**
 
-| Prop           | Type                                                                             | Description                                                                | Default   |
-|----------------|--------------------------------------------------------------------|------------------------------------------------------------------------------------------|-----------|
-| `variant`      | `primary` \| `secondary` \| `outline` \| `ghost`                   | Defines the visual style of the InputNumber.                                             | `primary` |
-| `height`       | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the height of the InputNumber.                                                      | `md`      |
-| `rounded`      | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                   | Sets the border radius of the InputNumber.                                               | `md`      |
-| `fontSize`     | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the InputNumber content.                                           | `md`      |
-| `fontWeight`   | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the InputNumber content.                                    | `normal`  |
-| `label`        | `string`                                                           | Text label for the InputNumber.                                                          | `-`       |
-| `plusIcon`     | `React.ReactNode`                                                  | Icon for increment action.                                                               | `-`       |
-| `minusIcon`    | `React.ReactNode`                                                  | Icon for decrement action.                                                               | `-`       |
-| `controlsProps`| `ButtonProps`                                                      | Props for the increment/decrement buttons. See [Button Props](https://ui.vbss.io/button) | `-`       |
-| `disabled`     | `boolean`                                                          | Disables the InputNumber interaction.                                                    | `false`   |
-| `ref`          | `React.Ref`                                                        | Allows accessing the underlying DOM element.                                             | `-`       |
-| `className`    | `string`                                                           | Additional CSS classes for custom styling.                                               | `-`       |
-| `style`        | `React.CSSProperties`                                              | Additional style for custom styling.                                                     | `-`       |
+| Prop              | Type                                                                             | Description                                                                | Default   |
+|-------------------|--------------------------------------------------------------------|------------------------------------------------------------------------------------------|-----------|
+| `variant`         | `primary` \| `secondary` \| `outline` \| `ghost`                   | Defines the visual style of the InputNumber.                                             | `primary` |
+| `height`          | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the height of the InputNumber.                                                      | `md`      |
+| `rounded`         | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                   | Sets the border radius of the InputNumber.                                               | `md`      |
+| `fontSize`        | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the InputNumber content.                                           | `md`      |
+| `fontWeight`      | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the InputNumber content.                                    | `normal`  |
+| `label`           | `string`                                                           | Text label for the InputNumber.                                                          | `-`       |
+| `error`           | `string`                                                           | Error message to display.                                                                | `-`       |
+| `isFloat`         | `boolean`                                                          | Enables decimal number input with specified decimal places.                              | `false`   |
+| `step`            | `number`                                                           | Increment/decrement step value. For float values, this can be a decimal number.          | `1`       |
+| `denyNegative`    | `boolean`                                                          | When true, prevents negative values in the input. Values below 0 will be set to 0.       | `false`   |
+| `disableControls` | `boolean`                                                          | Prop to disable Input controls.                                                          | `false`   |
+| `plusIcon`        | `React.ReactNode`                                                  | Icon for increment action.                                                               | `-`       |
+| `minusIcon`       | `React.ReactNode`                                                  | Icon for decrement action.                                                               | `-`       |
+| `controlsProps`   | `ButtonProps`                                                      | Props for the increment/decrement buttons. See [Button Props](https://ui.vbss.io/button) | `-`       |
+| `disabled`        | `boolean`                                                          | Disables the InputNumber interaction.                                                    | `false`   |
+| `ref`             | `React.Ref`                                                        | Allows accessing the underlying DOM element.                                             | `-`       |
+| `className`       | `string`                                                           | Additional CSS classes for custom styling.                                               | `-`       |
+| `style`           | `React.CSSProperties`                                              | Additional style for custom styling.                                                     | `-`       |
 
 ---
 
