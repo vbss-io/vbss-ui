@@ -1,12 +1,10 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 interface SidebarProps {
   isOpen?: boolean
-  isMobile?: boolean
 }
 
 interface NavLinkProps {
-  active?: boolean
   disabled?: boolean
 }
 
@@ -24,14 +22,12 @@ export const SidebarContainer = styled.aside<SidebarProps>`
     transition: transform 0.2s ease-in-out;
   }
 
-  ${({ isMobile }) =>
-    isMobile &&
-    css`
-      display: block;
-      top: 0rem;
-      width: 100%;
-      padding: 3rem 1rem;
-    `}
+  &[data-mobile="true"] {
+    display: block;
+    top: 0rem;
+    width: 100%;
+    padding: 3rem 1rem;
+  }
 `
 
 export const Nav = styled.nav`
@@ -61,8 +57,8 @@ export const NavLink = styled.div<NavLinkProps>`
     justify-content: start;
     padding: 1rem 1rem;
     line-height: 1rem;
-    color: ${({ active, theme }) => (active ? "white" : theme.colors.muted)};
-    background-color: ${({ active, theme }) => (active ? theme.colors.secondary : "transparent")};
+    color: ${({ theme }) => theme.colors.muted};
+    background-color: transparent;
     border: none;
 
     pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
@@ -78,5 +74,10 @@ export const NavLink = styled.div<NavLinkProps>`
       font-weight: 700;
       color: ${({ theme }) => theme.colors.muted};
     }
+  }
+
+  &[data-active="true"] a {
+    color: white;
+    background-color: ${({ theme }) => theme.colors.secondary};
   }
 `
