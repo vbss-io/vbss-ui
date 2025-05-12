@@ -42,8 +42,6 @@ export const Primary: Story = {
     buttonsProps: {
       variant: "primary",
     },
-    leftIcon: <ArrowLeft />,
-    rightIcon: <ArrowRight />,
   },
   argTypes,
 }
