@@ -80,6 +80,7 @@ export const List = styled.ol`
   list-style: inside;
   padding-left: 1.5rem;
   margin-bottom: 1.5rem;
+  color: ${({ theme }) => theme.colors.foreground};
 `
 export const StateExampleContainer = styled.div`
   width: 100%;
