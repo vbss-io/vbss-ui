@@ -58,8 +58,8 @@ export const popoverStyles = cva(
   {
     variants: {
       variant: {
-        primary: "bg-primary  border bg-primary text-white",
-        secondary: "border bg-secondary text-white",
+        primary: "bg-primary bg-primary text-white",
+        secondary: "bg-secondary text-white",
         outline: "bg-background border border-primary text-primary",
       },
       size: {
