@@ -4,6 +4,10 @@ export const sections = [
     anchor: "",
     subsections: [
       {
+        title: "Available Components",
+        anchor: "available-components",
+      },
+      {
         title: "Built with Modern Technologies",
         anchor: "built-with-modern-technologies",
       },
@@ -12,7 +16,7 @@ export const sections = [
         anchor: "built-in-typeScript-support",
       },
       {
-        title: "open-source-e-community-driven",
+        title: "Open Source & Community-Driven",
         anchor: "open-source",
       },
     ],

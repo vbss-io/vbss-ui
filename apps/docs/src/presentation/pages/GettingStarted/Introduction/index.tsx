@@ -1,9 +1,35 @@
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
-
+import { components } from "@/presentation/consts/components"
+import { Table } from "@vbss-ui/table"
 import * as S from "../../styles"
 import { sections } from "./sections"
 
 export const Introduction = () => {
+  const componentsTableHeaders = [{ content: "Component" }, { content: "Documentation" }, { content: "Package" }]
+
+  const componentsTableRows = components.map((component) => ({
+    component: component.name,
+    documentation: component.dev ? (
+      <span style={{ color: "#94a3b8" }}>Coming Soon</span>
+    ) : (
+      <a href={`${component.path}`} style={{ color: "#3b82f6", textDecoration: "none" }}>
+        View Documentation
+      </a>
+    ),
+    package: component.dev ? (
+      <span style={{ color: "#94a3b8" }}>Coming Soon</span>
+    ) : (
+      <a
+        href={`https://www.npmjs.com/package/@vbss-ui/${component.path.slice(1).replace(/-/g, "")}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#3b82f6", textDecoration: "none" }}
+      >
+        View Package
+      </a>
+    ),
+  }))
+
   return (
     <>
       <S.Container>
@@ -20,6 +46,28 @@ export const Introduction = () => {
               Each component is available as an independent package, allowing you to keep your project lightweight by installing
               only what you need.
             </S.Paragraph>
+          </section>
+          <S.SectionDivider />
+          <section>
+            <S.SectionTitle>
+              <S.SectionAnchor id="available-components" />
+              Available Components
+            </S.SectionTitle>
+            <S.Paragraph>
+              Here&apos;s a list of all components in the VBSS UI library. Components marked as &quot;Coming Soon&quot; are
+              currently in development:
+            </S.Paragraph>
+            <S.TableSection>
+              <Table
+                variant="secondary"
+                headers={componentsTableHeaders}
+                rows={componentsTableRows.map((row) => ({
+                  ...row,
+                  style: { color: "white" },
+                }))}
+                fontSize="sm"
+              />
+            </S.TableSection>
           </section>
           <S.SectionDivider />
           <section>
