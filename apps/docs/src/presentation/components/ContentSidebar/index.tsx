@@ -25,7 +25,7 @@ export const ContentSidebar = ({ title, sections }: ContentSidebarProps) => {
           <S.Nav key={section.anchor}>
             <S.NavLink href={`#${section.anchor}`}>{section.title}</S.NavLink>
             {section?.subsections?.map((subsection) => (
-              <S.NavLink key={subsection.anchor} href={`#${subsection.anchor}`} indented>
+              <S.NavLink key={subsection.anchor} href={`#${subsection.anchor}`} data-indented="true">
                 {subsection.title}
               </S.NavLink>
             ))}

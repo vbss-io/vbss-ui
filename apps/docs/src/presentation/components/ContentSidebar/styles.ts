@@ -35,14 +35,18 @@ export const Nav = styled.nav`
   gap: 0.5rem;
 `
 
-export const NavLink = styled.a<{ indented?: boolean }>`
+export const NavLink = styled.a`
   font-size: 0.875rem;
   text-decoration: none;
-  color: ${({ indented, theme }) => (indented ? theme.colors.muted : theme.colors.primary)};
-  padding-left: ${({ indented }) => (indented ? "1rem" : "0")};
+  color: ${({ theme }) => theme.colors.primary};
   transition: color 0.2s ease-in-out;
 
   &:hover {
     color: ${({ theme }) => theme.colors.secondary};
+  }
+
+  &[data-indented="true"] {
+    color: ${({ theme }) => theme.colors.muted};
+    padding-left: 1rem;
   }
 `
