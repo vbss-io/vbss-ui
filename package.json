@@ -19,9 +19,11 @@
   },
   "types": "./dist/vbss-ui.d.ts",
   "sideEffects": false,
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vitorbss12/vbss-ui.git"
+    "url": "git+https://github.com/vbss-io/vbss-ui.git"
   },
   "scripts": {
     "dev": "vite",

@@ -1,5 +1,26 @@
 # vbss-ui Library
 
+> ⚠️ **LEGACY VERSION WARNING** ⚠️
+>
+> This is a legacy/deprecated version of vbss-ui. Please use the latest version instead:
+>
+> - GitHub Repository: [https://github.com/vbss-io/vbss-ui](https://github.com/vbss-io/vbss-ui)
+> - Documentation: [https://ui.vbss.io](https://ui.vbss.io)
+>
+> The new version includes:
+>
+> - Improved components with better TypeScript support
+> - Modular package structure (each component is a separate package)
+> - More features and better performance
+>
+> Instead of installing all components at once, you can now install only the components you need:
+>
+> ```bash
+> npm install @vbss-ui/button @vbss-ui/input @vbss-ui/table ...
+> # or
+> yarn add @vbss-ui/button @vbss-ui/input @vbss-ui/table ...
+> ```
+
 ## Installation
 
 First, you need to install the vbss-ui library. You can do this using either npm or yarn.
@@ -72,11 +93,11 @@ import "./custom-colors.css";
 
 This will override the default colors with your custom colors.
 
-### You are now ready to use the vbss-ui components in your project!
+### You are now ready to use the vbss-ui components in your project
 
 ### More
 
-For more information, please visit the [repository](https://github.com/vitorbss12/vbss-ui) and run Storybook to see the components in action. Storybook provides an interactive way to explore and test the components.
+For more information, please visit the [repository](https://github.com/vbss-io/vbss-ui) and run Storybook to see the components in action. Storybook provides an interactive way to explore and test the components.
 
 To start Storybook, navigate to the repository directory and run:
 
