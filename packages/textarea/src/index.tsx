@@ -5,6 +5,7 @@ import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, Ref
 type TextareaProps = ComponentProps<"textarea"> &
   VariantProps<typeof textareaStyles> & {
     label?: string
+    error?: string
   }
 
 export type ExtendableTextareaProps<C extends ElementType> = ExtendableComponentProps<C, TextareaProps>
@@ -16,7 +17,18 @@ export type TextareaComponent = ForwardRefExoticComponent<ExtendableTextareaProp
  */
 export const Textarea: TextareaComponent = forwardRef(
   <C extends ElementType>(
-    { variant, rounded, fontSize, fontWeight, className, disabled, placeholder, label, ...props }: ExtendableTextareaProps<C>,
+    {
+      variant,
+      rounded,
+      fontSize,
+      fontWeight,
+      className,
+      disabled,
+      placeholder,
+      label,
+      error,
+      ...props
+    }: ExtendableTextareaProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
     const textareaId = props.id ?? Math.random().toString()
@@ -55,6 +67,7 @@ export const Textarea: TextareaComponent = forwardRef(
           )}
           {...props}
         />
+        {error && <span className={cn("textareaError pl-0.5 text-red-500", textareaErrorStyles({ fontWeight }))}>{error}</span>}
       </div>
     )
   }
@@ -113,5 +126,13 @@ export const textAreaLabelStyles = ({ fontSize, fontWeight }: Partial<TextareaPr
     variant: null,
     rounded: null,
     fontSize,
+    fontWeight,
+  })
+
+export const textareaErrorStyles = ({ fontWeight }: Partial<TextareaProps>) =>
+  textareaStyles({
+    variant: null,
+    rounded: null,
+    fontSize: "sm",
     fontWeight,
   })
