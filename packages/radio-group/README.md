@@ -100,24 +100,24 @@ export const App = () => {
 
 ## **Props**
 
-| Prop            | Type                                                                             | Description                                           | Default   |
-|-----------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`       | `primary` \| `secondary` \| `outline` \| `ghost`                                 | Defines the visual style of the RadioGroup.           | `primary` |
-| `size`          | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the size of the RadioGroup.                      | `sm`      |
-| `rounded`       | `none` \| `sm` \| `md` \| `lg` \| `full`                                         | Sets the border radius of the RadioGroup.             | `md`      |
-| `fontSize`      | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the RadioGroup label.           | `md`      |
-| `fontWeight`    | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the RadioGroup label.    | `normal`  |
-| `direction`     | `col` \| `row`                                                                   | Change the items direction for the RadioGroup.        | `col`     |
-| `label`         | `string`                                                                         | Text label for the RadioGroup.                        | `-`       |
-| `icon`          | `React.ReactNode`                                                                | Custom icon for the checked state.                    | `-`       |
-| `values`        | `{ value: string; label: string }[]`                                             | Array of options for the RadioGroup.                  | `[]`      |
-| `value`         | `string`                                                                         | Controlled value of the RadioGroup.                   | `-`       |
-| `onValueChange` | `(value: string) => void`                                                        | Callback when value changes.                          | `-`       |
-| `defaultValue`  | `string`                                                                         | Default value of the RadioGroup.                      | `-`       |
-| `disabled`      | `boolean`                                                                        | Disables the RadioGroup interaction.                  | `false`   |
-| `ref`           | `React.Ref`                                                                      | Allows accessing the underlying DOM element.          | `-`       |
-| `className`     | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`         | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop            | Type                                                               | Description                                           | Default   |
+|-----------------|--------------------------------------------------------------------|-------------------------------------------------------|-----------|
+| `variant`       | `primary` \| `secondary` \| `outline` \| `ghost`                   | Defines the visual style of the RadioGroup.           | `primary` |
+| `size`          | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the size of the RadioGroup.                      | `sm`      |
+| `rounded`       | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Sets the border radius of the RadioGroup.             | `md`      |
+| `fontSize`      | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the RadioGroup label.           | `md`      |
+| `fontWeight`    | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the RadioGroup label.    | `normal`  |
+| `direction`     | `col` \| `row`                                                     | Change the items direction for the RadioGroup.        | `col`     |
+| `label`         | `string`                                                           | Text label for the RadioGroup.                        | `-`       |
+| `icon`          | `React.ReactNode`                                                  | Custom icon for the checked state.                    | `-`       |
+| `values`        | `{ value: string; label: string }[]`                               | Array of options for the RadioGroup.                  | `[]`      |
+| `value`         | `string`                                                           | Controlled value of the RadioGroup.                   | `-`       |
+| `onValueChange` | `(value: string) => void`                                          | Callback when value changes.                          | `-`       |
+| `defaultValue`  | `string`                                                           | Default value of the RadioGroup.                      | `-`       |
+| `disabled`      | `boolean`                                                          | Disables the RadioGroup interaction.                  | `false`   |
+| `ref`           | `React.Ref`                                                        | Allows accessing the underlying DOM element.          | `-`       |
+| `className`     | `string`                                                           | Additional CSS classes for custom styling.            | `-`       |
+| `style`         | `React.CSSProperties`                                              | Additional style for custom styling.                  | `-`       |
 
 ---
 

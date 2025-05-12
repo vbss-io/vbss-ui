@@ -134,22 +134,22 @@ return (
 
 ## **Props**
 
-| Prop               | Type                                                                             | Description                                           | Default   |
-|--------------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`          | `primary` \| `secondary` \| `outline` \| `ghost`                                 | Defines the visual style of the Dialog.               | `primary` |
-| `rounded`          | `none` \| `sm` \| `md` \| `lg` \| `full`                                         | Sets the border radius of the Dialog.                 | `md`      |
-| `trigger`          | `React.ReactNode`                                                                | The element that triggers the Dialog.                 | `<div />` |
-| `overlayOpacity`   | `number`                                                                         | Sets the opacity of the overlay (0-100).              | `50`      |
-| `border`           | `boolean`                                                                        | Adds a border to the Dialog.                          | `false`   |
-| `title`            | `React.ReactNode`                                                                | The title of the Dialog.                              | `-`       |
-| `description`      | `React.ReactNode`                                                                | The description text of the Dialog.                   | `-`       |
-| `footer`           | `React.ReactNode`                                                                | Content to be displayed in the footer.                | `-`       |
-| `disableTextColor` | `boolean`                                                                        | Disable variant-based text color.                     | `false`    |
-| `hideClose`        | `boolean`                                                                        | Shows/hides the close button.                         | `false`   |
-| `open`             | `boolean`                                                                        | Controls whether the dialog is open or closed.        | `-`       |
-| `onOpenChange`     | `(open: boolean) => void`                                                        | Callback when the dialog's open state changes.        | `-`       |
-| `className`        | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`            | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop               | Type                                             | Description                                           | Default   |
+|--------------------|--------------------------------------------------|-------------------------------------------------------|-----------|
+| `variant`          | `primary` \| `secondary` \| `outline` \| `ghost` | Defines the visual style of the Dialog.               | `primary` |
+| `rounded`          | `none` \| `sm` \| `md` \| `lg` \| `full`         | Sets the border radius of the Dialog.                 | `md`      |
+| `trigger`          | `React.ReactNode`                                | The element that triggers the Dialog.                 | `<div />` |
+| `overlayOpacity`   | `number`                                         | Sets the opacity of the overlay (0-100).              | `50`      |
+| `border`           | `boolean`                                        | Adds a border to the Dialog.                          | `false`   |
+| `title`            | `React.ReactNode`                                | The title of the Dialog.                              | `-`       |
+| `description`      | `React.ReactNode`                                | The description text of the Dialog.                   | `-`       |
+| `footer`           | `React.ReactNode`                                | Content to be displayed in the footer.                | `-`       |
+| `disableTextColor` | `boolean`                                        | Disable variant-based text color.                     | `false`    |
+| `hideClose`        | `boolean`                                        | Shows/hides the close button.                         | `false`   |
+| `open`             | `boolean`                                        | Controls whether the dialog is open or closed.        | `-`       |
+| `onOpenChange`     | `(open: boolean) => void`                        | Callback when the dialog's open state changes.        | `-`       |
+| `className`        | `string`                                         | Additional CSS classes for custom styling.            | `-`       |
+| `style`            | `React.CSSProperties`                            | Additional style for custom styling.                  | `-`       |
 
 ---
 

@@ -90,24 +90,24 @@ export const App = () => {
 
 ## **Props**
 
-| Prop                | Type                                                                             | Description                                                                  | Default   |
-|---------------------|----------------------------------------------------------------------------------|------------------------------------------------------------------------------|-----------|
-| `variant`           | `primary` \| `secondary` \| `outline` \| `ghost`                                 | Defines the visual style of the Input.                                       | `primary` |
-| `height`            | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the height of the Input.                                                | `md`      |
-| `rounded`           | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                                 | Sets the border radius of the Input.                                         | `md`      |
-| `fontSize`          | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the Input content.                                     | `md`      |
-| `fontWeight`        | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the Input content.                              | `normal`  |
-| `type`              | `text` \| `password` \| `number`                                                 | Sets the input type.                                                         | `text`    |
-| `label`             | `string`                                                                         | Text label for the Input.                                                    | `-`       |
-| `error`             | `string`                                                                         | Error message to display.                                                    | `-`       |
-| `showPasswordSwitch`| `boolean`                                                                        | Enables password visibility toggle.                                          | `false`   |
-| `iconOn`            | `React.ReactNode`                                                                | Icon to display when password is hidden.                                     | `-`       |
-| `iconOff`           | `React.ReactNode`                                                                | Icon to display when password is visible.                                    | `-`       |
-| `buttonProps`       | `ButtonProps`                                                                    | Props for the attached button. See [Button Props](https://ui.vbss.io/button) | `-`       |
-| `disabled`          | `boolean`                                                                        | Disables the Input interaction.                                              | `false`   |
-| `ref`               | `React.Ref`                                                                      | Allows accessing the underlying DOM element.                                 | `-`       |
-| `className`         | `string`                                                                         | Additional CSS classes for custom styling.                                   | `-`       |
-| `style`             | `React.CSSProperties`                                                            | Additional style for custom styling.                                         | `-`       |
+| Prop                | Type                                                               | Description                                                                  | Default   |
+|---------------------|--------------------------------------------------------------------|------------------------------------------------------------------------------|-----------|
+| `variant`           | `primary` \| `secondary` \| `outline` \| `ghost`                   | Defines the visual style of the Input.                                       | `primary` |
+| `height`            | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the height of the Input.                                                | `md`      |
+| `rounded`           | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                   | Sets the border radius of the Input.                                         | `md`      |
+| `fontSize`          | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the Input content.                                     | `md`      |
+| `fontWeight`        | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the Input content.                              | `normal`  |
+| `type`              | `text` \| `password` \| `number`                                   | Sets the input type.                                                         | `text`    |
+| `label`             | `string`                                                           | Text label for the Input.                                                    | `-`       |
+| `error`             | `string`                                                           | Error message to display.                                                    | `-`       |
+| `showPasswordSwitch`| `boolean`                                                          | Enables password visibility toggle.                                          | `false`   |
+| `iconOn`            | `React.ReactNode`                                                  | Icon to display when password is hidden.                                     | `-`       |
+| `iconOff`           | `React.ReactNode`                                                  | Icon to display when password is visible.                                    | `-`       |
+| `buttonProps`       | `ButtonProps`                                                      | Props for the attached button. See [Button Props](https://ui.vbss.io/button) | `-`       |
+| `disabled`          | `boolean`                                                          | Disables the Input interaction.                                              | `false`   |
+| `ref`               | `React.Ref`                                                        | Allows accessing the underlying DOM element.                                 | `-`       |
+| `className`         | `string`                                                           | Additional CSS classes for custom styling.                                   | `-`       |
+| `style`             | `React.CSSProperties`                                              | Additional style for custom styling.                                         | `-`       |
 
 ---
 

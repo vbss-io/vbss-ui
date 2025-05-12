@@ -84,20 +84,20 @@ const [isEnabled, setIsEnabled] = useState(false)
 
 ## **Props**
 
-| Prop         | Type                                                                             | Description                                           | Default   |
-|--------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`    | `primary` \| `secondary` \| `outline` \| `ghost`                                 | Defines the visual style of the Switch.               | `primary` |
-| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                                         | Sets the border radius of the Switch.                 | `full`    |
-| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the Switch label.               | `sm`      |
-| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the Switch label.        | `normal`  |
-| `inverted`   | `boolean`                                                                        | Inverts the Switch's direction.                       | `false`   |
-| `disabled`   | `boolean`                                                                        | Disables the Switch interaction.                      | `false`   |
-| `label`      | `string`                                                                         | Text label for the Switch.                            | `-`       |
-| `iconOn`     | `React.ReactNode`                                                                      | Icon to display when Switch is on.                    | `-`       |
-| `iconOff`    | `React.ReactNode`                                                                      | Icon to display when Switch is off.                   | `-`       |
-| `ref`        | `React.Ref`                                                                      | Allows accessing the underlying DOM element.          | `-`       |
-| `className`  | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop         | Type                                                               | Description                                    | Default   |
+|--------------|--------------------------------------------------------------------|------------------------------------------------|-----------|
+| `variant`    | `primary` \| `secondary` \| `outline` \| `ghost`                   | Defines the visual style of the Switch.        | `primary` |
+| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Sets the border radius of the Switch.          | `full`    |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the Switch label.        | `sm`      |
+| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the Switch label. | `normal`  |
+| `inverted`   | `boolean`                                                          | Inverts the Switch's direction.                | `false`   |
+| `disabled`   | `boolean`                                                          | Disables the Switch interaction.               | `false`   |
+| `label`      | `string`                                                           | Text label for the Switch.                     | `-`       |
+| `iconOn`     | `React.ReactNode`                                                  | Icon to display when Switch is on.             | `-`       |
+| `iconOff`    | `React.ReactNode`                                                  | Icon to display when Switch is off.            | `-`       |
+| `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.   | `-`       |
+| `className`  | `string`                                                           | Additional CSS classes for custom styling.     | `-`       |
+| `style`      | `React.CSSProperties`                                              | Additional style for custom styling.           | `-`       |
 
 ---
 

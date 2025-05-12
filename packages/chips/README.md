@@ -28,16 +28,16 @@ export const App = () => {
 
 ## **Props**
 
-| Prop            | Type                                            | Description                                                                   | Default |
-|-----------------|-------------------------------------------------|-------------------------------------------------------------------------------|---------|
-| `chips`         | `React.ReactNode[]`                             | List of chip contents to render.                                              | `[]`    |
-| `gap`           | `xs` \| `sm` \| `md` \| `lg` \| `xl`            | Defines the spacing between chips.                                            | `md`    |
-| `flexDirection` | `row` \| `col`                                  | Determines the layout direction of the chips.                                 | `row`   |
-| `chipsProps`    | `ChipProps`                                     | Props applied to `Chip` components. See [Chip Props](https://ui.vbss.io/chip) | `-`     |
-| `as`            | `React.ElementType`                             | Defines the HTML element or component to render.                              | `div`   |
-| `ref`           | `React.Ref`                                     | Allows accessing the underlying DOM element.                                  | `-`     |
-| `className`     | `string`                                        | Additional CSS classes for custom styling.                                    | `-`     |
-| `style`         | `React.CSSProperties`                           | Additional style for custom styling.                                          | `-`     |
+| Prop            | Type                                 | Description                                                                   | Default |
+|-----------------|--------------------------------------|-------------------------------------------------------------------------------|---------|
+| `chips`         | `React.ReactNode[]`                  | List of chip contents to render.                                              | `[]`    |
+| `gap`           | `xs` \| `sm` \| `md` \| `lg` \| `xl` | Defines the spacing between chips.                                            | `md`    |
+| `flexDirection` | `row` \| `col`                       | Determines the layout direction of the chips.                                 | `row`   |
+| `chipsProps`    | `ChipProps`                          | Props applied to `Chip` components. See [Chip Props](https://ui.vbss.io/chip) | `-`     |
+| `as`            | `React.ElementType`                  | Defines the HTML element or component to render.                              | `div`   |
+| `ref`           | `React.Ref`                          | Allows accessing the underlying DOM element.                                  | `-`     |
+| `className`     | `string`                             | Additional CSS classes for custom styling.                                    | `-`     |
+| `style`         | `React.CSSProperties`                | Additional style for custom styling.                                          | `-`     |
 
 ### **chipsProps Example**
 

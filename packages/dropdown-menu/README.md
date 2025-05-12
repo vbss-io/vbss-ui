@@ -104,20 +104,20 @@ export const App = () => {
 
 ## **Props**
 
-| Prop         | Type                                                                             | Description                                           | Default   |
-|--------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`    | `primary` \| `secondary` \| `outline` \| `ghost`                                 | Defines the visual style of the Dropdown Menu.        | `primary` |
-| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the size of the Dropdown Menu.                   | `md`      |
-| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                                         | Sets the border radius of the Dropdown Menu.          | `md`      |
-| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the menu items.                 | `md`      |
-| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the menu items.          | `normal`  |
-| `side`       | `top` \| `right` \| `bottom` \| `left`                                           | Sets the position of the Dropdown Menu.               | `top`     |
-| `trigger`    | `React.ReactNode`                                                                | The element that triggers the Dropdown Menu.          | `-`       |
-| `menuLabel`  | `React.ReactNode`                                                                | Optional label for the menu.                          | `-`       |
-| `menus`      | `{ item: React.ReactNode \| "separator" }[]`                                     | Array of menu items or separators.                    | `[]`      |
-| `ref`        | `React.Ref`                                                                      | Allows accessing the underlying DOM element.          | `-`       |
-| `className`  | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop         | Type                                                               | Description                                           | Default   |
+|--------------|--------------------------------------------------------------------|-------------------------------------------------------|-----------|
+| `variant`    | `primary` \| `secondary` \| `outline` \| `ghost`                   | Defines the visual style of the Dropdown Menu.        | `primary` |
+| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the size of the Dropdown Menu.                   | `md`      |
+| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Sets the border radius of the Dropdown Menu.          | `md`      |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the menu items.                 | `md`      |
+| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the menu items.          | `normal`  |
+| `side`       | `top` \| `right` \| `bottom` \| `left`                             | Sets the position of the Dropdown Menu.               | `top`     |
+| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Dropdown Menu.          | `-`       |
+| `menuLabel`  | `React.ReactNode`                                                  | Optional label for the menu.                          | `-`       |
+| `menus`      | `{ item: React.ReactNode \| "separator" }[]`                       | Array of menu items or separators.                    | `[]`      |
+| `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.          | `-`       |
+| `className`  | `string`                                                           | Additional CSS classes for custom styling.            | `-`       |
+| `style`      | `React.CSSProperties`                                              | Additional style for custom styling.                  | `-`       |
 
 ---
 

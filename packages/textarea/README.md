@@ -73,18 +73,18 @@ export const App = () => {
 
 ## **Props**
 
-| Prop         | Type                                                                             | Description                                           | Default   |
-|--------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`    | `primary` \| `secondary` \| `outline` \| `ghost`                                 | Defines the visual style of the Textarea.             | `primary` |
-| `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                                 | Sets the border radius of the Textarea.               | `md`      |
-| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the Textarea content.           | `md`      |
-| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the Textarea content.    | `normal`  |
-| `label`      | `string`                                                                         | Text label for the Textarea.                          | `-`       |
-| `error`      | `string`                                                                         | Error message to display.                             | `-`       |
-| `disabled`   | `boolean`                                                                        | Disables the Textarea interaction.                    | `false`   |
-| `ref`        | `React.Ref`                                                                      | Allows accessing the underlying DOM element.          | `-`       |
-| `className`  | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop         | Type                                                               | Description                                        | Default   |
+|--------------|--------------------------------------------------------------------|----------------------------------------------------|-----------|
+| `variant`    | `primary` \| `secondary` \| `outline` \| `ghost`                   | Defines the visual style of the Textarea.          | `primary` |
+| `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                   | Sets the border radius of the Textarea.            | `md`      |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the Textarea content.        | `md`      |
+| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the Textarea content. | `normal`  |
+| `label`      | `string`                                                           | Text label for the Textarea.                       | `-`       |
+| `error`      | `string`                                                           | Error message to display.                          | `-`       |
+| `disabled`   | `boolean`                                                          | Disables the Textarea interaction.                 | `false`   |
+| `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.       | `-`       |
+| `className`  | `string`                                                           | Additional CSS classes for custom styling.         | `-`       |
+| `style`      | `React.CSSProperties`                                              | Additional style for custom styling.               | `-`       |
 
 ---
 

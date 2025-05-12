@@ -62,19 +62,19 @@ export const App = () => {
 
 ## **Props**
 
-| Prop         | Type                                                                             | Description                                           | Default   |
-|--------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`    | `primary` \| `secondary` \| `outline`                                            | Defines the visual style of the Popover.              | `primary` |
-| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the padding size of the Popover.                 | `md`      |
-| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                                         | Sets the border radius of the Popover.                | `md`      |
-| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the Popover content.            | `md`      |
-| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Sets the font weight of the Popover content.          | `normal`  |
-| `trigger`    | `React.ReactNode`                                                                | The element that triggers the Popover.                | `<div />` |
-| `side`       | `top` \| `right` \| `bottom` \| `left`                                           | Sets the position of the Popover.                     | `top`     |
-| `align`      | `start` \| `center` \| `end`                                                     | Sets the alignment of the Popover.                    | `center`  |
-| `sideOffset` | `number`                                                                         | Sets the offset from the trigger element.             | `4`       |
-| `className`  | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop         | Type                                                               | Description                                           | Default   |
+|--------------|--------------------------------------------------------------------|-------------------------------------------------------|-----------|
+| `variant`    | `primary` \| `secondary` \| `outline`                              | Defines the visual style of the Popover.              | `primary` |
+| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the padding size of the Popover.                 | `md`      |
+| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Sets the border radius of the Popover.                | `md`      |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the Popover content.            | `md`      |
+| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Sets the font weight of the Popover content.          | `normal`  |
+| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Popover.                | `<div />` |
+| `side`       | `top` \| `right` \| `bottom` \| `left`                             | Sets the position of the Popover.                     | `top`     |
+| `align`      | `start` \| `center` \| `end`                                       | Sets the alignment of the Popover.                    | `center`  |
+| `sideOffset` | `number`                                                           | Sets the offset from the trigger element.             | `4`       |
+| `className`  | `string`                                                           | Additional CSS classes for custom styling.            | `-`       |
+| `style`      | `React.CSSProperties`                                              | Additional style for custom styling.                  | `-`       |
 
 ---
 

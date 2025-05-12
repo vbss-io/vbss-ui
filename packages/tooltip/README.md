@@ -89,19 +89,19 @@ export const App = () => {
 
 ## **Props**
 
-| Prop         | Type                                                                             | Description                                           | Default   |
-|--------------|----------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
-| `variant`    | `primary` \| `secondary` \| `outline`                                            | Defines the visual style of the Tooltip.              | `primary` |
-| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the size of the Tooltip.                         | `md`      |
-| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                                         | Sets the border radius of the Tooltip.                | `md`      |
-| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the Tooltip content.            | `md`      |
-| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the Tooltip content.     | `normal`  |
-| `side`       | `top` \| `right` \| `bottom` \| `left`                                           | Sets the position of the Tooltip.                     | `top`     |
-| `sideOffset` | `number`                                                                         | Sets the offset from the trigger element.             | `4`       |
-| `trigger`    | `React.ReactNode`                                                                | The element that triggers the Tooltip.                | `-`       |
-| `ref`        | `React.Ref`                                                                      | Allows accessing the underlying DOM element.          | `-`       |
-| `className`  | `string`                                                                         | Additional CSS classes for custom styling.            | `-`       |
-| `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.                  | `-`       |
+| Prop         | Type                                                               | Description                                       | Default   |
+|--------------|--------------------------------------------------------------------|---------------------------------------------------|-----------|
+| `variant`    | `primary` \| `secondary` \| `outline`                              | Defines the visual style of the Tooltip.          | `primary` |
+| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the size of the Tooltip.                     | `md`      |
+| `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Sets the border radius of the Tooltip.            | `md`      |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the Tooltip content.        | `md`      |
+| `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the Tooltip content. | `normal`  |
+| `side`       | `top` \| `right` \| `bottom` \| `left`                             | Sets the position of the Tooltip.                 | `top`     |
+| `sideOffset` | `number`                                                           | Sets the offset from the trigger element.         | `4`       |
+| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Tooltip.            | `-`       |
+| `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.      | `-`       |
+| `className`  | `string`                                                           | Additional CSS classes for custom styling.        | `-`       |
+| `style`      | `React.CSSProperties`                                              | Additional style for custom styling.              | `-`       |
 
 ---
 
