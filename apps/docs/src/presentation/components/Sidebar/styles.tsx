@@ -26,6 +26,7 @@ export const SidebarContainer = styled.aside<SidebarProps>`
     display: block;
     top: 0rem;
     width: 100%;
+    height: 100vh;
     padding: 3rem 1rem;
   }
 `
