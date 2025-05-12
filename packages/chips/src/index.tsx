@@ -5,7 +5,7 @@ import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, Rea
 
 type ChipsProps = ComponentProps<"div"> &
   VariantProps<typeof chipsStyles> & {
-    chips?: string[] | number[] | ReactNode[]
+    chips?: ReactNode[]
     chipsProps?: ExtendableChipProps<ElementType>
   }
 
