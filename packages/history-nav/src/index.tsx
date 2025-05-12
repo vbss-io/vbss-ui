@@ -2,6 +2,8 @@ import { Button, ExtendableButtonProps } from "@vbss-ui/button"
 import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
 import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import ArrowLeft from "./arrow-left.svg"
+import ArrowRight from "./arrow-right.svg"
 import "./index.css"
 
 export type HistoryNavProps = ComponentProps<"div"> &
@@ -28,10 +30,10 @@ export const HistoryNav: HistoryNavComponent = forwardRef(
     return (
       <Component ref={ref} className={cn("historyNavContainer flex", historyNavStyles({ gap }), className)} {...props}>
         <Button size={buttonsProps?.size ?? "icon-md"} onClick={leftOnClick} {...buttonsProps}>
-          {leftIcon}
+          {leftIcon ? leftIcon : <ArrowLeft />}
         </Button>
         <Button size={buttonsProps?.size ?? "icon-md"} onClick={rightOnClick} {...buttonsProps}>
-          {rightIcon}
+          {rightIcon ? rightIcon : <ArrowRight />}
         </Button>
       </Component>
     )

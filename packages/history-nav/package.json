@@ -20,7 +20,8 @@
   "version": "1.0.0",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "src/**/*.svg"
   ],
   "sideEffects": false,
   "module": "dist/vbss-ui-history-nav.es.js",
