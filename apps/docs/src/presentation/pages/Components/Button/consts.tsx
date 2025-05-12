@@ -67,6 +67,26 @@ export const sections = [
   },
 ]
 
+export const realUsageExampleCode = `import { Button } from "@vbss-ui/button"
+
+export const App = () => {
+  const handleSubmit = () => {
+    // Handle form submission
+    console.log("Form submitted!")
+  }
+
+  return (
+    <form onSubmit={(e) => {
+      e.preventDefault()
+      handleSubmit()
+    }}>
+      <Button type="submit">
+        Submit Form
+      </Button>
+    </form>
+  )
+}`
+
 export const usageExampleCode = `import { Button } from "@vbss-ui/button"
 
 export export const App = () => {

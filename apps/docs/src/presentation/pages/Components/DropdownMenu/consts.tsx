@@ -197,3 +197,39 @@ export const App = () => {
     />
   )
 }`
+
+export const realUsageExampleCode = `import { DropdownMenu } from "@vbss-ui/dropdown-menu"
+import { Button } from "@vbss-ui/button"
+import { PencilSimple, Trash } from "@phosphor-icons/react"
+
+export const App = () => {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <h3 style={{ fontSize: "1rem", fontWeight: "500", margin: 0 }}>User Actions:</h3>
+      <DropdownMenu
+        trigger={<Button as="div">More Actions</Button>}
+        style={{ padding: "0.75rem" }}
+        menuLabel="User Options"
+        menus={[
+          {
+            item: (
+              <Button onClick={() => console.log("Edit action")} style={{ width: "100%" }}>
+                <PencilSimple />
+                Edit Profile
+              </Button>
+            ),
+          },
+          { item: "separator" },
+          {
+            item: (
+              <Button onClick={() => console.log("Delete action")} style={{ width: "100%" }}>
+                <Trash />
+                Delete Account
+              </Button>
+            ),
+          },
+        ]}
+      />
+    </div>
+  )
+}`

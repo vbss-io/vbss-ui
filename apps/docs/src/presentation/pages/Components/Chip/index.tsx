@@ -1,5 +1,6 @@
 import { Chip } from "@vbss-ui/chip"
 import { Table } from "@vbss-ui/table"
+import { useState } from "react"
 
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
@@ -11,12 +12,19 @@ import {
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
 import "./style.css"
 
 export const ChipDocs = () => {
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]))
+  }
+
   return (
     <>
       <S.Container>
@@ -29,8 +37,22 @@ export const ChipDocs = () => {
               labels, or status indicators. It supports different variants, sizes, and styles, making it highly flexible for
               various use cases.
             </S.Paragraph>
-            <ExampleContainer code="<Chip>Hello World</Chip>">
-              <Chip>Hello World</Chip>
+            <ExampleContainer code={realUsageExampleCode}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                  {["React", "TypeScript", "Node.js"].map((tag) => (
+                    <Chip
+                      key={tag}
+                      variant={selectedTags.includes(tag) ? "primary" : "outline"}
+                      onClick={() => handleTagClick(tag)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {tag}
+                    </Chip>
+                  ))}
+                </div>
+                <p style={{ fontSize: "0.875rem", color: "#666" }}>Selected: {selectedTags.join(", ") || "None"}</p>
+              </div>
             </ExampleContainer>
           </section>
           <section>

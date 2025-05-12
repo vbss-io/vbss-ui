@@ -290,3 +290,62 @@ export const styledFooterExampleCode = `const styledRows = {
 }
 
 <Table headers={basicHeaders} rows={basicRows} footer={styledFooter} />`
+
+export const realUsageExampleCode = `import { Table } from "@vbss-ui/table"
+
+export const App = () => {
+  const taskListHeaders = [
+    { content: "Task", style: { width: "40%" } },
+    { content: "Status", style: { width: "20%" } },
+    { content: "Priority", style: { width: "20%" } },
+    { content: "Due Date", style: { width: "20%" } }
+  ]
+
+  const taskListRows = [
+    {
+      task: "Implement user authentication",
+      status: "In Progress",
+      priority: "High",
+      dueDate: "2024-03-15",
+      style: { fontWeight: "500" }
+    },
+    {
+      task: "Design dashboard layout",
+      status: "Completed",
+      priority: "Medium",
+      dueDate: "2024-03-10",
+      style: { fontWeight: "500" }
+    },
+    {
+      task: "Write API documentation",
+      status: "Pending",
+      priority: "Low",
+      dueDate: "2024-03-20",
+      style: { fontWeight: "500" }
+    }
+  ]
+
+  const taskListFooter = {
+    content: [
+      "Total Tasks: 3",
+      "In Progress: 1",
+      "Completed: 1",
+      "Pending: 1"
+    ],
+    style: {
+      backgroundColor: "#f1f5f9",
+      fontWeight: "500",
+      color: "#475569"
+    }
+  }
+
+  return (
+    <Table
+      headers={taskListHeaders}
+      rows={taskListRows}
+      footer={taskListFooter}
+      fontSize="sm"
+      height="md"
+    />
+  )
+}`

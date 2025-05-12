@@ -7,7 +7,6 @@ import { InteractiveExampleContainer } from "@/presentation/components/Interacti
 
 import * as S from "../../styles"
 import {
-  basicExampleCode,
   basicHeaders,
   basicRows,
   customizingClassExampleCode,
@@ -16,6 +15,7 @@ import {
   footerExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   styledFooter,
   styledFooterExampleCode,
@@ -28,6 +28,46 @@ import {
 import "./style.css"
 
 export const TableDocs = () => {
+  const taskListHeaders = [
+    { content: "Task", style: { width: "40%" } },
+    { content: "Status", style: { width: "20%" } },
+    { content: "Priority", style: { width: "20%" } },
+    { content: "Due Date", style: { width: "20%" } },
+  ]
+
+  const taskListRows = [
+    {
+      task: "Implement user authentication",
+      status: "In Progress",
+      priority: "High",
+      dueDate: "2024-03-15",
+      style: { fontWeight: "500" },
+    },
+    {
+      task: "Design dashboard layout",
+      status: "Completed",
+      priority: "Medium",
+      dueDate: "2024-03-10",
+      style: { fontWeight: "500" },
+    },
+    {
+      task: "Write API documentation",
+      status: "Pending",
+      priority: "Low",
+      dueDate: "2024-03-20",
+      style: { fontWeight: "500" },
+    },
+  ]
+
+  const taskListFooter = {
+    content: ["Total Tasks: 3", "In Progress: 1", "Completed: 1", "Pending: 1"],
+    style: {
+      backgroundColor: "#f1f5f9",
+      fontWeight: "500",
+      color: "#475569",
+    },
+  }
+
   return (
     <>
       <S.Container>
@@ -41,8 +81,8 @@ export const TableDocs = () => {
               The component is built with accessibility in mind and provides a clean, modern interface for displaying tabular
               data.
             </S.Paragraph>
-            <ExampleContainer code={basicExampleCode}>
-              <Table headers={basicHeaders} rows={basicRows} />
+            <ExampleContainer code={realUsageExampleCode}>
+              <Table headers={taskListHeaders} rows={taskListRows} footer={taskListFooter} fontSize="sm" height="md" />
             </ExampleContainer>
           </section>
           <section>

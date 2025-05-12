@@ -32,7 +32,7 @@ export const HistoryNavDocs = () => {
               features.
             </S.Paragraph>
             <ExampleContainer code={basicExampleCode}>
-              <HistoryNav leftIcon={<ArrowLeft />} rightIcon={<ArrowRight />} />
+              <HistoryNav />
             </ExampleContainer>
           </section>
           <section>

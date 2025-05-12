@@ -1,4 +1,5 @@
 import { Minus, Plus } from "@phosphor-icons/react"
+import { Button } from "@vbss-ui/button"
 import { InputNumber } from "@vbss-ui/input-number"
 import { Table } from "@vbss-ui/table"
 import { useState } from "react"
@@ -6,17 +7,16 @@ import { useState } from "react"
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
-
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
 import * as S from "../../styles"
 import {
-  basicExampleCode,
   controlledExampleCode,
   controlsExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
@@ -24,6 +24,21 @@ import "./style.css"
 
 export const InputNumberDocs = () => {
   const [value, setValue] = useState("")
+  const [quantity, setQuantity] = useState("")
+  const [quantityError, setQuantityError] = useState("")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setQuantityError("")
+    if (!quantity) {
+      return setQuantityError("Quantity is required")
+    }
+    const numQuantity = Number(quantity)
+    if (numQuantity < 1 || numQuantity > 10) {
+      return setQuantityError("Quantity must be between 1 and 10")
+    }
+    console.log({ quantity: numQuantity })
+  }
 
   return (
     <>
@@ -37,8 +52,30 @@ export const InputNumberDocs = () => {
               and decrement buttons. It supports various input types, labels, and styling options. Built with accessibility in
               mind, it provides a clean and modern interface for numeric input with convenient controls.
             </S.Paragraph>
-            <ExampleContainer code={basicExampleCode}>
-              <InputNumber placeholder="Enter a number" plusIcon={<Plus />} minusIcon={<Minus />} />
+            <ExampleContainer code={realUsageExampleCode}>
+              <form
+                onSubmit={handleSubmit}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                  padding: "1.5rem",
+                  backgroundColor: "#f3f4f6",
+                  borderRadius: "0.5rem",
+                }}
+              >
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "500", margin: 0 }}>Product Order</h3>
+                <InputNumber
+                  label="Quantity"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  placeholder="Enter quantity"
+                  error={quantityError}
+                  isFloat
+                  step={0.1}
+                />
+                <Button type="submit">Add to Cart</Button>
+              </form>
             </ExampleContainer>
           </section>
           <section>

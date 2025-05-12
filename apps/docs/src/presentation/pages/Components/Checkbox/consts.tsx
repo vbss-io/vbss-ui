@@ -65,6 +65,26 @@ export const App = () => {
   )
 }`
 
+export const realUsageExampleCode = `import { Checkbox } from "@vbss-ui/checkbox"
+import { useState } from "react"
+
+export const App = () => {
+  const [isSubscribed, setIsSubscribed] = useState(false)
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <Checkbox
+        label="Subscribe to newsletter"
+        checked={isSubscribed}
+        onCheckedChange={setIsSubscribed}
+      />
+      <p style={{ fontSize: "0.875rem", color: "#666" }}>
+        {isSubscribed ? "Subscribed" : "Not subscribed"}
+      </p>
+    </div>
+  )
+}`
+
 export const propsTableHeaders = [{ content: "Prop" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [

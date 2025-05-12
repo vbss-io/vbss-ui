@@ -64,6 +64,35 @@ export const App = () => {
   )
 }`
 
+export const realUsageExampleCode = `import { Textarea } from "@vbss-ui/textarea"
+
+export const App = () => {
+  return (
+    <div style={{ 
+      width: "20rem",
+      padding: "1.5rem",
+      backgroundColor: "#f8fafc",
+      borderRadius: "0.5rem"
+    }}>
+      <h3 style={{ 
+        fontSize: "1.25rem", 
+        fontWeight: "500",
+        marginBottom: "1rem",
+        color: "#1e293b"
+      }}>
+        Send Feedback
+      </h3>
+      <Textarea
+        label="Your Message"
+        placeholder="Tell us what you think..."
+        error="Please provide your feedback"
+        variant="outline"
+        fontSize="md"
+      />
+    </div>
+  )
+}`
+
 export const propsTableHeaders = [{ content: "Prop" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
@@ -95,6 +124,12 @@ export const propsTableRows = [
     prop: "label",
     type: "string",
     description: "Text label for the Textarea.",
+    default: "-",
+  },
+  {
+    prop: "error",
+    type: "string",
+    description: "Error message to display.",
     default: "-",
   },
   {

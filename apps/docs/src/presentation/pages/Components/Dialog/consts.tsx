@@ -225,3 +225,44 @@ export const customizingClassExampleCode = `// CSS
     Custom styled dialog
   </Dialog>
 </div>`
+
+export const realUsageExampleCode = `import { Dialog } from "@vbss-ui/dialog"
+import { Button } from "@vbss-ui/button"
+import { useState } from "react"
+
+export const App = () => {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
+  const handleDelete = () => {
+    // Handle delete action
+    setIsDeleteDialogOpen(false)
+  }
+
+  return (
+    <Dialog
+      trigger={<Button as="div">Delete Account</Button>}
+      title="Delete Account"
+      description="Are you sure you want to delete your account? This action cannot be undone."
+      footer={
+        <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
+          <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+            Cancel
+          </Button>
+          <Button 
+            variant="primary" 
+            onClick={handleDelete}
+            style={{ backgroundColor: "#dc2626", borderColor: "#dc2626" }}
+          >
+            Delete
+          </Button>
+        </div>
+      }
+      open={isDeleteDialogOpen}
+      onOpenChange={setIsDeleteDialogOpen}
+    >
+      <div style={{ padding: "1rem 0" }}>
+        This will permanently delete your account and all associated data.
+      </div>
+    </Dialog>
+  )
+}`

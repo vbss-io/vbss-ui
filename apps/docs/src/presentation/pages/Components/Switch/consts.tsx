@@ -195,3 +195,44 @@ export const customizingClassExampleCode = `//CSS
 <div className="customSwitch">
   <Switch label="Custom Style" />
 </div>`
+
+export const realUsageExampleCode = `import { Moon, Sun } from "@phosphor-icons/react"
+import { Switch } from "@vbss-ui/switch"
+import { useState } from "react"
+
+export const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  return (
+    <div style={{ 
+      maxWidth: "400px",
+      padding: "1.5rem",
+      backgroundColor: isDarkMode ? "#1f2937" : "#f3f4f6",
+      borderRadius: "0.5rem",
+      color: isDarkMode ? "#f3f4f6" : "#1f2937",
+      transition: "all 0.3s ease"
+    }}>
+      <div style={{ 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "space-between",
+        marginBottom: "1rem"
+      }}>
+        <Switch
+          label="Theme Settings"
+          checked={isDarkMode}
+          onCheckedChange={setIsDarkMode}
+          iconOn={<Moon />}
+          iconOff={<Sun />}
+          inverted
+        />
+      </div>
+      <p style={{ 
+        fontSize: "0.875rem",
+        opacity: 0.8
+      }}>
+        Current theme: {isDarkMode ? "Dark" : "Light"}
+      </p>
+    </div>
+  )
+}`

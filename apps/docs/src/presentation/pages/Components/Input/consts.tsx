@@ -79,8 +79,8 @@ export const App = () => {
       label="Password:"
       type="password"
       showPasswordSwitch
-      iconOn={<Eye />}
-      iconOff={<EyeSlash />}
+      iconOn={<Eye />} // You can change the icon
+      iconOff={<EyeSlash />} // You can change the icon
       placeholder="Enter your password"
     />
   )
@@ -236,5 +236,69 @@ export const App = () => {
     <div className="customInput">
       <Input label="Custom Class:" placeholder="Custom class" error="Required field" />
     </div>
+  )
+}`
+
+export const realUsageExampleCode = `import { Input } from "@vbss-ui/input"
+import { Button } from "@vbss-ui/button"
+import { useState } from "react"
+
+export const App = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Reset errors
+    setEmailError("")
+    setPasswordError("")
+    // Validate form
+    if (!email) {
+      setEmailError("Email is required")
+      return
+    }
+    if (!password) {
+      setPasswordError("Password is required")
+      return
+    }
+    console.log({ email, password })
+  }
+
+  return (
+    <form 
+      onSubmit={handleSubmit}
+      style={{ 
+        display: "flex", 
+        flexDirection: "column", 
+        gap: "1rem",
+        padding: "1.5rem",
+        backgroundColor: "#f3f4f6",
+        borderRadius: "0.5rem"
+      }}
+    >
+      <h3 style={{ fontSize: "1.25rem", fontWeight: "500", margin: 0 }}>Login Form</h3>
+      <Input
+        label="Email"
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter your email"
+        error={emailError}
+      />
+      <Input
+        label="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter your password"
+        error={passwordError}
+        showPasswordSwitch
+      />
+      <Button type="submit">
+        Sign In
+      </Button>
+    </form>
   )
 }`

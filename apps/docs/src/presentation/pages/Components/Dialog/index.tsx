@@ -7,13 +7,13 @@ import { Table } from "@vbss-ui/table"
 import { useState } from "react"
 import * as S from "../../styles"
 import {
-  basicExampleCode,
   contentExampleCode,
   controllerExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
@@ -21,6 +21,7 @@ import "./style.css"
 
 export const DialogDocs = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   return (
     <>
@@ -36,14 +37,29 @@ export const DialogDocs = () => {
               interaction space. Built with accessibility in mind, it offers various styling options, content sections, and
               customization features.
             </S.Paragraph>
-            <ExampleContainer code={basicExampleCode}>
+            <ExampleContainer code={realUsageExampleCode}>
               <Dialog
-                trigger={<Button as="div">Open Dialog</Button>}
-                title="Dialog Title"
-                description="Dialog Description"
-                footer="Dialog Footer"
+                trigger={<Button as="div">Delete Account</Button>}
+                title="Delete Account"
+                description="Are you sure you want to delete your account? This action cannot be undone."
+                footer={
+                  <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
+                    <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => setIsDeleteDialogOpen(false)}
+                      style={{ backgroundColor: "#dc2626", borderColor: "#dc2626" }}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                }
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
               >
-                <div>Dialog Content</div>
+                <div style={{ padding: "1rem 0" }}>This will permanently delete your account and all associated data.</div>
               </Dialog>
             </ExampleContainer>
           </section>

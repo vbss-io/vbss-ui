@@ -43,30 +43,52 @@ export const sections = [
   },
 ]
 
-export const basicExampleCode = `<Tooltip trigger={<button>Hover me</button>}>
-  This is a tooltip
-</Tooltip>`
-
-export const usageExampleCode = `import { Tooltip } from "@vbss-ui/tooltip"
+export const basicExampleCode = `import { Button } from "@vbss-ui/button"
+import { Tooltip } from "@vbss-ui/tooltip"
 
 export const App = () => {
   return (
-    <Tooltip trigger={<button>Hover me</button>}>
+    <Tooltip trigger={<Button as="div">Hover me</Button>}>
       This is a tooltip
     </Tooltip>
   )
 }`
 
-export const triggerExampleCode = `<Tooltip trigger={<button>Hover me</button>}>
-  This is a tooltip with a button trigger
-</Tooltip>`
+export const usageExampleCode = `import { Button } from "@vbss-ui/button"
+import { Tooltip } from "@vbss-ui/tooltip"
 
-export const positionExampleCode = `<Tooltip
-  trigger={<button>Top</button>}
-  side="top"
->
-  This tooltip appears on top
-</Tooltip>`
+export const App = () => {
+  return (
+    <Tooltip trigger={<Button as="div">Hover me</Button>}>
+      This is a tooltip
+    </Tooltip>
+  )
+}`
+
+export const triggerExampleCode = `import { Button } from "@vbss-ui/button"
+import { Tooltip } from "@vbss-ui/tooltip"
+
+export const App = () => {
+  return (
+    <Tooltip trigger={<Button as="div">Hover me</Button>}>
+      This is a tooltip with a button trigger
+    </Tooltip>
+  )
+}`
+
+export const positionExampleCode = `import { Button } from "@vbss-ui/button"
+import { Tooltip } from "@vbss-ui/tooltip"
+
+export const App = () => {
+  return (
+    <Tooltip
+      trigger={<Button as="div">Top</Button>}
+      side="top"
+    >
+      This tooltip appears on top
+    </Tooltip>
+  )
+}`
 
 export const propsTableHeaders = [{ content: "Prop" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
@@ -139,12 +161,13 @@ export const propsTableRows = [
   },
 ]
 
-export const customizingExampleCode = `import { Tooltip } from "@vbss-ui/tooltip"
+export const customizingExampleCode = `import { Button } from "@vbss-ui/button"
+import { Tooltip } from "@vbss-ui/tooltip"
 
 export const MyComponent = () => {
   return (
     <Tooltip
-      trigger={<button>Hover me</button>}
+      trigger={<Button as="div">Hover me</Button>}
       style={{
         backgroundColor: "red",
         color: "white",
@@ -169,7 +192,48 @@ export const customizingClassExampleCode = `// CSS
 }
   
 <div className="customTooltip">
-  <Tooltip trigger={<button>Hover me</button>}>
+  <Tooltip trigger={<Button as="div">Hover me</Button>}>
     This is a custom styled tooltip
   </Tooltip>
 </div>`
+
+export const realUsageExampleCode = `import { Tooltip } from "@vbss-ui/tooltip"
+import { Question } from "@phosphor-icons/react"
+
+export const App = () => {
+  return (
+    <div style={{ 
+      display: "flex",
+      alignItems: "center",
+      gap: "0.5rem",
+      padding: "1rem",
+      backgroundColor: "#f8fafc",
+      borderRadius: "0.5rem",
+      width: "fit-content"
+    }}>
+      <span style={{ 
+        fontSize: "0.875rem",
+        color: "#475569"
+      }}>
+        Password Requirements
+      </span>
+      <Tooltip 
+        trigger={
+          <Question 
+            size={16} 
+            style={{ 
+              color: "#64748b",
+              cursor: "pointer"
+            }} 
+          />
+        }
+        variant="outline"
+        side="top"
+        sideOffset={8}
+        size="sm"
+      >
+        Must be at least 8 characters long and include a number
+      </Tooltip>
+    </div>
+  )
+}`

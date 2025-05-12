@@ -32,13 +32,10 @@ export const sections = [
 ]
 
 export const basicExampleCode = `import { HistoryNav } from "@vbss-ui/history-nav"
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react"
 
 export const App = () => {
   return (
     <HistoryNav
-      leftIcon={<ArrowLeft />}
-      rightIcon={<ArrowRight />}
       leftOnClick={() => window.history.back()}
       rightOnClick={() => window.history.forward()}
     />

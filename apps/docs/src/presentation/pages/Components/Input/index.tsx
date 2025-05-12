@@ -1,4 +1,5 @@
 import { Eye, EyeSlash } from "@phosphor-icons/react"
+import { Button } from "@vbss-ui/button"
 import { Input } from "@vbss-ui/input"
 import { Table } from "@vbss-ui/table"
 import { useState } from "react"
@@ -6,7 +7,6 @@ import { useState } from "react"
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
-
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
 import * as S from "../../styles"
 import {
@@ -16,6 +16,7 @@ import {
   passwordExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
   withButtonExampleCode,
@@ -25,6 +26,27 @@ import "./style.css"
 export const InputDocs = () => {
   const [value, setValue] = useState("")
   const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
+  const [loginPassword, setLoginPassword] = useState("")
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Reset errors
+    setEmailError("")
+    setPasswordError("")
+    // Validate form
+    if (!email) {
+      setEmailError("Email is required")
+      return
+    }
+    if (!loginPassword) {
+      setPasswordError("Password is required")
+      return
+    }
+    console.log({ email, loginPassword })
+  }
 
   return (
     <>
@@ -38,8 +60,38 @@ export const InputDocs = () => {
               states, and password visibility toggles. It offers multiple styling options, including different variants, sizes,
               and customizable content. Built with accessibility in mind, it provides a clean and modern interface for user input.
             </S.Paragraph>
-            <ExampleContainer code='<Input placeholder="Enter your name" />'>
-              <Input placeholder="Enter your name" />
+            <ExampleContainer code={realUsageExampleCode}>
+              <form
+                onSubmit={handleSubmit}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                  padding: "1.5rem",
+                  backgroundColor: "#f3f4f6",
+                  borderRadius: "0.5rem",
+                }}
+              >
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "500", margin: 0 }}>Login Form</h3>
+                <Input
+                  label="Email"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  error={emailError}
+                />
+                <Input
+                  label="Password"
+                  type="password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  error={passwordError}
+                  showPasswordSwitch
+                />
+                <Button type="submit">Sign In</Button>
+              </form>
             </ExampleContainer>
           </section>
           <section>

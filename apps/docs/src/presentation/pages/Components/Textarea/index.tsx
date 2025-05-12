@@ -12,6 +12,7 @@ import {
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
@@ -32,8 +33,33 @@ export const TextareaDocs = () => {
               options, labels, and accessibility features. Built with flexibility in mind, it provides a clean and modern
               interface for text input with customizable appearance and behavior.
             </S.Paragraph>
-            <ExampleContainer code='<Textarea placeholder="Enter your message" />'>
-              <Textarea placeholder="Enter your message" />
+            <ExampleContainer code={realUsageExampleCode}>
+              <div
+                style={{
+                  width: "20rem",
+                  padding: "1.5rem",
+                  backgroundColor: "#f8fafc",
+                  borderRadius: "0.5rem",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "500",
+                    marginBottom: "1rem",
+                    color: "#1e293b",
+                  }}
+                >
+                  Send Feedback
+                </h3>
+                <Textarea
+                  label="Your Message"
+                  placeholder="Tell us what you think..."
+                  error="Please provide your feedback"
+                  variant="outline"
+                  fontSize="md"
+                />
+              </div>
             </ExampleContainer>
           </section>
           <section>

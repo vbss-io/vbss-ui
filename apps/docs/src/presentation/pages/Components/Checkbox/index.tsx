@@ -32,8 +32,31 @@ export const CheckboxDocs = () => {
               labels, and accessibility features. Built with flexibility in mind, it provides a clean and modern interface for
               checkbox input with customizable appearance and behavior.
             </S.Paragraph>
-            <ExampleContainer code='<Checkbox label="Accept terms" />'>
-              <Checkbox label="Accept terms" />
+            <ExampleContainer
+              code={`import { Checkbox } from "@vbss-ui/checkbox"
+import { useState } from "react"
+
+export const App = () => {
+  const [isSubscribed, setIsSubscribed] = useState(false)
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <Checkbox
+        label="Subscribe to newsletter"
+        checked={isSubscribed}
+        onCheckedChange={setIsSubscribed}
+      />
+      <p style={{ fontSize: "0.875rem", color: "#666" }}>
+        {isSubscribed ? "Subscribed" : "Not subscribed"}
+      </p>
+    </div>
+  )
+}`}
+            >
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <Checkbox label="Subscribe to newsletter" checked={checked} onCheckedChange={setChecked} />
+                <p style={{ fontSize: "0.875rem", color: "#666" }}>{checked ? "Subscribed" : "Not subscribed"}</p>
+              </div>
             </ExampleContainer>
           </section>
           <section>

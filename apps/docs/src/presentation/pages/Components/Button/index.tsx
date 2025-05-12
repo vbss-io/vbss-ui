@@ -14,6 +14,7 @@ import {
   invertedExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
@@ -31,8 +32,15 @@ export const ButtonDocs = () => {
               The <strong>Button</strong> component is a flexible UI element used to trigger actions or events. It supports
               various visual styles, sizes, shapes, and states, making it suitable for a wide range of interfaces.
             </S.Paragraph>
-            <ExampleContainer code="<Button>Click Me</Button>">
-              <Button>Click Me</Button>
+            <ExampleContainer code={realUsageExampleCode}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  console.log("Form submitted!")
+                }}
+              >
+                <Button type="submit">Submit Form</Button>
+              </form>
             </ExampleContainer>
           </section>
           <section>

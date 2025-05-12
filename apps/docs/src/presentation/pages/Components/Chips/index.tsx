@@ -13,12 +13,15 @@ import {
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
 import "./style.css"
 
 export const ChipsDocs = () => {
+  const skills = ["React", "TypeScript", "Node.js", "CSS", "HTML"]
+
   return (
     <>
       <S.Container>
@@ -31,8 +34,19 @@ export const ChipsDocs = () => {
               components in a customizable layout. It supports layout direction, spacing between chips, and allows passing shared
               props to chips.
             </S.Paragraph>
-            <ExampleContainer code='<Chips chips={["Design", "Development", "Marketing"]} />'>
-              <Chips chips={["Design", "Development", "Marketing"]} />
+            <ExampleContainer code={realUsageExampleCode}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <h3 style={{ fontSize: "1rem", fontWeight: "500", margin: 0 }}>Skills:</h3>
+                <Chips
+                  chips={skills}
+                  gap="sm"
+                  flexDirection="row"
+                  chipsProps={{
+                    variant: "primary",
+                    style: { cursor: "default" },
+                  }}
+                />
+              </div>
             </ExampleContainer>
           </section>
           <section>

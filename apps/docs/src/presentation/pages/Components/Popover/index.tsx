@@ -1,16 +1,17 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { User } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { Popover } from "@vbss-ui/popover"
 import { Table } from "@vbss-ui/table"
 import * as S from "../../styles"
 import {
-  basicExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
@@ -32,13 +33,54 @@ export const PopoverDocs = () => {
               additional information or actions. Built with accessibility in mind, it offers various styling options, positioning
               features, and customization capabilities.
             </S.Paragraph>
-            <ExampleContainer code={basicExampleCode}>
-              <Popover trigger={<Button as="div">Click Me</Button>} variant="primary">
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <Button variant="secondary">Button</Button>
-                  <Button variant="secondary">Button</Button>
-                </div>
-              </Popover>
+            <ExampleContainer code={realUsageExampleCode}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  padding: "1rem",
+                  backgroundColor: "#f3f4f6",
+                  borderRadius: "0.5rem",
+                }}
+              >
+                <span style={{ fontSize: "0.875rem" }}>User Profile:</span>
+                <Popover
+                  trigger={
+                    <Button as="div" variant="outline">
+                      <User size={20} />
+                      John Doe
+                    </Button>
+                  }
+                  side="bottom"
+                  align="start"
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.5rem",
+                      minWidth: "200px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "0.5rem",
+                        borderBottom: "1px solid #e5e7eb",
+                      }}
+                    >
+                      <div style={{ fontWeight: "500" }}>John Doe</div>
+                      <div style={{ fontSize: "0.875rem", color: "#6b7280" }}>john.doe@example.com</div>
+                    </div>
+                    <Button variant="ghost" style={{ justifyContent: "flex-start" }}>
+                      Edit Profile
+                    </Button>
+                    <Button variant="ghost" style={{ justifyContent: "flex-start", color: "#ef4444" }}>
+                      Sign Out
+                    </Button>
+                  </div>
+                </Popover>
+              </div>
             </ExampleContainer>
           </section>
           <section>

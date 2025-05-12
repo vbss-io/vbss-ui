@@ -1,16 +1,17 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { PencilSimple, Trash } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { DropdownMenu } from "@vbss-ui/dropdown-menu"
 import { Table } from "@vbss-ui/table"
 import * as S from "../../styles"
 import {
-  basicExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   separatorExampleCode,
   usageExampleCode,
@@ -30,15 +31,34 @@ export const DropdownMenuDocs = () => {
               provides a list of options or actions that users can select from. Built with accessibility in mind, it offers
               various styling options, positioning, and customization features.
             </S.Paragraph>
-            <ExampleContainer code={basicExampleCode}>
-              <DropdownMenu
-                trigger={<button>Open Menu</button>}
-                menus={[
-                  { item: <Button>Button One</Button> },
-                  { item: <Button>Button Two</Button> },
-                  { item: <Button>Button Three</Button> },
-                ]}
-              />
+            <ExampleContainer code={realUsageExampleCode}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <h3 style={{ fontSize: "1rem", fontWeight: "500", margin: 0 }}>User Actions:</h3>
+                <DropdownMenu
+                  trigger={<Button as="div">More Actions</Button>}
+                  style={{ padding: "0.75rem" }}
+                  menuLabel="User Options"
+                  menus={[
+                    {
+                      item: (
+                        <Button onClick={() => console.log("Edit action")} style={{ width: "100%" }}>
+                          <PencilSimple />
+                          Edit Profile
+                        </Button>
+                      ),
+                    },
+                    { item: "separator" },
+                    {
+                      item: (
+                        <Button onClick={() => console.log("Delete action")} style={{ width: "100%" }}>
+                          <Trash />
+                          Delete Account
+                        </Button>
+                      ),
+                    },
+                  ]}
+                />
+              </div>
             </ExampleContainer>
           </section>
           <section>
@@ -76,9 +96,9 @@ export const DropdownMenuDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <DropdownMenu
-                trigger={<button>Open Menu</button>}
+                trigger={<Button as="div">Open Menu</Button>}
                 menuLabel="Actions"
-                menus={[{ item: <button>Edit</button> }, { item: <button>Delete</button> }, { item: <button>Share</button> }]}
+                menus={[{ item: "Item 1" }, { item: "Item 2" }, { item: "Item 3" }]}
               />
             </ExampleContainer>
             <CodeSnippet code='<DropdownMenu menuLabel="Actions" />' language="tsx" />
@@ -91,14 +111,8 @@ export const DropdownMenuDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <DropdownMenu
-                trigger={<button>Open Menu</button>}
-                menus={[
-                  { item: <button>Option 1</button> },
-                  { item: "separator" },
-                  { item: <button>Option 2</button> },
-                  { item: "separator" },
-                  { item: <button>Option 3</button> },
-                ]}
+                trigger={<Button as="div">Open Menu</Button>}
+                menus={[{ item: "Item 1" }, { item: "separator" }, { item: "Item 2" }, { item: "separator" }, { item: "Item 3" }]}
               />
             </ExampleContainer>
             <CodeSnippet code={separatorExampleCode} language="tsx" />
@@ -111,18 +125,26 @@ export const DropdownMenuDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <DropdownMenu trigger={<button>Top</button>} side="top" menus={[{ item: "Option 1" }, { item: "Option 2" }]} />
                 <DropdownMenu
-                  trigger={<button>Right</button>}
+                  trigger={<Button as="div">Top</Button>}
+                  side="top"
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
+                />
+                <DropdownMenu
+                  trigger={<Button as="div">Right</Button>}
                   side="right"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Bottom</button>}
+                  trigger={<Button as="div">Bottom</Button>}
                   side="bottom"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
-                <DropdownMenu trigger={<button>Left</button>} side="left" menus={[{ item: "Option 1" }, { item: "Option 2" }]} />
+                <DropdownMenu
+                  trigger={<Button as="div">Left</Button>}
+                  side="left"
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
+                />
               </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<DropdownMenu side="top" />' language="tsx" />
@@ -136,24 +158,24 @@ export const DropdownMenuDocs = () => {
             <ExampleContainer>
               <S.ColumnContainer>
                 <DropdownMenu
-                  trigger={<button>Primary</button>}
+                  trigger={<Button as="div">Primary</Button>}
                   variant="primary"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Secondary</button>}
+                  trigger={<Button as="div">Secondary</Button>}
                   variant="secondary"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Outline</button>}
+                  trigger={<Button as="div">Outline</Button>}
                   variant="outline"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Ghost</button>}
+                  trigger={<Button as="div">Ghost</Button>}
                   variant="ghost"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
               </S.ColumnContainer>
             </ExampleContainer>
@@ -168,29 +190,29 @@ export const DropdownMenuDocs = () => {
             <ExampleContainer>
               <S.ColumnContainer>
                 <DropdownMenu
-                  trigger={<button>None</button>}
+                  trigger={<Button as="div">None</Button>}
                   rounded="none"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Small</button>}
+                  trigger={<Button as="div">Small</Button>}
                   rounded="sm"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Medium</button>}
+                  trigger={<Button as="div">Medium</Button>}
                   rounded="md"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Large</button>}
+                  trigger={<Button as="div">Large</Button>}
                   rounded="lg"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Full</button>}
+                  trigger={<Button as="div">Full</Button>}
                   rounded="full"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
               </S.ColumnContainer>
             </ExampleContainer>
@@ -205,17 +227,29 @@ export const DropdownMenuDocs = () => {
             <ExampleContainer>
               <S.ColumnContainer>
                 <DropdownMenu
-                  trigger={<button>Extra Small</button>}
+                  trigger={<Button as="div">Extra Small</Button>}
                   size="xs"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
-                <DropdownMenu trigger={<button>Small</button>} size="sm" menus={[{ item: "Option 1" }, { item: "Option 2" }]} />
-                <DropdownMenu trigger={<button>Medium</button>} size="md" menus={[{ item: "Option 1" }, { item: "Option 2" }]} />
-                <DropdownMenu trigger={<button>Large</button>} size="lg" menus={[{ item: "Option 1" }, { item: "Option 2" }]} />
                 <DropdownMenu
-                  trigger={<button>Extra Large</button>}
+                  trigger={<Button as="div">Small</Button>}
+                  size="sm"
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
+                />
+                <DropdownMenu
+                  trigger={<Button as="div">Medium</Button>}
+                  size="md"
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
+                />
+                <DropdownMenu
+                  trigger={<Button as="div">Large</Button>}
+                  size="lg"
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
+                />
+                <DropdownMenu
+                  trigger={<Button as="div">Extra Large</Button>}
                   size="xl"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
               </S.ColumnContainer>
             </ExampleContainer>
@@ -230,29 +264,29 @@ export const DropdownMenuDocs = () => {
             <ExampleContainer>
               <S.ColumnContainer>
                 <DropdownMenu
-                  trigger={<button>Extra Small</button>}
+                  trigger={<Button as="div">Extra Small</Button>}
                   fontSize="xs"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Small</button>}
+                  trigger={<Button as="div">Small</Button>}
                   fontSize="sm"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Medium</button>}
+                  trigger={<Button as="div">Medium</Button>}
                   fontSize="md"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Large</button>}
+                  trigger={<Button as="div">Large</Button>}
                   fontSize="lg"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Extra Large</button>}
+                  trigger={<Button as="div">Extra Large</Button>}
                   fontSize="xl"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
               </S.ColumnContainer>
             </ExampleContainer>
@@ -267,34 +301,34 @@ export const DropdownMenuDocs = () => {
             <ExampleContainer>
               <S.ColumnContainer>
                 <DropdownMenu
-                  trigger={<button>Thin</button>}
+                  trigger={<Button as="div">Thin</Button>}
                   fontWeight="thin"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Light</button>}
+                  trigger={<Button as="div">Light</Button>}
                   fontWeight="light"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Normal</button>}
+                  trigger={<Button as="div">Normal</Button>}
                   fontWeight="normal"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Medium</button>}
+                  trigger={<Button as="div">Medium</Button>}
                   fontWeight="medium"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Bold</button>}
+                  trigger={<Button as="div">Bold</Button>}
                   fontWeight="bold"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
                 <DropdownMenu
-                  trigger={<button>Extra Bold</button>}
+                  trigger={<Button as="div">Extra Bold</Button>}
                   fontWeight="extrabold"
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
               </S.ColumnContainer>
             </ExampleContainer>
@@ -333,12 +367,12 @@ export const DropdownMenuDocs = () => {
             <S.Paragraph>You can pass custom styles directly to the component:</S.Paragraph>
             <ExampleContainer code={customizingExampleCode}>
               <DropdownMenu
-                trigger={<button>Open Menu</button>}
+                trigger={<Button as="div">Open Menu</Button>}
                 style={{
                   backgroundColor: "red",
                   color: "white",
                 }}
-                menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                menus={[{ item: "Item 1" }, { item: "Item 2" }]}
               />
             </ExampleContainer>
             <S.SectionSubTitle>
@@ -351,8 +385,8 @@ export const DropdownMenuDocs = () => {
                 <DropdownMenu
                   className="dropdownMenu"
                   menuLabel="Actions"
-                  trigger={<button>Open Menu</button>}
-                  menus={[{ item: "Option 1" }, { item: "Option 2" }]}
+                  trigger={<Button as="div">Open Menu</Button>}
+                  menus={[{ item: "Item 1" }, { item: "Item 2" }]}
                 />
               </div>
             </ExampleContainer>

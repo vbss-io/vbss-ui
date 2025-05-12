@@ -14,6 +14,7 @@ import {
   customizingExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
   withIconsExampleCode,
@@ -22,6 +23,7 @@ import "./style.css"
 
 export const SwitchDocs = () => {
   const [isEnabled, setIsEnabled] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   return (
     <>
@@ -35,8 +37,43 @@ export const SwitchDocs = () => {
               supports various visual styles, sizes, and states, making it suitable for a wide range of interfaces. Built on top
               of Radix UI Switch primitive, it provides a fully accessible and customizable solution.
             </S.Paragraph>
-            <ExampleContainer code="<Switch />">
-              <Switch />
+            <ExampleContainer code={realUsageExampleCode}>
+              <div
+                style={{
+                  maxWidth: "400px",
+                  padding: "1.5rem",
+                  backgroundColor: isDarkMode ? "#1f2937" : "#f3f4f6",
+                  borderRadius: "0.5rem",
+                  color: isDarkMode ? "#f3f4f6" : "#1f2937",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <Switch
+                    label="Theme Settings"
+                    checked={isDarkMode}
+                    onCheckedChange={setIsDarkMode}
+                    iconOn={<Moon />}
+                    iconOff={<Sun />}
+                    inverted
+                  />
+                </div>
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    opacity: 0.8,
+                  }}
+                >
+                  Current theme: {isDarkMode ? "Dark" : "Light"}
+                </p>
+              </div>
             </ExampleContainer>
           </section>
           <section>

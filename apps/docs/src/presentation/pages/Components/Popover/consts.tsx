@@ -32,15 +32,6 @@ export const sections = [
   },
 ]
 
-export const basicExampleCode = `<Popover
-  trigger={<Button as="div">Click Me</Button>}
->
-  <div className="flex flex-col gap-1">
-    <Button variant="ghost">Button</Button>
-    <Button variant="ghost">Button</Button>
-  </div>
-</Popover>`
-
 export const usageExampleCode = `import { Popover } from "@vbss-ui/popover"
 import { Button } from "@vbss-ui/button"
 
@@ -54,6 +45,56 @@ export const App = () => {
         <Button variant="ghost">Button</Button>
       </div>
     </Popover>
+  )
+}`
+
+export const realUsageExampleCode = `import { Popover } from "@vbss-ui/popover"
+import { Button } from "@vbss-ui/button"
+import { User } from "@phosphor-icons/react"
+
+export const App = () => {
+  return (
+    <div style={{ 
+      display: "flex", 
+      alignItems: "center", 
+      gap: "1rem",
+      padding: "1rem",
+      backgroundColor: "#f3f4f6",
+      borderRadius: "0.5rem"
+    }}>
+      <span style={{ fontSize: "0.875rem" }}>User Profile:</span>
+      <Popover 
+        trigger={
+          <Button as="div" variant="outline">
+            <User size={20} />
+            John Doe
+          </Button>
+        }
+        side="bottom"
+        align="start"
+      >
+        <div style={{ 
+          display: "flex", 
+          flexDirection: "column", 
+          gap: "0.5rem",
+          minWidth: "200px"
+        }}>
+          <div style={{ 
+            padding: "0.5rem", 
+            borderBottom: "1px solid #e5e7eb" 
+          }}>
+            <div style={{ fontWeight: "500" }}>John Doe</div>
+            <div style={{ fontSize: "0.875rem", color: "#6b7280" }}>john.doe@example.com</div>
+          </div>
+          <Button variant="ghost" style={{ justifyContent: "flex-start" }}>
+            Edit Profile
+          </Button>
+          <Button variant="ghost" style={{ justifyContent: "flex-start", color: "#ef4444" }}>
+            Sign Out
+          </Button>
+        </div>
+      </Popover>
+    </div>
   )
 }`
 

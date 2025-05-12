@@ -234,3 +234,60 @@ export const customizingClassExampleCode = `// CSS
     ]}
   />
 </div>`
+
+export const realUsageExampleCode = `import { RadioGroup } from "@vbss-ui/radio-group"
+import { useState } from "react"
+
+export const App = () => {
+  const [selectedPlan, setSelectedPlan] = useState("basic")
+
+  return (
+    <div style={{ 
+      width: "20rem",
+      padding: "1.5rem",
+      backgroundColor: "#f3f4f6",
+      borderRadius: "0.5rem"
+    }}>
+      <h3 style={{ 
+        fontSize: "1.25rem", 
+        fontWeight: "500", 
+        marginBottom: "1rem" 
+      }}>
+        Choose Your Plan
+      </h3>
+      <RadioGroup
+        value={selectedPlan}
+        onValueChange={setSelectedPlan}
+        direction="col"
+        values={[
+          { 
+            value: "basic", 
+            label: "Basic Plan",
+          },
+          { 
+            value: "pro", 
+            label: "Pro Plan",
+          },
+          { 
+            value: "enterprise", 
+            label: "Enterprise Plan",
+          }
+        ]}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem"
+        }}
+      />
+      <div style={{ 
+        marginTop: "1rem", 
+        padding: "1rem",
+        backgroundColor: "#e5e7eb",
+        borderRadius: "0.375rem",
+        fontSize: "0.875rem"
+      }}>
+        Selected Plan: {selectedPlan}
+      </div>
+    </div>
+  )
+}`

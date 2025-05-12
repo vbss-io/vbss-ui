@@ -121,6 +121,36 @@ export const propsTableRows = [
     default: "-",
   },
   {
+    prop: "error",
+    type: "string",
+    description: "Error message to display.",
+    default: "-",
+  },
+  {
+    prop: "isFloat",
+    type: "boolean",
+    description: "Enables decimal number input with specified decimal places.",
+    default: "false",
+  },
+  {
+    prop: "step",
+    type: "number",
+    description: "Increment/decrement step value. For float values, this can be a decimal number.",
+    default: "1",
+  },
+  {
+    prop: "denyNegative",
+    type: "boolean",
+    description: "When true, prevents negative values in the input. Values below 0 will be set to 0.",
+    default: "false",
+  },
+  {
+    prop: "disableControls",
+    Type: "boolean",
+    description: "Prop to disable Input controls.",
+    default: "false",
+  },
+  {
     prop: "controlsProps",
     Type: <a href="button">ButtonProps</a>,
     description: "Props for the increment/decrement buttons.",
@@ -204,5 +234,53 @@ export const App = () => {
     <div className="customInputNumber">
       <InputNumber label="Label:" placeholder="Custom class" />
     </div>
+  )
+}`
+
+export const realUsageExampleCode = `import { InputNumber } from "@vbss-ui/input-number"
+import { Button } from "@vbss-ui/button"
+import { useState } from "react"
+
+export const App = () => {
+  const [quantity, setQuantity] = useState("")
+  const [quantityError, setQuantityError] = useState("")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setQuantityError("")
+    if (!quantity) {
+      return setQuantityError("Quantity is required")
+    }
+    const numQuantity = Number(quantity)
+    if (numQuantity < 1 || numQuantity > 10) {
+      return setQuantityError("Quantity must be between 1 and 10")
+    }
+    console.log({ quantity: numQuantity })
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        padding: "1.5rem",
+        backgroundColor: "#f3f4f6",
+        borderRadius: "0.5rem",
+      }}
+    >
+      <h3 style={{ fontSize: "1.25rem", fontWeight: "500", margin: 0 }}>Product Order</h3>
+      <InputNumber
+        label="Quantity"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+        placeholder="Enter quantity"
+        error={quantityError}
+        isFloat
+        step={0.1}
+      />
+      <Button type="submit">Add to Cart</Button>
+    </form>
   )
 }`

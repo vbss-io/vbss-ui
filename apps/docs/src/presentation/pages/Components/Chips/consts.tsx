@@ -141,3 +141,30 @@ export const customizingClassExampleCode = `// CSS
 <div className='custom-chip'>
   <Chips chips={["Example", "Example"]} />
 </div>`
+
+export const realUsageExampleCode = `import { Chips } from "@vbss-ui/chips"
+
+export const App = () => {
+  const skills = [
+    "React",
+    "TypeScript",
+    "Node.js",
+    "CSS",
+    "HTML"
+  ]
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <h3 style={{ fontSize: "1rem", fontWeight: "500", margin: 0 }}>Skills:</h3>
+      <Chips
+        chips={skills}
+        gap="sm"
+        flexDirection="row"
+        chipsProps={{
+          variant: "primary",
+          style: { cursor: "default" }
+        }}
+      />
+    </div>
+  )
+}`

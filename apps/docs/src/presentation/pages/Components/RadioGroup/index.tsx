@@ -7,13 +7,13 @@ import { Table } from "@vbss-ui/table"
 import { useState } from "react"
 import * as S from "../../styles"
 import {
-  basicExampleCode,
   controlledExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
   labelExampleCode,
   propsTableHeaders,
   propsTableRows,
+  realUsageExampleCode,
   sections,
   usageExampleCode,
 } from "./consts"
@@ -21,6 +21,7 @@ import "./style.css"
 
 export const RadioGroupDocs = () => {
   const [value, setValue] = useState("optionOne")
+  const [selectedPlan, setSelectedPlan] = useState("basic")
 
   return (
     <>
@@ -34,14 +35,60 @@ export const RadioGroupDocs = () => {
               of choices. It supports various styling options, labels, and accessibility features. Built with flexibility in mind,
               it provides a clean and modern interface for radio input with customizable appearance and behavior.
             </S.Paragraph>
-            <ExampleContainer code={basicExampleCode}>
-              <RadioGroup
-                defaultValue="option-1"
-                values={[
-                  { value: "option-1", label: "Option 1" },
-                  { value: "option-2", label: "Option 2" },
-                ]}
-              />
+            <ExampleContainer code={realUsageExampleCode}>
+              <div
+                style={{
+                  width: "20rem",
+                  padding: "1.5rem",
+                  backgroundColor: "#f3f4f6",
+                  borderRadius: "0.5rem",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "500",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Choose Your Plan
+                </h3>
+                <RadioGroup
+                  value={selectedPlan}
+                  onValueChange={setSelectedPlan}
+                  direction="col"
+                  values={[
+                    {
+                      value: "basic",
+                      label: "Basic Plan",
+                    },
+                    {
+                      value: "pro",
+                      label: "Pro Plan",
+                    },
+                    {
+                      value: "enterprise",
+                      label: "Enterprise Plan",
+                    },
+                  ]}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                  }}
+                />
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    padding: "1rem",
+                    backgroundColor: "#e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  Selected Plan: {selectedPlan}
+                </div>
+              </div>
             </ExampleContainer>
           </section>
           <section>
@@ -310,7 +357,7 @@ export const RadioGroupDocs = () => {
           </section>
         </S.ContentWrapper>
       </S.Container>
-      <ContentSidebar title="RadioGroupDocs" sections={sections} />
+      <ContentSidebar title="Radio Group" sections={sections} />
     </>
   )
 }

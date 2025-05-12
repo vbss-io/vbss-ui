@@ -65,6 +65,41 @@ export export const App = () => {
   return <Chip>Example Chip</Chip>
 }`
 
+export const realUsageExampleCode = `import { Chip } from "@vbss-ui/chip"
+import { useState } from "react"
+
+export const App = () => {
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    )
+  }
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+        {["React", "TypeScript", "Node.js"].map((tag) => (
+          <Chip
+            key={tag}
+            variant={selectedTags.includes(tag) ? "primary" : "outline"}
+            onClick={() => handleTagClick(tag)}
+            style={{ cursor: "pointer" }}
+          >
+            {tag}
+          </Chip>
+        ))}
+      </div>
+      <p style={{ fontSize: "0.875rem", color: "#666" }}>
+        Selected: {selectedTags.join(", ") || "None"}
+      </p>
+    </div>
+  )
+}`
+
 export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
