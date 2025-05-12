@@ -3,6 +3,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import dts from "vite-plugin-dts";
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   build: {
@@ -27,5 +28,14 @@ export default defineConfig({
     react(),
     dts({ rollupTypes: true }),
     cssInjectedByJsPlugin(),
+    svgr({
+      svgrOptions: {
+        exportType: 'default',
+        ref: true,
+        svgo: false,
+        titleProp: true,
+      },
+      include: '**/*.svg',
+    }),
   ],
 });

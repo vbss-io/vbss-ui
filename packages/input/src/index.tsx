@@ -2,6 +2,8 @@ import { Button, ExtendableButtonProps } from "@vbss-ui/button"
 import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
 import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useState } from "react"
+import EyeSlash from "./eye-slash.svg"
+import Eye from "./eye.svg"
 import "./index.css"
 
 type InputProps = ComponentProps<"input"> &
@@ -70,7 +72,7 @@ export const Input: InputComponent = forwardRef(
               ref={ref}
               value={props.value}
               className={cn(
-                `input ${buttonProps && "!rounded-e-none"} ${(showPasswordSwitch || iconOn || iconOff) && "pr-8"}`,
+                `input w-full ${buttonProps && "!rounded-e-none"} ${(showPasswordSwitch || iconOn || iconOff) && "pr-8"}`,
                 inputStyles({
                   variant,
                   height,
@@ -82,20 +84,20 @@ export const Input: InputComponent = forwardRef(
               )}
               {...props}
             />
-            {showPasswordSwitch && iconOn && !showPassword && (
+            {showPasswordSwitch && !showPassword && (
               <div
                 className={`inputIconOnContainer ${disabled ? "pointer-events-none" : "cursor-pointer"} select-none absolute right-2 top-1/2 -translate-y-1/2`}
                 onClick={switchPasswordVisibility}
               >
-                <div className={cn("inputIconOn", inputIconStyles({ height }))}>{iconOn}</div>
+                <div className={cn("inputIconOn", inputIconStyles({ height }))}>{iconOn ? iconOn : <Eye />}</div>
               </div>
             )}
-            {showPasswordSwitch && iconOff && showPassword && (
+            {showPasswordSwitch && showPassword && (
               <div
                 className={`inputIconOffContainer ${disabled ? "pointer-events-none" : "cursor-pointer"} select-none absolute right-2 top-1/2 -translate-y-1/2`}
                 onClick={switchPasswordVisibility}
               >
-                <div className={cn("inputIconOff", inputIconStyles({ height }))}>{iconOff}</div>
+                <div className={cn("inputIconOff", inputIconStyles({ height }))}>{iconOff ? iconOff : <EyeSlash />}</div>
               </div>
             )}
           </div>
