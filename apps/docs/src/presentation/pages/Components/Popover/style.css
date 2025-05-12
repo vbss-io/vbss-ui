@@ -1,0 +1,8 @@
+.customPopover {
+  .popoverTrigger {
+    background-color: red;
+    padding: 1rem;
+  }
+}
+
+.popoverContent {}
