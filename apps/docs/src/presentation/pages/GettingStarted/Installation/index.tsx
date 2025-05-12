@@ -45,8 +45,7 @@ export const Installation = () => {
   )
 }
 
-const usageExampleCode = `
-import { Button } from "@vbss-ui/button";
+const usageExampleCode = `import { Button } from "@vbss-ui/button";
 
 export const App = () => {
   return (
@@ -54,5 +53,4 @@ export const App = () => {
       <Button>Click Me</Button>
     </div>
   );
-}
-`
+}`
