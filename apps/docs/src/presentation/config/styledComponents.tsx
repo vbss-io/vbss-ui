@@ -1,5 +1,26 @@
 import { createGlobalStyle } from "styled-components"
 
+declare module "styled-components" {
+  export interface DefaultTheme {
+    colors: {
+      background: string
+      foreground: string
+      primary: string
+      secondary: string
+      muted: string
+      accent: string
+      shadow: string
+    }
+    media: {
+      xsm: string
+      sm: string
+      md: string
+      lg: string
+      xlg: string
+    }
+  }
+}
+
 const sizes = {
   media: {
     xsm: "(min-width: 480px)",
