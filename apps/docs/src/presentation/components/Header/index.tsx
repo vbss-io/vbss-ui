@@ -11,6 +11,7 @@ import * as S from "./styles"
 export const Header = () => {
   const { darkMode, setDarkMode } = useDarkMode()
   const [showMobile, setShowMobile] = useState(false)
+  const currentPath = window.location.pathname
 
   useEffect(() => {
     if (showMobile) {
@@ -31,8 +32,25 @@ export const Header = () => {
           <span>vbss/ui</span>
         </S.LogoSection>
         <S.Nav>
-          <Button as="a" href="/introduction" size="xs" fontSize="xs" rounded="full">
+          <Button
+            as="a"
+            href="/introduction"
+            size="xs"
+            fontSize="xs"
+            rounded="full"
+            variant={currentPath === "/introduction" || currentPath === "/" ? "primary" : "outline"}
+          >
             Documentation
+          </Button>
+          <Button
+            as="a"
+            href="/support"
+            size="xs"
+            fontSize="xs"
+            rounded="full"
+            variant={currentPath === "/support" ? "primary" : "outline"}
+          >
+            Support
           </Button>
         </S.Nav>
         <S.ConfigSection>

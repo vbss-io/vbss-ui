@@ -18,6 +18,7 @@ import { Colors } from "@/presentation/pages/GettingStarted/Colors"
 import { Installation } from "@/presentation/pages/GettingStarted/Installation"
 import { Introduction } from "@/presentation/pages/GettingStarted/Introduction"
 import { NotFound } from "@/presentation/pages/NotFound"
+import { SupportDocs } from "@/presentation/pages/Support"
 import { CheckboxDocs } from "../pages/Components/Checkbox"
 
 export const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
   {
     path: "/colors",
     element: <Colors />,
+  },
+  {
+    path: "/support",
+    element: <SupportDocs />,
   },
   {
     path: "/chip",

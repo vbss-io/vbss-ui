@@ -37,6 +37,11 @@ export const Sidebar = ({ isMobile = false }: SidebarProps) => {
               Colors
             </Button>
           </S.NavLink>
+          <S.NavLink data-active={currentPath === "/support"}>
+            <Button as="a" href="/support">
+              Support
+            </Button>
+          </S.NavLink>
         </S.Section>
         <S.Section>
           <S.Title>Components</S.Title>
