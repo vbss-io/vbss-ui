@@ -1,6 +1,7 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { ArrowSquareOut } from "@phosphor-icons/react"
 import { CheckedState } from "@radix-ui/react-checkbox"
 import { Checkbox } from "@vbss-ui/checkbox"
 import { Table } from "@vbss-ui/table"
@@ -64,6 +65,16 @@ export const App = () => {
               <S.SectionAnchor id="installation" />
               Installation
             </S.SectionTitle>
+            <S.Paragraph>
+              <a
+                href="https://www.npmjs.com/package/@vbss-ui/checkbox"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+              >
+                View on npm <ArrowSquareOut size={16} weight="bold" />
+              </a>
+            </S.Paragraph>
             <S.Paragraph>
               To install only the <strong>Checkbox</strong> component, run one of the following commands:
             </S.Paragraph>

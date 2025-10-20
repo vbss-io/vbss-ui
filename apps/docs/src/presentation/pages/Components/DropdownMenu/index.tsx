@@ -1,7 +1,7 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
-import { PencilSimple, Trash } from "@phosphor-icons/react"
+import { ArrowSquareOut, PencilSimple, Trash } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { DropdownMenu } from "@vbss-ui/dropdown-menu"
 import { Table } from "@vbss-ui/table"
@@ -66,6 +66,16 @@ export const DropdownMenuDocs = () => {
               <S.SectionAnchor id="installation" />
               Installation
             </S.SectionTitle>
+            <S.Paragraph>
+              <a
+                href="https://www.npmjs.com/package/@vbss-ui/dropdown-menu"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+              >
+                View on npm <ArrowSquareOut size={16} weight="bold" />
+              </a>
+            </S.Paragraph>
             <S.Paragraph>
               To install only the <strong>Dropdown Menu</strong> component, run one of the following commands:
             </S.Paragraph>

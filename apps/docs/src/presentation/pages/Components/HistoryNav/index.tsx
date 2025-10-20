@@ -2,7 +2,7 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react"
+import { ArrowLeft, ArrowRight, ArrowSquareOut } from "@phosphor-icons/react"
 import { HistoryNav } from "@vbss-ui/history-nav"
 import { Table } from "@vbss-ui/table"
 import * as S from "../../styles"
@@ -40,6 +40,16 @@ export const HistoryNavDocs = () => {
               <S.SectionAnchor id="installation" />
               Installation
             </S.SectionTitle>
+            <S.Paragraph>
+              <a
+                href="https://www.npmjs.com/package/@vbss-ui/history-nav"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+              >
+                View on npm <ArrowSquareOut size={16} weight="bold" />
+              </a>
+            </S.Paragraph>
             <S.Paragraph>
               To install only the <strong>History Navigation</strong> component, run one of the following commands:
             </S.Paragraph>

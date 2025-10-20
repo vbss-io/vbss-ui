@@ -4,6 +4,7 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { ArrowSquareOut } from "@phosphor-icons/react"
 
 import * as S from "../../styles"
 import {
@@ -90,6 +91,16 @@ export const TableDocs = () => {
               <S.SectionAnchor id="installation" />
               Installation
             </S.SectionTitle>
+            <S.Paragraph>
+              <a
+                href="https://www.npmjs.com/package/@vbss-ui/table"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+              >
+                View on npm <ArrowSquareOut size={16} weight="bold" />
+              </a>
+            </S.Paragraph>
             <S.Paragraph>
               To install only the <strong>Table</strong> component, run one of the following commands:
             </S.Paragraph>

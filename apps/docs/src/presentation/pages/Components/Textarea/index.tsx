@@ -2,6 +2,7 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { ArrowSquareOut } from "@phosphor-icons/react"
 import { Table } from "@vbss-ui/table"
 import { Textarea } from "@vbss-ui/textarea"
 import { useState } from "react"
@@ -67,6 +68,16 @@ export const TextareaDocs = () => {
               <S.SectionAnchor id="installation" />
               Installation
             </S.SectionTitle>
+            <S.Paragraph>
+              <a
+                href="https://www.npmjs.com/package/@vbss-ui/textarea"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+              >
+                View on npm <ArrowSquareOut size={16} weight="bold" />
+              </a>
+            </S.Paragraph>
             <S.Paragraph>
               To install only the <strong>Textarea</strong> component, run one of the following commands:
             </S.Paragraph>

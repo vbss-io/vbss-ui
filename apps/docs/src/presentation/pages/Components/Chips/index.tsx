@@ -1,3 +1,4 @@
+import { ArrowSquareOut } from "@phosphor-icons/react"
 import { Chips } from "@vbss-ui/chips"
 import { Table } from "@vbss-ui/table"
 
@@ -54,6 +55,16 @@ export const ChipsDocs = () => {
               <S.SectionAnchor id="installation" />
               Installation
             </S.SectionTitle>
+            <S.Paragraph>
+              <a
+                href="https://www.npmjs.com/package/@vbss-ui/chips"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+              >
+                View on npm <ArrowSquareOut size={16} weight="bold" />
+              </a>
+            </S.Paragraph>
             <S.Paragraph>
               To install only the <strong>Chips</strong> component, run one of the following commands:
             </S.Paragraph>
