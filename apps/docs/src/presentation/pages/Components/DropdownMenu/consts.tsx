@@ -233,3 +233,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const dropdownMenuWhatsNew: { version: string; date: string; changes: string[] }[] = []

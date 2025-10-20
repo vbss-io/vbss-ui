@@ -1,6 +1,7 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { Dialog } from "@vbss-ui/dialog"
@@ -12,6 +13,7 @@ import {
   controllerExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
+  dialogWhatsNew,
   propsTableHeaders,
   propsTableRows,
   realUsageExampleCode,
@@ -64,6 +66,7 @@ export const DialogDocs = () => {
               </Dialog>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={dialogWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

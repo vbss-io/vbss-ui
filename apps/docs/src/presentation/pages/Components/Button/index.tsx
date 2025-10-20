@@ -5,9 +5,11 @@ import { Table } from "@vbss-ui/table"
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 
 import * as S from "../../styles"
 import {
+  buttonWhatsNew,
   customizingClassExampleCode,
   customizingExampleCode,
   iconSizeExampleCode,
@@ -43,6 +45,7 @@ export const ButtonDocs = () => {
               </form>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={buttonWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

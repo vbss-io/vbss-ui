@@ -236,3 +236,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const switchWhatsNew: { version: string; date: string; changes: string[] }[] = []

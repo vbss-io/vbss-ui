@@ -6,6 +6,7 @@ import { useState } from "react"
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 
 import * as S from "../../styles"
 import {
@@ -16,6 +17,7 @@ import {
   propsTableRows,
   realUsageExampleCode,
   sections,
+  switchWhatsNew,
   usageExampleCode,
   withIconsExampleCode,
 } from "./consts"
@@ -76,6 +78,7 @@ export const SwitchDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={switchWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

@@ -2,6 +2,7 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut } from "@phosphor-icons/react"
 import { Table } from "@vbss-ui/table"
 import { Textarea } from "@vbss-ui/textarea"
@@ -15,6 +16,7 @@ import {
   propsTableRows,
   realUsageExampleCode,
   sections,
+  textareaWhatsNew,
   usageExampleCode,
 } from "./consts"
 import "./style.css"
@@ -63,6 +65,7 @@ export const TextareaDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={textareaWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

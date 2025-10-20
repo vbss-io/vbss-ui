@@ -157,3 +157,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const historyNavWhatsNew: { version: string; date: string; changes: string[] }[] = []

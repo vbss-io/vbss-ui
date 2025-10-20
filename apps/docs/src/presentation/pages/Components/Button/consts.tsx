@@ -199,3 +199,11 @@ export const customizingClassExampleCode = `// CSS
 <div className='custom-button'>
   <Button>Example</Button>
 </div>`
+
+export const buttonWhatsNew: { version: string; date: string; changes: string[] }[] = [
+  // {
+  //   version: "1.0.0",
+  //   date: "2025-10-20",
+  //   changes: ["Feat example", "Feat example"],
+  // },
+]

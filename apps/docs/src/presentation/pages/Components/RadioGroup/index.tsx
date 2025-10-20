@@ -2,6 +2,7 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut } from "@phosphor-icons/react"
 import { RadioGroup } from "@vbss-ui/radio-group"
 import { Table } from "@vbss-ui/table"
@@ -14,6 +15,7 @@ import {
   labelExampleCode,
   propsTableHeaders,
   propsTableRows,
+  radioGroupWhatsNew,
   realUsageExampleCode,
   sections,
   usageExampleCode,
@@ -92,6 +94,7 @@ export const RadioGroupDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={radioGroupWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

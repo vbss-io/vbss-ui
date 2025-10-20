@@ -198,3 +198,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const popoverWhatsNew: { version: string; date: string; changes: string[] }[] = []

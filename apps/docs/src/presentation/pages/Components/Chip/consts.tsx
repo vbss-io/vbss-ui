@@ -184,3 +184,5 @@ export const customizingClassExampleCode = `// CSS
 <div className='custom-chip'>
   <Chip>Example</Chip>
 </div>`
+
+export const chipWhatsNew: { version: string; date: string; changes: string[] }[] = []

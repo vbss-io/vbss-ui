@@ -349,3 +349,5 @@ export const App = () => {
     />
   )
 }`
+
+export const tableWhatsNew: { version: string; date: string; changes: string[] }[] = []

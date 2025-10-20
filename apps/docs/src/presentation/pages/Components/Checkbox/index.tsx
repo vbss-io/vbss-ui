@@ -1,6 +1,7 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut } from "@phosphor-icons/react"
 import { CheckedState } from "@radix-ui/react-checkbox"
 import { Checkbox } from "@vbss-ui/checkbox"
@@ -8,6 +9,7 @@ import { Table } from "@vbss-ui/table"
 import { useState } from "react"
 import * as S from "../../styles"
 import {
+  checkboxWhatsNew,
   controlledExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
@@ -60,6 +62,7 @@ export const App = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={checkboxWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

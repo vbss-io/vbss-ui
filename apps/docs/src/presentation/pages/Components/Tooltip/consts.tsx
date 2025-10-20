@@ -237,3 +237,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const tooltipWhatsNew: { version: string; date: string; changes: string[] }[] = []

@@ -4,6 +4,7 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut } from "@phosphor-icons/react"
 
 import * as S from "../../styles"
@@ -24,6 +25,7 @@ import {
   styledHeadersExampleCode,
   styledRows,
   styledRowsExampleCode,
+  tableWhatsNew,
   usageExampleCode,
 } from "./consts"
 import "./style.css"
@@ -86,6 +88,7 @@ export const TableDocs = () => {
               <Table headers={taskListHeaders} rows={taskListRows} footer={taskListFooter} fontSize="sm" height="md" />
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={tableWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

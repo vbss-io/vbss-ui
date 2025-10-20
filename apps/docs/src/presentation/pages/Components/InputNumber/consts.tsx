@@ -284,3 +284,5 @@ export const App = () => {
     </form>
   )
 }`
+
+export const inputNumberWhatsNew: { version: string; date: string; changes: string[] }[] = []

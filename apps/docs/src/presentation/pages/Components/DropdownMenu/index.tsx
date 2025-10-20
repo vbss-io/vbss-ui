@@ -1,6 +1,7 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut, PencilSimple, Trash } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { DropdownMenu } from "@vbss-ui/dropdown-menu"
@@ -9,6 +10,7 @@ import * as S from "../../styles"
 import {
   customizingClassExampleCode,
   customizingExampleCode,
+  dropdownMenuWhatsNew,
   propsTableHeaders,
   propsTableRows,
   realUsageExampleCode,
@@ -61,6 +63,7 @@ export const DropdownMenuDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={dropdownMenuWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

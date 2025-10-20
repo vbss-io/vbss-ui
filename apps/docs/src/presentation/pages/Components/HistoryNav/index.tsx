@@ -2,6 +2,7 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowLeft, ArrowRight, ArrowSquareOut } from "@phosphor-icons/react"
 import { HistoryNav } from "@vbss-ui/history-nav"
 import { Table } from "@vbss-ui/table"
@@ -11,6 +12,7 @@ import {
   customizingClassExampleCode,
   customizingExampleCode,
   gapExampleCode,
+  historyNavWhatsNew,
   iconExampleCode,
   propsTableHeaders,
   propsTableRows,
@@ -35,6 +37,7 @@ export const HistoryNavDocs = () => {
               <HistoryNav />
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={historyNavWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

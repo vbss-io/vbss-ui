@@ -291,3 +291,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const radioGroupWhatsNew: { version: string; date: string; changes: string[] }[] = []

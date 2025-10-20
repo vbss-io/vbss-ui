@@ -8,11 +8,13 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import * as S from "../../styles"
 import {
   controlledExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
+  inputWhatsNew,
   passwordExampleCode,
   propsTableHeaders,
   propsTableRows,
@@ -94,6 +96,7 @@ export const InputDocs = () => {
               </form>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={inputWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

@@ -1,6 +1,7 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut, Question } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { Table } from "@vbss-ui/table"
@@ -14,6 +15,7 @@ import {
   propsTableRows,
   realUsageExampleCode,
   sections,
+  tooltipWhatsNew,
   triggerExampleCode,
   usageExampleCode,
 } from "./consts"
@@ -72,6 +74,7 @@ export const TooltipDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={tooltipWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

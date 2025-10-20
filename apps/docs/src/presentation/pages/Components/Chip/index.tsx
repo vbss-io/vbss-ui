@@ -1,3 +1,4 @@
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut } from "@phosphor-icons/react"
 import { Chip } from "@vbss-ui/chip"
 import { Table } from "@vbss-ui/table"
@@ -9,6 +10,7 @@ import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 
 import * as S from "../../styles"
 import {
+  chipWhatsNew,
   customizingClassExampleCode,
   customizingExampleCode,
   propsTableHeaders,
@@ -56,6 +58,7 @@ export const ChipDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={chipWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

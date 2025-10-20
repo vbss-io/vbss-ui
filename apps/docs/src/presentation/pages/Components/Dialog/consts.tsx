@@ -266,3 +266,5 @@ export const App = () => {
     </Dialog>
   )
 }`
+
+export const dialogWhatsNew: { version: string; date: string; changes: string[] }[] = []

@@ -182,3 +182,5 @@ export const customizingClassExampleCode = `//CSS
 <div className="customCheckbox">
   <Checkbox label="Custom class" />
 </div>`
+
+export const checkboxWhatsNew: { version: string; date: string; changes: string[] }[] = []

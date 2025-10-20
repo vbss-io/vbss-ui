@@ -1,6 +1,7 @@
 import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut, User } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { Popover } from "@vbss-ui/popover"
@@ -9,6 +10,7 @@ import * as S from "../../styles"
 import {
   customizingClassExampleCode,
   customizingExampleCode,
+  popoverWhatsNew,
   propsTableHeaders,
   propsTableRows,
   realUsageExampleCode,
@@ -83,6 +85,7 @@ export const PopoverDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={popoverWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

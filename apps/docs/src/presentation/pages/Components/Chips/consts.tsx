@@ -168,3 +168,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const chipsWhatsNew: { version: string; date: string; changes: string[] }[] = []

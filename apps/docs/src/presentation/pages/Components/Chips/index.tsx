@@ -6,10 +6,12 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 
 import * as S from "../../styles"
 import {
   chipPropsExampleCode,
+  chipsWhatsNew,
   customizingClassExampleCode,
   customizingExampleCode,
   propsTableHeaders,
@@ -50,6 +52,7 @@ export const ChipsDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={chipsWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

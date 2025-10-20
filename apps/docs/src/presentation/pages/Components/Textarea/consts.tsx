@@ -187,3 +187,5 @@ export const App = () => {
     </div>
   )
 }`
+
+export const textareaWhatsNew: { version: string; date: string; changes: string[] }[] = []
