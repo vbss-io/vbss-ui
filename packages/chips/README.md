@@ -122,3 +122,15 @@ To see the components in action, run Storybook locally. Navigate to the reposito
 ```bash
 npm run storybook
 ```
+
+---
+
+## **Support**
+
+Help us keep vbss-ui free and open source. Your support enables continuous development, better docs and new components.
+
+- Buy me a coffee: [buymeacoffee.com/vbss.io](https://www.buymeacoffee.com/vbss.io)
+- Star on GitHub: [github.com/vbss-io/vbss-ui](https://github.com/vbss-io/vbss-ui)
+- Share with community: [ui.vbss.io](https://ui.vbss.io)
+
+Thank you for supporting the project!

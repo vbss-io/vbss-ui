@@ -6,7 +6,7 @@ vbss-ui is a modern and customizable UI components library designed to simplify 
 
 Each component is available as an independent package, allowing you to keep your project lightweight by installing only what you need.
 
-## Built with Modern Technologies
+## **Built with Modern Technologies**
 
 vbss-ui is built with the latest frontend technologies to ensure performance, maintainability, and ease of use:
 
@@ -16,15 +16,15 @@ vbss-ui is built with the latest frontend technologies to ensure performance, ma
 - **Monorepo managed with Lerna** for scalable package management
 - **Built with Vite** for fast development and optimized builds
 
-## Built-in TypeScript Support
+## **Built-in TypeScript Support**
 
 No need to install additional type definitions, vbss-ui comes with built-in TypeScript support. This ensures a seamless development experience with autocompletion and type checking out of the box.
 
-## Open Source & Community-Driven
+## **Open Source & Community-Driven**
 
 vbss-ui is an open-source project, and the code is available on [GitHub](https://github.com/vbss-io/vbss-ui). Contributions and feature requests are always welcome! If you have suggestions, issues, or ideas, feel free to open a pull request or an issue on the repository.
 
-## Available Components
+## **Available Components**
 
 Here's a list of all available components in the VBSS UI library:
 
@@ -48,7 +48,7 @@ Here's a list of all available components in the VBSS UI library:
 
 ---
 
-## Installation
+## **Installation**
 
 > Adding Components to Your Project
 
@@ -82,7 +82,7 @@ export const App = () => {
 };
 ```
 
-## Color Customization
+## **Color Customization**
 
 > Customize Your Component Colors
 
@@ -137,3 +137,15 @@ To see the components in action, run Storybook locally. Navigate to the reposito
 ```bash
 npm run storybook
 ```
+
+---
+
+## **Support**
+
+Help us keep vbss-ui free and open source. Your support enables continuous development, better docs and new components.
+
+- Buy me a coffee: [buymeacoffee.com/vbss.io](https://www.buymeacoffee.com/vbss.io)
+- Star on GitHub: [github.com/vbss-io/vbss-ui](https://github.com/vbss-io/vbss-ui)
+- Share with community: [ui.vbss.io](https://ui.vbss.io)
+
+Thank you for supporting the project!
