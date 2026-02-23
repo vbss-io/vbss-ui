@@ -12,3 +12,12 @@
     font-family: "Inter";
   }
 }
+
+@layer utilities {
+  @media (prefers-reduced-motion: reduce) {
+    .tooltipContent {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
