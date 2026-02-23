@@ -83,7 +83,15 @@ export const DropdownMenu: DropdownMenuComponent = forwardRef(
               )
             }
             return (
-              <Item key={`${menu.item}-${index}`} className="dropdownMenuItem w-full">
+              <Item
+                key={`${menu.item}-${index}`}
+                className={cn(
+                  "dropdownMenuItem w-full outline-none",
+                  dropdownMenuItemStyles({
+                    variant: variant ?? "primary",
+                  })
+                )}
+              >
                 {menu.item}
               </Item>
             )
@@ -152,3 +160,24 @@ export const dropdownMenuSeparatorStyle: { [key: string]: string } = {
   outline: "bg-primary",
   ghost: "bg-black",
 }
+
+export const dropdownMenuItemStyles = cva(
+  "px-2 py-1.5 rounded-sm cursor-pointer motion-safe:transition-colors motion-safe:duration-150",
+  {
+    variants: {
+      variant: {
+        primary:
+          "hover:bg-primary/80 hover:border hover:border-primary focus:bg-primary/80 focus:border focus:border-primary active:bg-primary/70 active:border active:border-primary",
+        secondary:
+          "hover:bg-secondary/80 hover:border hover:border-secondary focus:bg-secondary/80 focus:border focus:border-secondary active:bg-secondary/70 active:border active:border-secondary",
+        outline:
+          "hover:bg-primary/10 hover:border-2 hover:border-primary focus:bg-primary/10 focus:border-2 focus:border-primary active:bg-primary/20 active:border-2 active:border-primary",
+        ghost:
+          "hover:bg-black/10 hover:border-2 hover:border-black focus:bg-black/10 focus:border-2 focus:border-black active:bg-black/20 active:border-2 active:border-black",
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+    },
+  }
+)
