@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import { ButtonDocs } from "@/presentation/pages/Components/Button"
+import { CalendarDocs } from "@/presentation/pages/Components/Calendar"
 import { ChipDocs } from "@/presentation/pages/Components/Chip"
 import { ChipsDocs } from "@/presentation/pages/Components/Chips"
 import { DialogDocs } from "@/presentation/pages/Components/Dialog"
@@ -20,6 +21,9 @@ import { Introduction } from "@/presentation/pages/GettingStarted/Introduction"
 import { NotFound } from "@/presentation/pages/NotFound"
 import { SupportDocs } from "@/presentation/pages/Support"
 import { CheckboxDocs } from "../pages/Components/Checkbox"
+import { DataTableDocs } from "../pages/Components/DataTable"
+import { DatePickerDocs } from "../pages/Components/DatePicker"
+import { VBSSTranslatorDocs } from "../pages/Tools/VBSSTranslator"
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +57,10 @@ export const router = createBrowserRouter([
   {
     path: "/button",
     element: <ButtonDocs />,
+  },
+  {
+    path: "/calendar",
+    element: <CalendarDocs />,
   },
   {
     path: "/switch",
@@ -101,6 +109,18 @@ export const router = createBrowserRouter([
   {
     path: "/tooltip",
     element: <TooltipDocs />,
+  },
+  {
+    path: "/date-picker",
+    element: <DatePickerDocs />,
+  },
+  {
+    path: "/data-table",
+    element: <DataTableDocs />,
+  },
+  {
+    path: "/tools/vbss-translator",
+    element: <VBSSTranslatorDocs />,
   },
   {
     path: "/*",

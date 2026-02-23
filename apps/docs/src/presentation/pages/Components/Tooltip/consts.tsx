@@ -238,4 +238,13 @@ export const App = () => {
   )
 }`
 
-export const tooltipWhatsNew: { version: string; date: string; changes: string[] }[] = []
+export const tooltipWhatsNew: { version: string; date: string; changes: string[] }[] = [
+  {
+    version: "2.0.0",
+    date: "2025-01-15",
+    changes: [
+      "Added basic open/close animations with reduced-motion support",
+      "Standardized label prop to accept ReactNode for flexible content",
+    ],
+  },
+]

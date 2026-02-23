@@ -7,28 +7,31 @@ import { sections } from "./sections"
 export const Introduction = () => {
   const componentsTableHeaders = [{ content: "Component" }, { content: "Documentation" }, { content: "Package" }]
 
-  const componentsTableRows = components.map((component) => ({
-    component: component.name,
-    documentation: component.dev ? (
-      <span style={{ color: "#94a3b8" }}>Coming Soon</span>
-    ) : (
-      <a href={`${component.path}`} style={{ color: "#3b82f6", textDecoration: "none" }}>
-        View Documentation
-      </a>
-    ),
-    package: component.dev ? (
-      <span style={{ color: "#94a3b8" }}>Coming Soon</span>
-    ) : (
-      <a
-        href={`https://www.npmjs.com/package/@vbss-ui/${component.path.slice(1).replace(/-/g, "")}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ color: "#3b82f6", textDecoration: "none" }}
-      >
-        View Package
-      </a>
-    ),
-  }))
+  const componentsTableRows = components.map((component) => {
+    const isDev = "dev" in component ? component.dev : false
+    return {
+      component: component.name,
+      documentation: isDev ? (
+        <span style={{ color: "#94a3b8" }}>Coming Soon</span>
+      ) : (
+        <a href={`${component.path}`} style={{ color: "#3b82f6", textDecoration: "none" }}>
+          View Documentation
+        </a>
+      ),
+      package: isDev ? (
+        <span style={{ color: "#94a3b8" }}>Coming Soon</span>
+      ) : (
+        <a
+          href={`https://www.npmjs.com/package/@vbss-ui/${component.path.slice(1).replace(/-/g, "")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#3b82f6", textDecoration: "none" }}
+        >
+          View Package
+        </a>
+      ),
+    }
+  })
 
   return (
     <>

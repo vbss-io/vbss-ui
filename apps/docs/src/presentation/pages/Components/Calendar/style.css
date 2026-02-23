@@ -1,0 +1,8 @@
+.customCalendar {
+  .calendar {
+    background-color: blue;
+    .day {
+      color: red;
+    }
+  }
+}

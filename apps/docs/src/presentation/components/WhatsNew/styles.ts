@@ -82,7 +82,23 @@ export const List = styled.ul`
   margin: 0;
   padding-left: 1.25rem;
   color: #ffffff;
+  list-style: none;
+
   li {
     line-height: 1.6;
+    position: relative;
+    padding-left: 1rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -0.75rem;
+      top: 0.5rem;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      opacity: 0.8;
+    }
   }
 `

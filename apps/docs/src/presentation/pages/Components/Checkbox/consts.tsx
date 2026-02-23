@@ -183,4 +183,13 @@ export const customizingClassExampleCode = `//CSS
   <Checkbox label="Custom class" />
 </div>`
 
-export const checkboxWhatsNew: { version: string; date: string; changes: string[] }[] = []
+export const checkboxWhatsNew: { version: string; date: string; changes: string[] }[] = [
+  {
+    version: "2.0.0",
+    date: "2025-01-15",
+    changes: [
+      "Added onChangeChecked prop (renamed from onCheckChange) for clearer API",
+      "Standardized label prop to accept ReactNode for flexible content",
+    ],
+  },
+]

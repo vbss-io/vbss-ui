@@ -82,3 +82,14 @@ export const NavLink = styled.div<NavLinkProps>`
     background-color: ${({ theme }) => theme.colors.secondary};
   }
 `
+
+export const NewBadge = styled.span`
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white !important;
+  background-color: ${({ theme }) => theme.colors.accent};
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  margin-left: 0.25rem;
+  opacity: 1;
+`

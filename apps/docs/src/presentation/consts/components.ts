@@ -62,16 +62,14 @@ export const components = [
   {
     name: "Data Table",
     path: "/data-table",
-    dev: true,
   },
   {
     name: "Date Picker",
     path: "/date-picker",
-    dev: true,
   },
   {
     name: "Calendar",
     path: "/calendar",
-    dev: true,
+    releaseDate: "2025-10-30",
   },
 ]
