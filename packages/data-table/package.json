@@ -1,0 +1,51 @@
+{
+  "name": "@vbss-ui/data-table",
+  "description": "A customizable and accessible Data Table component with sorting and pagination.",
+  "keywords": [
+    "react",
+    "component",
+    "ui",
+    "data-table",
+    "table",
+    "sorting",
+    "pagination",
+    "vbss-ui"
+  ],
+  "license": "MIT",
+  "private": false,
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io/data-table",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
+  },
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "module": "dist/vbss-ui-data-table.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/vbss-ui-data-table.d.ts",
+      "import": "./dist/vbss-ui-data-table.es.js"
+    }
+  },
+  "types": "dist/vbss-ui-data-table.d.ts",
+  "scripts": {
+    "build": "tsc && vite build",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "dependencies": {
+    "@vbss-ui/lib": "*",
+    "@vbss-ui/table": "*",
+    "class-variance-authority": "^0.7.0"
+  }
+}
+
