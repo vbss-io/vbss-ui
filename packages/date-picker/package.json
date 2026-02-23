@@ -1,0 +1,54 @@
+{
+  "name": "@vbss-ui/date-picker",
+  "description": "A customizable and accessible Date Picker component with calendar popup.",
+  "keywords": [
+    "react",
+    "component",
+    "ui",
+    "date-picker",
+    "calendar",
+    "date",
+    "vbss-ui"
+  ],
+  "license": "MIT",
+  "private": false,
+  "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
+  "homepage": "https://ui.vbss.io/date-picker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
+  },
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "module": "dist/vbss-ui-date-picker.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/vbss-ui-date-picker.d.ts",
+      "import": "./dist/vbss-ui-date-picker.es.js"
+    }
+  },
+  "types": "dist/vbss-ui-date-picker.d.ts",
+  "scripts": {
+    "build": "tsc && vite build",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@vbss-ui/lib": "*",
+    "@vbss-ui/button": "*",
+    "@vbss-ui/calendar": "*",
+    "@vbss-ui/input": "*",
+    "@vbss-ui/popover": "*",
+    "class-variance-authority": "^0.7.0",
+    "date-fns": "^4.1.0"
+  }
+}
