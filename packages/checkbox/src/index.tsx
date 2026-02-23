@@ -1,13 +1,19 @@
-import { Indicator, Root } from "@radix-ui/react-checkbox"
+import { CheckedState, Indicator, Root } from "@radix-ui/react-checkbox"
 import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
 import { ComponentPropsWithoutRef, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
 import Check from "./check.svg"
 import "./index.css"
 
-type CheckboxProps = ComponentPropsWithoutRef<typeof Root> &
+type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof Root>, "onCheckedChange"> &
   VariantProps<typeof checkboxStyles> &
-  VariantProps<typeof checkboxLabelStyles> & { label?: string; icon?: ReactNode }
+  VariantProps<typeof checkboxLabelStyles> & {
+    label?: ReactNode
+    icon?: ReactNode
+    onChangeChecked?: (next: boolean) => void
+    /** @deprecated Use onChangeChecked instead. This prop is kept for backward compatibility. */
+    onCheckedChange?: (checked: CheckedState) => void
+  }
 
 export type ExtendableCheckboxProps<C extends ElementType> = ExtendableComponentProps<C, CheckboxProps>
 
@@ -18,10 +24,36 @@ export type SwitchComponent = ForwardRefExoticComponent<ExtendableCheckboxProps<
  */
 export const Checkbox: SwitchComponent = forwardRef(
   <C extends ElementType>(
-    { variant, size, rounded, fontSize, fontWeight, className, disabled, label, icon, ...props }: ExtendableCheckboxProps<C>,
+    {
+      variant,
+      size,
+      rounded,
+      fontSize,
+      fontWeight,
+      className,
+      disabled,
+      label,
+      icon,
+      onChangeChecked,
+      onCheckedChange,
+      ...props
+    }: ExtendableCheckboxProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
     const checkboxId = props.id ?? Math.random().toString()
+
+    // Handle onChangeChecked: convert CheckedState to boolean
+    const handleCheckedChange = (checked: CheckedState) => {
+      // Call the new API with boolean value
+      if (onChangeChecked) {
+        onChangeChecked(checked === true)
+      }
+      // Maintain backward compatibility with old API
+      if (onCheckedChange) {
+        onCheckedChange(checked)
+      }
+    }
+
     return (
       <div className="checkboxContainer flex items-center space-x-2">
         <Root
@@ -38,6 +70,7 @@ export const Checkbox: SwitchComponent = forwardRef(
               className,
             })
           )}
+          onCheckedChange={handleCheckedChange}
           {...props}
         >
           <Indicator className={cn("checkboxIconContainer flex items-center justify-center w-full h-full")}>
