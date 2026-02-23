@@ -1,5 +1,6 @@
 node_modules
 dist
 *storybook.log
-packages/@todo
-local-docs/
+.claude/
+tasks/
+templates/

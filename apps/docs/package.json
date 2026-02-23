@@ -13,6 +13,8 @@
     "@vbss-ui/checkbox": "*",
     "@vbss-ui/chip": "*",
     "@vbss-ui/chips": "*",
+    "@vbss-ui/data-table": "*",
+    "@vbss-ui/date-picker": "*",
     "@vbss-ui/dialog": "*",
     "@vbss-ui/dropdown-menu": "*",
     "@vbss-ui/history-nav": "*",
@@ -28,7 +30,8 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^7.1.5",
     "react-syntax-highlighter": "^15.6.1",
-    "styled-components": "^6.1.15"
+    "styled-components": "^6.1.15",
+    "vbss-translator": "1.1.0"
   },
   "devDependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",

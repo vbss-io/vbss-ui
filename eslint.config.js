@@ -68,6 +68,7 @@ export default [
   },
   {
     files: ["apps/**/*.{js,jsx,ts,tsx}", "packages/**/*.{js,jsx,ts,tsx}"],
+    ignores: ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**", "**/postcss.config.js", "**/tailwind.config.js"],
     languageOptions: {
       parserOptions: {
         project: ["./apps/*/tsconfig.json", "./packages/*/tsconfig.json"],
