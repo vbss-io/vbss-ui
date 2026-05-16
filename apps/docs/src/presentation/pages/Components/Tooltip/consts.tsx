@@ -82,10 +82,11 @@ import { Tooltip } from "@vbss-ui/tooltip"
 export const App = () => {
   return (
     <Tooltip
-      trigger={<Button as="div">Top</Button>}
-      side="top"
+      trigger={<Button as="div">Right</Button>}
+      side="right"
+      sideOffset={8}
     >
-      This tooltip appears on top
+      This tooltip appears on the right
     </Tooltip>
   )
 }`
@@ -127,13 +128,13 @@ export const propsTableRows = [
     prop: "side",
     type: "top | right | bottom | left",
     description: "The position of the tooltip relative to the trigger",
-    default: "top",
+    default: "bottom",
   },
   {
     prop: "sideOffset",
     type: "number",
     description: "The distance between the tooltip and the trigger",
-    default: "5",
+    default: "4",
   },
   {
     prop: "trigger",
@@ -241,10 +242,7 @@ export const App = () => {
 export const tooltipWhatsNew: { version: string; date: string; changes: string[] }[] = [
   {
     version: "2.0.0",
-    date: "2025-01-15",
-    changes: [
-      "Added basic open/close animations with reduced-motion support",
-      "Standardized label prop to accept ReactNode for flexible content",
-    ],
+    date: "2026-05-16",
+    changes: ["Added reduced-motion support for tooltip open/close animations"],
   },
 ]

@@ -57,7 +57,7 @@ export const App = () => {
 }`
 
 export const gapExampleCode = `<HistoryNav
-  gap='gap'
+  gap='lg'
   leftIcon={<ChevronLeftIcon />}
   rightIcon={<ChevronRightIcon />}
   leftOnClick={() => window.history.back()}
@@ -67,6 +67,12 @@ export const gapExampleCode = `<HistoryNav
 export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
+  {
+    prop: "as",
+    type: "React.ElementType",
+    description: "The element or component used to render the container",
+    default: "'div'",
+  },
   {
     prop: "gap",
     type: "xs | sm | md | lg | xl",

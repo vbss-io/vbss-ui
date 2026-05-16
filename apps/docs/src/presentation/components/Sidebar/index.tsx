@@ -57,6 +57,16 @@ export const Sidebar = ({ isMobile = false }: SidebarProps) => {
           </S.NavLink>
         </S.Section>
         <S.Section>
+          <S.Title>Tools</S.Title>
+          {tools.map((tool) => (
+            <S.NavLink key={tool.path} data-active={currentPath === tool.path}>
+              <Button as="a" href={tool.path}>
+                {tool.name}
+              </Button>
+            </S.NavLink>
+          ))}
+        </S.Section>
+        <S.Section>
           <S.Title>Components</S.Title>
           {sortedComponents.map((component) => {
             const isDev = "dev" in component ? (component.dev as boolean) : false
@@ -72,16 +82,6 @@ export const Sidebar = ({ isMobile = false }: SidebarProps) => {
               </S.NavLink>
             )
           })}
-        </S.Section>
-        <S.Section>
-          <S.Title>Tools</S.Title>
-          {tools.map((tool) => (
-            <S.NavLink key={tool.path} data-active={currentPath === tool.path}>
-              <Button as="a" href={tool.path}>
-                {tool.name}
-              </Button>
-            </S.NavLink>
-          ))}
         </S.Section>
       </S.Nav>
     </S.SidebarContainer>

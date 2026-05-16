@@ -53,7 +53,7 @@ export const sections = [
 
 export const usageExampleCode = `import { Chips } from "@vbss-ui/chips"
 
-export export const App = () => {
+export const App = () => {
   return <Chips chips={["Design", "Development", "Marketing"]} />
 }`
 
@@ -75,19 +75,19 @@ export const propsTableRows = [
   {
     prop: "gap",
     Type: "xs | sm | md | lg | xl",
-    Description: "Controls spacing between the chips.",
+    Description: "Defines the spacing between chips.",
     Default: "md",
   },
   {
     prop: "flexDirection",
     Type: "row | col",
-    Description: "	Defines the layout direction of the chips (horizontal or vertical).",
+    Description: "Determines the layout direction of the chips.",
     Default: "row",
   },
   {
     prop: "chipsProps",
     Type: <a href="chip">ChipProps</a>,
-    Description: "Shared props applied to each individual Chip.",
+    Description: "Props applied to Chip components. See Chip Props",
     Default: "-",
   },
   {

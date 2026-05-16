@@ -176,27 +176,27 @@ export const propsTableRows = [
     default: '"normal"',
   },
   {
+    prop: "className",
+    type: "string",
+    description: "CSS class applied to the date picker root",
+    default: "-",
+  },
+  {
     prop: "aria-label",
     type: "string",
-    description: "Accessible label for screen readers",
+    description: "Accessible label for the input",
     default: "-",
   },
   {
     prop: "aria-describedby",
     type: "string",
-    description: "ID of element that describes the date picker",
+    description: "ID of the element describing the input",
     default: "-",
   },
   {
-    prop: "className",
-    type: "string",
-    description: "Additional CSS classes for custom styling",
-    default: "-",
-  },
-  {
-    prop: "style",
-    type: "React.CSSProperties",
-    description: "Additional style for custom styling",
+    prop: "ref",
+    type: "React.Ref",
+    description: "Ref forwarded to the underlying input element",
     default: "-",
   },
 ]
@@ -339,3 +339,18 @@ export const App = () => {
     </div>
   )
 }`
+
+export const datePickerWhatsNew: { version: string; date: string; changes: string[] }[] = [
+  {
+    version: "1.0.0",
+    date: "2026-05-16",
+    changes: [
+      "Initial release of the DatePicker component",
+      "Controlled and uncontrolled modes via value/onChange and defaultValue",
+      "Date validation with minDate, maxDate, and disabledDates",
+      "date-fns powered formatting and locale support",
+      "Optional clear button and portal-rendered calendar popover",
+      "Accessible keyboard navigation, ARIA attributes, and focus management",
+    ],
+  },
+]

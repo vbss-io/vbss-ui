@@ -141,8 +141,8 @@ return (
 | `trigger`          | `React.ReactNode`                                | The element that triggers the Dialog.                 | `<div />` |
 | `overlayOpacity`   | `number`                                         | Sets the opacity of the overlay (0-100).              | `50`      |
 | `border`           | `boolean`                                        | Adds a border to the Dialog.                          | `false`   |
-| `title`            | `React.ReactNode`                                | The title of the Dialog.                              | `-`       |
-| `description`      | `React.ReactNode`                                | The description text of the Dialog.                   | `-`       |
+| `title`            | `React.ReactNode`                                | The title of the Dialog.                              | `""`      |
+| `description`      | `React.ReactNode`                                | The description text of the Dialog.                   | `""`      |
 | `footer`           | `React.ReactNode`                                | Content to be displayed in the footer.                | `-`       |
 | `disableTextColor` | `boolean`                                        | Disable variant-based text color.                     | `false`   |
 | `hideClose`        | `boolean`                                        | Shows/hides the close button.                         | `false`   |

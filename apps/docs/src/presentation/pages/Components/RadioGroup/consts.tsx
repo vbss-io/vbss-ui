@@ -140,8 +140,14 @@ export const propsTableRows = [
   },
   {
     prop: "icon",
-    type: "ReactNode",
+    type: "React.ReactNode",
     description: "Custom icon for the checked state.",
+    default: "-",
+  },
+  {
+    prop: "itemProps",
+    type: "RadixRadioGroupItemProps",
+    description: "Props forwarded to each radio item (excludes value, id, key).",
     default: "-",
   },
   {

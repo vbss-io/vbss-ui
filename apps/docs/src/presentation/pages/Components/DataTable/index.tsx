@@ -7,11 +7,13 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 
 import * as S from "../../styles"
 import {
   customizingClassExampleCode,
   customizingExampleCode,
+  dataTableWhatsNew,
   emptyStateExampleCode,
   mockUsers,
   paginationExampleCode,
@@ -109,6 +111,7 @@ export const DataTableDocs = () => {
               </div>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={dataTableWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

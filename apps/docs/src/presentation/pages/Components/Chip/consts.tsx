@@ -61,7 +61,7 @@ export const sections = [
 
 export const usageExampleCode = `import { Chip } from "@vbss-ui/chip"
 
-export export const App = () => {
+export const App = () => {
   return <Chip>Example Chip</Chip>
 }`
 
@@ -113,7 +113,7 @@ export const propsTableRows = [
     prop: "size",
     Type: "sm | md | lg",
     Description: "Specifies the size of the chip.",
-    Default: "md",
+    Default: "sm",
   },
   {
     prop: "rounded",
@@ -125,7 +125,7 @@ export const propsTableRows = [
     prop: "fontSize",
     Type: "xs | sm | md | lg | xl",
     Description: "Sets the font size of the chip text.",
-    Default: "md",
+    Default: "xs",
   },
   {
     prop: "fontWeight",

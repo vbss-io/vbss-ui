@@ -237,10 +237,10 @@ export const App = () => {
 export const dropdownMenuWhatsNew: { version: string; date: string; changes: string[] }[] = [
   {
     version: "2.0.0",
-    date: "2025-01-15",
+    date: "2026-05-16",
     changes: [
       "Improved border behavior on hover and click for better visual feedback",
-      "Standardized label prop to accept ReactNode for flexible content",
+      "Added variant support for dropdown menu items via the exported dropdownMenuItemStyles helper",
     ],
   },
 ]

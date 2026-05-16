@@ -33,9 +33,9 @@ export const App = () => {
 | Prop         | Type                                                               | Description                                      | Default   |
 |--------------|--------------------------------------------------------------------|--------------------------------------------------|-----------|
 | `variant`    | `primary` \| `secondary` \| `outline`                              | Defines the visual style of the chip.            | `primary` |
-| `size`       | `sm` \| `md` \| `lg`                                               | Specifies the size of the chip.                  | `md`      |
+| `size`       | `sm` \| `md` \| `lg`                                               | Specifies the size of the chip.                  | `sm`      |
 | `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                   | Determines the border radius of the chip.        | `md`      |
-| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the chip text.             | `md`      |
+| `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the chip text.             | `xs`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the chip text.      | `normal`  |
 | `as`         | `React.ElementType`                                                | Defines the HTML element or component to render. | `div`     |
 | `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.     | `-`       |

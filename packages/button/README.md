@@ -33,7 +33,7 @@ export const App = () => {
 | Prop         | Type                                                                                                  | Description                                           | Default   |
 |--------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------------------|-----------|
 | `variant`    | `primary` \| `secondary` \| `outline` \| `outlineSolid` \| `ghost`                                    | Defines the visual style of the Button.               | `primary` |
-| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `icon-xs` \| `icon-sm` \| `icon-md` \| `icon-lg` \| `icon-xl` | Defines the size or icon-specific size of the Button. | `md`      |
+| `size`       | `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `icon-xs` \| `icon-sm` \| `icon-md` \| `icon-lg` \| `icon-xl` | Defines the size or icon-specific size of the Button. | `sm`      |
 | `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `full`                                                      | Sets the border radius of the Button.                 | `md`      |
 | `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                                                  | Sets the font size of the Button text.                | `md`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`                                    | Specifies the font weight of the Button text.         | `normal`  |

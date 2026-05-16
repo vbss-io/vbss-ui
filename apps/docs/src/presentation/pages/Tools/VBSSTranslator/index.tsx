@@ -8,7 +8,7 @@ import { ArrowSquareOut } from "@phosphor-icons/react"
 
 import * as S from "../../styles"
 import {
-  cacheGlossaryCode,
+  cacheConfigurationCode,
   cliAllOptionsCode,
   cliCommandFlagsHeaders,
   cliCommandFlagsRows,
@@ -54,10 +54,10 @@ export const VBSSTranslatorDocs = () => {
           </S.SubTitle>
           <section>
             <S.Paragraph>
-              The <strong>VBSS Translator</strong> package provides a complete translation solution for React applications.
-              It features a context-driven provider, the <code>useTranslator</code> hook, automatic language detection,
-              external translation support with Google Translate or custom providers, intelligent caching, and a powerful
-              CLI for managing translation files.
+              The <strong>VBSS Translator</strong> package provides a complete translation solution for React applications. It
+              features a context-driven provider, the <code>useTranslator</code> hook, automatic language detection, external
+              translation support with Google Translate or custom providers, intelligent caching, and a powerful CLI for managing
+              translation files.
             </S.Paragraph>
           </section>
           <WhatsNew title="What's new" entries={vbssTranslatorWhatsNew} />
@@ -71,7 +71,11 @@ export const VBSSTranslatorDocs = () => {
                 href="https://www.npmjs.com/package/vbss-translator"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.25rem",
+                }}
               >
                 View on npm <ArrowSquareOut size={16} weight="bold" />
               </a>
@@ -94,16 +98,16 @@ export const VBSSTranslatorDocs = () => {
               Quick Start
             </S.SectionTitle>
             <S.Paragraph>
-              Get started quickly with VBSS Translator by creating a translation file, setting up the provider, and using
-              the hook in your components.
+              Get started quickly with VBSS Translator by creating a translation file, setting up the provider, and using the hook
+              in your components.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="translation-file" />
               Translation File
             </S.SectionSubTitle>
             <S.Paragraph>
-              Create a JSON file containing your translations. Each translation entry should be an object with language
-              keys (e.g., "en", "pt", "es") and corresponding translated strings:
+              Create a JSON file containing your translations. Each translation entry should be an object with language keys
+              (e.g., &quot;en&quot;, &quot;pt&quot;, &quot;es&quot;) and corresponding translated strings:
             </S.Paragraph>
             <CodeSnippet code={translationFileCode} language="json" />
             <S.SectionSubTitle>
@@ -111,8 +115,8 @@ export const VBSSTranslatorDocs = () => {
               Provider Setup
             </S.SectionSubTitle>
             <S.Paragraph>
-              Wrap your application with the <code>TranslatorProvider</code> component to make translations available
-              throughout your app:
+              Wrap your application with the <code>TranslatorProvider</code> component to make translations available throughout
+              your app:
             </S.Paragraph>
             <CodeSnippet code={providerSetupCode} language="tsx" />
             <S.SectionSubTitle>
@@ -139,8 +143,8 @@ export const VBSSTranslatorDocs = () => {
             </S.Paragraph>
             <CodeSnippet code={localTranslationsCode} language="tsx" />
             <S.Paragraph>
-              Translation entries must use the same language keys. When a match is found, the provider returns the
-              translation for the active language, falling back to other available values if necessary.
+              Translation entries must use the same language keys. When a match is found, the provider returns the translation for
+              the active language, falling back to other available values if necessary.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="language-management" />
@@ -151,8 +155,8 @@ export const VBSSTranslatorDocs = () => {
             </S.Paragraph>
             <CodeSnippet code={languageManagementCode} language="tsx" />
             <S.Paragraph>
-              The <code>autoDetectLanguage</code> option automatically detects the browser language and simplifies locale
-              codes (e.g., "pt-BR" becomes "pt"). The <code>persist</code> option saves the selected language to
+              The <code>autoDetectLanguage</code> option automatically detects the browser language and simplifies locale codes
+              (e.g., &quot;pt-BR&quot; becomes &quot;pt&quot;). The <code>persist</code> option saves the selected language to
               localStorage for persistence across sessions.
             </S.Paragraph>
             <S.SectionSubTitle>
@@ -160,25 +164,31 @@ export const VBSSTranslatorDocs = () => {
               External Translation
             </S.SectionSubTitle>
             <S.Paragraph>
-              External translation allows you to translate text that is not in your local translation files. This feature
-              supports Google Translate out of the box and allows custom translation providers:
+              External translation allows you to translate text that is not in your local translation files. This feature supports
+              Google Translate out of the box and allows custom translation providers:
             </S.Paragraph>
             <CodeSnippet code={externalTranslationConfigCode} language="tsx" />
-            <S.Paragraph style={{ fontWeight: "600", color: "#dc2626", marginTop: "1.5rem" }}>
+            <S.Paragraph
+              style={{
+                fontWeight: "600",
+                color: "#dc2626",
+                marginTop: "1.5rem",
+              }}
+            >
               {externalTranslationSecurityWarning}
             </S.Paragraph>
             <S.Paragraph>
-              The external translation pipeline includes built-in caching, request deduplication, timeout handling, retry
-              logic, and comprehensive callbacks for monitoring and error handling. Use the <code>debug</code> option during
-              development to see detailed logs of cache hits, deduplication, and translation requests.
+              The external translation pipeline includes built-in caching, request deduplication, timeout handling, retry logic,
+              and comprehensive callbacks for monitoring and error handling. Use the <code>debug</code> option during development
+              to see detailed logs of cache hits, deduplication, and translation requests.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="custom-providers" />
               Custom Providers
             </S.SectionSubTitle>
             <S.Paragraph>
-              For production environments, implement a custom translation provider that proxies requests through your
-              backend server. This approach keeps API keys secure and allows you to implement additional business logic:
+              For production environments, implement a custom translation provider that proxies requests through your backend
+              server. This approach keeps API keys secure and allows you to implement additional business logic:
             </S.Paragraph>
             <CodeSnippet code={customProviderCode} language="tsx" />
             <S.Paragraph>You can also use a factory function for more complex initialization logic:</S.Paragraph>
@@ -205,7 +215,10 @@ export const VBSSTranslatorDocs = () => {
               <Table
                 variant="primary"
                 headers={translatorProviderPropsHeaders}
-                rows={translatorProviderPropsRows.map((row) => ({ ...row, style: { color: "white" } }))}
+                rows={translatorProviderPropsRows.map((row) => ({
+                  ...row,
+                  style: { color: "white" },
+                }))}
                 fontSize="sm"
               />
             </S.TableSection>
@@ -220,7 +233,10 @@ export const VBSSTranslatorDocs = () => {
               <Table
                 variant="primary"
                 headers={useTranslatorApiHeaders}
-                rows={useTranslatorApiRows.map((row) => ({ ...row, style: { color: "white" } }))}
+                rows={useTranslatorApiRows.map((row) => ({
+                  ...row,
+                  style: { color: "white" },
+                }))}
                 fontSize="sm"
               />
             </S.TableSection>
@@ -235,7 +251,10 @@ export const VBSSTranslatorDocs = () => {
               <Table
                 variant="primary"
                 headers={translateOptionsHeaders}
-                rows={translateOptionsRows.map((row) => ({ ...row, style: { color: "white" } }))}
+                rows={translateOptionsRows.map((row) => ({
+                  ...row,
+                  style: { color: "white" },
+                }))}
                 fontSize="sm"
               />
             </S.TableSection>
@@ -243,14 +262,15 @@ export const VBSSTranslatorDocs = () => {
               <S.SectionAnchor id="external-translation-config" />
               External Translation Config
             </S.SectionSubTitle>
-            <S.Paragraph>
-              Configure external translation behavior with the following options:
-            </S.Paragraph>
+            <S.Paragraph>Configure external translation behavior with the following options:</S.Paragraph>
             <S.TableSection>
               <Table
                 variant="primary"
                 headers={externalTranslationConfigHeaders}
-                rows={externalTranslationConfigRows.map((row) => ({ ...row, style: { color: "white" } }))}
+                rows={externalTranslationConfigRows.map((row) => ({
+                  ...row,
+                  style: { color: "white" },
+                }))}
                 fontSize="sm"
               />
             </S.TableSection>
@@ -258,14 +278,15 @@ export const VBSSTranslatorDocs = () => {
               <S.SectionAnchor id="translation-provider-interface" />
               Translation Provider Interface
             </S.SectionSubTitle>
-            <S.Paragraph>
-              Custom translation providers must implement the following interface:
-            </S.Paragraph>
+            <S.Paragraph>Custom translation providers must implement the following interface:</S.Paragraph>
             <S.TableSection>
               <Table
                 variant="primary"
                 headers={translationProviderInterfaceHeaders}
-                rows={translationProviderInterfaceRows.map((row) => ({ ...row, style: { color: "white" } }))}
+                rows={translationProviderInterfaceRows.map((row) => ({
+                  ...row,
+                  style: { color: "white" },
+                }))}
                 fontSize="sm"
               />
             </S.TableSection>
@@ -276,8 +297,8 @@ export const VBSSTranslatorDocs = () => {
               CLI & Generator
             </S.SectionTitle>
             <S.Paragraph>
-              VBSS Translator includes a powerful CLI tool that generates typed translation indexes from scattered JSON
-              files. The CLI orchestrates file discovery, validation, deduplication, and code generation.
+              VBSS Translator includes a powerful CLI tool that generates typed translation indexes from scattered JSON files. The
+              CLI orchestrates file discovery, validation, deduplication, and code generation.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="command-reference" />
@@ -290,7 +311,10 @@ export const VBSSTranslatorDocs = () => {
               <Table
                 variant="primary"
                 headers={cliCommandFlagsHeaders}
-                rows={cliCommandFlagsRows.map((row) => ({ ...row, style: { color: "white" } }))}
+                rows={cliCommandFlagsRows.map((row) => ({
+                  ...row,
+                  style: { color: "white" },
+                }))}
                 fontSize="sm"
               />
             </S.TableSection>
@@ -300,26 +324,22 @@ export const VBSSTranslatorDocs = () => {
               <S.SectionAnchor id="watch-mode" />
               Watch Mode
             </S.SectionSubTitle>
-            <S.Paragraph>
-              Enable watch mode to automatically regenerate the translation index when files change:
-            </S.Paragraph>
+            <S.Paragraph>Enable watch mode to automatically regenerate the translation index when files change:</S.Paragraph>
             <CodeSnippet code={cliWatchModeCode} language="sh" />
             <S.Paragraph>
-              Watch mode runs an initial generation, then monitors files matching the pattern. Changes are debounced (300ms)
-              and trigger automatic regeneration. The watcher runs until interrupted and emits debug logs to help diagnose
-              file detection.
+              Watch mode runs an initial generation, then monitors files matching the pattern. Changes are debounced (300ms) and
+              trigger automatic regeneration. The watcher runs until interrupted and emits debug logs to help diagnose file
+              detection.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="programmatic-api" />
               Programmatic API
             </S.SectionSubTitle>
-            <S.Paragraph>
-              You can also use the generator programmatically in your build scripts or custom tooling:
-            </S.Paragraph>
+            <S.Paragraph>You can also use the generator programmatically in your build scripts or custom tooling:</S.Paragraph>
             <CodeSnippet code={programmaticApiCode} language="tsx" />
             <S.Paragraph>
-              The <code>generate</code> function returns a result object containing success status, file counts, error
-              details, and the output path. This API shares the same validation and deduplication pipeline as the CLI.
+              The <code>generate</code> function returns a result object containing success status, file counts, error details,
+              and the output path. This API shares the same validation and deduplication pipeline as the CLI.
             </S.Paragraph>
           </section>
           <section>
@@ -331,40 +351,35 @@ export const VBSSTranslatorDocs = () => {
               <S.SectionAnchor id="language-switching" />
               Language Switching
             </S.SectionSubTitle>
-            <S.Paragraph>
-              Create a language switcher component to allow users to change the active language:
-            </S.Paragraph>
+            <S.Paragraph>Create a language switcher component to allow users to change the active language:</S.Paragraph>
             <ExampleContainer code={languageSwitchingCode}>
               <S.Paragraph>
-                This example shows how to build a simple language switcher using the <code>language</code>,{" "}
-                <code>languages</code>, and <code>setLanguage</code> properties from the <code>useTranslator</code> hook.
+                This example shows how to build a simple language switcher using the <code>language</code>, <code>languages</code>
+                , and <code>setLanguage</code> properties from the <code>useTranslator</code> hook.
               </S.Paragraph>
             </ExampleContainer>
             <S.SectionSubTitle>
               <S.SectionAnchor id="external-translation-usage" />
               External Translation Usage
             </S.SectionSubTitle>
-            <S.Paragraph>
-              Use external translation for dynamic content that is not in your local translation files:
-            </S.Paragraph>
+            <S.Paragraph>Use external translation for dynamic content that is not in your local translation files:</S.Paragraph>
             <ExampleContainer code={externalTranslationUsageCode}>
               <S.Paragraph>
-                The example demonstrates using <code>preferExternal</code> to force external translation, registering keys
-                with <code>registerExternalKey</code>, and tracking translation status with <code>isTranslating</code>.
+                The example demonstrates using <code>preferExternal</code> to force external translation, registering keys with{" "}
+                <code>registerExternalKey</code>, and tracking translation status with <code>isTranslating</code>.
               </S.Paragraph>
             </ExampleContainer>
             <S.SectionSubTitle>
-              <S.SectionAnchor id="cache-glossary" />
-              Cache & Glossary
+              <S.SectionAnchor id="cache-configuration" />
+              Cache Configuration
             </S.SectionSubTitle>
             <S.Paragraph>
-              Configure caching to improve performance and use glossaries to preserve specific terminology:
+              Configure caching to improve performance and reduce redundant external translation requests:
             </S.Paragraph>
-            <CodeSnippet code={cacheGlossaryCode} language="tsx" />
+            <CodeSnippet code={cacheConfigurationCode} language="tsx" />
             <S.Paragraph>
-              The cache stores translations in memory with TTL (time-to-live) and optional LRU eviction. Glossaries ensure
-              brand names and technical terms are not translated. Enable <code>debug</code> mode to see cache hits and
-              misses in the console.
+              The cache stores translations in memory with TTL (time-to-live) and optional LRU eviction. Enable <code>debug</code>{" "}
+              mode to see cache hits and misses in the console.
             </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="error-handling" />
@@ -375,9 +390,9 @@ export const VBSSTranslatorDocs = () => {
             </S.Paragraph>
             <CodeSnippet code={errorHandlingCode} language="tsx" />
             <S.Paragraph>
-              Use <code>onTranslationError</code> and <code>onTranslationComplete</code> callbacks to handle translation
-              lifecycle events. The <code>fallbackValue</code> option provides default text when translations fail, and{" "}
-              <code>signal</code> allows canceling in-flight requests.
+              Use <code>onTranslationError</code> and <code>onTranslationComplete</code> callbacks to handle translation lifecycle
+              events. The <code>fallbackValue</code> option provides default text when translations fail, and <code>signal</code>{" "}
+              allows canceling in-flight requests.
             </S.Paragraph>
           </section>
         </S.ContentWrapper>

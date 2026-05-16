@@ -110,8 +110,8 @@ export const sections = [
         anchor: "external-translation-usage",
       },
       {
-        title: "Cache & Glossary",
-        anchor: "cache-glossary",
+        title: "Cache Configuration",
+        anchor: "cache-configuration",
       },
       {
         title: "Error Handling",
@@ -197,9 +197,6 @@ export const externalTranslationConfigCode = `const externalTranslation = {
     ttlMs: 30 * 60 * 1000,
     maxEntries: 500,
   },
-  glossary: {
-    BRAND_A: "Marca A",
-  },
   alwaysExternalKeys: ["product.description"],
   shouldTranslate: ({ key, text }) => !text.includes("SECRET"),
   onExternalTranslation: ({ key, text }) => {
@@ -232,7 +229,7 @@ export const customProviderCode = `import {
 // Custom provider implementation
 const myCustomProvider: TranslationProvider = {
   type: "custom",
-  checkAvailability: async () => ({ available: true }),
+  isAvailable: () => ({ available: true }),
   translate: async (request: TranslateRequest): Promise<TranslateResult> => {
     const response = await fetch("https://my-translation-api.com/translate", {
       method: "POST",
@@ -271,7 +268,7 @@ export const customProviderFactoryCode = `const providerFactory = () => {
 
   return {
     type: "custom",
-    checkAvailability: async () => {
+    isAvailable: () => {
       if (!apiKey || !endpoint) {
         return { available: false, reason: "Missing configuration" };
       }
@@ -389,7 +386,7 @@ export function ProductDescription() {
   );
 }`
 
-export const cacheGlossaryCode = `const externalTranslation = {
+export const cacheConfigurationCode = `const externalTranslation = {
   enabled: true,
   provider: {
     id: "google",
@@ -399,12 +396,6 @@ export const cacheGlossaryCode = `const externalTranslation = {
     enabled: true,
     ttlMs: 30 * 60 * 1000, // 30 minutes
     maxEntries: 500,
-  },
-  glossary: {
-    // Brand names and special terms
-    "VBSS": "VBSS",
-    "React": "React",
-    "TypeScript": "TypeScript",
   },
   debug: true, // See cache hits/misses in console
 };
@@ -499,11 +490,7 @@ export const translatorProviderPropsRows = [
   },
 ]
 
-export const useTranslatorApiHeaders = [
-  { content: "Property" },
-  { content: "Type" },
-  { content: "Description" },
-]
+export const useTranslatorApiHeaders = [{ content: "Property" }, { content: "Type" }, { content: "Description" }]
 
 export const useTranslatorApiRows = [
   {
@@ -548,11 +535,7 @@ export const useTranslatorApiRows = [
   },
 ]
 
-export const translateOptionsHeaders = [
-  { content: "Option" },
-  { content: "Type" },
-  { content: "Description" },
-]
+export const translateOptionsHeaders = [{ content: "Option" }, { content: "Type" }, { content: "Description" }]
 
 export const translateOptionsRows = [
   {
@@ -616,12 +599,6 @@ export const externalTranslationConfigRows = [
     description: "In-memory cache with TTL and optional LRU size limit (maxEntries).",
   },
   {
-    field: "glossary",
-    type: "Record<string, string>",
-    default: "undefined",
-    description: "Optional term overrides sent when the provider supports them.",
-  },
-  {
     field: "alwaysExternalKeys",
     type: "ReadonlySet<string>",
     default: "new Set()",
@@ -653,27 +630,23 @@ export const externalTranslationConfigRows = [
   },
 ]
 
-export const translationProviderInterfaceHeaders = [
-  { content: "Field" },
-  { content: "Type" },
-  { content: "Description" },
-]
+export const translationProviderInterfaceHeaders = [{ content: "Field" }, { content: "Type" }, { content: "Description" }]
 
 export const translationProviderInterfaceRows = [
   {
     field: "type",
-    type: "string",
-    description: 'String identifier for the provider (e.g., "custom", "google").',
-  },
-  {
-    field: "checkAvailability",
-    type: "() => Promise<ProviderAvailability>",
-    description: "Validates provider readiness (e.g., credentials, network connectivity).",
+    type: "ProviderId",
+    description: 'Provider identifier (e.g., "custom", "google").',
   },
   {
     field: "translate",
     type: "(request: TranslateRequest) => Promise<TranslateResult>",
     description: "Accepts translation request and returns translated text with optional metadata.",
+  },
+  {
+    field: "isAvailable",
+    type: "() => ProviderAvailability",
+    description: "Optional. Synchronously validates provider readiness (e.g., credentials, network connectivity).",
   },
   {
     field: "normalizeError",
@@ -683,11 +656,7 @@ export const translationProviderInterfaceRows = [
 ]
 
 // CLI Command Reference Table
-export const cliCommandFlagsHeaders = [
-  { content: "Flag" },
-  { content: "Description" },
-  { content: "Default" },
-]
+export const cliCommandFlagsHeaders = [{ content: "Flag" }, { content: "Description" }, { content: "Default" }]
 
 export const cliCommandFlagsRows = [
   {
@@ -725,14 +694,21 @@ export const cliCommandFlagsRows = [
 // WhatsNew Entry
 export const vbssTranslatorWhatsNew: { version: string; date: string; changes: string[] }[] = [
   {
+    version: "1.1.1",
+    date: "2026-05-16",
+    changes: [
+      "Updated axios to ^1.15.0 and glob to ^10.5.0 to address dependency security advisories",
+      "Added dependency overrides to harden the build toolchain",
+    ],
+  },
+  {
     version: "1.1.0",
-    date: "2025-01-15",
+    date: "2025-11-17",
     changes: [
       "Added CLI tool for generating typed translation indexes with watch mode",
       "Implemented external translation pipeline with Google Translate support",
       "Added custom translation provider support for backend proxying",
       "Introduced cache system with TTL and LRU eviction",
-      "Added glossary support for terminology overrides",
       "Implemented translation status tracking (isTranslating, isTranslatingAny)",
       "Added comprehensive error handling and retry logic",
       "Included debug mode for development troubleshooting",

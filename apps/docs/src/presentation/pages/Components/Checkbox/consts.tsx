@@ -59,7 +59,7 @@ export const App = () => {
   return (
     <Checkbox
       checked={checked}
-      onCheckedChange={setChecked}
+      onChangeChecked={setChecked}
       label="Accept terms"
     />
   )
@@ -76,7 +76,7 @@ export const App = () => {
       <Checkbox
         label="Subscribe to newsletter"
         checked={isSubscribed}
-        onCheckedChange={setIsSubscribed}
+        onChangeChecked={setIsSubscribed}
       />
       <p style={{ fontSize: "0.875rem", color: "#666" }}>
         {isSubscribed ? "Subscribed" : "Not subscribed"}
@@ -120,14 +120,26 @@ export const propsTableRows = [
   },
   {
     prop: "label",
-    type: "string",
-    description: "Text label for the Checkbox.",
+    type: "React.ReactNode",
+    description: "Label content for the Checkbox.",
     default: "-",
   },
   {
     prop: "icon",
-    type: "ReactNode",
+    type: "React.ReactNode",
     description: "Custom icon for the checked state.",
+    default: "-",
+  },
+  {
+    prop: "onChangeChecked",
+    type: "(next: boolean) => void",
+    description: "Called when the checked state changes, with a boolean value.",
+    default: "-",
+  },
+  {
+    prop: "onCheckedChange",
+    type: "(checked: CheckedState) => void",
+    description: "Deprecated. Use onChangeChecked instead. Kept for backward compatibility.",
     default: "-",
   },
   {
@@ -186,9 +198,9 @@ export const customizingClassExampleCode = `//CSS
 export const checkboxWhatsNew: { version: string; date: string; changes: string[] }[] = [
   {
     version: "2.0.0",
-    date: "2025-01-15",
+    date: "2026-05-16",
     changes: [
-      "Added onChangeChecked prop (renamed from onCheckChange) for clearer API",
+      "Added onChangeChecked prop with a boolean signature; onCheckedChange is now deprecated",
       "Standardized label prop to accept ReactNode for flexible content",
     ],
   },

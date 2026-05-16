@@ -64,7 +64,7 @@ export const propsTableRows = [
     prop: "initialSort",
     type: "{ columnId: string; direction: 'asc' | 'desc' } | null",
     description: "Initial sort state (uncontrolled mode)",
-    default: "-",
+    default: "null",
   },
   {
     prop: "sort",
@@ -112,48 +112,54 @@ export const propsTableRows = [
     prop: "variant",
     type: '"primary" | "secondary" | "outline" | "ghost"',
     description: "Visual style variant",
-    default: '"primary"',
+    default: "-",
   },
   {
     prop: "fontSize",
     type: '"xs" | "sm" | "md" | "lg" | "xl"',
     description: "Font size of table content",
-    default: '"md"',
+    default: "-",
   },
   {
     prop: "fontWeight",
     type: '"thin" | "light" | "normal" | "medium" | "bold" | "extrabold"',
     description: "Font weight of table content",
-    default: '"normal"',
+    default: "-",
   },
   {
     prop: "height",
     type: '"xs" | "sm" | "md" | "lg" | "xl"',
     description: "Height of table rows",
-    default: '"md"',
+    default: "-",
   },
   {
     prop: "rounded",
     type: '"none" | "xs" | "sm" | "md" | "lg" | "xl"',
     description: "Border radius of the table",
-    default: '"md"',
+    default: "-",
   },
   {
     prop: "outline",
     type: "boolean",
     description: "Add a border around the table",
-    default: "true",
+    default: "-",
   },
   {
     prop: "className",
     type: "string",
-    description: "Additional CSS classes for custom styling",
+    description: "Additional CSS class applied to the table",
     default: "-",
   },
   {
     prop: "style",
     type: "React.CSSProperties",
-    description: "Additional style for custom styling",
+    description: "Inline style applied to the table",
+    default: "-",
+  },
+  {
+    prop: "ref",
+    type: "React.Ref",
+    description: "Allows accessing the underlying DOM element",
     default: "-",
   },
 ]
@@ -376,3 +382,17 @@ export const App = () => {
     </div>
   )
 }`
+
+export const dataTableWhatsNew: { version: string; date: string; changes: string[] }[] = [
+  {
+    version: "1.0.0",
+    date: "2026-05-16",
+    changes: [
+      "Initial release of the DataTable component",
+      "Typed, generic column definitions with custom accessors, width, and alignment",
+      "Controlled and uncontrolled sorting with ascending, descending, and cleared states",
+      "Optional client-side pagination via pageSize with controlled page support",
+      "Accessible table semantics with keyboard-operable sortable headers and ARIA labels",
+    ],
+  },
+]

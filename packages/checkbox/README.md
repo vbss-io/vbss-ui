@@ -62,7 +62,7 @@ export const App = () => {
   return (
     <Checkbox
       checked={checked}
-      onCheckedChange={setChecked}
+      onChangeChecked={setChecked}
       label="Accept terms"
     />
   )
@@ -80,8 +80,10 @@ export const App = () => {
 | `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Sets the border radius of the Checkbox.               | `md`      |
 | `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the Checkbox label.             | `md`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the Checkbox label.      | `normal`  |
-| `label`      | `string`                                                           | Text label for the Checkbox.                          | `-`       |
+| `label`      | `React.ReactNode`                                                  | Label content for the Checkbox.                       | `-`       |
 | `icon`       | `React.ReactNode`                                                  | Custom icon for the checked state.                    | `-`       |
+| `onChangeChecked` | `(next: boolean) => void`                                     | Called when the checked state changes, with a boolean value. | `-` |
+| `onCheckedChange` | `(checked: CheckedState) => void`                             | **Deprecated.** Use `onChangeChecked` instead. Kept for backward compatibility. | `-` |
 | `disabled`   | `boolean`                                                          | Disables the Checkbox interaction.                    | `false`   |
 | `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.          | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.            | `-`       |

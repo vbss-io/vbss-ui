@@ -148,6 +148,10 @@ function App() {
 | `rounded` | `"none" \| "xs" \| "sm" \| ...` | `"md"` | Input border radius |
 | `fontSize` | `"xs" \| "sm" \| "md" \| ...` | `"md"` | Font size |
 | `fontWeight` | `"thin" \| "light" \| ...` | `"normal"` | Font weight |
+| `className` | `string` | - | CSS class applied to the date picker root |
+| `aria-label` | `string` | - | Accessible label for the input |
+| `aria-describedby` | `string` | - | ID of the element describing the input |
+| `ref` | `React.Ref` | - | Ref forwarded to the underlying input element |
 
 ## Accessibility
 

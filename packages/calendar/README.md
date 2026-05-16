@@ -93,6 +93,8 @@ For other locales, import directly from `date-fns/locale`. [See all locales](htt
 | `showOutsideDays` | `boolean` | `true` | Show days from previous/next month |
 | `selected` | `Date \| Date[] \| { from: Date; to?: Date }` | - | Selected date(s) |
 | `onSelect` | `(date: Date \| Date[] \| { from: Date; to?: Date } \| undefined) => void` | - | Selection callback |
+| `className` | `string` | - | Additional CSS class for the calendar container |
+| `classNames` | `Record<string, string>` | - | Custom class names for individual calendar parts |
 
 ---
 

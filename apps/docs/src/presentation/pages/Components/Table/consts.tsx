@@ -194,9 +194,9 @@ export const propsTableRows = [
   },
   {
     prop: "ref",
-    Type: "React.Ref",
-    Description: "Allows accessing the underlying DOM element.",
-    Default: "-",
+    type: "React.Ref",
+    description: "Allows accessing the underlying DOM element.",
+    default: "-",
   },
   {
     prop: "className",

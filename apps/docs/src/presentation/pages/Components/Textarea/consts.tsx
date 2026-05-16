@@ -104,7 +104,7 @@ export const propsTableRows = [
   },
   {
     prop: "rounded",
-    type: "none | sm | md | lg | full",
+    type: "none | xs | sm | md | lg | full",
     description: "Sets the border radius of the Textarea.",
     default: "md",
   },

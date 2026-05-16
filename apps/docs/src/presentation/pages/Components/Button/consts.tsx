@@ -89,7 +89,7 @@ export const App = () => {
 
 export const usageExampleCode = `import { Button } from "@vbss-ui/button"
 
-export export const App = () => {
+export const App = () => {
   return <Button>Example Button</Button>
 }`
 
@@ -115,7 +115,7 @@ export const propsTableRows = [
     prop: "size",
     Type: "xs | sm | md | lg | xl | icon-xs | icon-sm | icon-md | icon-lg | icon-xl",
     Description: "Defines the size or icon-specific size of the Button.",
-    Default: "md",
+    Default: "sm",
   },
   {
     prop: "rounded",

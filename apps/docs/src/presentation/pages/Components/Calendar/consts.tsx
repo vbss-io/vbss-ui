@@ -114,6 +114,18 @@ export const propsTableRows = [
     Default: "-",
     Description: "Selection callback",
   },
+  {
+    prop: "className",
+    Type: "string",
+    Default: "-",
+    Description: "Additional CSS class for the calendar container",
+  },
+  {
+    prop: "classNames",
+    Type: "Record<string, string>",
+    Default: "-",
+    Description: "Custom class names for individual calendar parts",
+  },
 ]
 
 export const usageExampleCode = `import { Calendar } from "@vbss-ui/calendar"
@@ -278,7 +290,7 @@ export const App = () => {
 export const calendarWhatsNew = [
   {
     version: "1.0.0",
-    date: "2024-01-15",
+    date: "2026-05-16",
     changes: [
       "Initial release of Calendar component",
       "Support for single, multiple, and range selection modes",

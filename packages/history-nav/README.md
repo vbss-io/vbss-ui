@@ -100,6 +100,7 @@ export const App = () => {
 
 | Prop           | Type                                 | Description                                                                            | Default   |
 |----------------|--------------------------------------|----------------------------------------------------------------------------------------|-----------|
+| `as`           | `React.ElementType`                  | The element or component used to render the container.                                 | `'div'`   |
 | `gap`          | `xs` \| `sm` \| `md` \| `lg` \| `xl` | Sets the gap between buttons.                                                          | `md`      |
 | `buttonsProps` | `ButtonProps`                        | Props passed to the underlying buttons.  See [Button Props](https://ui.vbss.io/button) | `-`       |
 | `leftOnClick`  | `() => void`                         | Function called when the left button is clicked.                                       | `-`       |

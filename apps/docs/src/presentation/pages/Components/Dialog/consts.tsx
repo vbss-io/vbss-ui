@@ -84,7 +84,7 @@ export const controllerExampleCode = `import { useState } from "react"
 import { Dialog } from "@vbss-ui/dialog"
 import { Button } from "@vbss-ui/button"
 
-export export const App = () => {
+export const App = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -137,13 +137,13 @@ export const propsTableRows = [
     prop: "title",
     type: "React.ReactNode",
     description: "The title of the Dialog.",
-    default: "-",
+    default: '""',
   },
   {
     prop: "description",
     type: "React.ReactNode",
     description: "The description text of the Dialog.",
-    default: "-",
+    default: '""',
   },
   {
     prop: "footer",
@@ -173,7 +173,7 @@ export const propsTableRows = [
     prop: "onOpenChange",
     type: "(open: boolean) => void",
     description: "Callback when the dialog's open state changes.",
-    default: "false",
+    default: "-",
   },
   {
     prop: "className",

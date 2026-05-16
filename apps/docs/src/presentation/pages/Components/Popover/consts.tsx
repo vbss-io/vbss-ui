@@ -141,7 +141,7 @@ export const propsTableRows = [
     prop: "side",
     type: "top | right | bottom | left",
     description: "Sets the position of the Popover.",
-    default: "top",
+    default: "bottom",
   },
   {
     prop: "align",
@@ -154,6 +154,12 @@ export const propsTableRows = [
     type: "number",
     description: "Sets the offset from the trigger element.",
     default: "4",
+  },
+  {
+    prop: "ref",
+    type: "React.Ref",
+    description: "Allows accessing the underlying DOM element.",
+    default: "-",
   },
   {
     prop: "className",
@@ -202,10 +208,7 @@ export const App = () => {
 export const popoverWhatsNew: { version: string; date: string; changes: string[] }[] = [
   {
     version: "2.0.0",
-    date: "2025-01-15",
-    changes: [
-      "Added basic open/close animations with reduced-motion support",
-      "Standardized label prop to accept ReactNode for flexible content",
-    ],
+    date: "2026-05-16",
+    changes: ["Added reduced-motion support for popover open/close animations"],
   },
 ]

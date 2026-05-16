@@ -63,7 +63,7 @@ export const App = () => {
     <InputNumber
       label="Quantity:"
       value={value}
-      onChange={(e) => setValue(e.anchor.value)}
+      onChange={(e) => setValue(e.target.value)}
       placeholder="Type a number..."
       plusIcon={<Plus />}
       minusIcon={<Minus />}
@@ -146,15 +146,9 @@ export const propsTableRows = [
   },
   {
     prop: "disableControls",
-    Type: "boolean",
+    type: "boolean",
     description: "Prop to disable Input controls.",
     default: "false",
-  },
-  {
-    prop: "controlsProps",
-    Type: <a href="button">ButtonProps</a>,
-    description: "Props for the increment/decrement buttons.",
-    default: "-",
   },
   {
     prop: "plusIcon",
@@ -165,7 +159,13 @@ export const propsTableRows = [
   {
     prop: "minusIcon",
     type: "React.ReactNode",
-    description: "Icon for decrement action. ",
+    description: "Icon for decrement action.",
+    default: "-",
+  },
+  {
+    prop: "controlsProps",
+    type: <a href="button">ButtonProps</a>,
+    description: "Props for the increment/decrement buttons.",
     default: "-",
   },
   {

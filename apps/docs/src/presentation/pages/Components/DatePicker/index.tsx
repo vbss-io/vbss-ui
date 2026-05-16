@@ -10,12 +10,14 @@ import { CodeSnippet } from "@/presentation/components/CodeSnippet"
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 import { ExampleContainer } from "@/presentation/components/ExampleContainer"
 import { InteractiveExampleContainer } from "@/presentation/components/InteractiveExampleContainer"
+import { WhatsNew } from "@/presentation/components/WhatsNew"
 
 import * as S from "../../styles"
 import {
   controlledExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
+  datePickerWhatsNew,
   localeExampleCode,
   propsTableHeaders,
   propsTableRows,
@@ -88,6 +90,7 @@ export const DatePickerDocs = () => {
               </DatePickerExampleContainer>
             </ExampleContainer>
           </section>
+          <WhatsNew title="What's new" entries={datePickerWhatsNew} />
           <section>
             <S.SectionTitle>
               <S.SectionAnchor id="installation" />

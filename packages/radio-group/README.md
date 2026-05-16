@@ -110,6 +110,7 @@ export const App = () => {
 | `direction`     | `col` \| `row`                                                     | Change the items direction for the RadioGroup.        | `col`     |
 | `label`         | `string`                                                           | Text label for the RadioGroup.                        | `-`       |
 | `icon`          | `React.ReactNode`                                                  | Custom icon for the checked state.                    | `-`       |
+| `itemProps`     | `RadixRadioGroupItemProps`                                         | Props forwarded to each radio item (excludes `value`, `id`, `key`). | `-` |
 | `values`        | `{ value: string; label: string }[]`                               | Array of options for the RadioGroup.                  | `[]`      |
 | `value`         | `string`                                                           | Controlled value of the RadioGroup.                   | `-`       |
 | `onValueChange` | `(value: string) => void`                                          | Callback when value changes.                          | `-`       |

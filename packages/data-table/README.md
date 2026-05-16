@@ -206,6 +206,9 @@ const columns = [
 | `height`        | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                                       | Row height (from Table component)                  | `-`     |
 | `rounded`       | `'none' \| 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                            | Border radius (from Table component)               | `-`     |
 | `outline`       | `boolean`                                                                                     | Add border around table (from Table component)     | `-`     |
+| `className`     | `string`                                                                                      | Additional CSS class applied to the table          | `-`     |
+| `style`         | `React.CSSProperties`                                                                         | Inline style applied to the table                  | `-`     |
+| `ref`           | `React.Ref`                                                                                   | Allows accessing the underlying DOM element        | `-`     |
 
 ### **DataTableColumn<T>**
 
