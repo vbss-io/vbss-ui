@@ -23,6 +23,7 @@
     "react-dom": "^18.0.0"
   },
   "optionalDependencies": {
+    "@esbuild/linux-x64": "^0.25.0",
     "@rollup/rollup-linux-x64-gnu": "^4.59.0"
   },
   "devDependencies": {
