@@ -1,0 +1,15 @@
+{
+  "name": "vbss/ui - Component Library",
+  "short_name": "vbss/ui",
+  "description": "A modern and accessible component library for building beautiful user interfaces.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#191a1f",
+  "theme_color": "#6a5bcd",
+  "icons": [
+    { "src": "/pwa-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/pwa-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/maskable-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
