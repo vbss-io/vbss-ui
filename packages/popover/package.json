@@ -9,6 +9,16 @@
     "vbss-ui"
   ],
   "license": "MIT",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/vbss-io"
+    },
+    {
+      "type": "individual",
+      "url": "https://buymeacoffee.com/vbss.io"
+    }
+  ],
   "private": false,
   "author": "Vitor Bastos <vitor@vbss.io> (https://vbss.io/)",
   "homepage": "https://ui.vbss.io/popover",

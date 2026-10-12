@@ -6,6 +6,16 @@
     "type": "git",
     "url": "git+https://github.com/vbss-io/vbss-ui.git"
   },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/vbss-io"
+    },
+    {
+      "type": "individual",
+      "url": "https://buymeacoffee.com/vbss.io"
+    }
+  ],
   "workspaces": [
     "packages/*",
     "apps/*"

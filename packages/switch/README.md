@@ -177,6 +177,7 @@ npm run storybook
 Help us keep vbss-ui free and open source. Your support enables continuous development, better docs and new components.
 
 - Buy me a coffee: [buymeacoffee.com/vbss.io](https://www.buymeacoffee.com/vbss.io)
+- GitHub Sponsors: [github.com/sponsors/vbss-io](https://github.com/sponsors/vbss-io)
 - Star on GitHub: [github.com/vbss-io/vbss-ui](https://github.com/vbss-io/vbss-ui)
 - Share with community: [ui.vbss.io](https://ui.vbss.io)
 

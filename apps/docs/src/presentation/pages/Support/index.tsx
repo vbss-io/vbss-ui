@@ -1,4 +1,4 @@
-import { Code, Coffee, Heart, Star, Users } from "@phosphor-icons/react"
+import { Code, Coffee, GithubLogo, Heart, Star, Users } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
@@ -96,6 +96,25 @@ export const SupportDocs = () => {
                   size="md"
                 >
                   Buy me a coffee
+                </Button>
+              </SupportS.SupportCard>
+              <SupportS.SupportCard>
+                <GithubLogo weight="fill" style={{ color: "hsl(248 39% 39%)", fontSize: "2rem" }} />
+                <SupportS.SupportCardContent>
+                  <SupportS.SupportCardTitle>Sponsor on GitHub</SupportS.SupportCardTitle>
+                  <SupportS.SupportCardDescription>
+                    Prefer to support through GitHub? Sponsor vbss-ui with GitHub Sponsors.
+                  </SupportS.SupportCardDescription>
+                </SupportS.SupportCardContent>
+                <Button
+                  as="a"
+                  href="https://github.com/sponsors/vbss-io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  size="md"
+                >
+                  Sponsor
                 </Button>
               </SupportS.SupportCard>
               <SupportS.SupportCard>
