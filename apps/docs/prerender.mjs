@@ -122,7 +122,6 @@ const componentLinks = components
   .join("\n        ")
 
 const buildBody = (route) => {
-  const title = titleFor(route)
   if (route.kind === "home") {
     return `<main style="max-width:44rem;margin:0 auto;padding:2rem 1.25rem 4rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.6">
       <h1>vbss-ui</h1>

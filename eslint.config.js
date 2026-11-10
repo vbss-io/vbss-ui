@@ -18,7 +18,7 @@ const gitignorePath = path.resolve(__dirname, ".gitignore")
 export default [
   includeIgnoreFile(gitignorePath),
   {
-    ignores: ["node_modules/", "dist/", "build/", ".next/", "coverage/"],
+    ignores: ["node_modules/", "dist/", "build/", ".next/", "coverage/", ".github/lock-guard.mjs"],
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
@@ -73,6 +73,12 @@ export default [
       parserOptions: {
         project: ["./apps/*/tsconfig.json", "./packages/*/tsconfig.json"],
       },
+    },
+  },
+  {
+    files: ["**/*.{mjs,cjs}", "scripts/**", ".github/**", "*.config.{js,ts,mts}"],
+    languageOptions: {
+      globals: globals.node,
     },
   },
   {
