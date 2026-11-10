@@ -1,18 +1,18 @@
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, RefAttributes } from "react"
+import { ComponentProps, ElementType, forwardRef } from "react"
 import "./index.css"
 
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>
 
 export type ExtendableButtonProps<C extends ElementType> = ExtendableComponentProps<C, ButtonProps>
 
-export type ButtonComponent = ForwardRefExoticComponent<ExtendableButtonProps<ElementType> & RefAttributes<ElementType>>
+export type ButtonComponent = PolymorphicComponent<"button", ButtonProps>
 
 /**
  * A customizable and accessible Button component.
  */
-export const Button: ButtonComponent = forwardRef(
+export const Button = forwardRef(
   <C extends ElementType>(
     { as, variant, size, rounded, fontWeight, fontSize, inverted, disabled, className, ...props }: ExtendableButtonProps<C>,
     ref?: PolymorphicRef<C>
@@ -41,7 +41,7 @@ export const Button: ButtonComponent = forwardRef(
       </Component>
     )
   }
-)
+) as ButtonComponent
 
 Button.displayName = "Button"
 

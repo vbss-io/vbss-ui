@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Button, buttonStyles } from "./index"
 
@@ -172,6 +173,29 @@ describe("Button", () => {
         </Button>
       )
       expect(received).toBe(screen.getByRole("link"))
+    })
+
+    it("accepts a ref object typed as the rendered button", () => {
+      const ref = createRef<HTMLButtonElement>()
+      render(<Button ref={ref}>Ref</Button>)
+      expect(ref.current).toBe(screen.getByRole("button"))
+    })
+
+    it("accepts a ref object typed as the element given in as", () => {
+      const ref = createRef<HTMLAnchorElement>()
+      render(
+        <Button as="a" ref={ref} href="#x">
+          Ref
+        </Button>
+      )
+      expect(ref.current).toBe(screen.getByRole("link"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit a button
+      render(<Button ref={ref}>Ref</Button>)
+      expect(ref.current).toBe(screen.getByRole("button"))
     })
 
     it("exposes its displayName", () => {
