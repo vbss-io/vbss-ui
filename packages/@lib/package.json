@@ -32,7 +32,8 @@
   },
   "types": "dist/vbss-ui-lib.d.ts",
   "scripts": {
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "prepublishOnly": "node ../../scripts/release-gate.mjs"
   },
   "peerDependencies": {
     "react": "^18.0.0"

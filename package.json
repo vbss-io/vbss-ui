@@ -34,6 +34,8 @@
     "typecheck:tests": "tsc -p tsconfig.test.json",
     "lock-guard": "node scripts/clean-vite-temp.mjs && node .github/lock-guard.mjs --base origin/main --installed .",
     "audit-gate": "node scripts/audit-gate.mjs",
+    "release": "node scripts/release.mjs",
+    "release:dry": "node scripts/release.mjs --dry-run",
     "verify": "npm run lock-guard && npm run audit-gate && npm run lint && npm run build && npm run typecheck:tests && npm run test:coverage"
   },
   "dependencies": {

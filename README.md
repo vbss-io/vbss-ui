@@ -140,6 +140,24 @@ npm run storybook
 
 ---
 
+## **Publishing**
+
+Releases are published manually (there is no CI) and only through the release script:
+
+```bash
+npm run release -- patch   # or minor / major
+npm run release:dry -- patch
+```
+
+`.npmrc` sets `ignore-scripts=true`, so npm never runs `prepublishOnly` on its own and a bare `npm publish` is not blocked unless `--ignore-scripts=false` is passed; releases go only through `scripts/release.mjs`, which runs everything in one process:
+
+1. Refuses a dirty working tree and a repository without release tags (tag each already published version once with `git tag "<name>@<version>"`, so lerna can tell what changed).
+2. `npm run verify` (lock-guard, audit-gate, lint, build, typecheck:tests, per-unit 90/80/90/90 coverage). Any failure stops the release before versioning.
+3. `lerna version <bump> --no-push` for the changed packages (independent versions), then confirms the version commit only touched `package.json`, `package-lock.json` and `CHANGELOG.md`.
+4. Confirms every changed package `dist/` is byte-identical to what verify built, then `lerna publish from-package`.
+
+`--dry-run` runs the same gates, versions without committing or tagging, runs `npm publish --dry-run` for each changed package (with the `prepublishOnly` guard active) and restores the repository. Every publishable package has `prepublishOnly` set to `scripts/release-gate.mjs`, which refuses unless `VBSS_RELEASE=1`, set only by the release script. `apps/docs` is `private` and is never published. Pushing the version commit and tags is a separate manual step.
+
 ## **Support**
 
 Help us keep vbss-ui free and open source. Your support enables continuous development, better docs and new components.
