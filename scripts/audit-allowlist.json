@@ -1,0 +1,14 @@
+[
+  {
+    "ghsa": "GHSA-3g3m-2fjr-6pw4",
+    "module": "glob",
+    "reason": "dev only through lerna (@npmcli/*, cacache pin glob 13) and runtime-adjacent through vbss-translator 1.1.1 (glob 11, fixed in the unpublished vbss-translator round, updated at publish); fix 14.0.2 published 2026-10-27 is younger than the 14 day rule until 2026-11-10 and is a major bump of every parent; revisit before the date below",
+    "until": "2026-11-23"
+  },
+  {
+    "ghsa": "GHSA-g3hv-75wg-m249",
+    "module": "minimatch",
+    "reason": "same chain as glob: lerna @npmcli/* and storybook docgen pin minimatch 10, vbss-translator 1.1.1 pins glob 11 (fixed in the unpublished vbss-translator round, updated at publish); fix 11.0.1 published 2026-10-27 is younger than the 14 day rule until 2026-11-10 and is a major bump of every parent; revisit before the date below",
+    "until": "2026-11-23"
+  }
+]

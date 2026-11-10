@@ -1,0 +1,12 @@
+[
+  {
+    "package": "esbuild",
+    "version": "0.25.4",
+    "reason": "dev only (vite, storybook); postinstall only validates the platform binary and is never run because .npmrc sets ignore-scripts=true"
+  },
+  {
+    "package": "nx",
+    "version": "23.3.1",
+    "reason": "dev only (lerna); postinstall only runs the optional nx dist/bin/post-install inside try/catch and is never run because .npmrc sets ignore-scripts=true"
+  }
+]
