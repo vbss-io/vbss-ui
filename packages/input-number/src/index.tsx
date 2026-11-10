@@ -1,7 +1,7 @@
 import { Button, ExtendableButtonProps } from "@vbss-ui/button"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ChangeEvent, ComponentProps, ElementType, forwardRef, ReactNode, useCallback, useId, useRef } from "react"
 import "./index.css"
 import Minus from "./minus.svg"
 import Plus from "./plus.svg"
@@ -23,12 +23,16 @@ type InputNumberProps = ComponentProps<"input"> &
 
 export type ExtendableInputNumberProps<C extends ElementType> = ExtendableComponentProps<C, InputNumberProps>
 
-export type InputNumberComponent = ForwardRefExoticComponent<ExtendableInputNumberProps<ElementType> & RefAttributes<ElementType>>
+export type InputNumberComponent = PolymorphicComponent<"input", InputNumberProps>
+
+const setNativeInputValue = (element: HTMLInputElement, value: string) => {
+  Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set?.call(element, value)
+}
 
 /**
  * A customizable and accessible Number Input component with increment/decrement controls.
  */
-export const InputNumber: InputNumberComponent = forwardRef(
+export const InputNumber = forwardRef(
   <C extends ElementType>(
     {
       variant,
@@ -53,36 +57,53 @@ export const InputNumber: InputNumberComponent = forwardRef(
     }: ExtendableInputNumberProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
-    const inputId = props.id ?? Math.random().toString()
+    const generatedId = useId()
+    const inputId = props.id ?? generatedId
+    const inputRef = useRef<HTMLInputElement | null>(null)
+    const lastValidValue = useRef(props.value !== undefined ? String(props.value) : String(props.defaultValue ?? ""))
 
-    const InputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (onChange) {
-        const value = e.target.value
-        if (value !== "") {
-          if (isFloat && (value === "-" || value === "." || value === "-.")) {
-            onChange(e)
-            return
-          }
-          if (!/^-?\d*\.?\d*$/.test(value)) {
-            return
-          }
-          const numValue = parseFloat(value)
-          if (!isNaN(numValue)) {
-            if (denyNegative && numValue < 0) {
-              e.target.value = "0"
-            } else if (isFloat) {
-              e.target.value = value
-            } else {
-              e.target.value = Math.round(numValue).toString()
-            }
+    const setInputRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node
+        if (typeof ref === "function") {
+          ref(node)
+        } else if (ref) {
+          Object.assign(ref, { current: node })
+        }
+      },
+      [ref]
+    )
+
+    const InputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      if (value !== "") {
+        if (isFloat && (value === "-" || value === "." || value === "-.")) {
+          lastValidValue.current = value
+          onChange?.(e)
+          return
+        }
+        if (!/^-?\d*\.?\d*$/.test(value)) {
+          e.target.value = props.value !== undefined ? String(props.value) : lastValidValue.current
+          return
+        }
+        const numValue = parseFloat(value)
+        if (!isNaN(numValue)) {
+          if (denyNegative && numValue < 0) {
+            e.target.value = "0"
+          } else if (!isFloat) {
+            e.target.value = Math.round(numValue).toString()
           }
         }
-        onChange(e)
       }
+      lastValidValue.current = e.target.value
+      onChange?.(e)
     }
 
     const dispatchInputOnChangeEvent = (plus = false) => {
-      const element = document.getElementById(inputId) as HTMLInputElement
+      const element = inputRef.current
+      if (!element) {
+        return
+      }
       const currentValue = element.value ? parseFloat(element.value) : 0
       const operation = plus ? step : -step
       const newValue = isFloat ? Number((currentValue + operation).toFixed(10)) : currentValue + operation
@@ -92,14 +113,11 @@ export const InputNumber: InputNumberComponent = forwardRef(
 
       const formattedValue = isFloat ? newValue.toString() : Math.round(newValue).toString()
 
-      InputOnChange({
-        target: {
-          value: formattedValue,
-        } as EventTarget & HTMLInputElement,
-      } as React.ChangeEvent<HTMLInputElement>)
-
-      element.value = formattedValue
+      setNativeInputValue(element, formattedValue)
+      element.dispatchEvent(new Event("input", { bubbles: true }))
     }
+
+    const minusDisabledByLimit = denyNegative && props.value !== undefined && props.value !== "" && Number(props.value) - step < 0
 
     return (
       <div className="inputNumberContainer flex relative flex-col gap-1">
@@ -112,13 +130,13 @@ export const InputNumber: InputNumberComponent = forwardRef(
           {!disableControls && (
             <div className={`inputNumberLeftControlContainer select-none absolute left-1 top-1/2 -translate-y-1/2`}>
               <Button
-                className={`inputNumberLeftControl`}
+                {...controlsProps}
+                className={cn("inputNumberLeftControl", controlsProps?.className)}
                 variant={controlsProps?.variant ?? variant}
                 rounded={rounded}
-                disabled={disabled || (denyNegative && props.value ? parseFloat(props.value.toString()) - step < 0 : false)}
+                disabled={disabled || minusDisabledByLimit}
                 size="icon-xs"
                 onClick={() => dispatchInputOnChangeEvent(false)}
-                {...controlsProps}
               >
                 {minusIcon ? minusIcon : <Minus />}
               </Button>
@@ -129,18 +147,21 @@ export const InputNumber: InputNumberComponent = forwardRef(
             type={isFloat ? "text" : "number"}
             disabled={disabled}
             placeholder={placeholder}
-            ref={ref}
+            ref={setInputRef}
             onChange={InputOnChange}
             step={isFloat ? step : 1}
             min={denyNegative ? 0 : undefined}
             className={cn(
-              `inputNumber w-full text-center ${minusIcon && "pl-8"} ${plusIcon && "pr-8"}`,
+              "inputNumber w-full text-center",
+              minusIcon ? "pl-8" : false,
+              plusIcon ? "pr-8" : false,
               inputNumberStyles({
                 variant,
                 height,
                 rounded,
                 fontSize,
                 fontWeight,
+                disabled,
                 className,
               })
             )}
@@ -149,13 +170,13 @@ export const InputNumber: InputNumberComponent = forwardRef(
           {!disableControls && (
             <div className={`inputNumberRightControlContainer select-none absolute right-1 top-1/2 -translate-y-1/2`}>
               <Button
-                className={`inputNumberRightControl`}
+                {...controlsProps}
+                className={cn("inputNumberRightControl", controlsProps?.className)}
                 variant={controlsProps?.variant ?? variant}
                 rounded={rounded}
                 disabled={disabled}
                 size="icon-xs"
                 onClick={() => dispatchInputOnChangeEvent(true)}
-                {...controlsProps}
               >
                 {plusIcon ? plusIcon : <Plus />}
               </Button>
@@ -168,7 +189,7 @@ export const InputNumber: InputNumberComponent = forwardRef(
       </div>
     )
   }
-)
+) as InputNumberComponent
 
 InputNumber.displayName = "InputNumber"
 

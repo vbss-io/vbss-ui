@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, createRef, useState } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { InputNumber, inputNumberErrorStyles, inputNumberLabelStyles, inputNumberStyles } from "./index"
 
@@ -64,6 +64,41 @@ describe("InputNumber", () => {
       expect(received).toBe(screen.getByRole("spinbutton"))
     })
 
+    it("accepts a ref object typed as the rendered input", () => {
+      const ref = createRef<HTMLInputElement>()
+      render(<InputNumber ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("spinbutton"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit an input
+      render(<InputNumber ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("spinbutton"))
+    })
+
+    it("keeps the generated id stable across rerenders and linked to the label", () => {
+      const { rerender } = render(<InputNumber label="Qty" />)
+      const firstId = screen.getByRole("spinbutton").getAttribute("id")
+      expect(firstId).toBeTruthy()
+      rerender(<InputNumber label="Qty" />)
+      rerender(<InputNumber label="Qty" />)
+      expect(screen.getByRole("spinbutton")).toHaveAttribute("id", firstId as string)
+      expect(screen.getByText("Qty")).toHaveAttribute("for", firstId as string)
+      expect(screen.getByLabelText("Qty")).toBe(screen.getByRole("spinbutton"))
+    })
+
+    it("gives each instance its own generated id", () => {
+      render(
+        <>
+          <InputNumber />
+          <InputNumber />
+        </>
+      )
+      const [first, second] = screen.getAllByRole("spinbutton")
+      expect(first.id).not.toBe(second.id)
+    })
+
     it("renders both controls by default and hides them with disableControls", () => {
       const { container, rerender } = render(<InputNumber />)
       expect(screen.getAllByRole("button")).toHaveLength(2)
@@ -84,6 +119,30 @@ describe("InputNumber", () => {
       expect(screen.getByRole("spinbutton")).not.toHaveClass("pl-8", "pr-8")
       rerender(<InputNumber plusIcon={<i />} minusIcon={<i />} />)
       expect(screen.getByRole("spinbutton")).toHaveClass("pl-8", "pr-8")
+    })
+
+    it("never emits undefined or false classes", () => {
+      const { rerender } = render(<InputNumber />)
+      expect(screen.getByRole("spinbutton").className).not.toMatch(/undefined|false/)
+      rerender(<InputNumber minusIcon={<i />} />)
+      expect(screen.getByRole("spinbutton").className).not.toMatch(/undefined|false/)
+      expect(screen.getByRole("spinbutton")).toHaveClass("pl-8")
+      expect(screen.getByRole("spinbutton")).not.toHaveClass("pr-8")
+      rerender(<InputNumber plusIcon={<i />} />)
+      expect(screen.getByRole("spinbutton").className).not.toMatch(/undefined|false/)
+      expect(screen.getByRole("spinbutton")).toHaveClass("pr-8")
+      expect(screen.getByRole("spinbutton")).not.toHaveClass("pl-8")
+    })
+
+    it("applies the disabled classes only when disabled", () => {
+      const { rerender } = render(<InputNumber />)
+      expect(screen.getByRole("spinbutton")).not.toHaveClass("cursor-not-allowed")
+      rerender(<InputNumber disabled />)
+      expect(screen.getByRole("spinbutton")).toHaveClass(
+        "cursor-not-allowed",
+        "disabled:pointer-events-none",
+        "disabled:opacity-50"
+      )
     })
 
     it("sets step and min attributes by mode", () => {
@@ -189,6 +248,52 @@ describe("InputNumber", () => {
       fireEvent.change(screen.getByRole("textbox"), { target: { value: "abc" } })
       fireEvent.change(screen.getByRole("textbox"), { target: { value: "1.2.3" } })
       expect(onChange).not.toHaveBeenCalled()
+    })
+
+    it("clamps negative typed values to zero when denyNegative without onChange", () => {
+      render(<InputNumber denyNegative />)
+      fireEvent.change(screen.getByRole("spinbutton"), { target: { value: "-5" } })
+      expect(screen.getByRole("spinbutton")).toHaveValue(0)
+    })
+
+    it("rounds fractional typed values in integer mode without onChange", () => {
+      render(<InputNumber />)
+      fireEvent.change(screen.getByRole("spinbutton"), { target: { value: "1.5" } })
+      expect(screen.getByRole("spinbutton")).toHaveValue(2)
+    })
+
+    it("keeps the last valid value when float input is rejected without onChange", () => {
+      render(<InputNumber isFloat />)
+      const field = screen.getByRole("textbox")
+      fireEvent.change(field, { target: { value: "1.5" } })
+      expect(field).toHaveValue("1.5")
+      fireEvent.change(field, { target: { value: "1.5a" } })
+      expect(field).toHaveValue("1.5")
+      fireEvent.change(field, { target: { value: "1.2.3" } })
+      expect(field).toHaveValue("1.5")
+    })
+
+    it("falls back to the default value when the first float input is rejected", () => {
+      render(<InputNumber isFloat defaultValue="2" />)
+      fireEvent.change(screen.getByRole("textbox"), { target: { value: "x" } })
+      expect(screen.getByRole("textbox")).toHaveValue("2")
+    })
+
+    it("restores the controlled value when float input is rejected", () => {
+      const Controlled = () => {
+        const [value, setValue] = useState("3")
+        return <InputNumber isFloat value={value} onChange={(e) => setValue(e.target.value)} />
+      }
+      render(<Controlled />)
+      fireEvent.change(screen.getByRole("textbox"), { target: { value: "3x" } })
+      expect(screen.getByRole("textbox")).toHaveValue("3")
+    })
+
+    it("accepts an emptied field without onChange", async () => {
+      const user = userEvent.setup()
+      render(<InputNumber defaultValue={5} />)
+      await user.clear(screen.getByRole("spinbutton"))
+      expect(screen.getByRole("spinbutton")).toHaveValue(null)
     })
 
     it("forwards an emptied field to onChange", async () => {
@@ -302,6 +407,70 @@ describe("InputNumber", () => {
       expect(screen.getByRole("spinbutton")).toHaveValue(0)
     })
 
+    it("hands a real change event to onChange when a control is clicked", async () => {
+      const user = userEvent.setup()
+      let currentTarget: EventTarget | null = null
+      const onChange = vi.fn((e: ChangeEvent<HTMLInputElement>) => {
+        currentTarget = e.currentTarget
+      })
+      const { container } = render(<InputNumber name="qty" id="qty-id" onChange={onChange} />)
+      await user.click(rightControl(container))
+      const event = lastChange(onChange)
+      const input = screen.getByRole("spinbutton")
+      expect(event.target).toBe(input)
+      expect(event.target).toBeInstanceOf(HTMLInputElement)
+      expect(event.target.name).toBe("qty")
+      expect(event.target.id).toBe("qty-id")
+      expect(currentTarget).toBe(input)
+      expect(typeof event.preventDefault).toBe("function")
+      expect(event.target.value).toBe("1")
+    })
+
+    it("calls onChange once per control click", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      const { container } = render(<InputNumber defaultValue={1} onChange={onChange} />)
+      await user.click(rightControl(container))
+      await user.click(leftControl(container))
+      expect(onChange).toHaveBeenCalledTimes(2)
+    })
+
+    it("keeps an object ref working when a control is clicked", async () => {
+      const user = userEvent.setup()
+      const ref = createRef<HTMLInputElement>()
+      const { container } = render(<InputNumber ref={ref} defaultValue={4} />)
+      await user.click(rightControl(container))
+      expect(ref.current).toBe(screen.getByRole("spinbutton"))
+      expect(ref.current?.value).toBe("5")
+    })
+
+    it("keeps a callback ref working when a control is clicked", async () => {
+      const user = userEvent.setup()
+      const received: Array<HTMLInputElement | null> = []
+      const { container } = render(<InputNumber ref={(node: HTMLInputElement | null) => received.push(node)} defaultValue={4} />)
+      await user.click(rightControl(container))
+      expect(received[0]).toBe(screen.getByRole("spinbutton"))
+      expect(screen.getByRole("spinbutton")).toHaveValue(5)
+    })
+
+    it("disables the minus control for a numeric zero value with denyNegative", () => {
+      const { container } = render(<InputNumber denyNegative value={0} onChange={() => {}} />)
+      expect(leftControl(container)).toBeDisabled()
+      expect(rightControl(container)).toBeEnabled()
+    })
+
+    it("keeps the minus control enabled for an empty or missing value with denyNegative", () => {
+      const { container, rerender } = render(<InputNumber denyNegative value="" onChange={() => {}} />)
+      expect(leftControl(container)).toBeEnabled()
+      rerender(<InputNumber denyNegative />)
+      expect(leftControl(container)).toBeEnabled()
+    })
+
+    it("disables the minus control for a numeric value below the step with denyNegative", () => {
+      const { container } = render(<InputNumber denyNegative step={2} value={1} onChange={() => {}} />)
+      expect(leftControl(container)).toBeDisabled()
+    })
+
     it("disables the minus control when a controlled value cannot go lower", () => {
       const { container } = render(<InputNumber denyNegative value="0" onChange={() => {}} />)
       expect(leftControl(container)).toBeDisabled()
@@ -335,6 +504,25 @@ describe("InputNumber", () => {
       expect(rightControl(container)).toBeDisabled()
       await user.click(rightControl(container))
       expect(onChange).not.toHaveBeenCalled()
+    })
+
+    it("merges the controlsProps className with the base control classes", () => {
+      const { container } = render(<InputNumber controlsProps={{ className: "ctl" }} />)
+      expect(leftControl(container)).toHaveClass("inputNumberLeftControl", "ctl")
+      expect(rightControl(container)).toHaveClass("inputNumberRightControl", "ctl")
+    })
+
+    it("keeps the component handlers and disabled state over controlsProps", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      const { container, rerender } = render(
+        <InputNumber defaultValue={1} onChange={onChange} controlsProps={{ className: "ctl" }} />
+      )
+      await user.click(rightControl(container))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      rerender(<InputNumber disabled controlsProps={{ className: "ctl" }} />)
+      expect(leftControl(container)).toBeDisabled()
+      expect(rightControl(container)).toBeDisabled()
     })
 
     it("passes controlsProps to both controls", () => {
