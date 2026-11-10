@@ -1,7 +1,7 @@
 import { Root, Thumb } from "@radix-ui/react-switch"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentPropsWithoutRef, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentPropsWithoutRef, ElementType, forwardRef, ReactNode, useId } from "react"
 import "./index.css"
 
 type SwitchProps = ComponentPropsWithoutRef<typeof Root> &
@@ -15,12 +15,12 @@ type SwitchProps = ComponentPropsWithoutRef<typeof Root> &
 
 export type ExtendableSwitchProps<C extends ElementType> = ExtendableComponentProps<C, SwitchProps>
 
-export type SwitchComponent = ForwardRefExoticComponent<ExtendableSwitchProps<ElementType> & RefAttributes<ElementType>>
+export type SwitchComponent = PolymorphicComponent<"button", SwitchProps>
 
 /**
  * A customizable and accessible Switch component.
  */
-export const Switch: SwitchComponent = forwardRef(
+export const Switch = forwardRef(
   <C extends ElementType>(
     {
       variant,
@@ -34,20 +34,30 @@ export const Switch: SwitchComponent = forwardRef(
       iconOn,
       iconOff,
       onChange,
+      onCheckedChange,
       ...props
     }: ExtendableSwitchProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
-    const inputId = props.id ?? Math.random().toString()
+    const generatedId = useId()
+    const inputId = props.id ?? generatedId
+
+    const notifyChange = onChange as unknown as ((checked: boolean) => void) | undefined
+
+    const handleCheckedChange = (checked: boolean) => {
+      notifyChange?.(checked)
+      onCheckedChange?.(checked)
+    }
+
     return (
-      <div className={`switchContainer flex ${inverted && "flex-row-reverse"} gap-2 items-center`}>
+      <div className={cn("switchContainer flex gap-2 items-center", inverted ? "flex-row-reverse" : false)}>
         <Root
           className={cn("switchRoot", switchStyles({ variant, rounded, className }))}
           ref={ref}
           disabled={disabled}
-          onCheckedChange={onChange ?? props.onCheckedChange}
-          id={inputId}
           {...props}
+          onCheckedChange={handleCheckedChange}
+          id={inputId}
         >
           {iconOn && (
             <div
@@ -77,7 +87,7 @@ export const Switch: SwitchComponent = forwardRef(
       </div>
     )
   }
-)
+) as SwitchComponent
 
 Switch.displayName = "Switch"
 

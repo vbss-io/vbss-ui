@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { createRef, ElementType } from "react"
+import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Switch, switchLabelStyles, switchStyles, switchThumbStyles } from "./index"
 
@@ -48,10 +48,55 @@ describe("Switch", () => {
       expect(container.querySelector(".switchContainer")).not.toHaveClass("flex-row-reverse")
     })
 
-    it("forwards the ref to the switch button", () => {
-      const ref = createRef<ElementType>()
+    it("never emits undefined or false classes on the container", () => {
+      const { container, rerender } = render(<Switch />)
+      expect(container.querySelector(".switchContainer")?.className).not.toMatch(/undefined|false/)
+      rerender(<Switch inverted={false} />)
+      expect(container.querySelector(".switchContainer")?.className).not.toMatch(/undefined|false/)
+      rerender(<Switch inverted />)
+      expect(container.querySelector(".switchContainer")?.className).not.toMatch(/undefined|false/)
+      expect(container.querySelector(".switchContainer")).toHaveClass(
+        "switchContainer",
+        "flex",
+        "flex-row-reverse",
+        "gap-2",
+        "items-center"
+      )
+    })
+
+    it("accepts a ref object typed as the rendered button", () => {
+      const ref = createRef<HTMLButtonElement>()
       render(<Switch ref={ref} />)
       expect(ref.current).toBe(screen.getByRole("switch"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit a button
+      render(<Switch ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("switch"))
+    })
+
+    it("keeps the generated id stable across rerenders and linked to the label", () => {
+      const { rerender } = render(<Switch label="Mode" />)
+      const firstId = screen.getByRole("switch").getAttribute("id")
+      expect(firstId).toBeTruthy()
+      rerender(<Switch label="Mode" />)
+      rerender(<Switch label="Mode" />)
+      expect(screen.getByRole("switch")).toHaveAttribute("id", firstId as string)
+      expect(screen.getByText("Mode")).toHaveAttribute("for", firstId as string)
+      expect(screen.getByLabelText("Mode")).toBe(screen.getByRole("switch"))
+    })
+
+    it("gives each instance its own generated id", () => {
+      render(
+        <>
+          <Switch />
+          <Switch />
+        </>
+      )
+      const [first, second] = screen.getAllByRole("switch")
+      expect(first.id).not.toBe(second.id)
     })
 
     it("merges className into the switch root and keeps the base class", () => {
@@ -122,6 +167,21 @@ describe("Switch", () => {
       render(<Switch onChange={onChange as never} />)
       await user.click(screen.getByRole("switch"))
       expect(onChange).toHaveBeenCalledWith(true)
+    })
+
+    it("calls both onChange and onCheckedChange once with the new checked value", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      const onCheckedChange = vi.fn()
+      render(<Switch onChange={onChange as never} onCheckedChange={onCheckedChange} />)
+      await user.click(screen.getByRole("switch"))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(true)
+      expect(onCheckedChange).toHaveBeenCalledTimes(1)
+      expect(onCheckedChange).toHaveBeenCalledWith(true)
+      await user.click(screen.getByRole("switch"))
+      expect(onChange).toHaveBeenLastCalledWith(false)
+      expect(onCheckedChange).toHaveBeenLastCalledWith(false)
     })
 
     it("toggles with Space and with Enter from the keyboard", async () => {
