@@ -165,12 +165,17 @@ The DatePicker component follows WAI-ARIA best practices:
 
 ### Keyboard Shortcuts
 
+On the input:
+
+- `ArrowDown` - Open the calendar and move focus to a date
+- `Tab` - Move to the calendar button, then to the next field (the calendar does not open on focus)
+
 When the calendar is open:
 
 - `Arrow keys` - Navigate between dates
-- `Enter` or `Space` - Select focused date
-- `Escape` - Close calendar
-- `Tab` - Move focus to next element
+- `Enter` or `Space` - Select focused date and return focus to the input
+- `Escape` - Close calendar and return focus to the input
+- `Tab` - Move between the calendar controls
 
 ## TypeScript
 
