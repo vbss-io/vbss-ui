@@ -142,7 +142,7 @@ npm run storybook
 
 ## **Publishing**
 
-Releases are published manually (there is no CI) and only through the release script:
+Releases are published manually (there is no CI) and only through the release script. Packages have no `version:*` scripts and must never be versioned or published one by one with `npm version` or `npm publish`, since that skips the gate:
 
 ```bash
 npm run release -- patch   # or minor / major

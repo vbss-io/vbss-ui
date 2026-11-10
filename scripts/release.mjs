@@ -1,23 +1,35 @@
 import { execFileSync, spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..')
-const [bump, ...flags] = process.argv.slice(2)
-const dryRun = flags.includes('--dry-run')
+const BUMPS = ['patch', 'minor', 'major']
+const args = process.argv.slice(2)
+const bump = args.find((arg) => BUMPS.includes(arg))
+const dryRun = args.includes('--dry-run')
 const VERSION_FILES = new Set(['package.json', 'package-lock.json', 'CHANGELOG.md'])
 
-if (!['patch', 'minor', 'major'].includes(bump) || flags.some((flag) => flag !== '--dry-run')) {
-  console.error('usage: release.mjs <patch|minor|major> [--dry-run]')
+const unknownArgs = args.filter((arg) => arg !== '--dry-run' && !BUMPS.includes(arg))
+if (!bump || args.filter((arg) => BUMPS.includes(arg)).length !== 1 || unknownArgs.length > 0) {
+  console.error('usage: release.mjs <patch|minor|major> [--dry-run] (flag and bump in any order)')
   process.exit(2)
 }
 
 const git = (...args) => execFileSync('git', args, { cwd: repoRoot, encoding: 'utf8' }).trim()
 
+let versionStepStarted = false
+
+const changedVersionFiles = () =>
+  git('diff', '--name-only')
+    .split('\n')
+    .filter((file) => file && VERSION_FILES.has(basename(file)))
+
 const restoreDryRun = () => {
-  if (dryRun) git('checkout', '--', '.')
+  if (!dryRun || !versionStepStarted) return
+  const files = changedVersionFiles()
+  if (files.length > 0) git('checkout', '--', ...files)
 }
 
 const refuse = (reason) => {
@@ -79,6 +91,7 @@ if (changed.length === 0) refuse('no publishable package changed since the last 
 const locations = changed.map((pkg) => pkg.location)
 const verifiedDist = distHash(locations)
 
+versionStepStarted = true
 if (dryRun) {
   run(`npx --no-install lerna version ${bump} --yes --no-git-tag-version --no-push`)
 } else {

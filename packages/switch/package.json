@@ -43,9 +43,6 @@
   "types": "dist/vbss-ui-switch.d.ts",
   "scripts": {
     "build": "tsc && vite build",
-    "version:patch": "npm version patch",
-    "version:minor": "npm version minor",
-    "version:major": "npm version major",
     "prepublishOnly": "node ../../scripts/release-gate.mjs"
   },
   "peerDependencies": {

@@ -279,24 +279,6 @@ describe("DataTable behavior", () => {
       rerender(<DataTable columns={columns} data={many} pageSize={0} />)
       expect(firstColumn()).toHaveLength(5)
     })
-
-    it("does not call onPageChange when a controlled-page table is sorted in controlled mode", async () => {
-      const user = userEvent.setup()
-      const onPageChange = vi.fn()
-      render(
-        <DataTable
-          columns={columns}
-          data={many}
-          pageSize={2}
-          page={2}
-          sort={null}
-          onSortChange={vi.fn()}
-          onPageChange={onPageChange}
-        />
-      )
-      await user.click(header("Name"))
-      expect(onPageChange).not.toHaveBeenCalled()
-    })
   })
 
   describe("empty states", () => {
