@@ -3,7 +3,16 @@ import userEvent from "@testing-library/user-event"
 import { createRef } from "react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import type { DateRange } from "react-day-picker"
-import { Calendar, calendarDayStyles, calendarStyles, calendarTodayStyles, enUS, navButtonStyles, ptBR } from "./index"
+import {
+  Calendar,
+  calendarDayStyles,
+  calendarSelectedStyles,
+  calendarStyles,
+  calendarTodayStyles,
+  enUS,
+  navButtonStyles,
+  ptBR,
+} from "./index"
 
 const january = new Date(2025, 0, 1)
 
@@ -117,6 +126,17 @@ describe("Calendar", () => {
       expect(dayButton(/January 10th, 2025/).closest("td")).toHaveClass("day-selected")
       expect(dayButton(/January 11th, 2025/).closest("td")).not.toHaveClass("day-selected")
     })
+
+    it.each(["primary", "secondary", "outline", "outlineSolid", "ghost"] as const)(
+      "styles the selected day button and not its cell with the %s variant",
+      (variant) => {
+        render(<Calendar defaultMonth={january} mode="single" variant={variant} selected={new Date(2025, 0, 10)} />)
+        const cell = dayButton(/January 10th, 2025/).closest("td") as HTMLElement
+        expect(cell).toHaveClass("day-selected", ...calendarSelectedStyles({ variant }).split(" "))
+        expect(cell).not.toHaveClass("h-9", "w-9", "flex")
+        expect(calendarSelectedStyles({ variant })).toMatch(/\[&>\.day\]:!text-/)
+      }
+    )
 
     it("dims the days outside the month", () => {
       render(<Calendar defaultMonth={january} mode="single" />)

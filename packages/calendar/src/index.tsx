@@ -87,7 +87,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
             button_previous: cn("nav-button", navButtonStyles({ variant }), getRoundedClass()),
             button_next: cn("nav-button", navButtonStyles({ variant }), getRoundedClass()),
             day_button: cn("day cursor-pointer", dayStyles),
-            selected: cn("day-selected", dayStyles),
+            selected: cn("day-selected", calendarSelectedStyles({ variant })),
             today: cn("day-today", calendarTodayStyles({ variant, rounded })),
             outside: "day-outside opacity-40",
             disabled: "text-gray-400 opacity-50 cursor-not-allowed",
@@ -177,6 +177,21 @@ export const calendarDayStyles = cva(
     },
   }
 )
+
+export const calendarSelectedStyles = cva("", {
+  variants: {
+    variant: {
+      primary: "[&>.day]:!bg-primary [&>.day]:!text-white [&>.day]:shadow-md",
+      secondary: "[&>.day]:!bg-secondary [&>.day]:!text-white [&>.day]:shadow-md",
+      outline: "[&>.day]:border-primary [&>.day]:!bg-primary [&>.day]:!text-white [&>.day]:shadow-md",
+      outlineSolid: "[&>.day]:!bg-primary [&>.day]:!text-white [&>.day]:shadow-md",
+      ghost: "[&>.day]:!bg-primary/10 [&>.day]:!text-primary",
+    },
+  },
+  defaultVariants: {
+    variant: "primary",
+  },
+})
 
 export const calendarTodayStyles = cva("font-semibold text-primary ring-2 ring-primary/20", {
   variants: {
