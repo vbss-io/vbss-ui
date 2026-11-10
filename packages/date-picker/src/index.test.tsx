@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import userEvent from "@testing-library/user-event"
 import { createRef } from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { format as formatWith } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { DatePicker, datePickerLabelStyles } from "./index"
 
@@ -126,13 +127,22 @@ describe("DatePicker", () => {
       expect(onBlur).toHaveBeenCalled()
     })
 
-    it("calls the consumer onFocus and still opens the calendar", async () => {
+    it("calls the consumer onFocus once without opening the calendar", async () => {
       const user = userEvent.setup()
       const onFocus = vi.fn()
       render(<DatePicker onFocus={onFocus} />)
-      await user.click(input())
+      await user.tab()
       expect(onFocus).toHaveBeenCalledTimes(1)
-      await waitFor(() => expect(calendar()).toBeInTheDocument())
+      expect(calendar()).not.toBeInTheDocument()
+    })
+
+    it("calls the consumer onKeyDown", async () => {
+      const user = userEvent.setup()
+      const onKeyDown = vi.fn()
+      render(<DatePicker onKeyDown={onKeyDown} />)
+      await user.click(input())
+      await user.keyboard("a")
+      expect(onKeyDown).toHaveBeenCalledTimes(1)
     })
 
     it("calls the consumer onClick", async () => {
@@ -375,13 +385,173 @@ describe("DatePicker", () => {
       expect(input()).toHaveAttribute("aria-expanded", "true")
     })
 
-    it("opens when the input receives focus from the keyboard", async () => {
+    it("does not open when the input receives focus from the keyboard", async () => {
       const user = userEvent.setup()
       render(<DatePicker />)
       await user.tab()
       expect(input()).toHaveFocus()
+      expect(calendar()).not.toBeInTheDocument()
+      expect(input()).toHaveAttribute("aria-expanded", "false")
+    })
+
+    it("does not open any calendar while tabbing through two date pickers", async () => {
+      const user = userEvent.setup()
+      render(
+        <form>
+          <DatePicker aria-label="Start" />
+          <DatePicker aria-label="End" />
+          <button type="button">Next</button>
+        </form>
+      )
+      const [start, end] = screen.getAllByRole("textbox")
+      const [startButton] = screen.getAllByRole("button", { name: "Open calendar" })
+      const stops = [start, startButton, end]
+      for (const stop of stops) {
+        await user.tab()
+        expect(stop).toHaveFocus()
+        expect(calendar()).not.toBeInTheDocument()
+      }
+      await user.tab()
+      await user.tab()
+      expect(screen.getByRole("button", { name: "Next" })).toHaveFocus()
+      expect(calendar()).not.toBeInTheDocument()
+    })
+
+    it("opens with ArrowDown on the input and focuses today when there is no selection", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await user.tab()
+      await user.keyboard("{ArrowDown}")
       await waitFor(() => expect(calendar()).toBeInTheDocument())
+      await waitFor(() => expect(day(/January 10th, 2024/)).toHaveFocus())
+    })
+
+    it("opens with ArrowDown and focuses the selected day", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker value={new Date(2024, 0, 20)} />)
+      await user.tab()
+      await user.keyboard("{ArrowDown}")
+      await waitFor(() => expect(day(/January 20th, 2024/)).toHaveFocus())
+    })
+
+    it("focuses the first enabled day when today is not selectable", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker minDate={new Date(2024, 0, 12)} />)
+      await user.tab()
+      await user.keyboard("{ArrowDown}")
+      await waitFor(() => expect(day(/January 12th, 2024/)).toHaveFocus())
+    })
+
+    it("moves the focus into an already open calendar with ArrowDown", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await openCalendar(user)
       expect(input()).toHaveFocus()
+      await user.keyboard("{ArrowDown}")
+      await waitFor(() => expect(day(/January 10th, 2024/)).toHaveFocus())
+      expect(calendar()).toBeInTheDocument()
+    })
+
+    it("lets the consumer prevent the ArrowDown opening", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker onKeyDown={(e) => e.preventDefault()} />)
+      await user.tab()
+      await user.keyboard("{ArrowDown}")
+      expect(calendar()).not.toBeInTheDocument()
+    })
+
+    it("ignores other keys on the input", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await user.tab()
+      await user.keyboard("{ArrowUp}")
+      expect(calendar()).not.toBeInTheDocument()
+    })
+
+    it("selects a day reached with the keyboard and returns the focus to the input", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker format="yyyy-MM-dd" />)
+      await user.tab()
+      await user.keyboard("{ArrowDown}")
+      await waitFor(() => expect(day(/January 10th, 2024/)).toHaveFocus())
+      await user.keyboard("{ArrowRight}{Enter}")
+      await expectClosed()
+      expect(input()).toHaveValue("2024-01-11")
+      await waitFor(() => expect(input()).toHaveFocus())
+    })
+
+    it("opens from the calendar button and focuses a day", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await user.click(screen.getByRole("button", { name: "Open calendar" }))
+      await waitFor(() => expect(day(/January 10th, 2024/)).toHaveFocus())
+    })
+
+    it("keeps the focus on the input when the calendar opens from a click on it", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await openCalendar(user)
+      expect(input()).toHaveFocus()
+    })
+
+    it("returns the focus to the input after a day is picked with the mouse", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await openCalendar(user)
+      await user.click(day(/January 15th, 2024/))
+      await expectClosed()
+      await waitFor(() => expect(input()).toHaveFocus())
+    })
+
+    it("returns the focus to the input when Escape is pressed inside the calendar", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await user.click(screen.getByRole("button", { name: "Open calendar" }))
+      await waitFor(() => expect(day(/January 10th, 2024/)).toHaveFocus())
+      await user.keyboard("{Escape}")
+      await expectClosed()
+      await waitFor(() => expect(input()).toHaveFocus())
+    })
+
+    it("returns the focus to the input when the calendar button closes the calendar", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await user.click(screen.getByRole("button", { name: "Open calendar" }))
+      await waitFor(() => expect(calendar()).toBeInTheDocument())
+      await user.click(screen.getByRole("button", { name: "Open calendar" }))
+      await expectClosed()
+      await waitFor(() => expect(input()).toHaveFocus())
+    })
+
+    it("leaves the focus on the element clicked outside", async () => {
+      const user = userEvent.setup()
+      render(
+        <>
+          <button>Outside</button>
+          <DatePicker />
+        </>
+      )
+      await openCalendar(user)
+      await user.click(screen.getByRole("button", { name: "Outside" }))
+      await expectClosed()
+      await waitFor(() => expect(screen.getByRole("button", { name: "Outside" })).toHaveFocus())
+    })
+
+    it("returns the focus to the input when reopened after an outside click and closed with Escape", async () => {
+      const user = userEvent.setup()
+      render(
+        <>
+          <button>Outside</button>
+          <DatePicker />
+        </>
+      )
+      await openCalendar(user)
+      await user.click(screen.getByRole("button", { name: "Outside" }))
+      await expectClosed()
+      await openCalendar(user)
+      await user.keyboard("{Escape}")
+      await expectClosed()
+      await waitFor(() => expect(input()).toHaveFocus())
     })
 
     it("keeps the typing focus on the input after the calendar opens", async () => {
@@ -635,6 +805,47 @@ describe("DatePicker", () => {
       await user.clear(input())
       expect(input()).toHaveValue("")
       expect(screen.queryByRole("button", { name: "Clear date" })).not.toBeInTheDocument()
+    })
+
+    describe.each([
+      ["in English", undefined],
+      ["in Portuguese", ptBR],
+    ] as const)("typing the default PP format %s key by key", (_name, locale) => {
+      const text = formatWith(new Date(2024, 0, 15), "PP", locale ? { locale } : undefined)
+
+      it("reports one date and keeps the text in controlled mode", async () => {
+        const user = userEvent.setup()
+        const onChange = vi.fn()
+        render(<DatePicker value={null} onChange={onChange} locale={locale} />)
+        await user.type(input(), text)
+        expect(onChange).toHaveBeenCalledTimes(1)
+        expect(dayOf(onChange.mock.calls[0][0])).toEqual([2024, 0, 15])
+        expect(input()).toHaveValue(text)
+      })
+
+      it("reports one date and keeps the text in uncontrolled mode", async () => {
+        const user = userEvent.setup()
+        const onChange = vi.fn()
+        render(<DatePicker onChange={onChange} locale={locale} />)
+        await user.type(input(), text)
+        expect(onChange).toHaveBeenCalledTimes(1)
+        expect(dayOf(onChange.mock.calls[0][0])).toEqual([2024, 0, 15])
+        expect(input()).toHaveValue(text)
+      })
+    })
+
+    it("ignores a year with fewer than four digits", () => {
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="PP" />)
+      fireEvent.change(input(), { target: { value: "Jan 15, 202" } })
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
+    it("ignores a year with more than four digits", () => {
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="PP" />)
+      fireEvent.change(input(), { target: { value: "Jan 15, 20245" } })
+      expect(onChange).not.toHaveBeenCalled()
     })
 
     it("parses with the locale", () => {

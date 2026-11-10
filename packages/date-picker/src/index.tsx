@@ -7,8 +7,8 @@ import type { Locale } from "date-fns"
 import {
   ComponentPropsWithoutRef,
   ChangeEvent,
-  FocusEvent,
   forwardRef,
+  KeyboardEvent,
   MouseEvent,
   ReactNode,
   useCallback,
@@ -94,11 +94,16 @@ const ClearIcon = () => (
   </svg>
 )
 
+const MIN_FOUR_DIGIT_YEAR = 1000
+const MAX_FOUR_DIGIT_YEAR = 9999
+
 const parseExactDate = (text: string, formatString: string, locale?: Locale): Date | null => {
   const options = locale ? { locale } : undefined
   try {
     const parsed = parse(text, formatString, new Date(), options)
     if (!isValid(parsed)) return null
+    const year = parsed.getFullYear()
+    if (year < MIN_FOUR_DIGIT_YEAR || year > MAX_FOUR_DIGIT_YEAR) return null
     return formatWith(parsed, formatString, options) === text ? parsed : null
   } catch {
     return null
@@ -133,8 +138,8 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       "aria-describedby": ariaDescribedBy,
       className,
       id,
-      onFocus,
       onClick,
+      onKeyDown,
       ...inputProps
     },
     forwardedRef
@@ -143,6 +148,19 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     const inputId = id ?? generatedId
     const contentId = useId()
     const containerRef = useRef<HTMLDivElement>(null)
+    const inputRef = useRef<HTMLInputElement | null>(null)
+    const contentRef = useRef<HTMLDivElement>(null)
+    const focusCalendarOnOpenRef = useRef(false)
+    const closedByOutsideRef = useRef(false)
+
+    const setInputRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node
+        if (typeof forwardedRef === "function") forwardedRef(node)
+        else if (forwardedRef) forwardedRef.current = node
+      },
+      [forwardedRef]
+    )
 
     const isControlled = value !== undefined
 
@@ -215,20 +233,51 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       [commit, formatString, locale, validationOptions]
     )
 
-    const handleInputFocus = (e: FocusEvent<HTMLInputElement>) => {
-      onFocus?.(e)
+    const focusCalendarDay = () => {
+      contentRef.current?.querySelector<HTMLButtonElement>('td button[tabindex="0"]')?.focus()
+    }
+
+    const openCalendar = (focusInside: boolean) => {
+      focusCalendarOnOpenRef.current = focusInside
+      closedByOutsideRef.current = false
       setIsOpen(true)
     }
 
     const handleInputClick = (e: MouseEvent<HTMLInputElement>) => {
       onClick?.(e)
-      setIsOpen(true)
+      if (!isOpen) openCalendar(false)
+    }
+
+    const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      onKeyDown?.(e)
+      if (e.defaultPrevented || e.key !== "ArrowDown") return
+      e.preventDefault()
+      if (isOpen) focusCalendarDay()
+      else openCalendar(true)
+    }
+
+    const handleButtonClick = () => {
+      if (isOpen) setIsOpen(false)
+      else openCalendar(true)
+    }
+
+    const handleOpenAutoFocus = (e: Event) => {
+      e.preventDefault()
+      if (focusCalendarOnOpenRef.current) focusCalendarDay()
+    }
+
+    const handleCloseAutoFocus = (e: Event) => {
+      e.preventDefault()
+      if (!closedByOutsideRef.current) inputRef.current?.focus()
+      closedByOutsideRef.current = false
     }
 
     const handleInteractOutside = (e: Event) => {
       if (e.target instanceof Node && containerRef.current?.contains(e.target)) {
         e.preventDefault()
+        return
       }
+      closedByOutsideRef.current = true
     }
 
     const disabledMatcher = useMemo((): Matcher | Matcher[] | undefined => {
@@ -263,10 +312,12 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 
     const popoverContent = (
       <PopoverContent
+        ref={contentRef}
         id={contentId}
         align="start"
         className={cn("datePickerPopover p-0 bg-transparent border-0 shadow-none")}
-        onOpenAutoFocus={(e) => e.preventDefault()}
+        onOpenAutoFocus={handleOpenAutoFocus}
+        onCloseAutoFocus={handleCloseAutoFocus}
         onInteractOutside={handleInteractOutside}
       >
         <Calendar
@@ -278,7 +329,6 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           variant={calendarVariant}
           rounded={calendarRounded}
           locale={locale}
-          initialFocus
         />
       </PopoverContent>
     )
@@ -299,13 +349,13 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             <div ref={containerRef} className="datePickerTriggerContainer relative">
               <Input
                 {...inputProps}
-                ref={forwardedRef}
+                ref={setInputRef}
                 id={inputId}
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
-                onFocus={handleInputFocus}
                 onClick={handleInputClick}
+                onKeyDown={handleInputKeyDown}
                 placeholder={placeholder}
                 disabled={disabled}
                 variant={variant}
@@ -335,7 +385,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               ) : (
                 <button
                   type="button"
-                  onClick={() => setIsOpen((open) => !open)}
+                  onClick={handleButtonClick}
                   className="datePickerIcon"
                   aria-label="Open calendar"
                   disabled={disabled}
