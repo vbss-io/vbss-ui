@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { createRef, useState } from "react"
+import { useState } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Textarea, textAreaLabelStyles, textareaErrorStyles, textareaStyles } from "./index"
 
@@ -42,9 +42,15 @@ describe("Textarea", () => {
     })
 
     it("forwards the ref to the textarea element", () => {
-      const ref = createRef<HTMLTextAreaElement>()
-      render(<Textarea ref={ref} />)
-      expect(ref.current).toBe(screen.getByRole("textbox"))
+      let received: unknown = null
+      render(
+        <Textarea
+          ref={(node: unknown) => {
+            received = node
+          }}
+        />
+      )
+      expect(received).toBe(screen.getByRole("textbox"))
     })
 
     it("passes native attributes through", () => {
