@@ -106,7 +106,6 @@
     "flatted": "^3.4.2",
     "follow-redirects": "^1.16.0",
     "form-data": "^4.0.4",
-    "glob@^10": "^11.0.0",
     "handlebars": "^4.7.9",
     "ip-address": "^10.1.1",
     "js-yaml": "^4.1.1",
@@ -114,7 +113,6 @@
     "minimatch@^3": "^3.1.4",
     "minimatch@^5": "^5.1.8",
     "minimatch@^6": "^6.2.2",
-    "minimatch@^9": "^9.0.7",
     "picomatch": "^2.3.2",
     "postcss": "^8.5.10",
     "prismjs": "^1.30.0",
@@ -130,6 +128,10 @@
     },
     "@storybook/addon-actions": {
       "uuid": "11.1.1"
-    }
+    },
+    "@isaacs/nonrecursive-glob-match": "1.0.1",
+    "glob@>=9.0.0 <14.0.2": "14.0.2",
+    "minimatch@>=7.0.0 <11.0.1": "11.0.1",
+    "minimatch@^11.0.0": "11.0.1"
   }
 }
