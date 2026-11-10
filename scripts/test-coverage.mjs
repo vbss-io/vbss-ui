@@ -20,6 +20,7 @@ if (requested.length === 0) rmSync(join(root, "coverage"), { recursive: true, fo
 const failed = []
 for (const unit of units) {
   console.log(`\n=== ${unit.name} (${unit.dir})`)
+  rmSync(join(root, "coverage", unitSlug(unit)), { recursive: true, force: true })
   const run = spawnSync(process.execPath, [vitest, "run", "--coverage"], {
     cwd: root,
     stdio: "inherit",
