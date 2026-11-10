@@ -112,12 +112,22 @@ export const App = () => {
 | `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the menu items.                 | `md`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the menu items.          | `normal`  |
 | `side`       | `top` \| `right` \| `bottom` \| `left`                             | Sets the position of the Dropdown Menu.               | `top`     |
-| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Dropdown Menu.          | `-`       |
+| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Dropdown Menu. An element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button. | `-`       |
 | `menuLabel`  | `React.ReactNode`                                                  | Optional label for the menu.                          | `-`       |
-| `menus`      | `{ item: React.ReactNode \| "separator" }[]`                       | Array of menu items or separators.                    | `[]`      |
+| `menus`      | `{ item: React.ReactNode \| "separator"; onSelect?: (event: Event) => void; disabled?: boolean; asChild?: boolean }[]` | Array of menu items or separators. `onSelect` runs when the item is selected, `disabled` disables it and `asChild` renders the item content as the item itself (for example an `<a href>`). | `[]`      |
+| `open`       | `boolean`                                                          | Controls whether the Dropdown Menu is open or closed. | `-`       |
+| `defaultOpen` | `boolean`                                                         | Whether the Dropdown Menu starts open when uncontrolled. | `-`    |
+| `onOpenChange` | `(open: boolean) => void`                                        | Callback when the open state changes.                 | `-`       |
+| `modal`      | `boolean`                                                          | Whether the Dropdown Menu is modal.                   | `-`       |
 | `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.          | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.            | `-`       |
 | `style`      | `React.CSSProperties`                                              | Additional style for custom styling.                  | `-`       |
+
+---
+
+## **Migration**
+
+When `trigger` is an element, it becomes the trigger itself and must be focusable: use a button (for example `<Button>`) instead of a `span` or an icon. A string, `null` or any other node is still wrapped in the trigger button.
 
 ---
 
