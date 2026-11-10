@@ -104,7 +104,7 @@ describe("DataTable", () => {
 
     it("sorts descending on second click", async () => {
       render(<DataTable columns={basicColumns} data={mockUsers} />)
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
 
       await userEvent.click(nameHeader)
       await userEvent.click(nameHeader)
@@ -118,7 +118,7 @@ describe("DataTable", () => {
 
     it("clears sort on third click", async () => {
       render(<DataTable columns={basicColumns} data={mockUsers} />)
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
 
       await userEvent.click(nameHeader) // asc
       await userEvent.click(nameHeader) // desc
@@ -190,7 +190,7 @@ describe("DataTable", () => {
       ]
 
       render(<DataTable columns={basicColumns} data={usersWithDuplicates} />)
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
 
       await userEvent.click(nameHeader)
 
@@ -217,7 +217,7 @@ describe("DataTable", () => {
       const handleSortChange = vi.fn()
       render(<DataTable columns={basicColumns} data={mockUsers} sort={null} onSortChange={handleSortChange} />)
 
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
       await userEvent.click(nameHeader)
 
       expect(handleSortChange).toHaveBeenCalledWith({ columnId: "name", direction: "asc" })
@@ -234,7 +234,7 @@ describe("DataTable", () => {
         />
       )
 
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
       await userEvent.click(nameHeader)
 
       expect(handleSortChange).toHaveBeenCalledWith({ columnId: "name", direction: "desc" })
@@ -251,7 +251,7 @@ describe("DataTable", () => {
         />
       )
 
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
       await userEvent.click(nameHeader)
 
       expect(handleSortChange).toHaveBeenCalledWith(null)
@@ -316,7 +316,7 @@ describe("DataTable", () => {
       render(<DataTable columns={basicColumns} data={mockUsers} pageSize={2} />)
 
       // Sort by name descending
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
       await userEvent.click(nameHeader) // asc
       await userEvent.click(nameHeader) // desc
 
@@ -329,7 +329,7 @@ describe("DataTable", () => {
       render(<DataTable columns={basicColumns} data={mockUsers} pageSize={2} page={2} />)
 
       // Change sort
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
       await userEvent.click(nameHeader)
 
       // In uncontrolled mode, page should reset to 1 internally
@@ -364,7 +364,7 @@ describe("DataTable", () => {
 
     it("supports keyboard navigation for sorting", async () => {
       render(<DataTable columns={basicColumns} data={mockUsers} />)
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
 
       nameHeader.focus()
       fireEvent.keyDown(nameHeader, { key: "Enter" })
@@ -376,7 +376,7 @@ describe("DataTable", () => {
 
     it("handles space key for sorting", async () => {
       render(<DataTable columns={basicColumns} data={mockUsers} />)
-      const nameHeader = screen.getByText("Name").closest("div[role='button']")!
+      const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
 
       nameHeader.focus()
       fireEvent.keyDown(nameHeader, { key: " " })

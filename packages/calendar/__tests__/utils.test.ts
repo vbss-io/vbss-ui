@@ -1,10 +1,4 @@
-/**
- * Unit tests for Calendar utility functions
- *
- * Note: These tests require Jest to be configured in the project.
- * Run with: npm test (after Jest setup)
- */
-
+import { describe, expect, it } from "vitest"
 import { ptBR } from "date-fns/locale"
 import { formatDate, isDateDisabled, isDateSelectable, isSameDayAs, normalizeDate, parseDate } from "../src/utils"
 
