@@ -27,7 +27,7 @@
     "type": "git",
     "url": "git+https://github.com/vbss-io/vbss-ui.git#main"
   },
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "files": [
     "dist"
