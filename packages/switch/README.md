@@ -95,6 +95,8 @@ const [isEnabled, setIsEnabled] = useState(false)
 | `label`      | `string`                                                           | Text label for the Switch.                     | `-`       |
 | `iconOn`     | `React.ReactNode`                                                  | Icon to display when Switch is on.             | `-`       |
 | `iconOff`    | `React.ReactNode`                                                  | Icon to display when Switch is off.            | `-`       |
+| `onChange`   | `(checked: boolean) => void`                                       | Called with the new checked state. It is not a form event. | `-`       |
+| `onCheckedChange` | `(checked: boolean) => void`                                  | Called with the new checked state. When both are set, both are called once. | `-`       |
 | `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.   | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.     | `-`       |
 | `style`      | `React.CSSProperties`                                              | Additional style for custom styling.           | `-`       |
