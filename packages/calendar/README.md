@@ -89,7 +89,7 @@ For other locales, import directly from `date-fns/locale`. [See all locales](htt
 | `rounded` | `"none" \| "xs" \| "sm" \| "md" \| "lg" \| "full"` | `"md"` | Border radius (full = circular selected days) |
 | `mode` | `"single" \| "multiple" \| "range"` | `"single"` | Selection mode |
 | `locale` | `Locale` | `enUS` | Date-fns locale for internationalization |
-| `disabled` | `boolean` | `false` | Disable the calendar |
+| `disabled` | `boolean \| Matcher \| Matcher[]` | `false` | Disable the whole calendar with `true`, or specific days with a matcher (for example `{ before: date }`) |
 | `showOutsideDays` | `boolean` | `true` | Show days from previous/next month |
 | `selected` | `Date \| Date[] \| { from: Date; to?: Date }` | - | Selected date(s) |
 | `onSelect` | `(date: Date \| Date[] \| { from: Date; to?: Date } \| undefined) => void` | - | Selection callback |
