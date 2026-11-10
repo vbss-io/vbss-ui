@@ -1,14 +1,20 @@
 import { render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, expect, it, vi } from "vitest"
+import { createRef } from "react"
+import { afterEach, describe, expect, it, vi } from "vitest"
 import type { DateRange } from "react-day-picker"
-import { Calendar, calendarDayStyles, calendarStyles, enUS, ptBR } from "./index"
+import { Calendar, calendarDayStyles, calendarStyles, calendarTodayStyles, enUS, navButtonStyles, ptBR } from "./index"
 
 const january = new Date(2025, 0, 1)
 
 const dayButton = (name: RegExp | string) => screen.getByRole("button", { name })
 
 const root = (container: HTMLElement) => container.querySelector<HTMLElement>(".calendar")!
+
+afterEach(() => {
+  vi.useRealTimers()
+  vi.restoreAllMocks()
+})
 
 describe("Calendar", () => {
   describe("rendering", () => {
@@ -81,8 +87,57 @@ describe("Calendar", () => {
 
     it("applies the variant styling to the day buttons", () => {
       render(<Calendar defaultMonth={january} mode="single" variant="secondary" />)
-      const cell = dayButton(/January 15th, 2025/).closest("td")!
-      expect(cell).toHaveClass(...calendarDayStyles({ variant: "secondary" }).split(" "))
+      expect(dayButton(/January 15th, 2025/)).toHaveClass("day", ...calendarDayStyles({ variant: "secondary" }).split(" "))
+    })
+
+    it("gives the full radius its own root class, distinct from lg", () => {
+      expect(calendarStyles({ rounded: "full" })).toContain("rounded-3xl")
+      expect(calendarStyles({ rounded: "full" })).not.toBe(calendarStyles({ rounded: "lg" }))
+      const { container } = render(<Calendar defaultMonth={january} rounded="full" />)
+      expect(root(container)).toHaveClass("rounded-3xl")
+    })
+
+    it("applies the navigation styles to the previous and next buttons", () => {
+      render(<Calendar defaultMonth={january} variant="secondary" />)
+      const expected = ["nav-button", ...navButtonStyles({ variant: "secondary" }).split(" ")]
+      expect(screen.getByRole("button", { name: /previous month/i })).toHaveClass(...expected)
+      expect(screen.getByRole("button", { name: /next month/i })).toHaveClass(...expected)
+    })
+
+    it("marks today with the today classes", () => {
+      vi.useFakeTimers({ toFake: ["Date"] })
+      vi.setSystemTime(new Date(2025, 0, 15, 12))
+      render(<Calendar defaultMonth={january} mode="single" />)
+      expect(dayButton(/January 15th, 2025/).closest("td")).toHaveClass("day-today", ...calendarTodayStyles({}).split(" "))
+      expect(dayButton(/January 16th, 2025/).closest("td")).not.toHaveClass("day-today")
+    })
+
+    it("marks the selected day with the selected class", () => {
+      render(<Calendar defaultMonth={january} mode="single" selected={new Date(2025, 0, 10)} />)
+      expect(dayButton(/January 10th, 2025/).closest("td")).toHaveClass("day-selected")
+      expect(dayButton(/January 11th, 2025/).closest("td")).not.toHaveClass("day-selected")
+    })
+
+    it("dims the days outside the month", () => {
+      render(<Calendar defaultMonth={january} mode="single" />)
+      expect(dayButton(/December 31st, 2024/).closest("td")).toHaveClass("day-outside", "opacity-40")
+      expect(dayButton(/January 15th, 2025/).closest("td")).not.toHaveClass("day-outside")
+    })
+
+    it("styles the disabled days", () => {
+      render(<Calendar defaultMonth={january} mode="single" disabled={{ before: new Date(2025, 0, 10) }} />)
+      expect(dayButton(/January 5th, 2025/).closest("td")).toHaveClass("cursor-not-allowed", "opacity-50")
+      expect(dayButton(/January 15th, 2025/).closest("td")).not.toHaveClass("cursor-not-allowed")
+    })
+
+    it("lets the consumer override the class of a v9 part", () => {
+      vi.useFakeTimers({ toFake: ["Date"] })
+      vi.setSystemTime(new Date(2025, 0, 15, 12))
+      render(<Calendar defaultMonth={january} mode="single" classNames={{ today: "my-today", day_button: "my-button" }} />)
+      expect(dayButton(/January 15th, 2025/).closest("td")).toHaveClass("my-today")
+      expect(dayButton(/January 15th, 2025/).closest("td")).not.toHaveClass("day-today")
+      expect(dayButton(/January 15th, 2025/)).toHaveClass("my-button")
+      expect(dayButton(/January 15th, 2025/)).not.toHaveClass("day")
     })
 
     it("lets the consumer override the class of a calendar part", () => {
@@ -212,10 +267,65 @@ describe("Calendar", () => {
       expect(root(container)).toHaveClass("opacity-50", "pointer-events-none")
     })
 
+    it("accepts a date matcher and disables only the matching days", async () => {
+      const user = userEvent.setup()
+      const onSelect = vi.fn()
+      const { container } = render(
+        <Calendar defaultMonth={january} mode="single" disabled={{ before: new Date(2025, 0, 10) }} onSelect={onSelect} />
+      )
+      expect(dayButton(/January 9th, 2025/)).toBeDisabled()
+      expect(dayButton(/January 10th, 2025/)).toBeEnabled()
+      expect(root(container)).not.toHaveClass("pointer-events-none")
+      await user.click(dayButton(/January 12th, 2025/))
+      expect(onSelect).toHaveBeenCalledTimes(1)
+    })
+
+    it("accepts a list of matchers", () => {
+      render(<Calendar defaultMonth={january} mode="single" disabled={[new Date(2025, 0, 3), { dayOfWeek: [0] }]} />)
+      expect(dayButton(/January 3rd, 2025/)).toBeDisabled()
+      expect(dayButton(/January 5th, 2025/)).toBeDisabled()
+      expect(dayButton(/January 6th, 2025/)).toBeEnabled()
+    })
+
     it("keeps the days enabled by default", () => {
       const { container } = render(<Calendar defaultMonth={january} mode="single" />)
       expect(dayButton(/January 15th, 2025/)).toBeEnabled()
       expect(root(container)).not.toHaveClass("pointer-events-none")
+    })
+  })
+
+  describe("ref", () => {
+    it("points the ref at the root element without extra wrappers", () => {
+      const ref = createRef<HTMLDivElement>()
+      const { container } = render(<Calendar ref={ref} defaultMonth={january} />)
+      expect(ref.current).toBe(root(container))
+      expect(container.firstElementChild).toBe(ref.current)
+    })
+
+    it("supports callback refs", () => {
+      let received: HTMLDivElement | null = null
+      const { container } = render(
+        <Calendar
+          ref={(node) => {
+            received = node
+          }}
+          defaultMonth={january}
+        />
+      )
+      expect(received).toBe(root(container))
+    })
+
+    it("does not warn about the forwardRef signature", () => {
+      const error = vi.spyOn(console, "error").mockImplementation(() => undefined)
+      render(<Calendar defaultMonth={january} />)
+      const messages = error.mock.calls.map((call) => String(call[0]))
+      expect(messages.filter((message) => message.includes("forwardRef render functions"))).toEqual([])
+    })
+
+    it("keeps a custom Root component given by the consumer", () => {
+      const Custom = ({ className }: { className?: string }) => <div data-testid="custom-root" className={className} />
+      render(<Calendar defaultMonth={january} components={{ Root: Custom }} />)
+      expect(screen.getByTestId("custom-root")).toHaveClass("calendar")
     })
   })
 

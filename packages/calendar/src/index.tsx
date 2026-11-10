@@ -1,7 +1,16 @@
 import { cn } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { forwardRef } from "react"
-import { DayPicker, type DayPickerProps } from "react-day-picker"
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  type ForwardedRef,
+  type HTMLAttributes,
+  type MutableRefObject,
+  type Ref,
+} from "react"
+import { DayPicker, type DayPickerProps, type Matcher } from "react-day-picker"
 import "./index.css"
 
 // Re-export locales from date-fns
@@ -15,23 +24,45 @@ export * from "./utils"
 
 type CalendarComponentProps = DayPickerProps
 
-type CalendarVariantProps = VariantProps<typeof calendarStyles>
+type CalendarVariantProps = Omit<VariantProps<typeof calendarStyles>, "disabled">
 
 type CalendarExtraProps = {
   rounded?: "none" | "xs" | "sm" | "md" | "lg" | "full"
   showOutsideDays?: boolean
-  disabled?: boolean
+  disabled?: Matcher | Matcher[]
   className?: string
   classNames?: Record<string, string>
 }
 
 export type CalendarProps = CalendarComponentProps & CalendarVariantProps & CalendarExtraProps
 
+const assignRef = <T,>(ref: Ref<T> | ForwardedRef<T> | undefined, value: T | null) => {
+  if (typeof ref === "function") ref(value)
+  else if (ref) (ref as MutableRefObject<T | null>).current = value
+}
+
+const ConsumerRefContext = createContext<ForwardedRef<HTMLDivElement>>(null)
+
+const CalendarRoot = ({ rootRef, ...props }: { rootRef?: Ref<HTMLDivElement> } & HTMLAttributes<HTMLDivElement>) => {
+  const consumerRef = useContext(ConsumerRefContext)
+  const setRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      assignRef(rootRef, node)
+      assignRef(consumerRef, node)
+    },
+    [rootRef, consumerRef]
+  )
+  return <div {...props} ref={setRef} />
+}
+
 /**
  * A customizable and accessible Calendar component.
  */
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
-  ({ variant = "primary", rounded = "md", disabled = false, showOutsideDays = true, className, classNames, ...props }) => {
+  (
+    { variant = "primary", rounded = "md", disabled, showOutsideDays = true, className, classNames, components, ...props },
+    ref
+  ) => {
     const getRoundedClass = () => {
       const roundedMap = {
         none: "rounded-none",
@@ -44,22 +75,28 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       return roundedMap[rounded] || "rounded-md"
     }
 
+    const dayStyles = calendarDayStyles({ variant, rounded })
+
     return (
-      <DayPicker
-        disabled={disabled}
-        showOutsideDays={showOutsideDays}
-        className={cn("calendar", calendarStyles({ variant, rounded, disabled }), className)}
-        classNames={{
-          nav_button: cn("nav-button", navButtonStyles({ variant }), getRoundedClass()),
-          day: cn("day cursor-pointer", calendarDayStyles({ variant, rounded })),
-          day_selected: cn("day-selected", calendarDayStyles({ variant, rounded })),
-          day_today: cn("day-today", calendarTodayStyles({ variant, rounded })),
-          day_outside: "day-outside opacity-40",
-          day_disabled: "text-gray-400 opacity-50 cursor-not-allowed",
-          ...classNames,
-        }}
-        {...props}
-      />
+      <ConsumerRefContext.Provider value={ref}>
+        <DayPicker
+          disabled={disabled}
+          showOutsideDays={showOutsideDays}
+          className={cn("calendar", calendarStyles({ variant, rounded, disabled: disabled === true }), className)}
+          classNames={{
+            button_previous: cn("nav-button", navButtonStyles({ variant }), getRoundedClass()),
+            button_next: cn("nav-button", navButtonStyles({ variant }), getRoundedClass()),
+            day_button: cn("day cursor-pointer", dayStyles),
+            selected: cn("day-selected", dayStyles),
+            today: cn("day-today", calendarTodayStyles({ variant, rounded })),
+            outside: "day-outside opacity-40",
+            disabled: "text-gray-400 opacity-50 cursor-not-allowed",
+            ...classNames,
+          }}
+          components={{ Root: CalendarRoot, ...components }}
+          {...props}
+        />
+      </ConsumerRefContext.Provider>
     )
   }
 )
@@ -81,7 +118,7 @@ export const calendarStyles = cva("p-6 bg-white border border-gray-200 shadow-lg
       sm: "rounded-md",
       md: "rounded-lg",
       lg: "rounded-xl",
-      full: "rounded-xl",
+      full: "rounded-3xl",
     },
     disabled: {
       true: "opacity-50 pointer-events-none",
