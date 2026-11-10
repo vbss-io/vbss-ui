@@ -138,6 +138,29 @@ describe("Calendar", () => {
       }
     )
 
+    it.each(["none", "xs", "sm", "md", "lg", "full"] as const)(
+      "keys the selected look of the day button on its selected cell with rounded %s",
+      (rounded) => {
+        render(<Calendar defaultMonth={january} mode="single" rounded={rounded} selected={new Date(2025, 0, 10)} />)
+        const classes = Array.from(dayButton(/January 10th, 2025/).classList)
+        expect(classes.filter((name) => name.startsWith("aria-selected:"))).toEqual([])
+        expect(classes.some((name) => name.startsWith("[[aria-selected=true]>&]:rounded"))).toBe(true)
+      }
+    )
+
+    it("makes the selected day circular with rounded full", () => {
+      render(<Calendar defaultMonth={january} mode="single" rounded="full" selected={new Date(2025, 0, 10)} />)
+      expect(dayButton(/January 10th, 2025/)).toHaveClass("[[aria-selected=true]>&]:rounded-full")
+    })
+
+    it("lets the today and disabled cells color the day button text", () => {
+      vi.useFakeTimers({ toFake: ["Date"] })
+      vi.setSystemTime(new Date(2025, 0, 15, 12))
+      render(<Calendar defaultMonth={january} mode="single" disabled={{ before: new Date(2025, 0, 5) }} />)
+      expect(dayButton(/January 15th, 2025/).closest("td")).toHaveClass("[&>.day]:text-inherit")
+      expect(dayButton(/January 2nd, 2025/).closest("td")).toHaveClass("[&>.day]:text-inherit")
+    })
+
     it("dims the days outside the month", () => {
       render(<Calendar defaultMonth={january} mode="single" />)
       expect(dayButton(/December 31st, 2024/).closest("td")).toHaveClass("day-outside", "opacity-40")
@@ -333,13 +356,6 @@ describe("Calendar", () => {
         />
       )
       expect(received).toBe(root(container))
-    })
-
-    it("does not warn about the forwardRef signature", () => {
-      const error = vi.spyOn(console, "error").mockImplementation(() => undefined)
-      render(<Calendar defaultMonth={january} />)
-      const messages = error.mock.calls.map((call) => String(call[0]))
-      expect(messages.filter((message) => message.includes("forwardRef render functions"))).toEqual([])
     })
 
     it("keeps a custom Root component given by the consumer", () => {

@@ -88,9 +88,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
             button_next: cn("nav-button", navButtonStyles({ variant }), getRoundedClass()),
             day_button: cn("day cursor-pointer", dayStyles),
             selected: cn("day-selected", calendarSelectedStyles({ variant })),
-            today: cn("day-today", calendarTodayStyles({ variant, rounded })),
+            today: cn("day-today [&>.day]:text-inherit", calendarTodayStyles({ variant, rounded })),
             outside: "day-outside opacity-40",
-            disabled: "text-gray-400 opacity-50 cursor-not-allowed",
+            disabled: "text-gray-400 opacity-50 cursor-not-allowed [&>.day]:text-inherit [&>.day]:cursor-not-allowed",
             ...classNames,
           }}
           components={{ Root: CalendarRoot, ...components }}
@@ -152,23 +152,23 @@ export const calendarDayStyles = cva(
     variants: {
       variant: {
         primary:
-          "bg-transparent text-gray-700 hover:bg-primary/10 hover:text-primary hover:scale-105 aria-selected:bg-primary aria-selected:text-white aria-selected:shadow-md",
+          "bg-transparent text-gray-700 hover:bg-primary/10 hover:text-primary hover:scale-105 [[aria-selected=true]>&]:bg-primary [[aria-selected=true]>&]:text-white [[aria-selected=true]>&]:shadow-md",
         secondary:
-          "bg-transparent text-gray-700 hover:bg-secondary/10 hover:text-secondary hover:scale-105 aria-selected:bg-secondary aria-selected:text-white aria-selected:shadow-md",
+          "bg-transparent text-gray-700 hover:bg-secondary/10 hover:text-secondary hover:scale-105 [[aria-selected=true]>&]:bg-secondary [[aria-selected=true]>&]:text-white [[aria-selected=true]>&]:shadow-md",
         outline:
-          "border border-transparent text-gray-700 bg-transparent hover:bg-primary/10 hover:border-primary hover:text-primary hover:scale-105 aria-selected:border-primary aria-selected:bg-primary aria-selected:text-white aria-selected:shadow-md",
+          "border border-transparent text-gray-700 bg-transparent hover:bg-primary/10 hover:border-primary hover:text-primary hover:scale-105 [[aria-selected=true]>&]:border-primary [[aria-selected=true]>&]:bg-primary [[aria-selected=true]>&]:text-white [[aria-selected=true]>&]:shadow-md",
         outlineSolid:
-          "border border-transparent text-gray-700 bg-transparent hover:bg-primary hover:text-white hover:scale-105 aria-selected:bg-primary aria-selected:text-white aria-selected:shadow-md",
+          "border border-transparent text-gray-700 bg-transparent hover:bg-primary hover:text-white hover:scale-105 [[aria-selected=true]>&]:bg-primary [[aria-selected=true]>&]:text-white [[aria-selected=true]>&]:shadow-md",
         ghost:
-          "border-transparent text-gray-700 hover:bg-primary/10 hover:text-primary hover:scale-105 aria-selected:bg-primary/10 aria-selected:text-primary",
+          "border-transparent text-gray-700 hover:bg-primary/10 hover:text-primary hover:scale-105 [[aria-selected=true]>&]:bg-primary/10 [[aria-selected=true]>&]:text-primary",
       },
       rounded: {
-        none: "rounded-none aria-selected:rounded-none hover:rounded-none",
-        xs: "rounded-sm aria-selected:rounded-sm hover:rounded-sm",
-        sm: "rounded-md aria-selected:rounded-md hover:rounded-md",
-        md: "rounded-lg aria-selected:rounded-lg hover:rounded-lg",
-        lg: "rounded-xl aria-selected:rounded-xl hover:rounded-xl",
-        full: "rounded-xl aria-selected:rounded-full hover:rounded-full",
+        none: "rounded-none [[aria-selected=true]>&]:rounded-none hover:rounded-none",
+        xs: "rounded-sm [[aria-selected=true]>&]:rounded-sm hover:rounded-sm",
+        sm: "rounded-md [[aria-selected=true]>&]:rounded-md hover:rounded-md",
+        md: "rounded-lg [[aria-selected=true]>&]:rounded-lg hover:rounded-lg",
+        lg: "rounded-xl [[aria-selected=true]>&]:rounded-xl hover:rounded-xl",
+        full: "rounded-xl [[aria-selected=true]>&]:rounded-full hover:rounded-full",
       },
     },
     defaultVariants: {
