@@ -222,7 +222,7 @@ const columns = [
 | `accessor`      | `(row: T) => React.ReactNode`         | Function to extract cell value from row data                  | `-`     |
 | `sortable`      | `boolean`                              | Whether the column can be sorted. Needs a `sortAccessor`, or an `accessor` that returns a string, number or Date in every row | `false` |
 | `sortAccessor` | `(row: T) => string \| number \| Date` | Optional function for sorting (defaults to accessor result). Required to sort a column whose accessor returns JSX | `-`     |
-| `headerLabel`  | `string`                               | Text used in the sort `aria-label` when `header` is not a string or number (falls back to `id`) | `-`     |
+| `headerLabel`  | `string`                               | Text used in the sort `aria-label`; when unset, a string or number `header` is used, otherwise the `id` | `-`     |
 | `width`         | `number \| string`                     | Column width (number in px, or CSS string)                    | `-`     |
 | `align`         | `'left' \| 'center' \| 'right'`       | Column alignment                                               | `'left'` |
 
