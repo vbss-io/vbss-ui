@@ -1,385 +1,471 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, it, expect, vi } from "vitest"
-import { DatePicker } from "./index"
-// Unused date-fns imports removed
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { ptBR } from "date-fns/locale"
+import { DatePicker, datePickerLabelStyles } from "./index"
+
+const today = new Date(2024, 0, 10, 12)
+
+const input = () => screen.getByRole("textbox") as HTMLInputElement
+
+const calendar = () => document.querySelector<HTMLElement>(".calendar")
+
+const day = (name: RegExp | string) => screen.getByRole("button", { name })
+
+const openCalendar = async (user: ReturnType<typeof userEvent.setup>) => {
+  await user.click(input())
+  await waitFor(() => expect(calendar()).toBeInTheDocument())
+}
+
+const expectClosed = () => waitFor(() => expect(calendar()).not.toBeInTheDocument())
+
+const dayOf = (date: Date | null | undefined) => (date ? [date.getFullYear(), date.getMonth(), date.getDate()] : date)
+
+beforeEach(() => {
+  vi.useFakeTimers({ toFake: ["Date"] })
+  vi.setSystemTime(today)
+})
+
+afterEach(() => {
+  vi.useRealTimers()
+})
 
 describe("DatePicker", () => {
-  describe("Rendering", () => {
-    it("renders with default props", () => {
-      render(<DatePicker />)
-      const input = screen.getByRole("textbox")
-      expect(input).toBeInTheDocument()
+  describe("rendering", () => {
+    it("renders an empty text input with the default placeholder and a calendar icon", () => {
+      const { container } = render(<DatePicker />)
+      expect(input()).toHaveValue("")
+      expect(input()).toHaveAttribute("placeholder", "Select date...")
+      expect(container.querySelector(".datePickerIcon svg")).toBeInTheDocument()
+      expect(calendar()).not.toBeInTheDocument()
     })
 
-    it("renders with label", () => {
-      render(<DatePicker label="Birth Date" />)
-      expect(screen.getByText("Birth Date")).toBeInTheDocument()
-    })
-
-    it("renders with ReactNode label", () => {
-      render(<DatePicker label={<span data-testid="custom-label">Custom Label</span>} />)
-      expect(screen.getByTestId("custom-label")).toBeInTheDocument()
-    })
-
-    it("renders with placeholder", () => {
+    it("uses the given placeholder", () => {
       render(<DatePicker placeholder="Pick a date" />)
-      const input = screen.getByPlaceholderText("Pick a date")
-      expect(input).toBeInTheDocument()
+      expect(screen.getByPlaceholderText("Pick a date")).toBe(input())
     })
 
-    it("renders with error message", () => {
+    it("renders a string label and uses it as the accessible name", () => {
+      render(<DatePicker label="Birth date" />)
+      expect(screen.getByText("Birth date")).toBeInTheDocument()
+      expect(screen.getByRole("textbox", { name: "Birth date" })).toBeInTheDocument()
+    })
+
+    it("renders a ReactNode label and falls back to a generic accessible name", () => {
+      render(<DatePicker label={<span data-testid="custom-label">Custom</span>} />)
+      expect(screen.getByTestId("custom-label")).toBeInTheDocument()
+      expect(screen.getByRole("textbox", { name: "Select date" })).toBeInTheDocument()
+    })
+
+    it("prefers an explicit aria-label over the label text", () => {
+      render(<DatePicker label="Birth date" aria-label="Date of birth" />)
+      expect(screen.getByRole("textbox", { name: "Date of birth" })).toBeInTheDocument()
+    })
+
+    it("links the description through aria-describedby", () => {
+      render(
+        <>
+          <DatePicker aria-describedby="hint" />
+          <p id="hint">Use your legal birth date</p>
+        </>
+      )
+      expect(input()).toHaveAccessibleDescription("Use your legal birth date")
+    })
+
+    it("renders the error message", () => {
       render(<DatePicker error="Invalid date" />)
       expect(screen.getByText("Invalid date")).toBeInTheDocument()
     })
 
-    it("renders calendar icon by default", () => {
+    it("appends the className on the root element", () => {
+      const { container } = render(<DatePicker className="my-picker" />)
+      expect(container.firstElementChild).toHaveClass("datePickerRoot", "my-picker")
+    })
+
+    it.each(["xs", "sm", "md", "lg", "xl"] as const)("applies the label fontSize %s", (fontSize) => {
+      render(<DatePicker label="Label" fontSize={fontSize} />)
+      expect(screen.getByText("Label")).toHaveClass(...datePickerLabelStyles({ fontSize }).split(" "))
+    })
+
+    it.each(["thin", "light", "normal", "medium", "bold", "extrabold"] as const)(
+      "applies the label fontWeight %s",
+      (fontWeight) => {
+        render(<DatePicker label="Label" fontWeight={fontWeight} />)
+        expect(screen.getByText("Label")).toHaveClass(`font-${fontWeight}`)
+      }
+    )
+
+    it("forwards the ref to the input element", () => {
+      let received: unknown = null
+      render(<DatePicker ref={(node: unknown) => (received = node)} />)
+      expect(received).toBe(input())
+    })
+
+    it("exposes its displayName", () => {
+      expect(DatePicker.displayName).toBe("DatePicker")
+    })
+  })
+
+  describe("input styling", () => {
+    it("applies variant, height and rounded to the input", () => {
+      render(<DatePicker variant="outline" height="lg" rounded="full" />)
+      expect(input()).toHaveClass("border-primary", "h-14", "rounded-full")
+    })
+
+    it("defaults to a medium height and rounded input", () => {
       render(<DatePicker />)
-      const icon = document.querySelector(".datePickerIcon")
-      expect(icon).toBeInTheDocument()
+      expect(input()).toHaveClass("h-9", "rounded-md")
     })
 
-    it("renders clear button when allowClear is true and date is selected", () => {
-      const testDate = new Date(2024, 0, 15)
-      render(<DatePicker value={testDate} allowClear />)
-      const clearButton = screen.getByLabelText("Clear date")
-      expect(clearButton).toBeInTheDocument()
-    })
-
-    it("does not render clear button when no date is selected", () => {
-      render(<DatePicker value={null} allowClear />)
-      const clearButton = screen.queryByLabelText("Clear date")
-      expect(clearButton).not.toBeInTheDocument()
+    it("reserves room for the icon and for the clear button", () => {
+      const { rerender } = render(<DatePicker value={today} />)
+      expect(input()).toHaveClass("datePickerTrigger", "pr-10")
+      rerender(<DatePicker value={today} allowClear />)
+      expect(input()).toHaveClass("pr-16")
     })
   })
 
-  describe("Controlled Mode", () => {
-    it("displays formatted date in controlled mode", () => {
-      const testDate = new Date(2024, 0, 15)
-      render(<DatePicker value={testDate} format="yyyy-MM-dd" />)
-      const input = screen.getByRole("textbox") as HTMLInputElement
-      expect(input.value).toBe("2024-01-15")
+  describe("formatting", () => {
+    it("formats with the default PP format", () => {
+      render(<DatePicker value={new Date(2024, 0, 15)} />)
+      expect(input()).toHaveValue("Jan 15, 2024")
     })
 
-    it("calls onChange when date is selected", async () => {
-      const handleChange = vi.fn()
-
-      render(<DatePicker value={null} onChange={handleChange} />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      // Wait for calendar to appear and click a date
-      await waitFor(() => {
-        const dayButton = screen.getByRole("button", { name: "15" })
-        fireEvent.click(dayButton)
-      })
-
-      expect(handleChange).toHaveBeenCalled()
+    it("formats with a custom format string", () => {
+      render(<DatePicker value={new Date(2024, 0, 15)} format="yyyy-MM-dd" />)
+      expect(input()).toHaveValue("2024-01-15")
     })
 
-    it("does not update internal state in controlled mode", () => {
-      const testDate = new Date(2024, 0, 15)
-      const { rerender } = render(<DatePicker value={testDate} />)
-
-      const input = screen.getByRole("textbox") as HTMLInputElement
-      expect(input.value).toContain("2024")
-
-      // Value should only change via prop
-      rerender(<DatePicker value={null} />)
-      expect(input.value).toBe("")
-    })
-  })
-
-  describe("Uncontrolled Mode", () => {
-    it("uses defaultValue for initial state", () => {
-      const testDate = new Date(2024, 0, 15)
-      render(<DatePicker defaultValue={testDate} format="yyyy-MM-dd" />)
-
-      const input = screen.getByRole("textbox") as HTMLInputElement
-      expect(input.value).toBe("2024-01-15")
+    it("formats with the given locale", () => {
+      render(<DatePicker value={new Date(2024, 0, 15)} locale={ptBR} format="PPP" />)
+      expect(input()).toHaveValue("15 de janeiro de 2024")
     })
 
-    it("updates internal state on date selection", async () => {
-      render(<DatePicker />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      await waitFor(() => {
-        const dayButton = screen.getByRole("button", { name: "15" })
-        fireEvent.click(dayButton)
-      })
-
-      const inputAfter = screen.getByRole("textbox") as HTMLInputElement
-      expect(inputAfter.value).not.toBe("")
-    })
-  })
-
-  describe("Date Formatting", () => {
-    it("formats date with default format (PP)", () => {
-      const testDate = new Date(2024, 0, 15)
-      render(<DatePicker value={testDate} />)
-
-      const input = screen.getByRole("textbox") as HTMLInputElement
-      // Default PP format produces "Jan 15, 2024" or locale variant
-      expect(input.value).toMatch(/Jan|15|2024/)
-    })
-
-    it("formats date with custom format string", () => {
-      const testDate = new Date(2024, 0, 15)
-      render(<DatePicker value={testDate} format="MM/dd/yyyy" />)
-
-      const input = screen.getByRole("textbox") as HTMLInputElement
-      expect(input.value).toBe("01/15/2024")
-    })
-
-    it("handles invalid dates gracefully", () => {
+    it("shows nothing for an invalid date", () => {
       render(<DatePicker value={new Date("invalid")} />)
+      expect(input()).toHaveValue("")
+    })
 
-      const input = screen.getByRole("textbox") as HTMLInputElement
-      expect(input.value).toBe("")
+    it("reformats when the format changes", () => {
+      const { rerender } = render(<DatePicker value={new Date(2024, 0, 15)} format="yyyy-MM-dd" />)
+      rerender(<DatePicker value={new Date(2024, 0, 15)} format="dd/MM/yyyy" />)
+      expect(input()).toHaveValue("15/01/2024")
     })
   })
 
-  describe("Date Validation", () => {
-    it("respects minDate constraint", async () => {
-      const minDate = new Date(2024, 0, 10)
-      const handleChange = vi.fn()
-
-      render(<DatePicker value={null} onChange={handleChange} minDate={minDate} />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      // Calendar should disable dates before minDate
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).toBeInTheDocument()
-      })
+  describe("controlled mode", () => {
+    it("shows the value and follows the parent", () => {
+      const { rerender } = render(<DatePicker value={new Date(2024, 0, 15)} format="yyyy-MM-dd" />)
+      expect(input()).toHaveValue("2024-01-15")
+      rerender(<DatePicker value={new Date(2024, 4, 2)} format="yyyy-MM-dd" />)
+      expect(input()).toHaveValue("2024-05-02")
+      rerender(<DatePicker value={null} format="yyyy-MM-dd" />)
+      expect(input()).toHaveValue("")
     })
 
-    it("respects maxDate constraint", async () => {
-      const maxDate = new Date(2024, 0, 20)
-
-      render(<DatePicker value={null} maxDate={maxDate} />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).toBeInTheDocument()
-      })
+    it("reports a calendar selection as a day-normalized Date and leaves the display to the parent", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} />)
+      await openCalendar(user)
+      await user.click(day(/January 15th, 2024/))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      const [selected] = onChange.mock.calls[0]
+      expect(dayOf(selected)).toEqual([2024, 0, 15])
+      expect(selected.getHours()).toBe(0)
+      expect(selected.getMinutes()).toBe(0)
+      expect(input()).toHaveValue("")
     })
 
-    it("handles disabledDates array", async () => {
-      const disabledDates = [new Date(2024, 0, 10), new Date(2024, 0, 15)]
-
-      render(<DatePicker value={null} disabledDates={disabledDates} />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).toBeInTheDocument()
-      })
+    it("works without an onChange handler", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker value={null} />)
+      await openCalendar(user)
+      await user.click(day(/January 15th, 2024/))
+      await expectClosed()
     })
 
-    it("handles disabledDates function", async () => {
-      const disabledDatesFn = (date: Date) => date.getDay() === 0 || date.getDay() === 6
-
-      render(<DatePicker value={null} disabledDates={disabledDatesFn} />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).toBeInTheDocument()
-      })
+    it("marks the current value as selected in the calendar", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker value={new Date(2024, 0, 15)} />)
+      await openCalendar(user)
+      expect(day(/January 15th, 2024/).closest("td")).toHaveAttribute("aria-selected", "true")
     })
   })
 
-  describe("Clear Functionality", () => {
-    it("clears date in controlled mode", async () => {
-      const handleChange = vi.fn()
-      const testDate = new Date(2024, 0, 15)
-
-      render(<DatePicker value={testDate} onChange={handleChange} allowClear />)
-
-      const clearButton = screen.getByLabelText("Clear date")
-      await userEvent.click(clearButton)
-
-      expect(handleChange).toHaveBeenCalledWith(null)
+  describe("uncontrolled mode", () => {
+    it("starts from defaultValue", () => {
+      render(<DatePicker defaultValue={new Date(2024, 0, 15)} format="yyyy-MM-dd" />)
+      expect(input()).toHaveValue("2024-01-15")
     })
 
-    it("clears date in uncontrolled mode", async () => {
-      const testDate = new Date(2024, 0, 15)
+    it("keeps the selection in its own state and shows it", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker format="yyyy-MM-dd" />)
+      await openCalendar(user)
+      await user.click(day(/January 15th, 2024/))
+      expect(input()).toHaveValue("2024-01-15")
+    })
 
-      render(<DatePicker defaultValue={testDate} allowClear format="yyyy-MM-dd" />)
-
-      const input = screen.getByRole("textbox") as HTMLInputElement
-      expect(input.value).toBe("2024-01-15")
-
-      const clearButton = screen.getByLabelText("Clear date")
-      await userEvent.click(clearButton)
-
-      expect(input.value).toBe("")
+    it("selects with the keyboard from the calendar", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker format="yyyy-MM-dd" />)
+      await openCalendar(user)
+      day(/January 20th, 2024/).focus()
+      await user.keyboard("{Enter}")
+      expect(input()).toHaveValue("2024-01-20")
     })
   })
 
-  describe("Disabled State", () => {
-    it("disables input when disabled prop is true", () => {
-      render(<DatePicker disabled />)
-
-      const input = screen.getByRole("textbox")
-      expect(input).toBeDisabled()
+  describe("popover", () => {
+    it("starts closed and opens when the input is clicked", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      expect(calendar()).not.toBeInTheDocument()
+      await openCalendar(user)
+      expect(screen.getByRole("grid")).toBeInTheDocument()
     })
 
-    it("does not show clear button when disabled", () => {
-      const testDate = new Date(2024, 0, 15)
-      render(<DatePicker value={testDate} allowClear disabled />)
-
-      const clearButton = screen.queryByLabelText("Clear date")
-      expect(clearButton).not.toBeInTheDocument()
-    })
-  })
-
-  describe("Accessibility", () => {
-    it("has proper aria-label", () => {
-      render(<DatePicker aria-label="Select appointment date" />)
-
-      const input = screen.getByLabelText("Select appointment date")
-      expect(input).toBeInTheDocument()
+    it("closes after a date is picked", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await openCalendar(user)
+      await user.click(day(/January 15th, 2024/))
+      await expectClosed()
     })
 
-    it("uses label text for aria-label when no explicit aria-label", () => {
-      render(<DatePicker label="Birth Date" />)
-
-      const input = screen.getByLabelText("Birth Date")
-      expect(input).toBeInTheDocument()
+    it("closes with Escape", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await openCalendar(user)
+      await user.keyboard("{Escape}")
+      await expectClosed()
     })
 
-    it("supports aria-describedby", () => {
+    it("closes when clicking outside", async () => {
+      const user = userEvent.setup()
       render(
         <>
-          <DatePicker aria-describedby="date-help" />
-          <span id="date-help">Select your preferred date</span>
+          <button>Outside</button>
+          <DatePicker />
         </>
       )
-
-      const input = screen.getByRole("textbox")
-      expect(input).toHaveAttribute("aria-describedby", "date-help")
+      await openCalendar(user)
+      await user.click(screen.getByRole("button", { name: "Outside" }))
+      await expectClosed()
     })
 
-    it("calendar has proper keyboard navigation", async () => {
-      render(<DatePicker />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      // Calendar from react-day-picker includes keyboard navigation
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).toBeInTheDocument()
-      })
-    })
-  })
-
-  describe("Calendar Popover", () => {
-    it("opens calendar on input click", async () => {
-      render(<DatePicker />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
-
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).toBeInTheDocument()
-      })
+    it("renders the calendar in a portal by default", async () => {
+      const user = userEvent.setup()
+      const { container } = render(<DatePicker />)
+      await openCalendar(user)
+      expect(container).not.toContainElement(calendar())
     })
 
-    it("closes calendar after date selection", async () => {
-      render(<DatePicker />)
+    it("renders the calendar next to the input when withPortal is false", async () => {
+      const user = userEvent.setup()
+      const { container } = render(<DatePicker withPortal={false} format="yyyy-MM-dd" />)
+      await openCalendar(user)
+      expect(container).toContainElement(calendar())
+      await user.click(day(/January 15th, 2024/))
+      expect(input()).toHaveValue("2024-01-15")
+      await expectClosed()
+    })
 
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
+    it("passes the calendar variant and radius to the calendar", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker calendarVariant="ghost" calendarRounded="lg" />)
+      await openCalendar(user)
+      expect(calendar()).toHaveClass("bg-transparent", "border-transparent", "rounded-xl")
+    })
 
-      await waitFor(() => {
-        const dayButton = screen.getByRole("button", { name: "15" })
-        fireEvent.click(dayButton)
-      })
-
-      // Calendar should close after selection
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).not.toBeInTheDocument()
-      })
+    it("uses the given locale in the calendar", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker locale={ptBR} />)
+      await openCalendar(user)
+      expect(within(calendar()!).getByText(/janeiro 2024/i)).toBeInTheDocument()
     })
   })
 
-  describe("Manual Input", () => {
-    it("parses manual date input", async () => {
-      const handleChange = vi.fn()
-
-      render(<DatePicker value={null} onChange={handleChange} format="MM/dd/yyyy" />)
-
-      const input = screen.getByRole("textbox")
-      await userEvent.clear(input)
-      await userEvent.type(input, "01/15/2024")
-
-      // Should parse and call onChange
-      expect(handleChange).toHaveBeenCalled()
+  describe("validation", () => {
+    it("disables days before minDate and keeps the others selectable", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker minDate={new Date(2024, 0, 10)} />)
+      await openCalendar(user)
+      expect(day(/January 9th, 2024/)).toBeDisabled()
+      expect(day(/January 10th, 2024/)).toBeEnabled()
+      expect(day(/January 11th, 2024/)).toBeEnabled()
     })
 
-    it("ignores invalid manual input", async () => {
-      const handleChange = vi.fn()
+    it("disables days after maxDate and keeps the others selectable", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker maxDate={new Date(2024, 0, 20)} />)
+      await openCalendar(user)
+      expect(day(/January 20th, 2024/)).toBeEnabled()
+      expect(day(/January 21st, 2024/)).toBeDisabled()
+    })
 
-      render(<DatePicker value={null} onChange={handleChange} format="MM/dd/yyyy" />)
+    it("disables the listed dates", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker disabledDates={[new Date(2024, 0, 10), new Date(2024, 0, 15)]} />)
+      await openCalendar(user)
+      expect(day(/January 10th, 2024/)).toBeDisabled()
+      expect(day(/January 15th, 2024/)).toBeDisabled()
+      expect(day(/January 11th, 2024/)).toBeEnabled()
+    })
 
-      const input = screen.getByRole("textbox")
-      await userEvent.type(input, "invalid")
+    it("disables the dates matched by a predicate", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker disabledDates={(date) => date.getDay() === 0 || date.getDay() === 6} />)
+      await openCalendar(user)
+      expect(day(/Saturday, January 13th, 2024/)).toBeDisabled()
+      expect(day(/Sunday, January 14th, 2024/)).toBeDisabled()
+      expect(day(/Monday, January 15th, 2024/)).toBeEnabled()
+    })
 
-      // Should not parse invalid date
-      const lastCall = handleChange.mock.calls[handleChange.mock.calls.length - 1]
-      expect(lastCall).toBeUndefined()
+    it("combines the range and the disabled dates", async () => {
+      const user = userEvent.setup()
+      render(
+        <DatePicker minDate={new Date(2024, 0, 5)} maxDate={new Date(2024, 0, 25)} disabledDates={[new Date(2024, 0, 15)]} />
+      )
+      await openCalendar(user)
+      expect(day(/January 4th, 2024/)).toBeDisabled()
+      expect(day(/January 26th, 2024/)).toBeDisabled()
+      expect(day(/January 15th, 2024/)).toBeDisabled()
+      expect(day(/January 16th, 2024/)).toBeEnabled()
+    })
+
+    it("does not report a click on a disabled day", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} minDate={new Date(2024, 0, 10)} />)
+      await openCalendar(user)
+      await user.click(day(/January 9th, 2024/))
+      expect(onChange).not.toHaveBeenCalled()
+      expect(calendar()).toBeInTheDocument()
     })
   })
 
-  describe("Styling Variants", () => {
-    it("applies custom variant prop", () => {
-      render(<DatePicker variant="secondary" />)
-
-      const input = screen.getByRole("textbox")
-      expect(input).toBeInTheDocument()
+  describe("manual input", () => {
+    it("reports a typed date that matches the format", () => {
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="MM/dd/yyyy" />)
+      fireEvent.change(input(), { target: { value: "01/15/2024" } })
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(dayOf(onChange.mock.calls[0][0])).toEqual([2024, 0, 15])
     })
 
-    it("applies custom height prop", () => {
-      render(<DatePicker height="lg" />)
-
-      const input = screen.getByRole("textbox")
-      expect(input).toBeInTheDocument()
+    it("keeps the typed text visible while the parent has not updated", () => {
+      render(<DatePicker value={null} format="MM/dd/yyyy" />)
+      fireEvent.change(input(), { target: { value: "01/15/2024" } })
+      expect(input()).toHaveValue("01/15/2024")
     })
 
-    it("applies custom rounded prop", () => {
-      render(<DatePicker rounded="full" />)
-
-      const input = screen.getByRole("textbox")
-      expect(input).toBeInTheDocument()
+    it("accepts a typed date in uncontrolled mode", () => {
+      render(<DatePicker format="MM/dd/yyyy" />)
+      fireEvent.change(input(), { target: { value: "03/04/2024" } })
+      expect(input()).toHaveValue("03/04/2024")
     })
 
-    it("applies calendar styling props", async () => {
-      render(<DatePicker calendarVariant="secondary" calendarRounded="lg" />)
+    it("does not report text that is not a date", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="MM/dd/yyyy" />)
+      await user.type(input(), "invalid")
+      expect(onChange).not.toHaveBeenCalled()
+      expect(input()).toHaveValue("invalid")
+    })
 
-      const input = screen.getByRole("textbox")
-      await userEvent.click(input)
+    it("does not report a typed date that is disabled", () => {
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="MM/dd/yyyy" minDate={new Date(2024, 0, 10)} />)
+      fireEvent.change(input(), { target: { value: "01/05/2024" } })
+      expect(onChange).not.toHaveBeenCalled()
+    })
 
-      await waitFor(() => {
-        const calendar = document.querySelector(".calendar")
-        expect(calendar).toBeInTheDocument()
-      })
+    it("reports null when the text is erased in controlled mode", () => {
+      const onChange = vi.fn()
+      render(<DatePicker value={new Date(2024, 0, 15)} onChange={onChange} format="MM/dd/yyyy" />)
+      fireEvent.change(input(), { target: { value: "" } })
+      expect(onChange).toHaveBeenCalledWith(null)
+    })
+
+    it("clears the date when the text is erased in uncontrolled mode", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker defaultValue={new Date(2024, 0, 15)} format="MM/dd/yyyy" allowClear />)
+      await user.clear(input())
+      expect(input()).toHaveValue("")
+      expect(screen.queryByRole("button", { name: "Clear date" })).not.toBeInTheDocument()
+    })
+
+    it("parses with the locale", () => {
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="PPP" locale={ptBR} />)
+      fireEvent.change(input(), { target: { value: "15 de janeiro de 2024" } })
+      expect(dayOf(onChange.mock.calls.at(-1)?.[0])).toEqual([2024, 0, 15])
+    })
+  })
+
+  describe("clear button", () => {
+    it("is hidden unless allowClear is set and there is a date", () => {
+      const { rerender } = render(<DatePicker value={today} />)
+      expect(screen.queryByRole("button", { name: "Clear date" })).not.toBeInTheDocument()
+      rerender(<DatePicker value={null} allowClear />)
+      expect(screen.queryByRole("button", { name: "Clear date" })).not.toBeInTheDocument()
+      rerender(<DatePicker value={today} allowClear />)
+      expect(screen.getByRole("button", { name: "Clear date" })).toBeInTheDocument()
+    })
+
+    it("replaces the calendar icon while visible", () => {
+      const { container } = render(<DatePicker value={today} allowClear />)
+      expect(container.querySelector(".datePickerIcon")).not.toBeInTheDocument()
+    })
+
+    it("reports null in controlled mode without opening the calendar", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker value={new Date(2024, 0, 15)} onChange={onChange} allowClear />)
+      await user.click(screen.getByRole("button", { name: "Clear date" }))
+      expect(onChange).toHaveBeenCalledWith(null)
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(calendar()).not.toBeInTheDocument()
+    })
+
+    it("empties the input in uncontrolled mode and brings the icon back", async () => {
+      const user = userEvent.setup()
+      const { container } = render(<DatePicker defaultValue={new Date(2024, 0, 15)} allowClear />)
+      expect(input()).toHaveValue("Jan 15, 2024")
+      await user.click(screen.getByRole("button", { name: "Clear date" }))
+      expect(input()).toHaveValue("")
+      expect(container.querySelector(".datePickerIcon")).toBeInTheDocument()
+    })
+
+    it("is not part of the tab order", () => {
+      render(<DatePicker value={today} allowClear />)
+      expect(screen.getByRole("button", { name: "Clear date" })).toHaveAttribute("tabindex", "-1")
+    })
+  })
+
+  describe("disabled", () => {
+    it("disables the input and does not open the calendar", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker disabled />)
+      expect(input()).toBeDisabled()
+      await user.click(input())
+      expect(calendar()).not.toBeInTheDocument()
+    })
+
+    it("hides the clear button even with a date and allowClear", () => {
+      render(<DatePicker disabled value={today} allowClear />)
+      expect(screen.queryByRole("button", { name: "Clear date" })).not.toBeInTheDocument()
+      expect(input()).toHaveValue("Jan 10, 2024")
+    })
+
+    it("is skipped when tabbing", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker disabled />)
+      await user.tab()
+      expect(input()).not.toHaveFocus()
     })
   })
 })
