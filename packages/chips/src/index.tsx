@@ -1,7 +1,7 @@
 import { Chip, ExtendableChipProps } from "@vbss-ui/chip"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentProps, ElementType, forwardRef, ReactNode } from "react"
 
 type ChipsProps = ComponentProps<"div"> &
   VariantProps<typeof chipsStyles> & {
@@ -11,12 +11,12 @@ type ChipsProps = ComponentProps<"div"> &
 
 export type ExtendableChipsProps<C extends ElementType> = ExtendableComponentProps<C, ChipsProps>
 
-export type ChipsComponent = ForwardRefExoticComponent<ExtendableChipsProps<ElementType> & RefAttributes<ElementType>>
+export type ChipsComponent = PolymorphicComponent<"div", ChipsProps>
 
 /**
  * The Chips component is a wrapper for grouping multiple Chip components.
  */
-export const Chips: ChipsComponent = forwardRef(
+export const Chips = forwardRef(
   <C extends ElementType>(
     { as, gap, flexDirection, className, chips, chipsProps, ...props }: ExtendableChipsProps<C>,
     ref?: PolymorphicRef<C>
@@ -32,7 +32,7 @@ export const Chips: ChipsComponent = forwardRef(
       </Component>
     )
   }
-)
+) as ChipsComponent
 
 Chips.displayName = "Chips"
 

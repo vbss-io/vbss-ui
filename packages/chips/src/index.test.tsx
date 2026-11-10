@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react"
+import { createRef } from "react"
 import { describe, expect, it } from "vitest"
 import { Chips } from "./index"
 
@@ -72,6 +73,25 @@ describe("Chips", () => {
     render(<Chips ref={(node: unknown) => (received = node)} aria-label="Skills" role="group" chips={["a"]} />)
     const group = screen.getByRole("group", { name: "Skills" })
     expect(received).toBe(group)
+  })
+
+  it("accepts a ref object typed as the rendered div", () => {
+    const ref = createRef<HTMLDivElement>()
+    render(<Chips ref={ref} data-testid="group" />)
+    expect(ref.current).toBe(screen.getByTestId("group"))
+  })
+
+  it("accepts a ref object typed as the element given in as", () => {
+    const ref = createRef<HTMLUListElement>()
+    render(<Chips as="ul" ref={ref} chips={["x"]} />)
+    expect(ref.current).toBe(screen.getByRole("list"))
+  })
+
+  it("rejects a ref typed for another element at compile time", () => {
+    const ref = createRef<HTMLButtonElement>()
+    // @ts-expect-error a button ref does not fit a div
+    render(<Chips ref={ref} data-testid="group" />)
+    expect(screen.getByTestId("group")).toBeInTheDocument()
   })
 
   it("exposes its displayName", () => {
