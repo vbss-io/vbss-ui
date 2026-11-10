@@ -1,6 +1,6 @@
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, RefAttributes } from "react"
+import { ComponentProps, ElementType, forwardRef, useId } from "react"
 
 type TextareaProps = ComponentProps<"textarea"> &
   VariantProps<typeof textareaStyles> & {
@@ -10,12 +10,12 @@ type TextareaProps = ComponentProps<"textarea"> &
 
 export type ExtendableTextareaProps<C extends ElementType> = ExtendableComponentProps<C, TextareaProps>
 
-export type TextareaComponent = ForwardRefExoticComponent<ExtendableTextareaProps<ElementType> & RefAttributes<ElementType>>
+export type TextareaComponent = PolymorphicComponent<"textarea", TextareaProps>
 
 /**
  * A customizable and accessible Textarea component for multi-line text input.
  */
-export const Textarea: TextareaComponent = forwardRef(
+export const Textarea = forwardRef(
   <C extends ElementType>(
     {
       variant,
@@ -31,7 +31,8 @@ export const Textarea: TextareaComponent = forwardRef(
     }: ExtendableTextareaProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
-    const textareaId = props.id ?? Math.random().toString()
+    const generatedId = useId()
+    const textareaId = props.id ?? generatedId
 
     return (
       <div className="textareaContainer flex flex-col gap-1">
@@ -62,6 +63,7 @@ export const Textarea: TextareaComponent = forwardRef(
               rounded,
               fontSize,
               fontWeight,
+              disabled,
               className,
             })
           )}
@@ -71,7 +73,7 @@ export const Textarea: TextareaComponent = forwardRef(
       </div>
     )
   }
-)
+) as TextareaComponent
 
 Textarea.displayName = "Textarea"
 

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useState } from "react"
+import { createRef, useState } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Textarea, textAreaLabelStyles, textareaErrorStyles, textareaStyles } from "./index"
 
@@ -39,6 +39,26 @@ describe("Textarea", () => {
       render(<Textarea id="notes" label="Notes" />)
       expect(screen.getByRole("textbox")).toHaveAttribute("id", "notes")
       expect(screen.getByText("Notes")).toHaveAttribute("for", "notes")
+    })
+
+    it("keeps a stable generated id between rerenders and links the label", () => {
+      const { rerender } = render(<Textarea label="Bio" />)
+      const first = screen.getByLabelText("Bio").getAttribute("id")
+      expect(first).toBeTruthy()
+      rerender(<Textarea label="Bio" placeholder="again" />)
+      rerender(<Textarea label="Bio" placeholder="third" />)
+      expect(screen.getByLabelText("Bio")).toHaveAttribute("id", first as string)
+      expect(screen.getByText("Bio")).toHaveAttribute("for", first as string)
+    })
+
+    it("generates a different id for each textarea", () => {
+      render(
+        <>
+          <Textarea label="A" />
+          <Textarea label="B" />
+        </>
+      )
+      expect(screen.getByLabelText("A").id).not.toBe(screen.getByLabelText("B").id)
     })
 
     it("forwards the ref to the textarea element", () => {
@@ -92,6 +112,16 @@ describe("Textarea", () => {
       expect(screen.getByRole("textbox")).toHaveClass("custom-area", "textarea")
     })
 
+    it("applies the disabled variant classes when disabled", () => {
+      render(<Textarea disabled />)
+      expect(screen.getByRole("textbox")).toHaveClass("cursor-not-allowed", "disabled:pointer-events-none", "disabled:opacity-50")
+    })
+
+    it("does not apply the disabled variant classes when enabled", () => {
+      render(<Textarea />)
+      expect(screen.getByRole("textbox")).not.toHaveClass("cursor-not-allowed")
+    })
+
     it("applies font settings to the label and font weight to the error", () => {
       render(<Textarea label="Label" error="Oops" fontSize="lg" fontWeight="extrabold" />)
       expect(screen.getByText("Label")).toHaveClass("text-lg", "font-extrabold")
@@ -102,6 +132,21 @@ describe("Textarea", () => {
       expect(textareaStyles({ variant: "secondary" })).toContain("focus-visible:border-secondary")
       expect(textAreaLabelStyles({ fontSize: "lg" })).toContain("text-lg")
       expect(textareaErrorStyles({ fontWeight: "thin" })).toContain("font-thin")
+    })
+  })
+
+  describe("polymorphic ref", () => {
+    it("accepts a ref object typed as the textarea element", () => {
+      const ref = createRef<HTMLTextAreaElement>()
+      render(<Textarea ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("textbox"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit a textarea
+      render(<Textarea ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("textbox"))
     })
   })
 
