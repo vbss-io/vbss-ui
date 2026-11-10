@@ -36,7 +36,7 @@
     "audit-gate": "node scripts/audit-gate.mjs",
     "release": "node scripts/release.mjs",
     "release:dry": "node scripts/release.mjs --dry-run",
-    "verify": "npm run lock-guard && npm run audit-gate && npm run lint && npm run build && npm run typecheck:tests && npm run test:coverage"
+    "verify": "npm run lint && npm run typecheck:tests && npm run test:coverage && npm run lock-guard && npm run audit-gate && npm run build"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",

@@ -145,16 +145,20 @@ npm run storybook
 Releases are published manually (there is no CI) and only through the release script. Packages have no `version:*` scripts and must never be versioned or published one by one with `npm version` or `npm publish`, since that skips the gate:
 
 ```bash
-npm run release -- patch   # or minor / major
-npm run release:dry -- patch
+npm run release:dry -- patch             # rehearsal: gates, version, publish --dry-run, repository restored
+npm run release -- patch --yes-publish   # real release (or minor / major)
 ```
+
+A real release only starts with the explicit `--yes-publish` argument; without it the script refuses before doing anything. Dry mode is also detected when npm swallows the flag (`npm run release patch --dry-run` without `--` sets `npm_config_dry_run`), so that mistyped form stays a dry run and never becomes a real release. Always keep the `--` before the script arguments. The script prints the packages and versions it is about to publish.
 
 `.npmrc` sets `ignore-scripts=true`, so npm never runs `prepublishOnly` on its own and a bare `npm publish` is not blocked unless `--ignore-scripts=false` is passed; releases go only through `scripts/release.mjs`, which runs everything in one process:
 
-1. Refuses a dirty working tree and a repository without release tags (tag each already published version once with `git tag "<name>@<version>"`, so lerna can tell what changed).
-2. `npm run verify` (lock-guard, audit-gate, lint, build, typecheck:tests, per-unit 90/80/90/90 coverage). Any failure stops the release before versioning.
+1. Refuses a dirty working tree and a repository without release tags. Lerna only reads annotated tags, so tag each already published version once with `git tag -a "<name>@<version>" -m "<name>@<version>"`; the script refuses, naming the package, when a publishable package has no such tag or only a lightweight one.
+2. `npm run verify` (lint, typecheck:tests, per-unit 90/80/90/90 coverage, lock-guard, audit-gate and, as the last step, build). Any failure stops the release before versioning. Because the build is the last step, the dist fingerprint is taken right after the build.
 3. `lerna version <bump> --no-push` for the changed packages (independent versions), then confirms the version commit only touched `package.json`, `package-lock.json` and `CHANGELOG.md`.
 4. Confirms every changed package `dist/` is byte-identical to what verify built, then `lerna publish from-package`.
+
+If the script refuses after the version step (for example `dist/` changed), it undoes only what it created: it deletes the tags it made and runs `git reset --keep` back to the pre-release commit, then reports. Once `lerna publish` has started nothing is undone, so check the registry before anything else. Do not edit files while a release runs: the tree is proven clean before versioning and the cleanup assumes nothing else changes it.
 
 `--dry-run` runs the same gates, versions without committing or tagging, runs `npm publish --dry-run` for each changed package (with the `prepublishOnly` guard active) and restores the repository. Every publishable package has `prepublishOnly` set to `scripts/release-gate.mjs`, which refuses unless `VBSS_RELEASE=1`, set only by the release script. `apps/docs` is `private` and is never published. Pushing the version commit and tags is a separate manual step.
 
