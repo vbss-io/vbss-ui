@@ -1,14 +1,18 @@
 import { Content, Item, Label, Portal, Root, Separator, Trigger } from "@radix-ui/react-dropdown-menu"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentPropsWithoutRef, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentPropsWithoutRef, ElementType, forwardRef, isValidElement, ReactNode } from "react"
 import "./index.css"
 
 export type DropdownMenuProps = ComponentPropsWithoutRef<typeof Content> &
-  VariantProps<typeof dropdownMenuStyles> & {
+  VariantProps<typeof dropdownMenuStyles> &
+  Pick<ComponentPropsWithoutRef<typeof Root>, "open" | "defaultOpen" | "onOpenChange" | "modal"> & {
     trigger?: ReactNode
     menus?: {
       item: ReactNode
+      onSelect?: (event: Event) => void
+      disabled?: boolean
+      asChild?: boolean
     }[]
     menuLabel?: ReactNode
     side?: "top" | "right" | "bottom" | "left"
@@ -16,17 +20,19 @@ export type DropdownMenuProps = ComponentPropsWithoutRef<typeof Content> &
 
 export type ExtendableDropdownMenuProps<C extends ElementType> = ExtendableComponentProps<C, DropdownMenuProps>
 
-export type DropdownMenuComponent = ForwardRefExoticComponent<
-  ExtendableDropdownMenuProps<ElementType> & RefAttributes<ElementType>
->
+export type DropdownMenuComponent = PolymorphicComponent<"div", DropdownMenuProps>
 
 /**
  * A customizable and accessible Dropdown Menu component.
  */
-export const DropdownMenu: DropdownMenuComponent = forwardRef(
+export const DropdownMenu = forwardRef(
   <C extends ElementType>(
     {
-      trigger = <div />,
+      trigger,
+      open,
+      defaultOpen,
+      onOpenChange,
+      modal,
       menuLabel,
       menus = [],
       side = "top",
@@ -40,8 +46,14 @@ export const DropdownMenu: DropdownMenuComponent = forwardRef(
     }: ExtendableDropdownMenuProps<C>,
     ref?: PolymorphicRef<C>
   ) => (
-    <Root>
-      <Trigger className="dropdownMenuTrigger">{trigger}</Trigger>
+    <Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} modal={modal}>
+      {isValidElement(trigger) ? (
+        <Trigger asChild className="dropdownMenuTrigger">
+          {trigger}
+        </Trigger>
+      ) : (
+        <Trigger className="dropdownMenuTrigger">{trigger ?? <div />}</Trigger>
+      )}
       <Portal>
         <Content
           ref={ref}
@@ -85,6 +97,9 @@ export const DropdownMenu: DropdownMenuComponent = forwardRef(
             return (
               <Item
                 key={`${menu.item}-${index}`}
+                onSelect={menu.onSelect}
+                disabled={menu.disabled}
+                asChild={menu.asChild}
                 className={cn(
                   "dropdownMenuItem w-full outline-none",
                   dropdownMenuItemStyles({
@@ -100,7 +115,7 @@ export const DropdownMenu: DropdownMenuComponent = forwardRef(
       </Portal>
     </Root>
   )
-)
+) as DropdownMenuComponent
 
 DropdownMenu.displayName = "DropdownMenu"
 

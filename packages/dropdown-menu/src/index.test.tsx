@@ -1,12 +1,14 @@
+import { Button } from "@vbss-ui/button"
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { DropdownMenu, dropdownMenuItemStyles, dropdownMenuSeparatorStyle, dropdownMenuStyles } from "./index"
 
 const menus = [{ item: "Profile" }, { item: "Settings" }, { item: "separator" }, { item: "Logout" }]
 
 const renderMenu = (props: Partial<Parameters<typeof DropdownMenu>[0]> = {}) =>
-  render(<DropdownMenu trigger={<span>Open menu</span>} menus={menus} {...props} />)
+  render(<DropdownMenu trigger={<button type="button">Open menu</button>} menus={menus} {...props} />)
 
 const openMenu = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.click(screen.getByText("Open menu"))
@@ -22,10 +24,29 @@ describe("DropdownMenu", () => {
       expect(screen.queryByRole("menu")).toBeNull()
     })
 
-    it("renders the provided trigger content inside the trigger button", () => {
+    it("renders a string trigger inside the trigger button", () => {
+      renderMenu({ trigger: "Open menu" })
+      const trigger = screen.getByRole("button")
+      expect(trigger).toHaveClass("dropdownMenuTrigger")
+      expect(trigger).toHaveTextContent("Open menu")
+    })
+
+    it("uses a React element trigger as the trigger itself", () => {
       renderMenu()
-      expect(screen.getByRole("button")).toHaveClass("dropdownMenuTrigger")
-      expect(screen.getByRole("button")).toContainElement(screen.getByText("Open menu"))
+      const trigger = screen.getByRole("button", { name: "Open menu" })
+      expect(trigger).toHaveClass("dropdownMenuTrigger")
+      expect(trigger).toHaveAttribute("aria-haspopup", "menu")
+      expect(screen.getAllByRole("button")).toHaveLength(1)
+    })
+
+    it("does not nest buttons when the trigger is a disabled Button", () => {
+      const error = vi.spyOn(console, "error").mockImplementation(() => undefined)
+      renderMenu({ trigger: <Button disabled>X</Button> })
+      const buttons = screen.getAllByRole("button")
+      expect(buttons).toHaveLength(1)
+      expect(buttons[0]).toBeDisabled()
+      expect(buttons[0]).toHaveClass("dropdownMenuTrigger")
+      expect(error.mock.calls.flat().join(" ")).not.toContain("validateDOMNesting")
     })
 
     it("renders a default empty trigger when none is given", () => {
@@ -45,7 +66,7 @@ describe("DropdownMenu", () => {
       const user = userEvent.setup()
       renderMenu()
       const menu = await openMenu(user)
-      expect(screen.getByText("Open menu").closest("button")).toHaveAttribute("aria-expanded", "true")
+      expect(screen.getByRole("button", { name: "Open menu", hidden: true })).toHaveAttribute("aria-expanded", "true")
       expect(menu).toHaveClass("dropdownMenuContent")
       expect(screen.getAllByRole("menuitem").map((item) => item.textContent)).toEqual(["Profile", "Settings", "Logout"])
     })
@@ -88,7 +109,7 @@ describe("DropdownMenu", () => {
       const user = userEvent.setup({ pointerEventsCheck: 0 })
       render(
         <>
-          <DropdownMenu trigger={<span>Open menu</span>} menus={menus} />
+          <DropdownMenu trigger={<button type="button">Open menu</button>} menus={menus} />
           <p>outside</p>
         </>
       )
@@ -117,6 +138,93 @@ describe("DropdownMenu", () => {
       await openMenu(user)
       await user.click(screen.getByText("Action"))
       expect(onClick).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe("open state", () => {
+    it("is controlled by open and reports changes through onOpenChange", async () => {
+      const user = userEvent.setup()
+      const onOpenChange = vi.fn()
+      const { rerender } = renderMenu({ open: false, onOpenChange })
+      await user.click(screen.getByText("Open menu"))
+      expect(onOpenChange).toHaveBeenCalledWith(true)
+      expect(screen.queryByRole("menu")).toBeNull()
+      rerender(<DropdownMenu trigger={<button type="button">Open menu</button>} menus={menus} open onOpenChange={onOpenChange} />)
+      expect(await screen.findByRole("menu")).toBeInTheDocument()
+    })
+
+    it("starts open with defaultOpen", async () => {
+      renderMenu({ defaultOpen: true })
+      expect(await screen.findByRole("menu")).toBeInTheDocument()
+    })
+
+    it("does not lock the page when modal is false", async () => {
+      const user = userEvent.setup()
+      renderMenu({ modal: false })
+      await openMenu(user)
+      expect(document.body.style.pointerEvents).not.toBe("none")
+    })
+
+    it("does not leak root props to the content element", async () => {
+      renderMenu({ open: true, defaultOpen: true, modal: false, onOpenChange: vi.fn() })
+      const menu = await screen.findByRole("menu")
+      ;["open", "defaultopen", "modal"].forEach((name) => expect(menu).not.toHaveAttribute(name))
+    })
+  })
+
+  describe("entries", () => {
+    it("calls onSelect with the event when an item is chosen by click", async () => {
+      const user = userEvent.setup()
+      const onSelect = vi.fn()
+      renderMenu({ menus: [{ item: "Profile", onSelect }, { item: "Logout" }] })
+      await openMenu(user)
+      await user.click(screen.getByRole("menuitem", { name: "Profile" }))
+      expect(onSelect).toHaveBeenCalledTimes(1)
+      expect(onSelect.mock.calls[0][0]).toBeInstanceOf(Event)
+      await waitFor(() => expect(screen.queryByRole("menu")).toBeNull())
+    })
+
+    it("calls onSelect when an item is chosen by keyboard", async () => {
+      const user = userEvent.setup()
+      const onSelect = vi.fn()
+      renderMenu({ menus: [{ item: "Profile", onSelect }] })
+      await user.tab()
+      await user.keyboard("{ArrowDown}")
+      await waitFor(() => expect(screen.getByRole("menuitem", { name: "Profile" })).toHaveFocus())
+      await user.keyboard("{Enter}")
+      expect(onSelect).toHaveBeenCalledTimes(1)
+    })
+
+    it("keeps the menu open when onSelect prevents the default", async () => {
+      const user = userEvent.setup()
+      renderMenu({ menus: [{ item: "Profile", onSelect: (event: Event) => event.preventDefault() }] })
+      await openMenu(user)
+      await user.click(screen.getByRole("menuitem", { name: "Profile" }))
+      expect(screen.getByRole("menu")).toBeInTheDocument()
+    })
+
+    it("renders a disabled item that cannot be selected", async () => {
+      const user = userEvent.setup({ pointerEventsCheck: 0 })
+      const onSelect = vi.fn()
+      renderMenu({ menus: [{ item: "Profile", onSelect, disabled: true }, { item: "Logout" }] })
+      await openMenu(user)
+      const item = screen.getByRole("menuitem", { name: "Profile" })
+      expect(item).toHaveAttribute("aria-disabled", "true")
+      expect(item).toHaveAttribute("data-disabled")
+      await user.click(item)
+      expect(onSelect).not.toHaveBeenCalled()
+      expect(screen.getByRole("menu")).toBeInTheDocument()
+    })
+
+    it("uses the child element as the item itself with asChild", async () => {
+      const user = userEvent.setup()
+      renderMenu({ menus: [{ item: <a href="/profile">Profile</a>, asChild: true }] })
+      await openMenu(user)
+      const item = screen.getByRole("menuitem", { name: "Profile" })
+      expect(item.tagName).toBe("A")
+      expect(item).toHaveAttribute("href", "/profile")
+      expect(item).toHaveClass("dropdownMenuItem")
+      expect(screen.getAllByRole("menuitem")).toHaveLength(1)
     })
   })
 
@@ -152,7 +260,7 @@ describe("DropdownMenu", () => {
 
     it("renders an empty menu when no entries are given", async () => {
       const user = userEvent.setup()
-      render(<DropdownMenu trigger={<span>Open menu</span>} />)
+      render(<DropdownMenu trigger={<button type="button">Open menu</button>} />)
       await openMenu(user)
       expect(screen.queryAllByRole("menuitem")).toHaveLength(0)
     })
@@ -166,6 +274,25 @@ describe("DropdownMenu", () => {
       renderMenu()
       await openMenu(user)
       expect(screen.getByRole("menu")).toHaveAttribute("data-side", "top")
+    })
+
+    it("accepts a ref object typed as the content element", async () => {
+      const user = userEvent.setup()
+      const ref = createRef<HTMLDivElement>()
+      render(<DropdownMenu ref={ref} trigger={<button type="button">Open menu</button>} menus={menus} />)
+      const menu = await openMenu(user)
+      expect(ref.current).toBe(menu)
+    })
+
+    it("rejects a ref typed for another element at compile time", async () => {
+      const user = userEvent.setup()
+      const ref = createRef<HTMLButtonElement>()
+      render(
+        // @ts-expect-error a button ref does not fit the div content
+        <DropdownMenu ref={ref} trigger={<button type="button">Open menu</button>} menus={menus} />
+      )
+      const menu = await openMenu(user)
+      expect(ref.current).toBe(menu)
     })
 
     it("forwards the ref to the content element", async () => {
