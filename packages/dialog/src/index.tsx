@@ -1,11 +1,11 @@
 import { Close, Content, Description, Overlay, Portal, Root, Title, Trigger } from "@radix-ui/react-dialog"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentPropsWithoutRef, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentPropsWithoutRef, ElementType, forwardRef, isValidElement, ReactNode } from "react"
 import "./index.css"
 import X from "./x.svg"
 
-export type DialogProps = ComponentPropsWithoutRef<typeof Content> &
+export type DialogProps = Omit<ComponentPropsWithoutRef<typeof Content>, "title"> &
   VariantProps<typeof dialogStyles> & {
     trigger?: ReactNode
     overlayOpacity?: number
@@ -21,18 +21,18 @@ export type DialogProps = ComponentPropsWithoutRef<typeof Content> &
 
 export type ExtendableDialogProps<C extends ElementType> = ExtendableComponentProps<C, DialogProps>
 
-export type DialogComponent = ForwardRefExoticComponent<ExtendableDialogProps<ElementType> & RefAttributes<ElementType>>
+export type DialogComponent = PolymorphicComponent<"div", DialogProps>
 
 /**
  * A customizable and accessible Dialog component with support for triggers, overlays, and various content sections.
  */
-export const Dialog: DialogComponent = forwardRef(
+export const Dialog = forwardRef(
   <C extends ElementType>(
     {
-      trigger = <div />,
+      trigger,
       overlayOpacity = 50,
       border,
-      title = "",
+      title,
       description = "",
       footer,
       disableTextColor = false,
@@ -45,44 +45,52 @@ export const Dialog: DialogComponent = forwardRef(
       ...props
     }: ExtendableDialogProps<C>,
     ref?: PolymorphicRef<C>
-  ) => (
-    <Root open={open} onOpenChange={onOpenChange}>
-      <Trigger className="dialogTrigger">{trigger}</Trigger>
-      <Portal>
-        <Overlay
-          className={cn(
-            "dialogOverlay fixed inset-0 z-50 bg-black",
-            "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-          )}
-          style={{ opacity: overlayOpacity / 100 }}
-        />
-        <Content
-          ref={ref}
-          className={cn(
-            "dialogContent",
-            dialogStyles({ variant, rounded }),
-            `${border && variant ? dialogBorderStyle[variant] : ""}`,
-            `${!disableTextColor && variant ? dialogTextStyle[variant] : ""}`,
-            className
-          )}
-          {...props}
-        >
-          <div className={"dialogInfo flex flex-col space-y-1.5 text-left"}>
-            <Title className={"dialogTitle text-lg font-semibold leading-none tracking-tight"}>{title}</Title>
-            {description && <Description className={"dialogDescription text-sm opacity-80"}>{description}</Description>}
-          </div>
-          {props.children}
-          {footer && <div className={"dialogFooter w-full flex justify-end space-x-2"}>{footer}</div>}
-          {!hideClose && (
-            <Close className="dialogCloseContainer absolute right-4 top-4 opacity-70">
-              <X className="dialogCloseIcon h-4 w-4" />
-            </Close>
-          )}
-        </Content>
-      </Portal>
-    </Root>
-  )
-)
+  ) => {
+    const hasTitle = title !== undefined && title !== null && title !== ""
+    const hasTrigger = trigger !== undefined
+    return (
+      <Root open={open} onOpenChange={onOpenChange}>
+        <Trigger className="dialogTrigger" asChild={isValidElement(trigger)}>
+          {hasTrigger ? trigger : <div />}
+        </Trigger>
+        <Portal>
+          <Overlay
+            className={cn(
+              "dialogOverlay fixed inset-0 z-50 bg-black",
+              "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+            )}
+            style={{ opacity: overlayOpacity / 100 }}
+          />
+          <Content
+            ref={ref}
+            className={cn(
+              "dialogContent",
+              dialogStyles({ variant, rounded }),
+              `${border && variant ? dialogBorderStyle[variant] : ""}`,
+              `${!disableTextColor && variant ? dialogTextStyle[variant] : ""}`,
+              className
+            )}
+            {...props}
+          >
+            <div className={"dialogInfo flex flex-col space-y-1.5 text-left"}>
+              <Title className={cn("dialogTitle", hasTitle ? "text-lg font-semibold leading-none tracking-tight" : "sr-only")}>
+                {hasTitle ? title : props["aria-label"]}
+              </Title>
+              {description && <Description className={"dialogDescription text-sm opacity-80"}>{description}</Description>}
+            </div>
+            {props.children}
+            {footer && <div className={"dialogFooter w-full flex justify-end space-x-2"}>{footer}</div>}
+            {!hideClose && (
+              <Close className="dialogCloseContainer absolute right-4 top-4 opacity-70" aria-label="Close">
+                <X className="dialogCloseIcon h-4 w-4" />
+              </Close>
+            )}
+          </Content>
+        </Portal>
+      </Root>
+    )
+  }
+) as DialogComponent
 
 Dialog.displayName = "Dialog"
 

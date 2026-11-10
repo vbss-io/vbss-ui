@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useState } from "react"
+import { Button } from "@vbss-ui/button"
+import { createRef, useState } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Dialog, dialogBorderStyle, dialogStyles, dialogTextStyle } from "./index"
 
@@ -286,6 +287,104 @@ describe("Dialog", () => {
 
     it("exposes its displayName", () => {
       expect(Dialog.displayName).toBe("Dialog")
+    })
+  })
+
+  describe("trigger", () => {
+    it("uses an element trigger as the trigger itself without nesting buttons", async () => {
+      const user = userEvent.setup()
+      const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined)
+      render(<Dialog trigger={<Button>Open</Button>} title="Nested" />)
+      expect(screen.getAllByRole("button")).toHaveLength(1)
+      const trigger = screen.getByRole("button", { name: "Open" })
+      expect(trigger).toHaveClass("dialogTrigger", "button")
+      expect(trigger.querySelector("button")).toBeNull()
+      await user.click(trigger)
+      expect(await screen.findByRole("dialog")).toBeInTheDocument()
+      expect(consoleError.mock.calls.some((call) => String(call[0]).includes("validateDOMNesting"))).toBe(false)
+    })
+
+    it("does not open when the element trigger is disabled", async () => {
+      const user = userEvent.setup()
+      render(<Dialog trigger={<Button disabled>Open</Button>} title="Disabled" />)
+      expect(screen.getAllByRole("button")).toHaveLength(1)
+      await user.click(screen.getByRole("button", { name: "Open" }))
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+    })
+
+    it("keeps a string trigger inside the Radix trigger button", () => {
+      render(<Dialog trigger="Open" title="String" />)
+      const trigger = screen.getByRole("button", { name: "Open" })
+      expect(trigger).toHaveClass("dialogTrigger")
+      expect(trigger).toHaveTextContent("Open")
+    })
+
+    it("renders the default empty trigger inside a button when none is given", () => {
+      render(<Dialog title="Default" />)
+      const trigger = screen.getByRole("button")
+      expect(trigger).toHaveClass("dialogTrigger")
+      expect(trigger.querySelector("div")).not.toBeNull()
+    })
+  })
+
+  describe("accessibility", () => {
+    it("names the close button", async () => {
+      const user = userEvent.setup()
+      render(<Dialog trigger="Open" title="Named close" />)
+      await openDialog(user)
+      expect(screen.getByRole("button", { name: "Close" })).toHaveClass("dialogCloseContainer")
+    })
+
+    it("does not render a visible empty heading when there is no title", async () => {
+      const user = userEvent.setup()
+      render(<Dialog trigger="Open" />)
+      await openDialog(user)
+      const visibleHeadings = screen.queryAllByRole("heading").filter((heading) => !heading.classList.contains("sr-only"))
+      expect(visibleHeadings).toHaveLength(0)
+      expect(document.querySelector(".dialogTitle")).toHaveClass("sr-only")
+      expect(document.querySelector(".dialogTitle")).toBeEmptyDOMElement()
+    })
+
+    it("uses the aria-label as the accessible title when there is no title", async () => {
+      const user = userEvent.setup()
+      const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined)
+      render(<Dialog trigger="Open" aria-label="Settings" />)
+      const dialog = await openDialog(user)
+      expect(dialog).toHaveAccessibleName("Settings")
+      expect(screen.getByText("Settings")).toHaveClass("sr-only")
+      expect(consoleError.mock.calls.some((call) => String(call[0]).includes("DialogTitle"))).toBe(false)
+    })
+
+    it("keeps the visible title when one is given", async () => {
+      const user = userEvent.setup()
+      render(<Dialog trigger="Open" title="Visible" aria-label="Ignored" />)
+      await openDialog(user)
+      const heading = screen.getByRole("heading", { name: "Visible" })
+      expect(heading).not.toHaveClass("sr-only")
+    })
+  })
+
+  describe("types", () => {
+    it("accepts a ReactNode title", async () => {
+      const user = userEvent.setup()
+      render(<Dialog trigger="Open" title={<strong data-testid="rich">Rich</strong>} />)
+      await openDialog(user)
+      expect(screen.getByTestId("rich")).toBeInTheDocument()
+    })
+
+    it("accepts a ref object typed as the rendered content", async () => {
+      const user = userEvent.setup()
+      const ref = createRef<HTMLDivElement>()
+      render(<Dialog ref={ref} trigger="Open" title="Typed ref" />)
+      const dialog = await openDialog(user)
+      expect(ref.current).toBe(dialog)
+    })
+
+    it("rejects a ref object typed as another element", () => {
+      const ref = createRef<HTMLButtonElement>()
+      // @ts-expect-error a button ref does not match the div content
+      render(<Dialog ref={ref} title="Wrong ref" />)
+      expect(ref.current).toBeNull()
     })
   })
 })
