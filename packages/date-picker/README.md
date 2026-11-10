@@ -128,12 +128,12 @@ function App() {
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `Date \| null` | - | Controlled value |
-| `onChange` | `(date: Date \| null) => void` | - | Controlled onChange handler |
+| `onChange` | `(date: Date \| null) => void` | - | Called when the date changes (selecting a day, typing a complete date, clearing), in controlled and uncontrolled mode |
 | `defaultValue` | `Date \| null` | - | Uncontrolled default value |
 | `minDate` | `Date` | - | Minimum selectable date |
 | `maxDate` | `Date` | - | Maximum selectable date |
 | `disabledDates` | `Date[] \| ((date: Date) => boolean)` | - | Disabled dates |
-| `format` | `string` | `"PP"` | Date format string (date-fns) |
+| `format` | `string` | `"PP"` | Date format string (date-fns). Typed text only becomes a date when it is complete, matches the format exactly and has a 4-digit year |
 | `locale` | `Locale` | - | date-fns locale |
 | `label` | `ReactNode` | - | Label text or element |
 | `placeholder` | `string` | `"Select date..."` | Input placeholder |
@@ -152,6 +152,7 @@ function App() {
 | `aria-label` | `string` | - | Accessible label for the input |
 | `aria-describedby` | `string` | - | ID of the element describing the input |
 | `ref` | `React.Ref` | - | Ref forwarded to the underlying input element |
+| `id`, `name`, `required`, `onBlur`, `onFocus`, `onClick`, `onKeyDown`, `autoComplete`, `data-*`... | native `input` props | - | Native input props reach the input; `value`, `onChange` and `type` stay controlled by the component |
 
 ## Accessibility
 
