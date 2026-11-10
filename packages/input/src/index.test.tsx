@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { createRef, useState } from "react"
+import { useState } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Input, inputErrorStyles, inputIconStyles, inputLabelStyles, inputStyles } from "./index"
 
@@ -47,9 +47,15 @@ describe("Input", () => {
     })
 
     it("forwards the ref to the input element", () => {
-      const ref = createRef<HTMLInputElement>()
-      render(<Input ref={ref} />)
-      expect(ref.current).toBe(screen.getByRole("textbox"))
+      let received: unknown = null
+      render(
+        <Input
+          ref={(node: unknown) => {
+            received = node
+          }}
+        />
+      )
+      expect(received).toBe(screen.getByRole("textbox"))
     })
 
     it("passes native attributes through", () => {
