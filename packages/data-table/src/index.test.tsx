@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 import { DataTable, type DataTableColumn, type SortState } from "./index"
@@ -132,10 +132,11 @@ describe("DataTable", () => {
 
     it("uses initialSort prop", () => {
       render(<DataTable columns={basicColumns} data={mockUsers} initialSort={{ columnId: "name", direction: "desc" }} />)
-      const rows = screen.getAllByRole("row")
-      const firstDataRow = rows[1]
-      // Should be sorted descending
-      expect(firstDataRow.textContent).not.toContain("Alice")
+      const names = screen
+        .getAllByRole("row")
+        .slice(1)
+        .map((row) => within(row).getAllByRole("cell")[0].textContent)
+      expect(names).toEqual(["Eve", "David", "Charlie", "Bob", "Alice"])
     })
 
     it("uses sortAccessor when provided", async () => {
@@ -207,10 +208,11 @@ describe("DataTable", () => {
       const sort: SortState = { columnId: "name", direction: "desc" }
       render(<DataTable columns={basicColumns} data={mockUsers} sort={sort} />)
 
-      const rows = screen.getAllByRole("row")
-      const firstDataRow = rows[1]
-      // Should be sorted descending
-      expect(firstDataRow.textContent).not.toContain("Alice")
+      const names = screen
+        .getAllByRole("row")
+        .slice(1)
+        .map((row) => within(row).getAllByRole("cell")[0].textContent)
+      expect(names).toEqual(["Eve", "David", "Charlie", "Bob", "Alice"])
     })
 
     it("calls onSortChange when header is clicked", async () => {
@@ -273,11 +275,10 @@ describe("DataTable", () => {
       expect(rows.length).toBe(3)
     })
 
-    it("shows correct page with defaultPage", () => {
+    it("shows the second page of two rows when page is 2", () => {
       render(<DataTable columns={basicColumns} data={mockUsers} pageSize={2} page={2} />)
       const rows = screen.getAllByRole("row")
-      // Should show page 2 (rows 3-4)
-      expect(rows.length).toBe(3) // Header + 2 rows
+      expect(rows.slice(1).map((row) => within(row).getAllByRole("cell")[0].textContent)).toEqual(["Charlie", "David"])
     })
 
     it("handles last page correctly", () => {
@@ -296,18 +297,18 @@ describe("DataTable", () => {
     })
 
     it("calls onPageChange when page changes", () => {
-      // Note: We don't have UI controls in the component itself,
-      // but the prop is available for external controls
       const handlePageChange = vi.fn()
       const { rerender } = render(
         <DataTable columns={basicColumns} data={mockUsers} pageSize={2} page={1} onPageChange={handlePageChange} />
       )
+      expect(within(screen.getByRole("table")).getByText("Alice")).toBeInTheDocument()
 
       rerender(<DataTable columns={basicColumns} data={mockUsers} pageSize={2} page={2} onPageChange={handlePageChange} />)
 
-      // onPageChange would be called by external pagination controls
-      // This test just verifies the component accepts the prop
-      expect(screen.getAllByRole("row").length).toBe(3)
+      expect(screen.getByText("Charlie")).toBeInTheDocument()
+      expect(screen.getByText("David")).toBeInTheDocument()
+      expect(screen.queryByText("Alice")).not.toBeInTheDocument()
+      expect(handlePageChange).not.toHaveBeenCalled()
     })
   })
 
@@ -325,17 +326,15 @@ describe("DataTable", () => {
       expect(rows.length).toBe(3) // Header + 2 rows
     })
 
-    it("resets to page 1 when sort changes", async () => {
-      render(<DataTable columns={basicColumns} data={mockUsers} pageSize={2} page={2} />)
+    it("asks a controlled page to reset to 1 when the sort changes", async () => {
+      const onPageChange = vi.fn()
+      render(<DataTable columns={basicColumns} data={mockUsers} pageSize={2} page={2} onPageChange={onPageChange} />)
 
-      // Change sort
       const nameHeader = screen.getByText("Name").closest<HTMLElement>("div[role='button']")!
       await userEvent.click(nameHeader)
 
-      // In uncontrolled mode, page should reset to 1 internally
-      // This is handled by the component logic
-      const rows = screen.getAllByRole("row")
-      expect(rows.length).toBe(3) // Header + 2 rows (page 1 after sort)
+      expect(onPageChange).toHaveBeenCalledTimes(1)
+      expect(onPageChange).toHaveBeenCalledWith(1)
     })
   })
 
@@ -345,8 +344,10 @@ describe("DataTable", () => {
       const table = screen.getByRole("table")
       expect(table).toBeInTheDocument()
 
-      const headerRow = screen.getByRole("row")
-      expect(headerRow).toBeInTheDocument()
+      const rows = within(table).getAllByRole("row")
+      expect(rows).toHaveLength(mockUsers.length + 1)
+      expect(within(rows[0]).getAllByRole("columnheader")).toHaveLength(basicColumns.length)
+      expect(within(rows[1]).getAllByRole("cell")).toHaveLength(basicColumns.length)
     })
 
     it("has sortable headers with button role", () => {
@@ -435,11 +436,12 @@ describe("DataTable", () => {
       ]
 
       render(<DataTable columns={columnsWithAlign} data={mockUsers} />)
-      // Check that alignment classes are applied
-      const nameHeader = screen.getByText("Name")
-      const ageHeader = screen.getByText("Age")
-      expect(nameHeader).toBeInTheDocument()
-      expect(ageHeader).toBeInTheDocument()
+      const nameHeader = screen.getByText("Name").closest("th")!
+      const ageHeader = screen.getByText("Age").closest("th")!
+      expect(nameHeader).toHaveStyle({ textAlign: "center" })
+      expect(nameHeader).toHaveClass("[&>div]:text-center")
+      expect(ageHeader).toHaveStyle({ textAlign: "right" })
+      expect(ageHeader).toHaveClass("[&>div]:text-right")
     })
   })
 
