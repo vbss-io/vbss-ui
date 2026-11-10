@@ -1,0 +1,21 @@
+{
+  "@vbss-ui/lib": "minor",
+  "@vbss-ui/button": "patch",
+  "@vbss-ui/calendar": "minor",
+  "@vbss-ui/checkbox": "patch",
+  "@vbss-ui/chip": "patch",
+  "@vbss-ui/chips": "patch",
+  "@vbss-ui/data-table": "minor",
+  "@vbss-ui/date-picker": "minor",
+  "@vbss-ui/dialog": "major",
+  "@vbss-ui/dropdown-menu": "major",
+  "@vbss-ui/history-nav": "minor",
+  "@vbss-ui/input": "patch",
+  "@vbss-ui/input-number": "minor",
+  "@vbss-ui/popover": "major",
+  "@vbss-ui/radio-group": "patch",
+  "@vbss-ui/switch": "minor",
+  "@vbss-ui/table": "major",
+  "@vbss-ui/textarea": "patch",
+  "@vbss-ui/tooltip": "major"
+}

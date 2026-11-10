@@ -149,13 +149,22 @@ npm run release:dry -- patch             # rehearsal: gates, version, publish --
 npm run release -- patch --yes-publish   # real release (or minor / major)
 ```
 
+To bump packages differently in one release, pass a plan file instead of a bump. `release-plan.json` at the repository root is a JSON object mapping every changed package to `major`, `minor` or `patch` (resolved from the repository root):
+
+```bash
+npm run release:dry -- --plan release-plan.json
+npm run release -- --plan release-plan.json --yes-publish
+```
+
+The plan must list exactly the packages `lerna changed` reports (none missing, none unchanged, none unknown, never the private `apps/docs`) and only the three bump values; otherwise the script exits 2 before doing anything. The script prints `name: current -> next` for every package, computes the versions by plain semver rules, writes them to each `package.json` and to the matching `package-lock.json` entry (no third-party entry changes), makes one version commit listing every `name@version` plus one annotated tag per package (as Vitor Bastos), and publishes with `lerna publish from-package`, which publishes dependencies first (`@vbss-ui/lib` leads). Plans require every internal `@vbss-ui/*` range to stay `*`, as today. Every guarantee below applies to plans too. The plan file is rewritten for each release.
+
 A real release only starts with the explicit `--yes-publish` argument; without it the script refuses before doing anything. Dry mode is also detected when npm swallows the flag (`npm run release patch --dry-run` without `--` sets `npm_config_dry_run`), so that mistyped form stays a dry run and never becomes a real release. Always keep the `--` before the script arguments. The script prints the packages and versions it is about to publish.
 
 `.npmrc` sets `ignore-scripts=true`, so npm never runs `prepublishOnly` on its own and a bare `npm publish` is not blocked unless `--ignore-scripts=false` is passed; releases go only through `scripts/release.mjs`, which runs everything in one process:
 
 1. Refuses a dirty working tree and a repository without release tags. Lerna only reads annotated tags, so tag each already published version once with `git tag -a "<name>@<version>" -m "<name>@<version>"`; the script refuses, naming the package, when a publishable package has no such tag or only a lightweight one.
 2. `npm run verify` (lint, typecheck:tests, per-unit 90/80/90/90 coverage, lock-guard, audit-gate and, as the last step, build). Any failure stops the release before versioning. Because the build is the last step, the dist fingerprint is taken right after the build.
-3. `lerna version <bump> --no-push` for the changed packages (independent versions), then confirms the version commit only touched `package.json`, `package-lock.json` and `CHANGELOG.md`.
+3. `lerna version <bump> --no-push` for the changed packages (independent versions) or, with `--plan`, the per-package versions committed and tagged by the script, then confirms the version commit only touched `package.json`, `package-lock.json` and `CHANGELOG.md`.
 4. Confirms every changed package `dist/` is byte-identical to what verify built, then `lerna publish from-package`.
 
 If the script refuses after the version step (for example `dist/` changed), it undoes only what it created: it deletes the tags it made and runs `git reset --keep` back to the pre-release commit, then reports. Once `lerna publish` has started nothing is undone, so check the registry before anything else. Do not edit files while a release runs: the tree is proven clean before versioning and the cleanup assumes nothing else changes it.
