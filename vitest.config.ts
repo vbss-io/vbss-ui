@@ -1,4 +1,5 @@
 import react from "@vitejs/plugin-react"
+import { createRequire } from "node:module"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import svgr from "vite-plugin-svgr"
@@ -7,6 +8,9 @@ import { COVERAGE_EXCLUDE, listUnits, unitSlug, unitThresholds } from "./scripts
 
 const root = path.dirname(fileURLToPath(import.meta.url))
 const allUnits = listUnits(root)
+const styledComponentsBrowser = createRequire(path.join(root, "apps", "docs", "package.json")).resolve(
+  "styled-components/dist/styled-components.browser.cjs.js"
+)
 const selected = process.env.VBSS_COVERAGE_UNIT
 const units = selected ? allUnits.filter((unit) => unit.dir === selected) : allUnits
 
@@ -38,7 +42,15 @@ export default defineConfig({
     projects: units.map((unit) => ({
       extends: true,
       root: path.join(root, unit.dir),
-      resolve: unit.dir === "apps/docs" ? { alias: [{ find: /^@\//, replacement: path.join(root, unit.dir, "src") + "/" }] } : {},
+      resolve:
+        unit.dir === "apps/docs"
+          ? {
+              alias: [
+                { find: /^@\//, replacement: path.join(root, unit.dir, "src") + "/" },
+                { find: /^styled-components$/, replacement: styledComponentsBrowser },
+              ],
+            }
+          : {},
       test: {
         name: unit.name,
         include: ["src/**/*.{test,spec}.{ts,tsx}", "__tests__/**/*.{test,spec}.{ts,tsx}", "tests/**/*.{test,spec}.{ts,tsx}"],
