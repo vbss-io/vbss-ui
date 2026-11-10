@@ -138,14 +138,20 @@ export const App = () => {
 | `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the font size of the Table content.        | `md`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold`               | Specifies the font weight of the Table content. | `normal`  |
 | `height`     | `xs` \| `sm` \| `md` \| `lg` \| `xl`                                             | Sets the height of table rows.                  | `md`      |
-| `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `xl`                                   | Sets the border radius of the Table.            | `md`      |
+| `rounded`    | `none` \| `xs` \| `sm` \| `md` \| `lg` \| `xl` \| `full`                         | Sets the border radius of the Table.            | `md`      |
 | `outline`    | `boolean`                                                                        | Adds a border around the Table.                 | `true`    |
 | `headers`    | `Array<{ content: React.ReactNode, className?: string, style?: CSSProperties }>` | Table headers configuration.                    | `-`       |
-| `rows`       | `Array<{ [key: string]: React.ReactNode \| CSSProperties }>`                     | Table rows data.                                | `-`       |
+| `rows`       | `Array<{ [key: string]: React.ReactNode \| CSSProperties }>`                     | Table rows data. A row `className` and `style` apply to the row (`tr`), not to each cell. | `-`       |
 | `footer`     | `{ content: Array<React.ReactNode>, className?: string, style?: CSSProperties }` | Table footer configuration.                     | `-`       |
 | `ref`        | `React.Ref`                                                                      | Allows accessing the underlying DOM element.    | `-`       |
 | `className`  | `string`                                                                         | Additional CSS classes for custom styling.      | `-`       |
 | `style`      | `React.CSSProperties`                                                            | Additional style for custom styling.            | `-`       |
+
+---
+
+## **Migration**
+
+A row `className` and `style` now go to the row (`tr`) instead of each cell (`td`). If you used them to style cells, style the cell content or the `.btd` class instead.
 
 ---
 
