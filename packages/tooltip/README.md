@@ -98,10 +98,22 @@ export const App = () => {
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Specifies the font weight of the Tooltip content. | `normal`  |
 | `side`       | `top` \| `right` \| `bottom` \| `left`                             | Sets the position of the Tooltip.                 | `bottom`  |
 | `sideOffset` | `number`                                                           | Sets the offset from the trigger element.         | `4`       |
-| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Tooltip.            | `-`       |
+| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Tooltip. An element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button. | `-`       |
+| `delayDuration` | `number`                                                        | Delay in milliseconds before the Tooltip opens.   | `-`       |
+| `open`       | `boolean`                                                          | Controls whether the Tooltip is open or closed.   | `-`       |
+| `defaultOpen` | `boolean`                                                         | Whether the Tooltip starts open when uncontrolled. | `-`      |
+| `onOpenChange` | `(open: boolean) => void`                                        | Callback when the open state changes.             | `-`       |
+| `skipDelayDuration` | `number`                                                    | Time in milliseconds after a Tooltip closes during which the next one opens without delay. | `-` |
+| `provider`   | `boolean`                                                          | Wraps the Tooltip in its own Provider. Pass `false` to use a `TooltipProvider` (exported by this package) around the page and share the delay between tooltips. | `true`    |
 | `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.      | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.        | `-`       |
 | `style`      | `React.CSSProperties`                                              | Additional style for custom styling.              | `-`       |
+
+---
+
+## **Migration**
+
+When `trigger` is an element, it becomes the trigger itself and must be focusable: use a button (for example `<Button>`) instead of a `span`, an icon or `<Button as="div">`. A string, `null` or any other node is still wrapped in the trigger button.
 
 ---
 
