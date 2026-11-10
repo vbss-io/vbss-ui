@@ -48,7 +48,7 @@ export const Primary: Story = {
         <Button variant="primary">Button</Button>
       </div>
     ),
-    trigger: <Button as="div">Button</Button>,
+    trigger: <Button>Button</Button>,
     variant: "primary",
     rounded: "md",
     title: "Dialog Title",
