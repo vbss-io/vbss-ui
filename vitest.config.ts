@@ -34,6 +34,7 @@ export default defineConfig({
     passWithNoTests: true,
     maxWorkers: 2,
     restoreMocks: true,
+    fsModuleCachePath: path.join(root, "node_modules", ".vitest"),
     projects: units.map((unit) => ({
       extends: true,
       root: path.join(root, unit.dir),
