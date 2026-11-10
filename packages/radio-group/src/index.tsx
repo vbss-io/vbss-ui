@@ -1,7 +1,7 @@
 import { Indicator, Item, Root } from "@radix-ui/react-radio-group"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ElementType, forwardRef, ReactNode, useId } from "react"
 import Check from "./check.svg"
 import "./index.css"
 
@@ -11,7 +11,8 @@ export type RadioValue = {
 }
 
 type RadioGroupProps = React.ComponentPropsWithoutRef<typeof Root> &
-  VariantProps<typeof radioGroupStyles> & {
+  VariantProps<typeof radioGroupStyles> &
+  VariantProps<typeof radioGroupFontStyle> & {
     values?: RadioValue[]
     label?: string
     icon?: ReactNode
@@ -22,9 +23,9 @@ type RadioGroupProps = React.ComponentPropsWithoutRef<typeof Root> &
 
 export type ExtendableRadioGroupProps<C extends ElementType> = ExtendableComponentProps<C, RadioGroupProps>
 
-export type RadioGroupComponent = ForwardRefExoticComponent<ExtendableRadioGroupProps<ElementType> & RefAttributes<ElementType>>
+export type RadioGroupComponent = PolymorphicComponent<"div", RadioGroupProps>
 
-export const RadioGroup: RadioGroupComponent = forwardRef(
+export const RadioGroup = forwardRef(
   <C extends ElementType>(
     {
       values = [],
@@ -44,27 +45,30 @@ export const RadioGroup: RadioGroupComponent = forwardRef(
     }: ExtendableRadioGroupProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
-    const radioGroupId = props.id ?? Math.random().toString()
+    const generatedId = useId()
+    const radioGroupId = props.id ?? generatedId
+    const labelId = `${radioGroupId}-label`
 
     return (
       <div className="radioGroupContainer flex flex-col space-y-2">
         {label && (
-          <label htmlFor={radioGroupId} className={cn(`radioGroupLabel`, radioGroupFontStyle({ fontSize, fontWeight }))}>
+          <span id={labelId} className={cn("radioGroupLabel", radioGroupFontStyle({ fontSize, fontWeight }))}>
             {label}
-          </label>
+          </span>
         )}
         <Root
           id={radioGroupId}
+          aria-labelledby={label ? labelId : undefined}
           disabled={disabled}
           defaultValue={defaultValue}
           ref={ref}
           className={cn(`radioGroupRoot flex flex-${direction} gap-2`)}
           {...props}
         >
-          {values.map((item: RadioValue) => (
+          {values.map((item: RadioValue, index) => (
             <div key={item.value} className="radioGroupItemContainer flex gap-2 items-center">
               <Item
-                id={item.value}
+                id={`${radioGroupId}-item-${index}`}
                 value={item.value}
                 className={cn(
                   "radioGroupItem",
@@ -78,7 +82,7 @@ export const RadioGroup: RadioGroupComponent = forwardRef(
                 </Indicator>
               </Item>
               <label
-                htmlFor={item.value}
+                htmlFor={`${radioGroupId}-item-${index}`}
                 className={cn("radioGroupItemLabel", radioGroupFontStyle({ fontSize, fontWeight, disabled }))}
               >
                 {item.label}
@@ -89,7 +93,7 @@ export const RadioGroup: RadioGroupComponent = forwardRef(
       </div>
     )
   }
-)
+) as RadioGroupComponent
 
 RadioGroup.displayName = "RadioGroup"
 

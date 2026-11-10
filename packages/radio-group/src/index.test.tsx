@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useState } from "react"
+import { createRef, useState } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { RadioGroup, radioGroupFontStyle, radioGroupStyles } from "./index"
 
@@ -41,10 +41,72 @@ describe("RadioGroup", () => {
       expect(container.querySelector(".radioGroupLabel")).toBeNull()
     })
 
-    it("uses the provided id on the group and its label", () => {
+    it("uses the provided id on the group and names the group by its label", () => {
       render(<RadioGroup id="sizes" label="Size" values={values} />)
-      expect(screen.getByRole("radiogroup")).toHaveAttribute("id", "sizes")
-      expect(screen.getByText("Size")).toHaveAttribute("for", "sizes")
+      const group = screen.getByRole("radiogroup", { name: "Size" })
+      expect(group).toHaveAttribute("id", "sizes")
+      expect(group).toHaveAttribute("aria-labelledby", screen.getByText("Size").id)
+      expect(screen.getByText("Size").id).not.toBe("sizes")
+    })
+
+    it("names the group by its label when no id is given", () => {
+      render(<RadioGroup label="Plan" values={values} />)
+      expect(screen.getByRole("radiogroup", { name: "Plan" })).toBeInTheDocument()
+      expect(screen.getByText("Plan").tagName).not.toBe("LABEL")
+    })
+
+    it("does not set aria-labelledby without a label", () => {
+      render(<RadioGroup values={values} />)
+      expect(screen.getByRole("radiogroup")).not.toHaveAttribute("aria-labelledby")
+    })
+
+    it("keeps the generated ids between rerenders and links each item label", () => {
+      const { rerender } = render(<RadioGroup label="Size" values={values} />)
+      const groupId = screen.getByRole("radiogroup").id
+      const itemIds = screen.getAllByRole("radio").map((radio) => radio.id)
+      rerender(<RadioGroup label="Size" values={values} />)
+      rerender(<RadioGroup label="Size" values={values} />)
+      expect(groupId).not.toBe("")
+      expect(screen.getByRole("radiogroup").id).toBe(groupId)
+      expect(screen.getAllByRole("radio").map((radio) => radio.id)).toEqual(itemIds)
+      expect(new Set(itemIds).size).toBe(3)
+      expect(screen.getByLabelText("Medium")).toBe(screen.getByRole("radio", { name: "Medium" }))
+    })
+
+    it("derives distinct item ids per group even when the values repeat", async () => {
+      const user = userEvent.setup()
+      render(
+        <>
+          <RadioGroup id="first" label="First" values={values} />
+          <RadioGroup id="second" label="Second" values={values} />
+        </>
+      )
+      const first = within(screen.getByRole("radiogroup", { name: "First" }))
+      const second = within(screen.getByRole("radiogroup", { name: "Second" }))
+      expect(first.getByRole("radio", { name: "Small" }).id).not.toBe(second.getByRole("radio", { name: "Small" }).id)
+      const ids = screen.getAllByRole("radio").map((radio) => radio.id)
+      expect(new Set(ids).size).toBe(6)
+      await user.click(second.getByText("Large"))
+      expect(second.getByRole("radio", { name: "Large" })).toHaveAttribute("aria-checked", "true")
+      expect(first.getByRole("radio", { name: "Large" })).toHaveAttribute("aria-checked", "false")
+    })
+
+    it("does not use the item value as the radio id", () => {
+      render(<RadioGroup values={values} />)
+      expect(screen.getByRole("radio", { name: "Small" }).id).not.toBe("small")
+    })
+
+    it("accepts a ref object typed as the rendered div", () => {
+      const ref = createRef<HTMLDivElement>()
+      render(<RadioGroup ref={ref} values={values} />)
+      expect(ref.current).toBe(screen.getByRole("radiogroup"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLButtonElement>()
+      // @ts-expect-error a button ref does not fit a div
+      render(<RadioGroup ref={ref} values={values} />)
+      expect(screen.getByRole("radiogroup")).toBeInTheDocument()
     })
 
     it("renders the default check icon inside the selected radio only", () => {
