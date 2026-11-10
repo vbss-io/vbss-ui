@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Chip, chipStyles } from "./index"
 
@@ -103,6 +104,29 @@ describe("Chip", () => {
     let received: unknown = null
     render(<Chip ref={(node: unknown) => (received = node)}>Ref</Chip>)
     expect(received).toBe(screen.getByText("Ref"))
+  })
+
+  it("accepts a ref object typed as the rendered div", () => {
+    const ref = createRef<HTMLDivElement>()
+    render(<Chip ref={ref}>Typed</Chip>)
+    expect(ref.current).toBe(screen.getByText("Typed"))
+  })
+
+  it("accepts a ref object typed as the element given in as", () => {
+    const ref = createRef<HTMLSpanElement>()
+    render(
+      <Chip as="span" ref={ref}>
+        Typed span
+      </Chip>
+    )
+    expect(ref.current).toBe(screen.getByText("Typed span"))
+  })
+
+  it("rejects a ref typed for another element at compile time", () => {
+    const ref = createRef<HTMLButtonElement>()
+    // @ts-expect-error a button ref does not fit a div
+    render(<Chip ref={ref}>Wrong</Chip>)
+    expect(screen.getByText("Wrong")).toBeInTheDocument()
   })
 
   it("exposes its displayName", () => {

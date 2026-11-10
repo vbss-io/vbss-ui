@@ -1,18 +1,18 @@
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, RefAttributes } from "react"
+import { ComponentProps, ElementType, forwardRef } from "react"
 import "./index.css"
 
 type ChipProps = ComponentProps<"div"> & VariantProps<typeof chipStyles>
 
 export type ExtendableChipProps<C extends ElementType> = ExtendableComponentProps<C, ChipProps>
 
-export type ChipComponent = ForwardRefExoticComponent<ExtendableChipProps<ElementType> & RefAttributes<ElementType>>
+export type ChipComponent = PolymorphicComponent<"div", ChipProps>
 
 /**
  * The Chip component is similar to a badge and can be used to display categorized information, labels, or status indicators.
  */
-export const Chip: ChipComponent = forwardRef(
+export const Chip = forwardRef(
   <C extends ElementType>(
     { as, variant, size, rounded, fontWeight, fontSize, className, ...props }: ExtendableChipProps<C>,
     ref?: PolymorphicRef<C>
@@ -26,7 +26,7 @@ export const Chip: ChipComponent = forwardRef(
       />
     )
   }
-)
+) as ChipComponent
 
 Chip.displayName = "Chip"
 
