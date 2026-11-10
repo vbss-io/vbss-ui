@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "paths": {
+      "@vbss-ui/lib": ["packages/@lib/src/index.ts"],
+      "@vbss-ui/*": ["packages/*/src/index.tsx"],
+      "@/*": ["apps/docs/src/*"]
+    }
+  },
+  "include": [
+    "test-support",
+    "vitest.config.ts",
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.tsx",
+    "packages/*/__tests__/**/*.ts",
+    "packages/*/__tests__/**/*.tsx",
+    "packages/*/tests/**/*.ts",
+    "packages/*/tests/**/*.tsx",
+    "apps/docs/src/**/*.ts",
+    "apps/docs/src/**/*.tsx"
+  ]
+}

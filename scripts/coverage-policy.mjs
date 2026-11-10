@@ -41,4 +41,6 @@ export const listUnits = (root) => {
   return units.sort((a, b) => a.dir.localeCompare(b.dir))
 }
 
+export const unitSlug = (unit) => unit.dir.replace(/\//g, "-")
+
 export const unitThresholds = (units) => Object.fromEntries(units.map((unit) => [unit.source, { ...THRESHOLDS }]))
