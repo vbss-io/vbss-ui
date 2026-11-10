@@ -138,7 +138,7 @@ export const propsTableRows = [
     type: "React.ReactNode",
     description:
       "The element that triggers the Popover. A React element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button.",
-    default: "-",
+    default: "<div /> (an empty trigger button)",
   },
   {
     prop: "open",

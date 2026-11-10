@@ -32,7 +32,7 @@ describe("InputNumberDocs", () => {
     expect(input).toHaveValue(42)
   })
 
-  it("fires a real change event from the controls of the controlled demo", async () => {
+  it("updates the controlled demo value from the controls", async () => {
     renderWithTheme(<InputNumberDocs />)
     const input = screen.getAllByPlaceholderText("Type a number...")[0]
     const content = input.closest(".inputNumberContent") as HTMLElement

@@ -7,7 +7,7 @@ import { renderWithTheme } from "@/test-support/render-with-theme"
 import { TooltipDocs } from "."
 
 describe("TooltipDocs", () => {
-  it("shows the tooltips that share the provider after the configured delay", async () => {
+  it("opens a tooltip of the provider demo on hover", async () => {
     renderWithTheme(<TooltipDocs />)
     expect(screen.queryByText("First tooltip")).not.toBeInTheDocument()
     await userEvent.hover(screen.getByRole("button", { name: "First" }))

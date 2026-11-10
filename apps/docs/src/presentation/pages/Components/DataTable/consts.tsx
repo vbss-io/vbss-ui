@@ -95,7 +95,8 @@ export const propsTableRows = [
   {
     prop: "onPageChange",
     type: "(page: number) => void",
-    description: "Callback fired when the page changes, including the return to page 1 after any sort change.",
+    description:
+      "Callback the DataTable calls with 1 when the sort changes while page is controlled. Other page changes come from your own controls.",
     default: "-",
   },
   {

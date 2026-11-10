@@ -141,7 +141,7 @@ export const propsTableRows = [
     prop: "denyNegative",
     type: "boolean",
     description:
-      "When true, prevents negative values in the input. Values below 0 will be set to 0, and the minus control is disabled when it would go below 0.",
+      "When true, prevents negative values in the input. Values below 0 will be set to 0, and with a controlled value the minus control is disabled when it would go below 0 (in uncontrolled mode it stays enabled and does nothing).",
     default: "false",
   },
   {

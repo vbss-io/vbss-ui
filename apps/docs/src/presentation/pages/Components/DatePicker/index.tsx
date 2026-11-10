@@ -172,11 +172,12 @@ export const DatePickerDocs = () => {
             </S.SectionSubTitle>
             <S.Paragraph>
               The calendar opens when you click the input, press <code>ArrowDown</code> in the input or use the calendar icon
-              button, which toggles it. It does not open on focus, so <code>Tab</code> moves through the field without opening it,
-              and clicking the input again does not close it. Opening with <code>ArrowDown</code> or the button moves the focus to
-              a day (the selected one, otherwise today, otherwise the first enabled day); opening with a click keeps the focus in
-              the input so you can type. The calendar opens on the month of the selected date, or the current month. When it
-              closes by selecting a day, <code>Escape</code> or the button, the focus returns to the input.
+              button, which toggles it (with <code>allowClear</code> and a selected date, the clear button takes its place). It
+              does not open on focus, so <code>Tab</code> moves through the field without opening it, and clicking the input again
+              does not close it. Opening with <code>ArrowDown</code> or the button moves the focus to a day (the selected one,
+              otherwise today, otherwise the first enabled day); opening with a click keeps the focus in the input so you can
+              type. The calendar opens on the month of the selected date, or the current month. When it closes by selecting a day,{" "}
+              <code>Escape</code> or the button, the focus returns to the input.
             </S.Paragraph>
             <S.Paragraph>
               Typed text becomes a date only when it is complete, matches the <code>format</code> exactly and has a four digit

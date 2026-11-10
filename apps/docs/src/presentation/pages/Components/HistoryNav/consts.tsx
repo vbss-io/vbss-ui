@@ -66,10 +66,10 @@ export const gapExampleCode = `<HistoryNav
 />`
 
 export const accessibleNamesExampleCode = `<HistoryNav
+  leftIcon={<ArrowLeft />}
+  rightIcon={<ArrowRight />}
   leftButtonProps={{ "aria-label": "Previous page" }}
   rightButtonProps={{ "aria-label": "Next page" }}
-  leftOnClick={() => window.history.back()}
-  rightOnClick={() => window.history.forward()}
 />`
 
 export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
