@@ -147,7 +147,7 @@ export const TableDocs = () => {
               Define the border radius using the <code>rounded</code> prop:
             </S.Paragraph>
             <InteractiveExampleContainer
-              props={["none", "sm", "md", "lg", "xl"]}
+              props={["none", "sm", "md", "lg", "xl", "full"]}
               targetProp="rounded"
               code={`<Table headers={headers} rows={rows} rounded='rounded' />`}
               initIndex={2}
@@ -216,11 +216,17 @@ export const TableDocs = () => {
               Footer
             </S.SectionSubTitle>
             <S.Paragraph>
-              Add a footer to the <strong>Table</strong> using the <code>footer</code> prop:
+              Add a footer to the <strong>Table</strong> using the <code>footer</code> prop. The footer follows the{" "}
+              <code>variant</code>: the <code>primary</code>, <code>secondary</code> and <code>ghost</code> footers match the
+              header of the same variant:
             </S.Paragraph>
-            <ExampleContainer>
+            <InteractiveExampleContainer
+              props={["primary", "secondary", "outline", "ghost"]}
+              targetProp="variant"
+              code={`<Table headers={headers} rows={rows} footer={footer} variant='variant' />`}
+            >
               <Table headers={basicHeaders} rows={basicRows} footer={footer} />
-            </ExampleContainer>
+            </InteractiveExampleContainer>
             <CodeSnippet code={footerExampleCode} language="tsx" />
           </section>
           <section>
@@ -236,6 +242,17 @@ export const TableDocs = () => {
                 fontSize="sm"
               />
             </S.TableSection>
+          </section>
+          <section>
+            <S.SectionTitle>
+              <S.SectionAnchor id="migration" />
+              Migration
+            </S.SectionTitle>
+            <S.Paragraph>
+              The <code>className</code> and <code>style</code> of a row now go to the <code>tr</code> instead of being repeated
+              on every <code>td</code>. If you used them to style the cells, move that styling to the row itself or to the content
+              of each cell.
+            </S.Paragraph>
           </section>
           <section>
             <S.SectionTitle>
@@ -277,7 +294,10 @@ export const TableDocs = () => {
               <S.SectionAnchor id="styled-rows" />
               Styled Rows
             </S.SectionSubTitle>
-            <S.Paragraph>Customize the appearance of table rows:</S.Paragraph>
+            <S.Paragraph>
+              Customize the appearance of table rows. The <code>className</code> and <code>style</code> of a row are applied to
+              the row (<code>tr</code>), not to each of its cells:
+            </S.Paragraph>
             <ExampleContainer>
               <Table variant="primary" headers={basicHeaders} rows={styledRows} />
             </ExampleContainer>

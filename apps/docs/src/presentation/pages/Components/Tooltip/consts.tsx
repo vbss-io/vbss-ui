@@ -24,9 +24,11 @@ export const sections = [
       { title: "Size", anchor: "size" },
       { title: "Font Size", anchor: "font-size" },
       { title: "Font Weight", anchor: "font-weight" },
+      { title: "Delay and Provider", anchor: "provider" },
     ],
   },
   { title: "Props", anchor: "props" },
+  { title: "Migration", anchor: "migration" },
   {
     title: "Customization",
     anchor: "customization",
@@ -128,7 +130,7 @@ export const propsTableRows = [
     prop: "side",
     type: "top | right | bottom | left",
     description: "The position of the tooltip relative to the trigger",
-    default: "bottom",
+    default: "top",
   },
   {
     prop: "sideOffset",
@@ -139,13 +141,52 @@ export const propsTableRows = [
   {
     prop: "trigger",
     type: "React.ReactNode",
-    description: "The element that triggers the tooltip",
+    description:
+      "The element that triggers the tooltip. A React element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button.",
+    default: "-",
+  },
+  {
+    prop: "delayDuration",
+    type: "number",
+    description: "How long in milliseconds the pointer must rest on the trigger before the tooltip opens.",
+    default: "700",
+  },
+  {
+    prop: "skipDelayDuration",
+    type: "number",
+    description:
+      "How long in milliseconds after a tooltip closes the next one opens without delay. Used by the provider the Tooltip creates, so it has no effect with provider={false}.",
+    default: "300",
+  },
+  {
+    prop: "provider",
+    type: "boolean",
+    description:
+      "When true the Tooltip creates its own provider. Pass false to use a TooltipProvider rendered above it and share the delay between tooltips.",
+    default: "true",
+  },
+  {
+    prop: "open",
+    type: "boolean",
+    description: "The controlled open state of the tooltip. Use it together with onOpenChange.",
+    default: "-",
+  },
+  {
+    prop: "defaultOpen",
+    type: "boolean",
+    description: "The open state of the tooltip when it is first rendered, for uncontrolled use.",
+    default: "false",
+  },
+  {
+    prop: "onOpenChange",
+    type: "(open: boolean) => void",
+    description: "Called when the open state changes.",
     default: "-",
   },
   {
     prop: "ref",
     type: "React.Ref",
-    description: "A ref to the tooltip element",
+    description: "A ref to the tooltip content element (HTMLDivElement)",
     default: "-",
   },
   {
@@ -161,6 +202,22 @@ export const propsTableRows = [
     default: "-",
   },
 ]
+
+export const providerExampleCode = `import { Button } from "@vbss-ui/button"
+import { Tooltip, TooltipProvider } from "@vbss-ui/tooltip"
+
+export const App = () => {
+  return (
+    <TooltipProvider delayDuration={200} skipDelayDuration={500}>
+      <Tooltip provider={false} trigger={<Button>First</Button>}>
+        First tooltip
+      </Tooltip>
+      <Tooltip provider={false} trigger={<Button>Second</Button>}>
+        Second tooltip
+      </Tooltip>
+    </TooltipProvider>
+  )
+}`
 
 export const customizingExampleCode = `import { Button } from "@vbss-ui/button"
 import { Tooltip } from "@vbss-ui/tooltip"

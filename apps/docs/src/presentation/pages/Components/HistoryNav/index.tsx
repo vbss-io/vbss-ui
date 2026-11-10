@@ -11,6 +11,7 @@ import {
   basicExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
+  accessibleNamesExampleCode,
   gapExampleCode,
   historyNavWhatsNew,
   iconExampleCode,
@@ -99,6 +100,23 @@ export const HistoryNavDocs = () => {
             >
               <HistoryNav leftIcon={<ArrowLeft />} rightIcon={<ArrowRight />} />
             </InteractiveExampleContainer>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="accessible-names" />
+              Accessible Names
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              The buttons are named <code>Go back</code> and <code>Go forward</code> by default through <code>aria-label</code>.
+              Override them for all buttons with <code>buttonsProps</code> or for a single side with <code>leftButtonProps</code>{" "}
+              and <code>rightButtonProps</code>, which are applied after <code>buttonsProps</code>:
+            </S.Paragraph>
+            <ExampleContainer code={accessibleNamesExampleCode}>
+              <HistoryNav
+                leftIcon={<ArrowLeft />}
+                rightIcon={<ArrowRight />}
+                leftButtonProps={{ "aria-label": "Previous page" }}
+                rightButtonProps={{ "aria-label": "Next page" }}
+              />
+            </ExampleContainer>
           </section>
           <section>
             <S.SectionTitle>

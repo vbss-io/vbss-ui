@@ -237,7 +237,8 @@ export const RadioGroupDocs = () => {
               Label
             </S.SectionSubTitle>
             <S.Paragraph>
-              Add a label to the <strong>RadioGroup</strong> using the <code>label</code> prop:
+              Add a label to the <strong>RadioGroup</strong> using the <code>label</code> prop. The label also gives the group its
+              accessible name:
             </S.Paragraph>
             <ExampleContainer>
               <RadioGroup

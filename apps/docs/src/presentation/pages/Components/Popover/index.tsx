@@ -6,8 +6,10 @@ import { ArrowSquareOut, User } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { Popover } from "@vbss-ui/popover"
 import { Table } from "@vbss-ui/table"
+import { useState } from "react"
 import * as S from "../../styles"
 import {
+  controlledExampleCode,
   customizingClassExampleCode,
   customizingExampleCode,
   popoverWhatsNew,
@@ -20,6 +22,8 @@ import {
 import "./style.css"
 
 export const PopoverDocs = () => {
+  const [open, setOpen] = useState(false)
+
   return (
     <>
       <S.Container>
@@ -329,6 +333,25 @@ export const PopoverDocs = () => {
               </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code="<Popover sideOffset={4} />" language="tsx" />
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="controlled" />
+              Controlled
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              Control the open state with the <code>open</code> and <code>onOpenChange</code> props, or start it open with{" "}
+              <code>defaultOpen</code>. Use <code>modal</code> to block interaction with the rest of the page while the{" "}
+              <strong>Popover</strong> is open:
+            </S.Paragraph>
+            <ExampleContainer code={controlledExampleCode}>
+              <S.ColumnContainer>
+                <Popover trigger={<Button>Controlled popover</Button>} open={open} onOpenChange={setOpen}>
+                  <Button variant="ghost" onClick={() => setOpen(false)}>
+                    Close popover
+                  </Button>
+                </Popover>
+                <span>{open ? "The popover is open" : "The popover is closed"}</span>
+              </S.ColumnContainer>
+            </ExampleContainer>
           </section>
           <section>
             <S.SectionTitle>
@@ -343,6 +366,18 @@ export const PopoverDocs = () => {
                 fontSize="sm"
               />
             </S.TableSection>
+          </section>
+          <section>
+            <S.SectionTitle>
+              <S.SectionAnchor id="migration" />
+              Migration
+            </S.SectionTitle>
+            <S.Paragraph>
+              When <code>trigger</code> is an element, it becomes the trigger itself and must be focusable: use a{" "}
+              <code>button</code> (for example <code>&lt;Button&gt;</code>) instead of a <code>span</code>, an icon or{" "}
+              <code>&lt;Button as=&quot;div&quot;&gt;</code>. A string, <code>null</code> or any other node is still wrapped in
+              the trigger button.
+            </S.Paragraph>
           </section>
           <section>
             <S.SectionTitle>

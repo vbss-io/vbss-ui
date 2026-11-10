@@ -51,7 +51,8 @@ export const propsTableRows = [
   {
     prop: "columns",
     type: "Array<DataTableColumn<T>>",
-    description: "Array of column definitions",
+    description:
+      "Array of column definitions. A column is sortable only with sortable and either a sortAccessor or an accessor that returns a string, number or Date for every row.",
     default: "-",
   },
   {
@@ -81,19 +82,20 @@ export const propsTableRows = [
   {
     prop: "pageSize",
     type: "number",
-    description: "Number of items per page (enables pagination)",
+    description:
+      "Number of items per page. There is no built-in pagination: it requires page and onPageChange to be controlled by you, and without page only the first page is shown.",
     default: "-",
   },
   {
     prop: "page",
     type: "number",
-    description: "Current page number (controlled mode)",
+    description: "Current page number. Required together with onPageChange when pageSize is set.",
     default: "-",
   },
   {
     prop: "onPageChange",
     type: "(page: number) => void",
-    description: "Callback fired when page changes",
+    description: "Callback fired when the page changes, including the return to page 1 after any sort change.",
     default: "-",
   },
   {
@@ -159,7 +161,7 @@ export const propsTableRows = [
   {
     prop: "ref",
     type: "React.Ref",
-    description: "Allows accessing the underlying DOM element",
+    description: "Allows accessing the table element (HTMLTableElement)",
     default: "-",
   },
 ]
@@ -256,20 +258,28 @@ export const App = () => {
   )
 }`
 
-export const paginationExampleCode = `import { DataTable } from "@vbss-ui/data-table"
+export const paginationExampleCode = `import { Button } from "@vbss-ui/button"
+import { DataTable } from "@vbss-ui/data-table"
 import { useState } from "react"
+
+const pageSize = 10
 
 export const App = () => {
   const [page, setPage] = useState(1)
+  const pageCount = Math.ceil(users.length / pageSize)
 
   return (
-    <DataTable
-      columns={columns}
-      data={users}
-      pageSize={10}
-      page={page}
-      onPageChange={setPage}
-    />
+    <>
+      <DataTable
+        columns={columns}
+        data={users}
+        pageSize={pageSize}
+        page={page}
+        onPageChange={setPage}
+      />
+      <Button disabled={page <= 1} onClick={() => setPage(page - 1)}>Previous page</Button>
+      <Button disabled={page >= pageCount} onClick={() => setPage(page + 1)}>Next page</Button>
+    </>
   )
 }`
 

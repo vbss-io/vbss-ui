@@ -150,8 +150,8 @@ export const propsTableRows = [
   },
   {
     prop: "ref",
-    type: "React.Ref",
-    description: "Allows accessing the underlying DOM element.",
+    type: "React.Ref<HTMLButtonElement>",
+    description: "Allows accessing the Checkbox button element.",
     default: "-",
   },
   {

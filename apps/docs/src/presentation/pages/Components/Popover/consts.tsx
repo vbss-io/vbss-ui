@@ -19,9 +19,11 @@ export const sections = [
       { title: "Font Weight", anchor: "font-weight" },
       { title: "Alignment", anchor: "align" },
       { title: "Side Offset", anchor: "side-offset" },
+      { title: "Controlled", anchor: "controlled" },
     ],
   },
   { title: "Props", anchor: "props" },
+  { title: "Migration", anchor: "migration" },
   {
     title: "Customization",
     anchor: "customization",
@@ -134,8 +136,33 @@ export const propsTableRows = [
   {
     prop: "trigger",
     type: "React.ReactNode",
-    description: "The element that triggers the Popover.",
-    default: "<div />",
+    description:
+      "The element that triggers the Popover. A React element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button.",
+    default: "-",
+  },
+  {
+    prop: "open",
+    type: "boolean",
+    description: "The controlled open state of the Popover. Use it together with onOpenChange.",
+    default: "-",
+  },
+  {
+    prop: "defaultOpen",
+    type: "boolean",
+    description: "The open state of the Popover when it is first rendered, for uncontrolled use.",
+    default: "false",
+  },
+  {
+    prop: "onOpenChange",
+    type: "(open: boolean) => void",
+    description: "Called when the open state changes.",
+    default: "-",
+  },
+  {
+    prop: "modal",
+    type: "boolean",
+    description: "When true, interaction with the rest of the page is blocked while the Popover is open.",
+    default: "false",
   },
   {
     prop: "side",
@@ -158,7 +185,7 @@ export const propsTableRows = [
   {
     prop: "ref",
     type: "React.Ref",
-    description: "Allows accessing the underlying DOM element.",
+    description: "Allows accessing the Popover content element (HTMLDivElement).",
     default: "-",
   },
   {
@@ -174,6 +201,22 @@ export const propsTableRows = [
     default: "-",
   },
 ]
+
+export const controlledExampleCode = `import { useState } from "react"
+import { Popover } from "@vbss-ui/popover"
+import { Button } from "@vbss-ui/button"
+
+export const App = () => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Popover trigger={<Button>Controlled popover</Button>} open={open} onOpenChange={setOpen}>
+      <Button variant="ghost" onClick={() => setOpen(false)}>
+        Close popover
+      </Button>
+    </Popover>
+  )
+}`
 
 export const customizingExampleCode = `<Popover
   trigger={<Button>Open Popover</Button>}

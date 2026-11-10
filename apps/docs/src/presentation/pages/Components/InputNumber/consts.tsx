@@ -73,8 +73,7 @@ export const App = () => {
 
 export const controlsExampleCode = `<InputNumber
   controlsProps={{
-    variant: "primary",
-    rounded: "full",
+    variant: "secondary",
   }}
   plusIcon={<Plus />}
   minusIcon={<Minus />}
@@ -141,7 +140,8 @@ export const propsTableRows = [
   {
     prop: "denyNegative",
     type: "boolean",
-    description: "When true, prevents negative values in the input. Values below 0 will be set to 0.",
+    description:
+      "When true, prevents negative values in the input. Values below 0 will be set to 0, and the minus control is disabled when it would go below 0.",
     default: "false",
   },
   {
@@ -165,7 +165,15 @@ export const propsTableRows = [
   {
     prop: "controlsProps",
     type: <a href="button">ButtonProps</a>,
-    description: "Props for the increment/decrement buttons.",
+    description:
+      "Props for the increment/decrement buttons. The className is added to inputNumberLeftControl and inputNumberRightControl, not a replacement. rounded, size, disabled, onClick and icon are controlled by the component.",
+    default: "-",
+  },
+  {
+    prop: "onChange",
+    type: "(event: React.ChangeEvent<HTMLInputElement>) => void",
+    description:
+      "Called with a native change event when typing and when using the controls (the target is the input). The value is sanitized (integers rounded, denyNegative applied, invalid float text reverted) even without onChange.",
     default: "-",
   },
   {
@@ -176,8 +184,8 @@ export const propsTableRows = [
   },
   {
     prop: "ref",
-    type: "React.Ref",
-    description: "Allows accessing the underlying DOM element.",
+    type: "React.Ref<HTMLInputElement>",
+    description: "Allows accessing the input element.",
     default: "-",
   },
   {

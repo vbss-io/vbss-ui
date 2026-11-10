@@ -52,6 +52,10 @@ export const sections = [
     anchor: "props",
   },
   {
+    title: "Migration",
+    anchor: "migration",
+  },
+  {
     title: "Customization",
     anchor: "customization",
     subsections: [
@@ -141,7 +145,7 @@ export const propsTableRows = [
   {
     prop: "variant",
     type: "primary | secondary | outline | ghost",
-    description: "Defines the visual style of the Table",
+    description: "Defines the visual style of the Table. The header and the footer follow it, including the ghost variant.",
     default: "primary",
   },
   {
@@ -164,8 +168,8 @@ export const propsTableRows = [
   },
   {
     prop: "rounded",
-    type: "none | xs | sm | md | lg | xl",
-    description: "Sets the border radius of the Table",
+    type: "none | xs | sm | md | lg | xl | full",
+    description: "Sets the border radius of the Table. full applies a large radius (rounded-3xl).",
     default: "md",
   },
   {
@@ -183,19 +187,20 @@ export const propsTableRows = [
   {
     prop: "rows",
     type: "Array<{ [key: string]: React.ReactNode | CSSProperties }>",
-    description: "Table rows data",
+    description:
+      "Table rows data. The optional className and style keys of a row are applied to the row (tr), not to each cell, and are not rendered as cells.",
     default: "-",
   },
   {
     prop: "footer",
     type: "{ content: Array<React.ReactNode>, className?: string, style?: CSSProperties }",
-    description: "Table footer configuration",
+    description: "Table footer configuration. Its colors follow the variant of the Table.",
     default: "-",
   },
   {
     prop: "ref",
     type: "React.Ref",
-    description: "Allows accessing the underlying DOM element.",
+    description: "Allows accessing the table element (HTMLTableElement).",
     default: "-",
   },
   {

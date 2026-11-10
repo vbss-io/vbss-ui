@@ -229,6 +229,22 @@ export const DialogDocs = () => {
           </section>
           <section>
             <S.SectionTitle>
+              <S.SectionAnchor id="migration" />
+              Migration
+            </S.SectionTitle>
+            <S.Paragraph>
+              When <code>trigger</code> is an element, it becomes the trigger itself and must be focusable: use a{" "}
+              <code>button</code> (for example <code>&lt;Button&gt;</code>) instead of a <code>span</code>, an icon or{" "}
+              <code>&lt;Button as=&quot;div&quot;&gt;</code>. A string, <code>null</code> or any other node is still wrapped in
+              the trigger button.
+            </S.Paragraph>
+            <S.Paragraph>
+              Without <code>title</code>, the title is visually hidden and shows the <code>aria-label</code> of the dialog, so
+              pass a <code>title</code> or an <code>aria-label</code> to give the dialog an accessible name.
+            </S.Paragraph>
+          </section>
+          <section>
+            <S.SectionTitle>
               <S.SectionAnchor id="customization" />
               Customization
             </S.SectionTitle>

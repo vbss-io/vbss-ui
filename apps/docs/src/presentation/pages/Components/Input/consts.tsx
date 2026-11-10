@@ -148,19 +148,20 @@ export const propsTableRows = [
   {
     prop: "showPasswordSwitch",
     type: "boolean",
-    description: "Enables password visibility toggle.",
+    description:
+      "Shows a button to toggle the password visibility. It is a real button with aria-label (Show password / Hide password) and aria-pressed, reachable by Tab, disabled with the Input, and it does not submit forms.",
     default: "false",
   },
   {
     prop: "iconOn",
     type: "React.ReactNode",
-    description: "Icon to display when password is hidden.",
+    description: "Icon to display when password is hidden. Only rendered with showPasswordSwitch.",
     default: "-",
   },
   {
     prop: "iconOff",
     type: "React.ReactNode",
-    description: "Icon to display when password is visible.",
+    description: "Icon to display when password is visible. Only rendered with showPasswordSwitch.",
     default: "-",
   },
   {
@@ -177,8 +178,8 @@ export const propsTableRows = [
   },
   {
     prop: "ref",
-    type: "React.Ref",
-    description: "Allows accessing the underlying DOM element.",
+    type: "React.Ref<HTMLInputElement>",
+    description: "Allows accessing the input element.",
     default: "-",
   },
   {

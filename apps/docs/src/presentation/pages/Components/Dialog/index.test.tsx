@@ -46,4 +46,13 @@ describe("DialogDocs", () => {
     await userEvent.click(closeIcon)
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
   })
+
+  it("documents the migration of the trigger and the accessible name", () => {
+    renderWithTheme(<DialogDocs />)
+    expect(screen.getByRole("heading", { name: "Migration" })).toBeInTheDocument()
+    expect(screen.getByText(/it becomes the trigger itself and must be focusable: use a/)).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Migration" }).closest("section")).toHaveTextContent(
+      "pass a title or an aria-label to give the dialog an accessible name"
+    )
+  })
 })

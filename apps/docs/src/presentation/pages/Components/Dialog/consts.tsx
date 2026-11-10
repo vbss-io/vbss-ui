@@ -25,6 +25,7 @@ export const sections = [
     ],
   },
   { title: "Props", anchor: "props" },
+  { title: "Migration", anchor: "migration" },
   {
     title: "Customization",
     anchor: "customization",
@@ -119,8 +120,9 @@ export const propsTableRows = [
   {
     prop: "trigger",
     type: "React.ReactNode",
-    description: "The element that triggers the Dialog.",
-    default: "<div />",
+    description:
+      "The element that triggers the Dialog. A React element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button.",
+    default: "-",
   },
   {
     prop: "overlayOpacity",
@@ -137,8 +139,15 @@ export const propsTableRows = [
   {
     prop: "title",
     type: "React.ReactNode",
-    description: "The title of the Dialog.",
-    default: '""',
+    description:
+      "The title of the Dialog, which also names it for assistive technology. Without it, the title is visually hidden and shows the aria-label.",
+    default: "-",
+  },
+  {
+    prop: "aria-label",
+    type: "string",
+    description: "The accessible name of the Dialog when there is no title. Pass a title or an aria-label.",
+    default: "-",
   },
   {
     prop: "description",
@@ -161,7 +170,7 @@ export const propsTableRows = [
   {
     prop: "hideClose",
     type: "boolean",
-    description: "Shows/hides the close button.",
+    description: 'Hides the close button, which has aria-label="Close".',
     default: "false",
   },
   {
@@ -174,6 +183,12 @@ export const propsTableRows = [
     prop: "onOpenChange",
     type: "(open: boolean) => void",
     description: "Callback when the dialog's open state changes.",
+    default: "-",
+  },
+  {
+    prop: "ref",
+    type: "React.Ref<HTMLDivElement>",
+    description: "Allows accessing the Dialog content element.",
     default: "-",
   },
   {

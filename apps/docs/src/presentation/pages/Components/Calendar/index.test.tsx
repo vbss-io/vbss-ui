@@ -79,4 +79,12 @@ describe("CalendarDocs", () => {
     await userEvent.click(screen.getAllByRole("button", { name: "full" })[0])
     expect(screen.getAllByRole("button", { name: "full" })[0].className).toContain("primary")
   })
+
+  it("disables only the weekend days in the disabled days demo", () => {
+    renderWithTheme(<CalendarDocs />)
+    const demo = screen.getByRole("heading", { name: "Disabled Days" }).nextElementSibling!.nextElementSibling as HTMLElement
+    expect(dayButton(demo, "2026-11-14")).toBeDisabled()
+    expect(dayButton(demo, "2026-11-15")).toBeDisabled()
+    expect(dayButton(demo, "2026-11-16")).toBeEnabled()
+  })
 })

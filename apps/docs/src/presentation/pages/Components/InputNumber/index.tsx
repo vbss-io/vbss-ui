@@ -197,14 +197,15 @@ export const InputNumberDocs = () => {
             </S.SectionSubTitle>
             <S.Paragraph>
               Customize the increment/decrement buttons using the <code>controlsProps</code> prop, see{" "}
-              <a href="button">ButtonProps</a>:
+              <a href="button">ButtonProps</a>. Its <code>className</code> is added to the control classes instead of replacing
+              them. The controls fire a native <code>input</code> event on the input, so <code>onChange</code> receives a real
+              change event (with <code>target</code>, <code>name</code> and <code>id</code> of the input), the same as when
+              typing:
             </S.Paragraph>
             <ExampleContainer>
               <InputNumber
                 controlsProps={{
-                  variant: "primary",
-                  rounded: "full",
-                  icon: "plus",
+                  variant: "secondary",
                 }}
                 plusIcon={<Plus />}
                 minusIcon={<Minus />}

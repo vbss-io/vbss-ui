@@ -31,4 +31,21 @@ describe("InputNumberDocs", () => {
     await userEvent.type(input, "42")
     expect(input).toHaveValue(42)
   })
+
+  it("fires a real change event from the controls of the controlled demo", async () => {
+    renderWithTheme(<InputNumberDocs />)
+    const input = screen.getAllByPlaceholderText("Type a number...")[0]
+    const content = input.closest(".inputNumberContent") as HTMLElement
+    await userEvent.click(content.querySelector<HTMLElement>(".inputNumberRightControl")!)
+    expect(input).toHaveValue(1)
+    await userEvent.click(content.querySelector<HTMLElement>(".inputNumberRightControl")!)
+    await userEvent.click(content.querySelector<HTMLElement>(".inputNumberLeftControl")!)
+    expect(input).toHaveValue(1)
+  })
+
+  it("documents the control events and the className of controlsProps", () => {
+    renderWithTheme(<InputNumberDocs />)
+    expect(screen.getByText(/The controls fire a native/)).toHaveTextContent("onChange receives a real change event")
+    expect(screen.getByText(/is added to the control classes instead of replacing/)).toBeInTheDocument()
+  })
 })

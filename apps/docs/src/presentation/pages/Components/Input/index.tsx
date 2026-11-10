@@ -216,7 +216,9 @@ export const InputDocs = () => {
               Password Input
             </S.SectionSubTitle>
             <S.Paragraph>
-              Create a password <strong>Input</strong> with visibility toggle:
+              Create a password <strong>Input</strong> with visibility toggle. The toggle is a real button named{" "}
+              <code>Show password</code> or <code>Hide password</code>, reachable with <code>Tab</code> and operated with{" "}
+              <code>Enter</code> or <code>Space</code>:
             </S.Paragraph>
             <ExampleContainer>
               <Input

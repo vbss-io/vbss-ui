@@ -5,7 +5,7 @@ import { WhatsNew } from "@/presentation/components/WhatsNew"
 import { ArrowSquareOut, Question } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { Table } from "@vbss-ui/table"
-import { Tooltip } from "@vbss-ui/tooltip"
+import { Tooltip, TooltipProvider } from "@vbss-ui/tooltip"
 import * as S from "../../styles"
 import {
   customizingClassExampleCode,
@@ -13,6 +13,7 @@ import {
   positionExampleCode,
   propsTableHeaders,
   propsTableRows,
+  providerExampleCode,
   realUsageExampleCode,
   sections,
   tooltipWhatsNew,
@@ -276,6 +277,28 @@ export const TooltipDocs = () => {
               </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<Tooltip fontWeight="normal" />' language="tsx" />
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="provider" />
+              Delay and Provider
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              Each <strong>Tooltip</strong> wraps itself in its own provider by default. To share the delay between several
+              tooltips, wrap the page or a group in <code>TooltipProvider</code> and pass <code>provider={"{false}"}</code> to
+              each <strong>Tooltip</strong>. Use <code>delayDuration</code> to change how long the pointer must rest on the
+              trigger and <code>skipDelayDuration</code> to open the next tooltip without delay right after another one closes:
+            </S.Paragraph>
+            <ExampleContainer code={providerExampleCode}>
+              <TooltipProvider delayDuration={200} skipDelayDuration={500}>
+                <S.ColumnContainer>
+                  <Tooltip provider={false} trigger={<Button>First</Button>}>
+                    First tooltip
+                  </Tooltip>
+                  <Tooltip provider={false} trigger={<Button>Second</Button>}>
+                    Second tooltip
+                  </Tooltip>
+                </S.ColumnContainer>
+              </TooltipProvider>
+            </ExampleContainer>
           </section>
           <section>
             <S.SectionTitle>
@@ -293,6 +316,18 @@ export const TooltipDocs = () => {
                 fontSize="sm"
               />
             </S.TableSection>
+          </section>
+          <section>
+            <S.SectionTitle>
+              <S.SectionAnchor id="migration" />
+              Migration
+            </S.SectionTitle>
+            <S.Paragraph>
+              When <code>trigger</code> is an element, it becomes the trigger itself and must be focusable: use a{" "}
+              <code>button</code> (for example <code>&lt;Button&gt;</code>) instead of a <code>span</code>, an icon or{" "}
+              <code>&lt;Button as=&quot;div&quot;&gt;</code>. A string, <code>null</code> or any other node is still wrapped in
+              the trigger button.
+            </S.Paragraph>
           </section>
           <section>
             <S.SectionTitle>

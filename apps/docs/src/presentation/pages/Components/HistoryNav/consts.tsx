@@ -13,6 +13,7 @@ export const sections = [
     subsections: [
       { title: "Custom Icons", anchor: "icons" },
       { title: "Gap", anchor: "gap" },
+      { title: "Accessible Names", anchor: "accessible-names" },
     ],
   },
   {
@@ -64,6 +65,13 @@ export const gapExampleCode = `<HistoryNav
   rightOnClick={() => window.history.forward()}
 />`
 
+export const accessibleNamesExampleCode = `<HistoryNav
+  leftButtonProps={{ "aria-label": "Previous page" }}
+  rightButtonProps={{ "aria-label": "Next page" }}
+  leftOnClick={() => window.history.back()}
+  rightOnClick={() => window.history.forward()}
+/>`
+
 export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
@@ -82,7 +90,20 @@ export const propsTableRows = [
   {
     prop: "buttonsProps",
     type: <a href="button">ButtonProps</a>,
-    description: "Props passed to the underlying buttons",
+    description:
+      'Props passed to both underlying buttons. The buttons have aria-label "Go back" (left) and "Go forward" (right) by default, which you can override here.',
+    default: "-",
+  },
+  {
+    prop: "leftButtonProps",
+    type: <a href="button">ButtonProps</a>,
+    description: "Props passed only to the left button, applied after buttonsProps.",
+    default: "-",
+  },
+  {
+    prop: "rightButtonProps",
+    type: <a href="button">ButtonProps</a>,
+    description: "Props passed only to the right button, applied after buttonsProps.",
     default: "-",
   },
   {
@@ -112,7 +133,7 @@ export const propsTableRows = [
   {
     prop: "ref",
     type: "React.Ref",
-    description: "Allows accessing the underlying DOM element",
+    description: "Allows accessing the container element (HTMLDivElement, or the element set by as)",
     default: "-",
   },
   {

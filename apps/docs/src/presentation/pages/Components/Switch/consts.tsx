@@ -151,9 +151,34 @@ export const propsTableRows = [
     default: "-",
   },
   {
+    prop: "checked",
+    type: "boolean",
+    description: "The controlled checked state of the Switch. Use it together with onCheckedChange or onChange.",
+    default: "-",
+  },
+  {
+    prop: "defaultChecked",
+    type: "boolean",
+    description: "The checked state of the Switch when it is first rendered, for uncontrolled use.",
+    default: "false",
+  },
+  {
+    prop: "onCheckedChange",
+    type: "(checked: boolean) => void",
+    description: "Called with the new checked state when the Switch is toggled.",
+    default: "-",
+  },
+  {
+    prop: "onChange",
+    type: "(checked: boolean) => void",
+    description:
+      "Called with the new checked state when the Switch is toggled. It receives the boolean, not an event, and is called together with onCheckedChange when both are set.",
+    default: "-",
+  },
+  {
     prop: "ref",
-    type: "React.Ref",
-    description: "Allows accessing the underlying DOM element.",
+    type: "React.Ref<HTMLButtonElement>",
+    description: "Allows accessing the Switch button element.",
     default: "-",
   },
   {

@@ -19,6 +19,7 @@ export const sections = [
     subsections: [
       { title: "Basic Usage", anchor: "basic-usage" },
       { title: "Controlled/Uncontrolled", anchor: "controlled-uncontrolled" },
+      { title: "Opening and Typing", anchor: "opening" },
       { title: "With Locale", anchor: "with-locale" },
       { title: "Validation", anchor: "validation" },
       { title: "Variant", anchor: "variants" },
@@ -64,7 +65,8 @@ export const propsTableRows = [
   {
     prop: "onChange",
     type: "(date: Date | null) => void",
-    description: "Callback fired when the date changes",
+    description:
+      "Callback fired when the date changes: a day is selected, a complete date is typed or the date is cleared. Also called in uncontrolled mode.",
     default: "-",
   },
   {
@@ -100,7 +102,7 @@ export const propsTableRows = [
   {
     prop: "label",
     type: "React.ReactNode",
-    description: "Label text for the date picker",
+    description: "Label text for the date picker. It is linked to the input: clicking it focuses the input.",
     default: "-",
   },
   {
@@ -176,6 +178,19 @@ export const propsTableRows = [
     default: '"normal"',
   },
   {
+    prop: "id",
+    type: "string",
+    description: "The id of the input, which the label points to. A unique id is generated when omitted.",
+    default: "-",
+  },
+  {
+    prop: "...inputProps",
+    type: "Omit<React.ComponentProps<'input'>, 'value' | 'onChange' | 'defaultValue'>",
+    description:
+      "Native input props such as name, required, autoComplete, onBlur, onFocus, onClick, onKeyDown and data-* are passed to the input. value, onChange and type are controlled by the component.",
+    default: "-",
+  },
+  {
     prop: "className",
     type: "string",
     description: "CSS class applied to the date picker root",
@@ -195,7 +210,7 @@ export const propsTableRows = [
   },
   {
     prop: "ref",
-    type: "React.Ref",
+    type: "React.Ref<HTMLInputElement>",
     description: "Ref forwarded to the underlying input element",
     default: "-",
   },

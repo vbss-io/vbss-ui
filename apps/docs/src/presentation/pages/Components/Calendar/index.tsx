@@ -16,6 +16,7 @@ import {
   calendarWhatsNew,
   customizingClassExampleCode,
   customizingExampleCode,
+  disabledDaysExampleCode,
   disabledExampleCode,
   localesTableHeaders,
   localesTableRows,
@@ -263,11 +264,32 @@ export const CalendarDocs = () => {
               <S.SectionAnchor id="disabled" />
               Disabled
             </S.SectionSubTitle>
-            <S.Paragraph>Disable the calendar interaction:</S.Paragraph>
+            <S.Paragraph>
+              Pass <code>disabled={"{true}"}</code> to disable the whole calendar:
+            </S.Paragraph>
             <ExampleContainer>
               <Calendar mode="single" selected={new Date()} onSelect={() => {}} disabled={true} variant="primary" />
             </ExampleContainer>
             <CodeSnippet code={disabledExampleCode} language="tsx" />
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="disabled-days" />
+              Disabled Days
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              Pass a matcher or an array of matchers, such as <code>{"{ dayOfWeek: [0, 6] }"}</code> or{" "}
+              <code>{"{ before: date }"}</code>, to disable only some days. The whole calendar looks disabled only when{" "}
+              <code>disabled</code> is <code>true</code>:
+            </S.Paragraph>
+            <ExampleContainer>
+              <Calendar
+                mode="single"
+                selected={new Date()}
+                onSelect={() => {}}
+                disabled={{ dayOfWeek: [0, 6] }}
+                variant="primary"
+              />
+            </ExampleContainer>
+            <CodeSnippet code={disabledDaysExampleCode} language="tsx" />
           </section>
           <section>
             <S.SectionTitle>

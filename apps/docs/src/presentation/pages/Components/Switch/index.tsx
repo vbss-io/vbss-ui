@@ -120,7 +120,9 @@ export const SwitchDocs = () => {
               State Management
             </S.SectionSubTitle>
             <S.Paragraph>
-              The <strong>Switch</strong> component can be controlled using React state or form libraries.
+              The <strong>Switch</strong> component can be controlled using React state or form libraries. Listen to changes with{" "}
+              <code>onCheckedChange</code> or <code>onChange</code>: both receive the new <code>checked</code> boolean (not an
+              event) and both are called when you set them together.
             </S.Paragraph>
             <S.StateExampleContainer>
               <Switch checked={isEnabled} label="Enable Feature" onCheckedChange={(checked) => setIsEnabled(checked)} />

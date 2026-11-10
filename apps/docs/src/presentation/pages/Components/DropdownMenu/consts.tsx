@@ -19,9 +19,11 @@ export const sections = [
       { title: "Size", anchor: "size" },
       { title: "Font Size", anchor: "font-size" },
       { title: "Font Weight", anchor: "font-weight" },
+      { title: "Item Options", anchor: "item-options" },
     ],
   },
   { title: "Props", anchor: "props" },
+  { title: "Migration", anchor: "migration" },
   {
     title: "Customization",
     anchor: "customization",
@@ -68,6 +70,35 @@ export const separatorExampleCode = `<DropdownMenu
   ]}
 />`
 
+export const itemOptionsExampleCode = `import { useState } from "react"
+import { DropdownMenu } from "@vbss-ui/dropdown-menu"
+import { Button } from "@vbss-ui/button"
+
+export const App = () => {
+  const [lastAction, setLastAction] = useState("none")
+
+  return (
+    <>
+      <DropdownMenu
+        trigger={<Button>Item actions</Button>}
+        menus={[
+          { item: "Save", onSelect: () => setLastAction("Saved") },
+          { item: "Export", disabled: true },
+          {
+            item: (
+              <a href="https://www.npmjs.com/package/@vbss-ui/dropdown-menu" target="_blank" rel="noopener noreferrer">
+                Open on npm
+              </a>
+            ),
+            asChild: true,
+          },
+        ]}
+      />
+      <span>Last action: {lastAction}</span>
+    </>
+  )
+}`
+
 export const propsTableHeaders = [{ content: "Props" }, { content: "Type" }, { content: "Description" }, { content: "Default" }]
 
 export const propsTableRows = [
@@ -110,8 +141,33 @@ export const propsTableRows = [
   {
     prop: "trigger",
     type: "React.ReactNode",
-    description: "The element that triggers the dropdown menu",
+    description:
+      "The element that triggers the dropdown menu. A React element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button.",
     default: "-",
+  },
+  {
+    prop: "open",
+    type: "boolean",
+    description: "The controlled open state of the dropdown menu. Use it together with onOpenChange.",
+    default: "-",
+  },
+  {
+    prop: "defaultOpen",
+    type: "boolean",
+    description: "The open state of the dropdown menu when it is first rendered, for uncontrolled use.",
+    default: "false",
+  },
+  {
+    prop: "onOpenChange",
+    type: "(open: boolean) => void",
+    description: "Called when the open state changes.",
+    default: "-",
+  },
+  {
+    prop: "modal",
+    type: "boolean",
+    description: "When true, interaction with the rest of the page is blocked while the menu is open.",
+    default: "true",
   },
   {
     prop: "menuLabel",
@@ -121,14 +177,15 @@ export const propsTableRows = [
   },
   {
     prop: "menus",
-    type: "{ item: React.ReactNode | 'separator' }[]",
-    description: "Array of menu items or separators",
+    type: "{ item: React.ReactNode | 'separator'; onSelect?: (event: Event) => void; disabled?: boolean; asChild?: boolean }[]",
+    description:
+      "Array of menu items or separators. onSelect runs when the item is selected, disabled blocks the item and asChild renders the item element itself (for example a link) as the menu item.",
     default: "[]",
   },
   {
     prop: "ref",
     type: "React.Ref",
-    description: "A ref to the dropdown menu element",
+    description: "A ref to the dropdown menu content element (HTMLDivElement)",
     default: "-",
   },
   {

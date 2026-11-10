@@ -39,4 +39,13 @@ describe("InputDocs", () => {
     await userEvent.click(screen.getByRole("button", { name: "Subscribe" }))
     expect(log).toHaveBeenCalledWith("Subscribed!")
   })
+
+  it("toggles the password visibility from the keyboard with the labelled button", async () => {
+    renderWithTheme(<InputDocs />)
+    const toggle = screen.getAllByRole("button", { name: "Show password" })[0]
+    expect(toggle).toHaveAttribute("aria-pressed", "false")
+    toggle.focus()
+    await userEvent.keyboard("{Enter}")
+    expect(screen.getAllByRole("button", { name: "Hide password" })[0]).toHaveAttribute("aria-pressed", "true")
+  })
 })

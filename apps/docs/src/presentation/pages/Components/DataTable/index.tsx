@@ -1,4 +1,5 @@
 import { ArrowSquareOut } from "@phosphor-icons/react"
+import { Button } from "@vbss-ui/button"
 import { DataTable, type DataTableColumn, type SortState } from "@vbss-ui/data-table"
 import { Table } from "@vbss-ui/table"
 import { useState } from "react"
@@ -30,6 +31,7 @@ import "./style.css"
 export const DataTableDocs = () => {
   const [sort, setSort] = useState<SortState>(null)
   const [page, setPage] = useState(1)
+  const pageCount = Math.ceil(mockUsers.length / 3)
 
   const basicColumns: DataTableColumn<MockUser>[] = [
     {
@@ -183,19 +185,34 @@ export const DataTableDocs = () => {
               <strong>Sorting behavior:</strong> Click a sortable column header to sort ascending. Click again to sort descending.
               Click a third time to clear sorting. The sort indicator arrows show the current sort direction.
             </S.Paragraph>
+            <S.Paragraph>
+              <strong>Which columns can be sorted:</strong> a column is sortable only when it has <code>sortable: true</code> and
+              either a <code>sortAccessor</code> or an <code>accessor</code> that returns a string, a number or a Date for every
+              row. A column whose <code>accessor</code> returns JSX needs a <code>sortAccessor</code>; without it the column loses
+              the sort control. Any sort change, controlled or not, goes back to page 1.
+            </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="pagination" />
               Pagination
             </S.SectionSubTitle>
             <S.Paragraph>
-              Enable pagination by providing a <code>pageSize</code> prop. Use <code>page</code> and <code>onPageChange</code> for
-              controlled pagination:
+              The <strong>Data Table</strong> has no built-in pagination controls. <code>pageSize</code> requires a controlled{" "}
+              <code>page</code> and <code>onPageChange</code>: render your own controls and keep the page in your state. Without{" "}
+              <code>page</code>, only the first page is shown:
             </S.Paragraph>
             <ExampleContainer>
               <div style={{ padding: "1rem", maxWidth: "800px" }}>
                 <DataTable columns={basicColumns} data={mockUsers} pageSize={3} page={page} onPageChange={setPage} />
                 <div style={{ marginTop: "1rem", fontSize: "0.875rem", color: "#666" }}>
-                  Page {page} of {Math.ceil(mockUsers.length / 3)}
+                  Page {page} of {pageCount}
+                </div>
+                <div style={{ marginTop: "0.5rem", display: "flex", gap: "0.5rem" }}>
+                  <Button size="sm" variant="outline" disabled={page <= 1} onClick={() => setPage(page - 1)}>
+                    Previous page
+                  </Button>
+                  <Button size="sm" variant="outline" disabled={page >= pageCount} onClick={() => setPage(page + 1)}>
+                    Next page
+                  </Button>
                 </div>
               </div>
             </ExampleContainer>
@@ -255,7 +272,9 @@ export const DataTableDocs = () => {
                 <strong>Keyboard Navigation:</strong> Sortable columns can be activated with Enter or Space key
               </li>
               <li>
-                <strong>ARIA Labels:</strong> Sortable headers include descriptive ARIA labels indicating current sort state
+                <strong>ARIA Labels:</strong> Sortable headers include descriptive ARIA labels indicating current sort state. The
+                label uses <code>headerLabel</code>, then the header when it is a string or a number, then the column{" "}
+                <code>id</code>, so a JSX header never reads as <code>[object Object]</code>
               </li>
               <li>
                 <strong>Screen Reader Support:</strong> Sort indicators and states are announced to screen readers
@@ -305,8 +324,12 @@ export const DataTableDocs = () => {
                 <code>sortable?: boolean</code> - Enable sorting for this column
               </li>
               <li>
-                <code>sortAccessor?: (row: T) =&gt; string | number | Date</code> - Custom function for sorting (defaults to
-                accessor result)
+                <code>sortAccessor?: (row: T) =&gt; string | number | Date</code> - Custom function for sorting. Required when the
+                accessor returns JSX; otherwise the accessor result is used when it is a string, a number or a Date
+              </li>
+              <li>
+                <code>headerLabel?: string</code> - Text used in the accessible name of the sort control. Use it when{" "}
+                <code>header</code> is not a string or a number
               </li>
               <li>
                 <code>width?: number | string</code> - Column width

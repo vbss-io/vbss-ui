@@ -135,7 +135,7 @@ export const propsTableRows = [
   {
     prop: "label",
     type: "string",
-    description: "Text label for the RadioGroup.",
+    description: "Text label for the RadioGroup. It also gives the group its accessible name.",
     default: "-",
   },
   {
@@ -182,8 +182,8 @@ export const propsTableRows = [
   },
   {
     prop: "ref",
-    type: "React.Ref",
-    description: "Allows accessing the underlying DOM element.",
+    type: "React.Ref<HTMLDivElement>",
+    description: "Allows accessing the RadioGroup element.",
     default: "-",
   },
   {

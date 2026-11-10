@@ -158,13 +158,31 @@ export const DatePickerDocs = () => {
               </DatePickerExampleContainer>
             </ExampleContainer>
             <S.Paragraph>
-              <strong>Uncontrolled mode:</strong> Use <code>defaultValue</code> prop:
+              <strong>Uncontrolled mode:</strong> Use <code>defaultValue</code> prop. <code>onChange</code> is also called in
+              uncontrolled mode when a day is selected, a complete date is typed or the date is cleared:
             </S.Paragraph>
             <ExampleContainer code={uncontrolledExampleCode}>
               <DatePickerExampleContainer>
                 <DatePicker defaultValue={new Date()} label="Select Date" />
               </DatePickerExampleContainer>
             </ExampleContainer>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="opening" />
+              Opening and Typing
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              The calendar opens when you click the input, press <code>ArrowDown</code> in the input or use the calendar icon
+              button, which toggles it. It does not open on focus, so <code>Tab</code> moves through the field without opening it,
+              and clicking the input again does not close it. Opening with <code>ArrowDown</code> or the button moves the focus to
+              a day (the selected one, otherwise today, otherwise the first enabled day); opening with a click keeps the focus in
+              the input so you can type. The calendar opens on the month of the selected date, or the current month. When it
+              closes by selecting a day, <code>Escape</code> or the button, the focus returns to the input.
+            </S.Paragraph>
+            <S.Paragraph>
+              Typed text becomes a date only when it is complete, matches the <code>format</code> exactly and has a four digit
+              year, so <code>onChange</code> never receives partial years such as 2, 20 or 202 while you type, and the text is not
+              rewritten under you.
+            </S.Paragraph>
             <S.SectionSubTitle>
               <S.SectionAnchor id="with-locale" />
               With Locale
@@ -272,15 +290,21 @@ export const DatePickerDocs = () => {
             </S.Paragraph>
             <S.List as="ul">
               <li>
-                <strong>Keyboard Navigation:</strong> Use arrow keys to navigate dates, Enter/Space to select, Escape to close the
-                calendar
+                <strong>Keyboard Navigation:</strong> <code>ArrowDown</code> in the input opens the calendar and moves the focus
+                to a day, arrow keys navigate dates, Enter/Space select, Escape closes the calendar and returns the focus to the
+                input
               </li>
               <li>
-                <strong>ARIA Attributes:</strong> Proper roles and labels for screen readers (<code>aria-label</code>,{" "}
-                <code>aria-describedby</code>)
+                <strong>ARIA Attributes:</strong> The input has <code>aria-haspopup=&quot;dialog&quot;</code>,{" "}
+                <code>aria-expanded</code> and <code>aria-controls</code>, plus your <code>aria-label</code> and{" "}
+                <code>aria-describedby</code>
               </li>
               <li>
-                <strong>Focus Management:</strong> Focus is automatically managed when opening/closing the calendar
+                <strong>Label:</strong> The <code>label</code> is linked to the input, so clicking it focuses the input
+              </li>
+              <li>
+                <strong>Focus Management:</strong> Focus is automatically managed when opening/closing the calendar: it stays in
+                the input when you open with a click and returns to it when the calendar closes
               </li>
               <li>
                 <strong>Disabled Dates:</strong> Keyboard navigation skips disabled dates automatically

@@ -23,4 +23,9 @@ describe("SwitchDocs", () => {
     expect(screen.getByText("Switch value:", { exact: false })).toHaveTextContent("On")
     expect(screen.getByRole("switch", { name: "Enable Feature" })).toBeChecked()
   })
+
+  it("documents that onChange and onCheckedChange receive the boolean", () => {
+    renderWithTheme(<SwitchDocs />)
+    expect(screen.getByText(/both receive the new/)).toHaveTextContent("not an event")
+  })
 })

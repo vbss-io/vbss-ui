@@ -41,6 +41,10 @@ export const sections = [
         title: "Disabled",
         anchor: "disabled",
       },
+      {
+        title: "Disabled Days",
+        anchor: "disabled-days",
+      },
     ],
   },
   {
@@ -76,7 +80,8 @@ export const propsTableRows = [
     prop: "rounded",
     Type: '"none" | "xs" | "sm" | "md" | "lg" | "full"',
     Default: '"md"',
-    Description: "Border radius (full = circular selected days)",
+    Description:
+      "Border radius of the calendar and of the selected day. full rounds the calendar with a large radius and makes the selected day a circle.",
   },
   {
     prop: "mode",
@@ -94,7 +99,8 @@ export const propsTableRows = [
     prop: "disabled",
     Type: "boolean | Matcher | Matcher[]",
     Default: "false",
-    Description: "Disable the calendar",
+    Description:
+      "true disables the whole calendar. A matcher or an array of matchers (for example { before: date }) disables only the matching days.",
   },
   {
     prop: "showOutsideDays",
@@ -113,6 +119,12 @@ export const propsTableRows = [
     Type: "(date: Date | Date[] | { from: Date; to?: Date } | undefined) => void",
     Default: "-",
     Description: "Selection callback",
+  },
+  {
+    prop: "ref",
+    Type: "React.Ref<HTMLDivElement>",
+    Default: "-",
+    Description: "Reaches the root element of the calendar. It stays null if you pass your own components.Root.",
   },
   {
     prop: "className",
@@ -225,6 +237,18 @@ export const App = () => {
   return (
     <Calendar
       disabled={true}
+      variant="primary"
+    />
+  )
+}`
+
+export const disabledDaysExampleCode = `import { Calendar } from "@vbss-ui/calendar"
+
+export const App = () => {
+  return (
+    <Calendar
+      mode="single"
+      disabled={{ dayOfWeek: [0, 6] }}
       variant="primary"
     />
   )

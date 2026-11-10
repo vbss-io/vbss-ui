@@ -6,11 +6,13 @@ import { ArrowSquareOut, PencilSimple, Trash } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
 import { DropdownMenu } from "@vbss-ui/dropdown-menu"
 import { Table } from "@vbss-ui/table"
+import { useState } from "react"
 import * as S from "../../styles"
 import {
   customizingClassExampleCode,
   customizingExampleCode,
   dropdownMenuWhatsNew,
+  itemOptionsExampleCode,
   propsTableHeaders,
   propsTableRows,
   realUsageExampleCode,
@@ -21,6 +23,8 @@ import {
 import "./style.css"
 
 export const DropdownMenuDocs = () => {
+  const [lastAction, setLastAction] = useState("none")
+
   return (
     <>
       <S.Container>
@@ -274,6 +278,34 @@ export const DropdownMenuDocs = () => {
               </S.ColumnContainer>
             </ExampleContainer>
             <CodeSnippet code='<DropdownMenu fontWeight="normal" />' language="tsx" />
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="item-options" />
+              Item Options
+            </S.SectionSubTitle>
+            <S.Paragraph>
+              Each entry of <code>menus</code> accepts <code>onSelect</code> to run an action, <code>disabled</code> to block the
+              item and <code>asChild</code> to render your own element, such as a link, as the item:
+            </S.Paragraph>
+            <ExampleContainer code={itemOptionsExampleCode}>
+              <S.ColumnContainer>
+                <DropdownMenu
+                  trigger={<Button>Item actions</Button>}
+                  menus={[
+                    { item: "Save", onSelect: () => setLastAction("Saved") },
+                    { item: "Export", disabled: true },
+                    {
+                      item: (
+                        <a href="https://www.npmjs.com/package/@vbss-ui/dropdown-menu" target="_blank" rel="noopener noreferrer">
+                          Open on npm
+                        </a>
+                      ),
+                      asChild: true,
+                    },
+                  ]}
+                />
+                <span>Last action: {lastAction}</span>
+              </S.ColumnContainer>
+            </ExampleContainer>
           </section>
           <section>
             <S.SectionTitle>
@@ -291,6 +323,18 @@ export const DropdownMenuDocs = () => {
                 fontSize="sm"
               />
             </S.TableSection>
+          </section>
+          <section>
+            <S.SectionTitle>
+              <S.SectionAnchor id="migration" />
+              Migration
+            </S.SectionTitle>
+            <S.Paragraph>
+              When <code>trigger</code> is an element, it becomes the trigger itself and must be focusable: use a{" "}
+              <code>button</code> (for example <code>&lt;Button&gt;</code>) instead of a <code>span</code>, an icon or{" "}
+              <code>&lt;Button as=&quot;div&quot;&gt;</code>. A string, <code>null</code> or any other node is still wrapped in
+              the trigger button.
+            </S.Paragraph>
           </section>
           <section>
             <S.SectionTitle>

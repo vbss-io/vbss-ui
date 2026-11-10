@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react"
+import { act, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -92,5 +92,50 @@ describe("DatePickerDocs", () => {
     expect(code()).toContain("calendarVariant='primary'")
     await userEvent.click(screen.getAllByRole("button", { name: "outline" })[1])
     expect(code()).toContain("calendarVariant='outline'")
+  })
+
+  it("opens the calendar by click, ArrowDown or the icon button but not by focus, as documented", async () => {
+    renderWithTheme(<DatePickerDocs />)
+    const input = screen.getByRole("textbox", { name: "Data de Nascimento" })
+    act(() => input.focus())
+    expect(screen.queryByRole("grid")).not.toBeInTheDocument()
+    await userEvent.keyboard("{ArrowDown}")
+    expect(await screen.findByRole("grid")).toBeInTheDocument()
+    expect(document.activeElement?.closest("td")).not.toBeNull()
+    await userEvent.keyboard("{Escape}")
+    expect(screen.queryByRole("grid")).not.toBeInTheDocument()
+    expect(input).toHaveFocus()
+    await userEvent.click(input)
+    expect(await screen.findByRole("grid")).toBeInTheDocument()
+    expect(input).toHaveFocus()
+    await userEvent.click(input)
+    expect(screen.getByRole("grid")).toBeInTheDocument()
+    await userEvent.keyboard("{Escape}")
+    const iconButton = within(input.closest(".datePickerTriggerContainer") as HTMLElement).getByRole("button", {
+      name: "Open calendar",
+    })
+    await userEvent.click(iconButton)
+    expect(await screen.findByRole("grid")).toBeInTheDocument()
+    await userEvent.click(iconButton)
+    expect(screen.queryByRole("grid")).not.toBeInTheDocument()
+  })
+
+  it("links the label to the input and exposes the popup state in the demo", async () => {
+    renderWithTheme(<DatePickerDocs />)
+    const input = screen.getByRole("textbox", { name: "Data de Nascimento" })
+    expect(input).toHaveAttribute("aria-haspopup", "dialog")
+    expect(input).toHaveAttribute("aria-expanded", "false")
+    const label = document.querySelector<HTMLElement>(`label[for="${input.id}"]`)!
+    expect(label).toHaveTextContent("Data de Nascimento")
+    await userEvent.click(label)
+    expect(input).toHaveFocus()
+  })
+
+  it("documents opening, typing and the uncontrolled onChange", () => {
+    renderWithTheme(<DatePickerDocs />)
+    expect(screen.getByRole("heading", { name: "Opening and Typing" })).toBeInTheDocument()
+    expect(screen.getByText(/It does not open on focus, so/)).toHaveTextContent("opens when you click the input")
+    expect(screen.getByText(/four digit/, { selector: "p" })).toBeInTheDocument()
+    expect(screen.getByText(/is also called in/)).toHaveTextContent("uncontrolled mode")
   })
 })
