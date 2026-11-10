@@ -98,9 +98,11 @@ export const Input = forwardRef(
                 onClick={switchPasswordVisibility}
               >
                 {showPassword ? (
-                  <span className={cn("inputIconOff", inputIconStyles({ height }))}>{iconOff ? iconOff : <EyeSlash />}</span>
+                  <span className={cn("inputIconOff block", inputIconStyles({ height }))}>
+                    {iconOff ? iconOff : <EyeSlash />}
+                  </span>
                 ) : (
-                  <span className={cn("inputIconOn", inputIconStyles({ height }))}>{iconOn ? iconOn : <Eye />}</span>
+                  <span className={cn("inputIconOn block", inputIconStyles({ height }))}>{iconOn ? iconOn : <Eye />}</span>
                 )}
               </button>
             )}

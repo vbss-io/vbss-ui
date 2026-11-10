@@ -217,6 +217,14 @@ describe("Input", () => {
       expect(container.querySelector(".inputIconOffContainer")).toBeNull()
     })
 
+    it("renders the toggle icons as block boxes inside the button", async () => {
+      const user = userEvent.setup()
+      const { container } = render(<Input type="password" showPasswordSwitch />)
+      expect(container.querySelector(".inputIconOn")).toHaveClass("block")
+      await user.click(container.querySelector(".inputIconOnContainer") as HTMLElement)
+      expect(container.querySelector(".inputIconOff")).toHaveClass("block")
+    })
+
     it("keeps the typed value while toggling", async () => {
       const user = userEvent.setup()
       const { container } = render(<Input type="password" showPasswordSwitch />)
