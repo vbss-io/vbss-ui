@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { HistoryNav, historyNavStyles } from "./index"
 
@@ -63,6 +64,78 @@ describe("HistoryNav", () => {
 
     it("exposes the display name", () => {
       expect(HistoryNav.displayName).toBe("HistoryNav")
+    })
+  })
+
+  describe("accessible names and per-button props", () => {
+    it("names the buttons Go back and Go forward by default", () => {
+      render(<HistoryNav />)
+      const back = screen.getByRole("button", { name: "Go back" })
+      const forward = screen.getByRole("button", { name: "Go forward" })
+      expect(back).not.toBe(forward)
+      expect(screen.getAllByRole("button")[0]).toBe(back)
+      expect(screen.getAllByRole("button")[1]).toBe(forward)
+    })
+
+    it("lets buttonsProps override both names", () => {
+      render(<HistoryNav buttonsProps={{ "aria-label": "step" }} />)
+      expect(screen.getAllByRole("button", { name: "step" })).toHaveLength(2)
+    })
+
+    it("applies leftButtonProps only to the left button", () => {
+      render(<HistoryNav leftButtonProps={{ "aria-label": "Previous", variant: "secondary", disabled: true }} />)
+      const left = screen.getByRole("button", { name: "Previous" })
+      expect(left).toBeDisabled()
+      expect(left).toHaveClass("bg-secondary")
+      const right = screen.getByRole("button", { name: "Go forward" })
+      expect(right).toBeEnabled()
+      expect(right).not.toHaveClass("bg-secondary")
+    })
+
+    it("applies rightButtonProps only to the right button", () => {
+      render(<HistoryNav rightButtonProps={{ "aria-label": "Next", rounded: "full" }} />)
+      expect(screen.getByRole("button", { name: "Next" })).toHaveClass("rounded-full")
+      expect(screen.getByRole("button", { name: "Go back" })).not.toHaveClass("rounded-full")
+    })
+
+    it("lets leftButtonProps and rightButtonProps override buttonsProps", () => {
+      render(
+        <HistoryNav
+          buttonsProps={{ "aria-label": "shared", variant: "outline" }}
+          leftButtonProps={{ "aria-label": "left", variant: "secondary" }}
+          rightButtonProps={{ "aria-label": "right" }}
+        />
+      )
+      expect(screen.getByRole("button", { name: "left" })).toHaveClass("bg-secondary")
+      expect(screen.getByRole("button", { name: "right" })).toHaveClass("text-primary")
+      expect(screen.queryByRole("button", { name: "shared" })).toBeNull()
+    })
+
+    it("lets the per-button size override the buttonsProps size", () => {
+      render(<HistoryNav buttonsProps={{ size: "icon-sm" }} rightButtonProps={{ size: "icon-lg" }} />)
+      expect(screen.getByRole("button", { name: "Go back" })).toHaveClass("h-8", "w-8")
+      expect(screen.getByRole("button", { name: "Go forward" })).toHaveClass("h-10", "w-10")
+    })
+  })
+
+  describe("polymorphic ref", () => {
+    it("accepts a ref object typed as the default div", () => {
+      const ref = createRef<HTMLDivElement>()
+      const { container } = render(<HistoryNav ref={ref} />)
+      expect(ref.current).toBe(container.firstElementChild)
+    })
+
+    it("accepts a ref object typed as the element given in as", () => {
+      const ref = createRef<HTMLElement>()
+      const { container } = render(<HistoryNav as="nav" ref={ref} />)
+      expect(ref.current).toBe(container.firstElementChild)
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLButtonElement>()
+      // @ts-expect-error a button ref does not fit a div
+      const { container } = render(<HistoryNav ref={ref} />)
+      expect(ref.current).toBe(container.firstElementChild)
     })
   })
 

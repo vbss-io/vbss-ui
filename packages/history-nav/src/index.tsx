@@ -1,16 +1,20 @@
 import { Button, ExtendableButtonProps } from "@vbss-ui/button"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentProps, ElementType, forwardRef, ReactNode } from "react"
 import ArrowLeft from "./arrow-left.svg"
 import ArrowRight from "./arrow-right.svg"
 import "./index.css"
 
+export type HistoryNavButtonProps = Omit<ExtendableButtonProps<ElementType>, "onClick" | "icon"> & {
+  size?: "icon-sm" | "icon-md" | "icon-lg"
+}
+
 export type HistoryNavProps = ComponentProps<"div"> &
   VariantProps<typeof historyNavStyles> & {
-    buttonsProps?: Omit<ExtendableButtonProps<ElementType>, "onClick" | "icon"> & {
-      size?: "icon-sm" | "icon-md" | "icon-lg"
-    }
+    buttonsProps?: HistoryNavButtonProps
+    leftButtonProps?: HistoryNavButtonProps
+    rightButtonProps?: HistoryNavButtonProps
     leftOnClick?: () => void
     rightOnClick?: () => void
     leftIcon?: ReactNode
@@ -19,26 +23,50 @@ export type HistoryNavProps = ComponentProps<"div"> &
 
 export type ExtendableHistoryNavProps<C extends ElementType> = ExtendableComponentProps<C, HistoryNavProps>
 
-export type HistoryNavComponent = ForwardRefExoticComponent<ExtendableHistoryNavProps<ElementType> & RefAttributes<ElementType>>
+export type HistoryNavComponent = PolymorphicComponent<"div", HistoryNavProps>
 
-export const HistoryNav: HistoryNavComponent = forwardRef(
+export const HistoryNav = forwardRef(
   <C extends ElementType>(
-    { as, gap, className, buttonsProps, leftOnClick, rightOnClick, leftIcon, rightIcon, ...props }: ExtendableHistoryNavProps<C>,
+    {
+      as,
+      gap,
+      className,
+      buttonsProps,
+      leftButtonProps,
+      rightButtonProps,
+      leftOnClick,
+      rightOnClick,
+      leftIcon,
+      rightIcon,
+      ...props
+    }: ExtendableHistoryNavProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
     const Component = as ?? "div"
     return (
       <Component ref={ref} className={cn("historyNavContainer flex", historyNavStyles({ gap }), className)} {...props}>
-        <Button size={buttonsProps?.size ?? "icon-md"} onClick={leftOnClick} {...buttonsProps}>
+        <Button
+          aria-label="Go back"
+          onClick={leftOnClick}
+          {...buttonsProps}
+          {...leftButtonProps}
+          size={leftButtonProps?.size ?? buttonsProps?.size ?? "icon-md"}
+        >
           {leftIcon ? leftIcon : <ArrowLeft />}
         </Button>
-        <Button size={buttonsProps?.size ?? "icon-md"} onClick={rightOnClick} {...buttonsProps}>
+        <Button
+          aria-label="Go forward"
+          onClick={rightOnClick}
+          {...buttonsProps}
+          {...rightButtonProps}
+          size={rightButtonProps?.size ?? buttonsProps?.size ?? "icon-md"}
+        >
           {rightIcon ? rightIcon : <ArrowRight />}
         </Button>
       </Component>
     )
   }
-)
+) as HistoryNavComponent
 
 HistoryNav.displayName = "HistoryNav"
 
