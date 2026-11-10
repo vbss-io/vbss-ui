@@ -8,6 +8,7 @@ import { DialogDocs } from "."
 
 const deleteBody = "This will permanently delete your account and all associated data."
 const controlledBody = /state is controlled externally/
+const controlledDescription = "Open and close this dialog from the page state."
 
 describe("DialogDocs", () => {
   it("cancels the delete dialog", async () => {
@@ -25,12 +26,24 @@ describe("DialogDocs", () => {
     expect(screen.queryByText(deleteBody)).not.toBeInTheDocument()
   })
 
-  it("closes the controlled dialog from its footer button", async () => {
+  it("describes the controlled dialog and closes it from its footer button", async () => {
     renderWithTheme(<DialogDocs />)
-    await userEvent.click(screen.getAllByText("Controlled Dialog")[0])
+    await userEvent.click(screen.getAllByRole("button", { name: "Controlled Dialog" })[0])
     const dialog = await screen.findByRole("dialog")
     expect(within(dialog).getByText(controlledBody)).toBeInTheDocument()
-    await userEvent.click(within(dialog).getByRole("button", { name: "Close" }))
+    expect(dialog).toHaveAccessibleDescription(controlledDescription)
+    const footer = dialog.querySelector<HTMLElement>(".dialogFooter")!
+    await userEvent.click(within(footer).getByRole("button", { name: "Close" }))
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+  })
+
+  it("closes the controlled dialog from the close icon", async () => {
+    renderWithTheme(<DialogDocs />)
+    await userEvent.click(screen.getAllByRole("button", { name: "Controlled Dialog" })[0])
+    const dialog = await screen.findByRole("dialog")
+    const closeIcon = dialog.querySelector<HTMLElement>(".dialogCloseContainer")!
+    expect(closeIcon).toHaveAccessibleName("Close")
+    await userEvent.click(closeIcon)
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
   })
 })

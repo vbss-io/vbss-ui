@@ -10,10 +10,15 @@ const selectedBox = (input: HTMLElement) => input.closest(".datePickerRoot")!.pa
 
 describe("DatePickerDocs", () => {
   beforeEach(() => {
+    const original = Date.prototype.toLocaleDateString
+    vi.spyOn(Date.prototype, "toLocaleDateString").mockImplementation(function (this: Date, locales, options) {
+      return original.call(this, locales ?? "en-US", options)
+    })
     freezeToday()
   })
 
   afterEach(() => {
+    vi.restoreAllMocks()
     vi.useRealTimers()
   })
 
@@ -33,11 +38,11 @@ describe("DatePickerDocs", () => {
   it("starts the controlled picker on today and follows typed dates and emptiness", async () => {
     renderWithTheme(<DatePickerDocs />)
     const input = screen.getAllByRole("textbox", { name: "Select Date" })[0]
-    expect(selectedBox(input)).toHaveTextContent(`Selected: ${new Date(2026, 10, 9).toLocaleDateString()}`)
+    expect(selectedBox(input)).toHaveTextContent("Selected: 09/11/2026")
     await userEvent.clear(input)
     expect(selectedBox(input)).not.toHaveTextContent("Selected:")
     await userEvent.type(input, "Dec 25, 2026")
-    expect(selectedBox(input)).toHaveTextContent(`Selected: ${new Date(2026, 11, 25).toLocaleDateString()}`)
+    expect(selectedBox(input)).toHaveTextContent("Selected: 25/12/2026")
   })
 
   it("parses typed dates in the pt-BR locale picker", async () => {
@@ -54,7 +59,7 @@ describe("DatePickerDocs", () => {
     expect(selectedBox(input)).not.toHaveTextContent("Selected:")
     await userEvent.clear(input)
     await userEvent.type(input, "Nov 20, 2026")
-    expect(selectedBox(input)).toHaveTextContent(`Selected: ${new Date(2026, 10, 20).toLocaleDateString()}`)
+    expect(selectedBox(input)).toHaveTextContent("Selected: 20/11/2026")
   })
 
   it("keeps the fixed demos usable by typing a date into each of them", async () => {

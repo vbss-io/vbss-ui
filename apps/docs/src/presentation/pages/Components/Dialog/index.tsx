@@ -42,7 +42,7 @@ export const DialogDocs = () => {
             </S.Paragraph>
             <ExampleContainer code={realUsageExampleCode}>
               <Dialog
-                trigger={<Button as="div">Delete Account</Button>}
+                trigger={<Button>Delete Account</Button>}
                 title="Delete Account"
                 description="Are you sure you want to delete your account? This action cannot be undone."
                 footer={
@@ -112,48 +112,16 @@ export const DialogDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Dialog
-                  title="Primary"
-                  trigger={
-                    <Button as="div" variant="primary">
-                      Primary
-                    </Button>
-                  }
-                  variant="primary"
-                >
+                <Dialog title="Primary" trigger={<Button variant="primary">Primary</Button>} variant="primary">
                   Primary dialog
                 </Dialog>
-                <Dialog
-                  title="Secondary"
-                  trigger={
-                    <Button as="div" variant="secondary">
-                      Secondary
-                    </Button>
-                  }
-                  variant="secondary"
-                >
+                <Dialog title="Secondary" trigger={<Button variant="secondary">Secondary</Button>} variant="secondary">
                   Secondary dialog
                 </Dialog>
-                <Dialog
-                  title="Outline"
-                  trigger={
-                    <Button as="div" variant="outline">
-                      Outline
-                    </Button>
-                  }
-                  variant="outline"
-                >
+                <Dialog title="Outline" trigger={<Button variant="outline">Outline</Button>} variant="outline">
                   Outline dialog
                 </Dialog>
-                <Dialog
-                  title="Ghost"
-                  trigger={
-                    <Button as="div" variant="ghost">
-                      Ghost
-                    </Button>
-                  }
-                  variant="ghost"
-                >
+                <Dialog title="Ghost" trigger={<Button variant="ghost">Ghost</Button>} variant="ghost">
                   Ghost dialog
                 </Dialog>
               </S.ColumnContainer>
@@ -168,19 +136,19 @@ export const DialogDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Dialog title="None" trigger={<Button as="div">None</Button>} rounded="none">
+                <Dialog title="None" trigger={<Button>None</Button>} rounded="none">
                   No border radius
                 </Dialog>
-                <Dialog title="Small" trigger={<Button as="div">Small</Button>} rounded="sm">
+                <Dialog title="Small" trigger={<Button>Small</Button>} rounded="sm">
                   Small border radius
                 </Dialog>
-                <Dialog title="Medium" trigger={<Button as="div">Medium</Button>} rounded="md">
+                <Dialog title="Medium" trigger={<Button>Medium</Button>} rounded="md">
                   Medium border radius
                 </Dialog>
-                <Dialog title="Large" trigger={<Button as="div">Large</Button>} rounded="lg">
+                <Dialog title="Large" trigger={<Button>Large</Button>} rounded="lg">
                   Large border radius
                 </Dialog>
-                <Dialog title="Full" trigger={<Button as="div">Full</Button>} rounded="full">
+                <Dialog title="Full" trigger={<Button>Full</Button>} rounded="full">
                   Full border radius
                 </Dialog>
               </S.ColumnContainer>
@@ -194,7 +162,7 @@ export const DialogDocs = () => {
               Control the overlay opacity using the <code>overlayOpacity</code> prop:
             </S.Paragraph>
             <ExampleContainer>
-              <Dialog title="Custom Overlay" trigger={<Button as="div">Custom Overlay</Button>} overlayOpacity={75}>
+              <Dialog title="Custom Overlay" trigger={<Button>Custom Overlay</Button>} overlayOpacity={75}>
                 Dialog with custom overlay opacity
               </Dialog>
             </ExampleContainer>
@@ -209,7 +177,7 @@ export const DialogDocs = () => {
             <ExampleContainer>
               <Dialog
                 variant="ghost"
-                trigger={<Button as="div">Content Example</Button>}
+                trigger={<Button>Content Example</Button>}
                 title="Dialog Title"
                 description="This is a description"
                 footer={
@@ -233,8 +201,9 @@ export const DialogDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <Dialog
-                trigger={<Button as="div">Controlled Dialog</Button>}
+                trigger={<Button>Controlled Dialog</Button>}
                 title="Controlled Dialog"
+                description="Open and close this dialog from the page state."
                 open={isOpen}
                 onOpenChange={setIsOpen}
                 footer={<Button onClick={() => setIsOpen(false)}>Close</Button>}
@@ -275,7 +244,7 @@ export const DialogDocs = () => {
             <ExampleContainer code={customizingExampleCode}>
               <Dialog
                 title="Custom Dialog"
-                trigger={<Button as="div">Open Dialog</Button>}
+                trigger={<Button>Open Dialog</Button>}
                 style={{
                   backgroundColor: "red",
                   color: "white",
@@ -291,7 +260,7 @@ export const DialogDocs = () => {
             <S.Paragraph>You can use the default component classNames:</S.Paragraph>
             <ExampleContainer code={customizingClassExampleCode}>
               <div className="customDialog">
-                <Dialog title="Custom Dialog" trigger={<Button as="div">Open Dialog</Button>}>
+                <Dialog title="Custom Dialog" trigger={<Button>Open Dialog</Button>}>
                   Custom styled dialog
                 </Dialog>
               </div>

@@ -65,6 +65,7 @@ export const CalendarDocs = () => {
   const [selected, setSelected] = useState<Date | undefined>(new Date())
   const [multipleSelected, setMultipleSelected] = useState<Date[] | undefined>([])
   const [rangeSelected, setRangeSelected] = useState<{ from: Date | undefined; to?: Date | undefined } | undefined>()
+  const hasRangeEnd = rangeSelected?.to !== undefined && rangeSelected.to.getTime() !== rangeSelected.from?.getTime()
 
   return (
     <>
@@ -141,6 +142,10 @@ export const CalendarDocs = () => {
               <S.SectionAnchor id="usage" />
               Usage
             </S.SectionTitle>
+            <S.SectionSubTitle>
+              <S.SectionAnchor id="basic-usage" />
+              Basic Usage
+            </S.SectionSubTitle>
             <S.Paragraph>After installation, import the component and use it in your project:</S.Paragraph>
             <CodeSnippet code={usageExampleCode} language="tsx" />
             <S.SectionSubTitle>
@@ -229,7 +234,7 @@ export const CalendarDocs = () => {
                   <SelectedDateContainer>
                     <SelectedDateText>
                       <strong>Selected Range:</strong> {rangeSelected.from?.toLocaleDateString("pt-BR")}
-                      {rangeSelected.to ? ` - ${rangeSelected.to.toLocaleDateString("pt-BR")}` : " (select end date)"}
+                      {hasRangeEnd ? ` - ${rangeSelected.to?.toLocaleDateString("pt-BR")}` : " (select end date)"}
                     </SelectedDateText>
                   </SelectedDateContainer>
                 )}

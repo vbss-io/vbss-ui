@@ -38,7 +38,7 @@ import { Button } from "@vbss-ui/button"
 export const App = () => {
   return (
     <Popover
-      trigger={<Button as="div">Click Me</Button>}
+      trigger={<Button>Click Me</Button>}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         <Button variant="ghost">Button</Button>
@@ -65,7 +65,7 @@ export const App = () => {
       <span style={{ fontSize: "0.875rem" }}>User Profile:</span>
       <Popover 
         trigger={
-          <Button as="div" variant="outline">
+          <Button variant="outline">
             <User size={20} />
             John Doe
           </Button>
@@ -176,7 +176,7 @@ export const propsTableRows = [
 ]
 
 export const customizingExampleCode = `<Popover
-  trigger={<Button as="div">Open Popover</Button>}
+  trigger={<Button>Open Popover</Button>}
   style={{
     backgroundColor: "red",
     color: "white",
@@ -198,7 +198,7 @@ export const customizingClassExampleCode = `// CSS
 export const App = () => {
   return (
     <div className="customPopover">
-      <Popover trigger={<Button as="div">Open Popover</Button>}>
+      <Popover trigger={<Button>Open Popover</Button>}>
         Custom styled popover
       </Popover>
     </div>

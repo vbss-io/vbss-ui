@@ -11,9 +11,7 @@ interface SidebarProps {
 export const Sidebar = ({ isMobile = false }: SidebarProps) => {
   const currentPath = window.location.pathname
 
-  const isNewComponent = (releaseDate?: string) => {
-    if (!releaseDate) return false
-
+  const isNewComponent = (releaseDate: string) => {
     const release = new Date(releaseDate)
     const now = new Date()
     const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate())
@@ -21,7 +19,7 @@ export const Sidebar = ({ isMobile = false }: SidebarProps) => {
     return release > threeMonthsAgo
   }
 
-  const sortedComponents = components.sort((a, b) => {
+  const sortedComponents = [...components].sort((a, b) => {
     const aDev = "dev" in a ? a.dev : false
     const bDev = "dev" in b ? b.dev : false
     if (aDev !== bDev) {

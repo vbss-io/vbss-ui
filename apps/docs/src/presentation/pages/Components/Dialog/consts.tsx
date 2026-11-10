@@ -47,7 +47,7 @@ import { Button } from "@vbss-ui/button"
 export const App = () => {
   return (
     <Dialog
-      trigger={<Button as="div">Open Dialog</Button>}
+      trigger={<Button>Open Dialog</Button>}
       title="Dialog Title"
       description="Dialog Description"
     >
@@ -57,7 +57,7 @@ export const App = () => {
 }`
 
 export const basicExampleCode = `<Dialog
-  trigger={<Button as="div">Open Dialog</Button>}
+  trigger={<Button>Open Dialog</Button>}
   title="Dialog Title"
   description="Dialog Description"
   footer="Dialog Footer"
@@ -67,7 +67,7 @@ export const basicExampleCode = `<Dialog
 
 export const contentExampleCode = `<Dialog
   variant="ghost"
-  trigger={<Button as="div">Content Example</Button>}
+  trigger={<Button>Content Example</Button>}
   title="Dialog Title"
   description="This is a description"
   footer={
@@ -89,8 +89,9 @@ export const App = () => {
 
   return (
     <Dialog
-      trigger={<Button as="div">Controlled Dialog</Button>}
+      trigger={<Button>Controlled Dialog</Button>}
       title="Controlled Dialog"
+      description="Open and close this dialog from the page state."
       open={isOpen}
       onOpenChange={setIsOpen}
       footer={<Button onClick={() => setIsOpen(false)}>Close</Button>}
@@ -191,7 +192,7 @@ export const propsTableRows = [
 
 export const customizingExampleCode = `<Dialog
   title="Custom Dialog"
-  trigger={<Button as="div">Open Dialog</Button>}
+  trigger={<Button>Open Dialog</Button>}
   style={{
     backgroundColor: "red",
     color: "white",
@@ -240,7 +241,7 @@ export const App = () => {
 
   return (
     <Dialog
-      trigger={<Button as="div">Delete Account</Button>}
+      trigger={<Button>Delete Account</Button>}
       title="Delete Account"
       description="Are you sure you want to delete your account? This action cannot be undone."
       footer={

@@ -23,7 +23,7 @@ export const WhatsNew = ({ title = "What's new", entries = [] }: WhatsNewProps) 
 
   const latestVersion = useMemo(() => {
     if (!hasEntries) return ""
-    return entries[0]?.version ?? ""
+    return entries[0].version
   }, [entries, hasEntries])
 
   if (!hasEntries) return null

@@ -2,6 +2,8 @@ import { screen, within } from "@testing-library/react"
 import { renderWithTheme } from "@/test-support/render-with-theme"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
+import { components } from "@/presentation/consts/components"
+
 import { Sidebar } from "."
 
 vi.mock("@/presentation/consts/components", async (importOriginal) => {
@@ -24,6 +26,12 @@ const renderAt = (path: string, isMobile?: boolean) => {
 describe("Sidebar", () => {
   afterEach(() => {
     window.history.pushState({}, "", "/")
+  })
+
+  it("does not reorder the shared components list while rendering", () => {
+    const before = components.map((component) => component.name)
+    renderAt("/")
+    expect(components.map((component) => component.name)).toEqual(before)
   })
 
   it("lists the getting started pages, the tools and every component with its link", () => {

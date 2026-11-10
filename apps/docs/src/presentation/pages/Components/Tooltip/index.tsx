@@ -56,13 +56,13 @@ export const TooltipDocs = () => {
                 </span>
                 <Tooltip
                   trigger={
-                    <Question
-                      size={16}
-                      style={{
-                        color: "#64748b",
-                        cursor: "pointer",
-                      }}
-                    />
+                    <button
+                      type="button"
+                      aria-label="Password requirements"
+                      style={{ display: "inline-flex", padding: 0, border: 0, background: "none", cursor: "pointer" }}
+                    >
+                      <Question size={16} style={{ color: "#64748b" }} />
+                    </button>
                   }
                   variant="outline"
                   side="top"
@@ -119,7 +119,7 @@ export const TooltipDocs = () => {
               You can use any element as a trigger for the <strong>Tooltip</strong>:
             </S.Paragraph>
             <ExampleContainer code={triggerExampleCode}>
-              <Tooltip trigger={<Button as="div">Hover me</Button>}>This is a tooltip with a button trigger</Tooltip>
+              <Tooltip trigger={<Button>Hover me</Button>}>This is a tooltip with a button trigger</Tooltip>
             </ExampleContainer>
             <S.SectionSubTitle>
               <S.SectionAnchor id="position" />
@@ -130,16 +130,16 @@ export const TooltipDocs = () => {
             </S.Paragraph>
             <ExampleContainer code={positionExampleCode}>
               <S.ColumnContainer>
-                <Tooltip trigger={<Button as="div">Top</Button>} side="top">
+                <Tooltip trigger={<Button>Top</Button>} side="top">
                   This tooltip appears on top
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Right</Button>} side="right">
+                <Tooltip trigger={<Button>Right</Button>} side="right">
                   This tooltip appears on the right
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Bottom</Button>} side="bottom">
+                <Tooltip trigger={<Button>Bottom</Button>} side="bottom">
                   This tooltip appears on the bottom
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Left</Button>} side="left">
+                <Tooltip trigger={<Button>Left</Button>} side="left">
                   This tooltip appears on the left
                 </Tooltip>
               </S.ColumnContainer>
@@ -153,13 +153,13 @@ export const TooltipDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Tooltip trigger={<Button as="div">Primary</Button>} variant="primary">
+                <Tooltip trigger={<Button>Primary</Button>} variant="primary">
                   Primary tooltip
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Secondary</Button>} variant="secondary">
+                <Tooltip trigger={<Button>Secondary</Button>} variant="secondary">
                   Secondary tooltip
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Outline</Button>} variant="outline">
+                <Tooltip trigger={<Button>Outline</Button>} variant="outline">
                   Outline tooltip
                 </Tooltip>
               </S.ColumnContainer>
@@ -174,19 +174,19 @@ export const TooltipDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Tooltip trigger={<Button as="div">None</Button>} rounded="none">
+                <Tooltip trigger={<Button>None</Button>} rounded="none">
                   No border radius
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Small</Button>} rounded="sm">
+                <Tooltip trigger={<Button>Small</Button>} rounded="sm">
                   Small border radius
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Medium</Button>} rounded="md">
+                <Tooltip trigger={<Button>Medium</Button>} rounded="md">
                   Medium border radius
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Large</Button>} rounded="lg">
+                <Tooltip trigger={<Button>Large</Button>} rounded="lg">
                   Large border radius
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Full</Button>} rounded="full">
+                <Tooltip trigger={<Button>Full</Button>} rounded="full">
                   Full border radius
                 </Tooltip>
               </S.ColumnContainer>
@@ -201,19 +201,19 @@ export const TooltipDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Tooltip trigger={<Button as="div">Extra Small</Button>} size="xs">
+                <Tooltip trigger={<Button>Extra Small</Button>} size="xs">
                   Extra small tooltip
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Small</Button>} size="sm">
+                <Tooltip trigger={<Button>Small</Button>} size="sm">
                   Small tooltip
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Medium</Button>} size="md">
+                <Tooltip trigger={<Button>Medium</Button>} size="md">
                   Medium tooltip
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Large</Button>} size="lg">
+                <Tooltip trigger={<Button>Large</Button>} size="lg">
                   Large tooltip
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Extra Large</Button>} size="xl">
+                <Tooltip trigger={<Button>Extra Large</Button>} size="xl">
                   Extra large tooltip
                 </Tooltip>
               </S.ColumnContainer>
@@ -228,19 +228,19 @@ export const TooltipDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Tooltip trigger={<Button as="div">Extra Small</Button>} fontSize="xs">
+                <Tooltip trigger={<Button>Extra Small</Button>} fontSize="xs">
                   Extra small text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Small</Button>} fontSize="sm">
+                <Tooltip trigger={<Button>Small</Button>} fontSize="sm">
                   Small text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Medium</Button>} fontSize="md">
+                <Tooltip trigger={<Button>Medium</Button>} fontSize="md">
                   Medium text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Large</Button>} fontSize="lg">
+                <Tooltip trigger={<Button>Large</Button>} fontSize="lg">
                   Large text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Extra Large</Button>} fontSize="xl">
+                <Tooltip trigger={<Button>Extra Large</Button>} fontSize="xl">
                   Extra large text
                 </Tooltip>
               </S.ColumnContainer>
@@ -255,22 +255,22 @@ export const TooltipDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Tooltip trigger={<Button as="div">Thin</Button>} fontWeight="thin">
+                <Tooltip trigger={<Button>Thin</Button>} fontWeight="thin">
                   Thin text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Light</Button>} fontWeight="light">
+                <Tooltip trigger={<Button>Light</Button>} fontWeight="light">
                   Light text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Normal</Button>} fontWeight="normal">
+                <Tooltip trigger={<Button>Normal</Button>} fontWeight="normal">
                   Normal text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Medium</Button>} fontWeight="medium">
+                <Tooltip trigger={<Button>Medium</Button>} fontWeight="medium">
                   Medium text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Bold</Button>} fontWeight="bold">
+                <Tooltip trigger={<Button>Bold</Button>} fontWeight="bold">
                   Bold text
                 </Tooltip>
-                <Tooltip trigger={<Button as="div">Extra Bold</Button>} fontWeight="extrabold">
+                <Tooltip trigger={<Button>Extra Bold</Button>} fontWeight="extrabold">
                   Extra bold text
                 </Tooltip>
               </S.ColumnContainer>
@@ -310,7 +310,7 @@ export const TooltipDocs = () => {
             <S.Paragraph>You can pass custom styles directly to the component:</S.Paragraph>
             <ExampleContainer code={customizingExampleCode}>
               <Tooltip
-                trigger={<Button as="div">Hover me</Button>}
+                trigger={<Button>Hover me</Button>}
                 style={{
                   backgroundColor: "red",
                   color: "white",
@@ -326,7 +326,7 @@ export const TooltipDocs = () => {
             <S.Paragraph>You can use the default component classNames:</S.Paragraph>
             <ExampleContainer code={customizingClassExampleCode}>
               <div className="customTooltip">
-                <Tooltip trigger={<Button as="div">Hover me</Button>}>This is a custom styled tooltip</Tooltip>
+                <Tooltip trigger={<Button>Hover me</Button>}>This is a custom styled tooltip</Tooltip>
               </div>
             </ExampleContainer>
           </section>

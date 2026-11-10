@@ -48,7 +48,7 @@ import { Tooltip } from "@vbss-ui/tooltip"
 
 export const App = () => {
   return (
-    <Tooltip trigger={<Button as="div">Hover me</Button>}>
+    <Tooltip trigger={<Button>Hover me</Button>}>
       This is a tooltip
     </Tooltip>
   )
@@ -59,7 +59,7 @@ import { Tooltip } from "@vbss-ui/tooltip"
 
 export const App = () => {
   return (
-    <Tooltip trigger={<Button as="div">Hover me</Button>}>
+    <Tooltip trigger={<Button>Hover me</Button>}>
       This is a tooltip
     </Tooltip>
   )
@@ -70,7 +70,7 @@ import { Tooltip } from "@vbss-ui/tooltip"
 
 export const App = () => {
   return (
-    <Tooltip trigger={<Button as="div">Hover me</Button>}>
+    <Tooltip trigger={<Button>Hover me</Button>}>
       This is a tooltip with a button trigger
     </Tooltip>
   )
@@ -82,7 +82,7 @@ import { Tooltip } from "@vbss-ui/tooltip"
 export const App = () => {
   return (
     <Tooltip
-      trigger={<Button as="div">Right</Button>}
+      trigger={<Button>Right</Button>}
       side="right"
       sideOffset={8}
     >
@@ -168,7 +168,7 @@ import { Tooltip } from "@vbss-ui/tooltip"
 export const MyComponent = () => {
   return (
     <Tooltip
-      trigger={<Button as="div">Hover me</Button>}
+      trigger={<Button>Hover me</Button>}
       style={{
         backgroundColor: "red",
         color: "white",
@@ -193,7 +193,7 @@ export const customizingClassExampleCode = `// CSS
 }
   
 <div className="customTooltip">
-  <Tooltip trigger={<Button as="div">Hover me</Button>}>
+  <Tooltip trigger={<Button>Hover me</Button>}>
     This is a custom styled tooltip
   </Tooltip>
 </div>`
@@ -220,13 +220,13 @@ export const App = () => {
       </span>
       <Tooltip 
         trigger={
-          <Question 
-            size={16} 
-            style={{ 
-              color: "#64748b",
-              cursor: "pointer"
-            }} 
-          />
+          <button
+            type="button"
+            aria-label="Password requirements"
+            style={{ display: "inline-flex", padding: 0, border: 0, background: "none", cursor: "pointer" }}
+          >
+            <Question size={16} style={{ color: "#64748b" }} />
+          </button>
         }
         variant="outline"
         side="top"

@@ -53,7 +53,7 @@ export const sections = [
     subsections: [
       {
         title: "Custom Styles",
-        anchor: "custom-styles",
+        anchor: "custom-style",
       },
       {
         title: "Custom Colors",
@@ -92,7 +92,7 @@ export const propsTableRows = [
   },
   {
     prop: "disabled",
-    Type: "boolean",
+    Type: "boolean | Matcher | Matcher[]",
     Default: "false",
     Description: "Disable the calendar",
   },

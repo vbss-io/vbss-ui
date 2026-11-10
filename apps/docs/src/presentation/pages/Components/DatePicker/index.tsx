@@ -151,7 +151,7 @@ export const DatePickerDocs = () => {
                 {controlledDate && (
                   <SelectedDateContainer>
                     <SelectedDateText>
-                      <strong>Selected:</strong> {controlledDate.toLocaleDateString()}
+                      <strong>Selected:</strong> {controlledDate.toLocaleDateString("pt-BR")}
                     </SelectedDateText>
                   </SelectedDateContainer>
                 )}
@@ -217,7 +217,7 @@ export const DatePickerDocs = () => {
                 {validatedDate && (
                   <SelectedDateContainer>
                     <SelectedDateText>
-                      <strong>Selected:</strong> {validatedDate.toLocaleDateString()}
+                      <strong>Selected:</strong> {validatedDate.toLocaleDateString("pt-BR")}
                     </SelectedDateText>
                   </SelectedDateContainer>
                 )}

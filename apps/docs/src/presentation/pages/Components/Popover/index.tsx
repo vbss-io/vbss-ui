@@ -49,7 +49,7 @@ export const PopoverDocs = () => {
                 <span style={{ fontSize: "0.875rem" }}>User Profile:</span>
                 <Popover
                   trigger={
-                    <Button as="div" variant="outline">
+                    <Button variant="outline">
                       <User size={20} />
                       John Doe
                     </Button>
@@ -131,40 +131,19 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover
-                  trigger={
-                    <Button as="div" variant="primary">
-                      Primary
-                    </Button>
-                  }
-                  variant="primary"
-                >
+                <Popover trigger={<Button variant="primary">Primary</Button>} variant="primary">
                   <div className="flex flex-col gap-1">
                     <Button variant="ghost">Button</Button>
                     <Button variant="ghost">Button</Button>
                   </div>
                 </Popover>
-                <Popover
-                  trigger={
-                    <Button as="div" variant="secondary">
-                      Secondary
-                    </Button>
-                  }
-                  variant="secondary"
-                >
+                <Popover trigger={<Button variant="secondary">Secondary</Button>} variant="secondary">
                   <div className="flex flex-col gap-1">
                     <Button variant="ghost">Button</Button>
                     <Button variant="ghost">Button</Button>
                   </div>
                 </Popover>
-                <Popover
-                  trigger={
-                    <Button as="div" variant="outline">
-                      Outline
-                    </Button>
-                  }
-                  variant="outline"
-                >
+                <Popover trigger={<Button variant="outline">Outline</Button>} variant="outline">
                   <div className="flex flex-col gap-1">
                     <Button variant="ghost">Button</Button>
                     <Button variant="ghost">Button</Button>
@@ -182,19 +161,19 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover trigger={<Button as="div">Extra Small</Button>} size="xs">
+                <Popover trigger={<Button>Extra Small</Button>} size="xs">
                   <div>Extra Small Popover</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Small</Button>} size="sm">
+                <Popover trigger={<Button>Small</Button>} size="sm">
                   <div>Small Popover</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Medium</Button>} size="md">
+                <Popover trigger={<Button>Medium</Button>} size="md">
                   <div>Medium Popover</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Large</Button>} size="lg">
+                <Popover trigger={<Button>Large</Button>} size="lg">
                   <div>Large Popover</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Extra Large</Button>} size="xl">
+                <Popover trigger={<Button>Extra Large</Button>} size="xl">
                   <div>Extra Large Popover</div>
                 </Popover>
               </S.ColumnContainer>
@@ -209,16 +188,16 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover trigger={<Button as="div">Top</Button>} side="top">
+                <Popover trigger={<Button>Top</Button>} side="top">
                   <div>Popover on top</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Right</Button>} side="right">
+                <Popover trigger={<Button>Right</Button>} side="right">
                   <div>Popover on right</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Bottom</Button>} side="bottom">
+                <Popover trigger={<Button>Bottom</Button>} side="bottom">
                   <div>Popover on bottom</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Left</Button>} side="left">
+                <Popover trigger={<Button>Left</Button>} side="left">
                   <div>Popover on left</div>
                 </Popover>
               </S.ColumnContainer>
@@ -233,19 +212,19 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover trigger={<Button as="div">Top</Button>} rounded="none">
+                <Popover trigger={<Button>Top</Button>} rounded="none">
                   <div>No border radius</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Right</Button>} rounded="sm">
+                <Popover trigger={<Button>Right</Button>} rounded="sm">
                   <div>Small border radius</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Bottom</Button>} rounded="md">
+                <Popover trigger={<Button>Bottom</Button>} rounded="md">
                   <div>Medium border radius</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Left</Button>} rounded="lg">
+                <Popover trigger={<Button>Left</Button>} rounded="lg">
                   <div>Large border radius</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Top</Button>} rounded="full">
+                <Popover trigger={<Button>Top</Button>} rounded="full">
                   <div>Full border radius</div>
                 </Popover>
               </S.ColumnContainer>
@@ -260,19 +239,19 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover trigger={<Button as="div">Extra Small</Button>} fontSize="xs">
+                <Popover trigger={<Button>Extra Small</Button>} fontSize="xs">
                   <div>Extra small text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Small</Button>} fontSize="sm">
+                <Popover trigger={<Button>Small</Button>} fontSize="sm">
                   <div>Small text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Medium</Button>} fontSize="md">
+                <Popover trigger={<Button>Medium</Button>} fontSize="md">
                   <div>Medium text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Large</Button>} fontSize="lg">
+                <Popover trigger={<Button>Large</Button>} fontSize="lg">
                   <div>Large text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Extra Large</Button>} fontSize="xl">
+                <Popover trigger={<Button>Extra Large</Button>} fontSize="xl">
                   <div>Extra large text</div>
                 </Popover>
               </S.ColumnContainer>
@@ -287,22 +266,22 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover trigger={<Button as="div">Thin</Button>} fontWeight="thin">
+                <Popover trigger={<Button>Thin</Button>} fontWeight="thin">
                   <div>Thin text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Light</Button>} fontWeight="light">
+                <Popover trigger={<Button>Light</Button>} fontWeight="light">
                   <div>Light text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Normal</Button>} fontWeight="normal">
+                <Popover trigger={<Button>Normal</Button>} fontWeight="normal">
                   <div>Normal text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Medium</Button>} fontWeight="medium">
+                <Popover trigger={<Button>Medium</Button>} fontWeight="medium">
                   <div>Medium text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Bold</Button>} fontWeight="bold">
+                <Popover trigger={<Button>Bold</Button>} fontWeight="bold">
                   <div>Bold text</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Extra Bold</Button>} fontWeight="extrabold">
+                <Popover trigger={<Button>Extra Bold</Button>} fontWeight="extrabold">
                   <div>Extra bold text</div>
                 </Popover>
               </S.ColumnContainer>
@@ -317,13 +296,13 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover trigger={<Button as="div">Start</Button>} align="start">
+                <Popover trigger={<Button>Start</Button>} align="start">
                   <div>Aligned to start</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Center</Button>} align="center">
+                <Popover trigger={<Button>Center</Button>} align="center">
                   <div>Aligned to center</div>
                 </Popover>
-                <Popover trigger={<Button as="div">End</Button>} align="end">
+                <Popover trigger={<Button>End</Button>} align="end">
                   <div>Aligned to end</div>
                 </Popover>
               </S.ColumnContainer>
@@ -338,13 +317,13 @@ export const PopoverDocs = () => {
             </S.Paragraph>
             <ExampleContainer>
               <S.ColumnContainer>
-                <Popover trigger={<Button as="div">No Offset</Button>} sideOffset={0}>
+                <Popover trigger={<Button>No Offset</Button>} sideOffset={0}>
                   <div>No offset from trigger</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Small Offset</Button>} sideOffset={4}>
+                <Popover trigger={<Button>Small Offset</Button>} sideOffset={4}>
                   <div>Small offset from trigger</div>
                 </Popover>
-                <Popover trigger={<Button as="div">Large Offset</Button>} sideOffset={8}>
+                <Popover trigger={<Button>Large Offset</Button>} sideOffset={8}>
                   <div>Large offset from trigger</div>
                 </Popover>
               </S.ColumnContainer>
@@ -381,7 +360,7 @@ export const PopoverDocs = () => {
             <S.Paragraph>You can pass custom styles directly to the component:</S.Paragraph>
             <ExampleContainer code={customizingExampleCode}>
               <Popover
-                trigger={<Button as="div">Open Popover</Button>}
+                trigger={<Button>Open Popover</Button>}
                 style={{
                   backgroundColor: "red",
                   color: "white",
@@ -397,7 +376,7 @@ export const PopoverDocs = () => {
             <S.Paragraph>You can use the default component classNames:</S.Paragraph>
             <ExampleContainer code={customizingClassExampleCode}>
               <div className="customPopover">
-                <Popover trigger={<Button as="div">Open Popover</Button>}>Custom styled popover</Popover>
+                <Popover trigger={<Button>Open Popover</Button>}>Custom styled popover</Popover>
               </div>
             </ExampleContainer>
           </section>

@@ -24,8 +24,11 @@ describe("SupportDocs", () => {
     expect(screen.getByRole("link", { name: "Open PR" })).toHaveAttribute("href", "https://github.com/vbss-io/vbss-ui")
   })
 
+  const shareStatus = () => screen.getByRole("status")
+
   it("shares the site with the native share sheet when available", async () => {
     const share = vi.fn().mockResolvedValue(undefined)
+    const alert = vi.spyOn(window, "alert").mockImplementation(() => {})
     setNavigator({ share })
     renderWithTheme(<SupportDocs />)
     await userEvent.click(screen.getByRole("button", { name: "Share" }))
@@ -34,15 +37,47 @@ describe("SupportDocs", () => {
       text: "Check out this amazing React component library!",
       url: "https://ui.vbss.io",
     })
+    expect(shareStatus()).toBeEmptyDOMElement()
+    expect(alert).not.toHaveBeenCalled()
   })
 
-  it("copies the link and tells the user when sharing is not available", async () => {
+  it("stays silent when the share sheet is dismissed", async () => {
+    const share = vi.fn().mockRejectedValue(new DOMException("dismissed", "AbortError"))
+    setNavigator({ share })
+    renderWithTheme(<SupportDocs />)
+    await userEvent.click(screen.getByRole("button", { name: "Share" }))
+    expect(share).toHaveBeenCalledTimes(1)
+    expect(shareStatus()).toBeEmptyDOMElement()
+  })
+
+  it("reports a share failure on the page", async () => {
+    setNavigator({ share: vi.fn().mockRejectedValue(new Error("boom")) })
+    renderWithTheme(<SupportDocs />)
+    await userEvent.click(screen.getByRole("button", { name: "Share" }))
+    expect(shareStatus()).toHaveTextContent("Could not share the link")
+  })
+
+  it("copies the link and confirms it on the page when sharing is not available", async () => {
     const writeText = vi.fn().mockResolvedValue(undefined)
     const alert = vi.spyOn(window, "alert").mockImplementation(() => {})
     setNavigator({ clipboard: { writeText } })
     renderWithTheme(<SupportDocs />)
     await userEvent.click(screen.getByRole("button", { name: "Share" }))
     expect(writeText).toHaveBeenCalledWith("https://ui.vbss.io")
-    expect(alert).toHaveBeenCalledWith("Link copied to clipboard!")
+    expect(shareStatus()).toHaveTextContent("Link copied")
+    expect(alert).not.toHaveBeenCalled()
+  })
+
+  it("reports a denied clipboard on the page", async () => {
+    setNavigator({ clipboard: { writeText: vi.fn().mockRejectedValue(new Error("denied")) } })
+    renderWithTheme(<SupportDocs />)
+    await userEvent.click(screen.getByRole("button", { name: "Share" }))
+    expect(shareStatus()).toHaveTextContent("Could not share the link")
+  })
+
+  it("reports when neither sharing nor the clipboard exist", async () => {
+    renderWithTheme(<SupportDocs />)
+    await userEvent.click(screen.getByRole("button", { name: "Share" }))
+    expect(shareStatus()).toHaveTextContent("Could not share the link")
   })
 })

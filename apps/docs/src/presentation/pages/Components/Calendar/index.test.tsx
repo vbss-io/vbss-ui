@@ -47,7 +47,7 @@ describe("CalendarDocs", () => {
     const demo = sectionOf("Select a Date Range")
     expect(demo).not.toHaveTextContent("Selected Range")
     await pickDay(demo, "2026-11-10")
-    expect(demo).toHaveTextContent("Selected Range: 10/11/2026")
+    expect(demo).toHaveTextContent("Selected Range: 10/11/2026 (select end date)")
     await pickDay(demo, "2026-11-14")
     expect(demo).toHaveTextContent("Selected Range: 10/11/2026 - 14/11/2026")
   })

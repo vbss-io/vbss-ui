@@ -207,7 +207,7 @@ export const App = () => {
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       <h3 style={{ fontSize: "1rem", fontWeight: "500", margin: 0 }}>User Actions:</h3>
       <DropdownMenu
-        trigger={<Button as="div">More Actions</Button>}
+        trigger={<Button>More Actions</Button>}
         style={{ padding: "0.75rem" }}
         menuLabel="User Options"
         menus={[

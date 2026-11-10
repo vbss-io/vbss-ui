@@ -1,5 +1,6 @@
 import { Code, Coffee, GithubLogo, Heart, Star, Users } from "@phosphor-icons/react"
 import { Button } from "@vbss-ui/button"
+import { useState } from "react"
 
 import { ContentSidebar } from "@/presentation/components/ContentSidebar"
 
@@ -7,7 +8,30 @@ import * as S from "../styles"
 import { sections } from "./sections"
 import * as SupportS from "./styles"
 
+const shareData = {
+  title: "vbss-ui - Modern React Component Library",
+  text: "Check out this amazing React component library!",
+  url: "https://ui.vbss.io",
+}
+
 export const SupportDocs = () => {
+  const [shareStatus, setShareStatus] = useState("")
+
+  const handleShare = async () => {
+    setShareStatus("")
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData)
+        return
+      }
+      await navigator.clipboard.writeText(shareData.url)
+      setShareStatus("Link copied")
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return
+      setShareStatus("Could not share the link")
+    }
+  }
+
   return (
     <>
       <S.Container>
@@ -143,23 +167,9 @@ export const SupportDocs = () => {
                   <SupportS.SupportCardDescription>
                     Share vbss-ui with your network and help grow our community.
                   </SupportS.SupportCardDescription>
+                  <span role="status">{shareStatus}</span>
                 </SupportS.SupportCardContent>
-                <Button
-                  variant="outline"
-                  size="md"
-                  onClick={() => {
-                    if (navigator.share) {
-                      navigator.share({
-                        title: "vbss-ui - Modern React Component Library",
-                        text: "Check out this amazing React component library!",
-                        url: "https://ui.vbss.io",
-                      })
-                    } else {
-                      navigator.clipboard.writeText("https://ui.vbss.io")
-                      alert("Link copied to clipboard!")
-                    }
-                  }}
-                >
+                <Button variant="outline" size="md" onClick={handleShare}>
                   Share
                 </Button>
               </SupportS.SupportCard>
