@@ -52,7 +52,7 @@ export const DropdownMenu = forwardRef(
           {trigger}
         </Trigger>
       ) : (
-        <Trigger className="dropdownMenuTrigger">{trigger ?? <div />}</Trigger>
+        <Trigger className="dropdownMenuTrigger">{trigger === undefined ? <div /> : trigger}</Trigger>
       )}
       <Portal>
         <Content

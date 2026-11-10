@@ -56,6 +56,11 @@ describe("DropdownMenu", () => {
       expect(trigger.querySelector("div")).not.toBeNull()
     })
 
+    it("renders an empty trigger button when trigger is null", () => {
+      render(<DropdownMenu menus={menus} trigger={null} />)
+      expect(screen.getByRole("button")).toBeEmptyDOMElement()
+    })
+
     it("exposes the display name", () => {
       expect(DropdownMenu.displayName).toBe("DropdownMenu")
     })

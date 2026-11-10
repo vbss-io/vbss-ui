@@ -60,6 +60,11 @@ describe("Tooltip", () => {
       expect(screen.getByRole("button").querySelector("div")).not.toBeNull()
     })
 
+    it("renders an empty trigger button when trigger is null", () => {
+      render(<Tooltip trigger={null}>Text</Tooltip>)
+      expect(screen.getByRole("button")).toBeEmptyDOMElement()
+    })
+
     it("exposes the display name", () => {
       expect(Tooltip.displayName).toBe("Tooltip")
     })
@@ -132,10 +137,31 @@ describe("Tooltip", () => {
     })
 
     it("passes skipDelayDuration to its own provider", async () => {
-      const user = userEvent.setup()
-      renderTooltip({ skipDelayDuration: 0, delayDuration: 0 })
-      await user.hover(screen.getByText("Hover me"))
-      expect(await screen.findByRole("tooltip", {}, { timeout: 300 })).toBeInTheDocument()
+      vi.useFakeTimers({ shouldAdvanceTime: true })
+      try {
+        const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+        renderTooltip({ delayDuration: 500, skipDelayDuration: 0 })
+        const trigger = screen.getByText("Hover me")
+        await user.hover(trigger)
+        await act(async () => {
+          await vi.advanceTimersByTimeAsync(600)
+        })
+        expect(screen.getByRole("tooltip")).toBeInTheDocument()
+        await user.keyboard("{Escape}")
+        expect(trigger).toHaveAttribute("data-state", "closed")
+        await user.unhover(trigger)
+        await act(async () => {
+          await vi.advanceTimersByTimeAsync(10)
+        })
+        await user.hover(trigger)
+        expect(trigger).toHaveAttribute("data-state", "closed")
+        await act(async () => {
+          await vi.advanceTimersByTimeAsync(600)
+        })
+        expect(trigger).toHaveAttribute("data-state", "delayed-open")
+      } finally {
+        vi.useRealTimers()
+      }
     })
   })
 

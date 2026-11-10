@@ -50,7 +50,7 @@ export const Tooltip = forwardRef(
             {trigger}
           </Trigger>
         ) : (
-          <Trigger className="tooltipTrigger">{trigger ?? <div />}</Trigger>
+          <Trigger className="tooltipTrigger">{trigger === undefined ? <div /> : trigger}</Trigger>
         )}
         <Content
           side={side}
