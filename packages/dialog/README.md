@@ -25,7 +25,7 @@ import { Button } from "@vbss-ui/button"
 export const App = () => {
   return (
     <Dialog
-      trigger={<Button as="div">Open Dialog</Button>}
+      trigger={<Button>Open Dialog</Button>}
       title="Dialog Title"
       description="Dialog Description"
     >
@@ -48,7 +48,7 @@ import { Button } from "@vbss-ui/button"
 export const App = () => {
   return (
     <Dialog
-      trigger={<Button as="div">Open Dialog</Button>}
+      trigger={<Button>Open Dialog</Button>}
       variant="secondary"
       rounded="lg"
       border={true}
@@ -68,7 +68,7 @@ import { Button } from "@vbss-ui/button"
 export const App = () => {
   return (
     <Dialog
-      trigger={<Button as="div">Open Dialog</Button>}
+      trigger={<Button>Open Dialog</Button>}
       title="Dialog Title"
       footer={
         <div>
@@ -97,7 +97,7 @@ export const App = () => {
     <Dialog
       open={isOpen}
       onOpenChange={setIsOpen}
-      trigger={<Button as="div">Open Dialog</Button>}
+      trigger={<Button>Open Dialog</Button>}
       title="Dialog Title"
     >
       <div>Dialog Content</div>
@@ -122,7 +122,7 @@ return (
   <Dialog
     open={isOpen}
     onOpenChange={handleOpenChange}
-    trigger={<Button as="div">Open Dialog</Button>}
+    trigger={<Button>Open Dialog</Button>}
     hideClose
   >
     <div>This dialog can't be closed</div>
@@ -138,10 +138,10 @@ return (
 |--------------------|--------------------------------------------------|-------------------------------------------------------|-----------|
 | `variant`          | `primary` \| `secondary` \| `outline` \| `ghost` | Defines the visual style of the Dialog.               | `primary` |
 | `rounded`          | `none` \| `sm` \| `md` \| `lg` \| `full`         | Sets the border radius of the Dialog.                 | `md`      |
-| `trigger`          | `React.ReactNode`                                | The element that triggers the Dialog.                 | `<div />` |
+| `trigger`          | `React.ReactNode`                                | The element that triggers the Dialog. An element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button. | `<div />` |
 | `overlayOpacity`   | `number`                                         | Sets the opacity of the overlay (0-100).              | `50`      |
 | `border`           | `boolean`                                        | Adds a border to the Dialog.                          | `false`   |
-| `title`            | `React.ReactNode`                                | The title of the Dialog.                              | `""`      |
+| `title`            | `React.ReactNode`                                | The title of the Dialog. Without it, the title is visually hidden and shows the `aria-label`. | `""`      |
 | `description`      | `React.ReactNode`                                | The description text of the Dialog.                   | `""`      |
 | `footer`           | `React.ReactNode`                                | Content to be displayed in the footer.                | `-`       |
 | `disableTextColor` | `boolean`                                        | Disable variant-based text color.                     | `false`   |
@@ -150,6 +150,15 @@ return (
 | `onOpenChange`     | `(open: boolean) => void`                        | Callback when the dialog's open state changes.        | `-`       |
 | `className`        | `string`                                         | Additional CSS classes for custom styling.            | `-`       |
 | `style`            | `React.CSSProperties`                            | Additional style for custom styling.                  | `-`       |
+| `aria-label`       | `string`                                         | The accessible name of the Dialog when there is no `title`. | `-`       |
+
+---
+
+## **Migration**
+
+When `trigger` is an element, it becomes the trigger itself and must be focusable: use a button (for example `<Button>`) instead of a `span`, an icon or `<Button as="div">`. A string, `null` or any other node is still wrapped in the trigger button.
+
+Without `title`, pass an `aria-label` so the dialog has an accessible name.
 
 ---
 
@@ -159,7 +168,7 @@ You can extend the default styles by passing custom styles using className or st
 
 ```jsx
 <Dialog
-  trigger={<Button as="div">Open Dialog</Button>}
+  trigger={<Button>Open Dialog</Button>}
   style={{
     backgroundColor: "red"
   }}
@@ -190,7 +199,7 @@ import "./custom.css"
 
 export const App = () => {
   return (
-    <Dialog trigger={<Button as="div">Open Dialog</Button>}>
+    <Dialog trigger={<Button>Open Dialog</Button>}>
       Custom styled dialog
     </Dialog>
   )
