@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ComponentPropsWithRef, ElementType, JSXElementConstructor } from "react"
+import { ComponentPropsWithoutRef, ComponentPropsWithRef, ElementType, JSXElementConstructor, ReactNode } from "react"
 
 type ClassValue = string | false | null | undefined
 
@@ -35,4 +35,9 @@ type PolymorphicComponentPropsWithRef<C extends ElementType, Props = object> = P
   ref?: PolymorphicRef<C>
 }
 
-export type ExtendableComponentProps<C extends ElementType, D> = PolymorphicComponentPropsWithRef<C, D>
+export type ExtendableComponentProps<C extends ElementType, D> = PolymorphicComponentPropsWithRef<C, Omit<D, "ref">>
+
+export type PolymorphicComponent<DefaultElement extends ElementType, Props> = {
+  <C extends ElementType = DefaultElement>(props: ExtendableComponentProps<C, Props>): ReactNode
+  displayName?: string
+}
