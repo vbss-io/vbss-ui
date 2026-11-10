@@ -33,4 +33,15 @@ describe("WhatsNew", () => {
     renderWithTheme(<WhatsNew entries={entries} />)
     expect(screen.getByText("What's new")).toBeInTheDocument()
   })
+
+  it("is a real button that Tab reaches and Enter activates to open the dialog", async () => {
+    renderWithTheme(<WhatsNew title="Recent" entries={entries} />)
+    await userEvent.tab()
+    const trigger = screen.getByRole("button", { name: /Recent/ })
+    expect(trigger.tagName).toBe("BUTTON")
+    expect(trigger).toHaveFocus()
+    await userEvent.keyboard("{Enter}")
+    expect(await screen.findByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByText("Added dark mode")).toBeInTheDocument()
+  })
 })

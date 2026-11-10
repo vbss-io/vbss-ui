@@ -32,7 +32,6 @@ export const WhatsNew = ({ title = "What's new", entries = [] }: WhatsNewProps) 
     <S.Container>
       <S.TriggerWrapper>
         <Button
-          as="div"
           variant="outline"
           size="sm"
           onClick={() => setOpen(true)}
