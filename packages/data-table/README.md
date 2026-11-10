@@ -118,15 +118,18 @@ export const App = () => {
 
 ```jsx
 import { DataTable } from "@vbss-ui/data-table";
+import { useState } from "react";
 
 export const App = () => {
+  const [page, setPage] = useState(1);
+
   return (
     <DataTable
       columns={columns}
       data={data}
       pageSize={10}
-      page={1}
-      onPageChange={(page) => console.log("Page changed:", page)}
+      page={page}
+      onPageChange={setPage}
     />
   );
 };
@@ -195,9 +198,9 @@ const columns = [
 | `initialSort`   | `{ columnId: string; direction: 'asc' \| 'desc' } \| null`                                    | Initial sort state (uncontrolled mode)              | `null`  |
 | `sort`          | `{ columnId: string; direction: 'asc' \| 'desc' } \| null`                                   | Controlled sort state                              | `-`     |
 | `onSortChange`  | `(next: SortState) => void`                                                                  | Callback when sort changes (controlled mode)        | `-`     |
-| `pageSize`      | `number`                                                                                      | Number of items per page (enables pagination)      | `-`     |
-| `page`          | `number`                                                                                      | Current page number (controlled mode)               | `-`     |
-| `onPageChange`  | `(page: number) => void`                                                                      | Callback when page changes (controlled mode)        | `-`     |
+| `pageSize`      | `number`                                                                                      | Number of rows per page. Requires `page` and `onPageChange`; there are no built-in pagination controls | `-`     |
+| `page`          | `number`                                                                                      | Current page number. Without it, only the first page is shown | `-`     |
+| `onPageChange`  | `(page: number) => void`                                                                      | Callback to change the page; also called with 1 when the sort changes | `-`     |
 | `label`         | `React.ReactNode`                                                                             | Optional label displayed above the table           | `-`     |
 | `emptyState`    | `React.ReactNode`                                                                             | Content to display when data is empty              | `-`     |
 | `variant`       | `'primary' \| 'secondary' \| 'outline' \| 'ghost'`                                           | Visual style variant (from Table component)        | `-`     |
@@ -217,8 +220,9 @@ const columns = [
 | `id`           | `string`                               | Unique identifier for the column                              | `-`     |
 | `header`       | `React.ReactNode`                     | Header content (supports ReactNode)                           | `-`     |
 | `accessor`      | `(row: T) => React.ReactNode`         | Function to extract cell value from row data                  | `-`     |
-| `sortable`      | `boolean`                              | Whether the column can be sorted                              | `false` |
-| `sortAccessor` | `(row: T) => string \| number \| Date` | Optional function for sorting (defaults to accessor result)  | `-`     |
+| `sortable`      | `boolean`                              | Whether the column can be sorted. Needs a `sortAccessor`, or an `accessor` that returns a string, number or Date in every row | `false` |
+| `sortAccessor` | `(row: T) => string \| number \| Date` | Optional function for sorting (defaults to accessor result). Required to sort a column whose accessor returns JSX | `-`     |
+| `headerLabel`  | `string`                               | Text used in the sort `aria-label` when `header` is not a string or number (falls back to `id`) | `-`     |
 | `width`         | `number \| string`                     | Column width (number in px, or CSS string)                    | `-`     |
 | `align`         | `'left' \| 'center' \| 'right'`       | Column alignment                                               | `'left'` |
 
@@ -230,16 +234,16 @@ const columns = [
 - **Controlled Mode**: Use `sort` and `onSortChange` props. Parent controls sort state
 - **Sort Indicators**: Visual arrows (↑↓) show current sort direction
 - **Keyboard Support**: Press Enter or Space on sortable headers to toggle sort
+- **Sortable Columns**: A column with `sortable` is only sortable when it has a `sortAccessor` or its `accessor` returns a string, number or Date in every row. Columns that return JSX without a `sortAccessor` lose the sort control
 - **Accessibility**: Headers include `aria-label` and proper ARIA attributes
 
 ---
 
 ## **Pagination Behavior**
 
-- **Enabled**: Set `pageSize` prop to enable pagination
-- **Uncontrolled Mode**: Component manages page state internally (starts at page 1)
-- **Controlled Mode**: Use `page` and `onPageChange` props
-- **Auto-reset**: When sorting changes, page resets to 1
+- **Page size**: `pageSize` sets the number of rows per page; the table has no built-in pagination controls
+- **Controlled Mode**: `pageSize` needs `page` and `onPageChange` controlled by the parent. Without `page`, only the first page is shown
+- **Auto-reset**: When sorting changes, page resets to 1 (with controlled `page`, `onPageChange(1)` is called)
 - **Calculation**: `totalPages = Math.ceil(sortedData.length / pageSize)`
 
 ---
