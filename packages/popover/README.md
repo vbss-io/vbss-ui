@@ -25,7 +25,7 @@ import { Button } from "@vbss-ui/button"
 export const App = () => {
   return (
     <Popover
-      trigger={<Button as="div">Click Me</Button>}
+      trigger={<Button>Click Me</Button>}
       variant="primary"
     >
       <div>Popover Content</div>
@@ -47,7 +47,7 @@ import { Button } from "@vbss-ui/button"
 export const App = () => {
   return (
     <Popover
-      trigger={<Button as="div">Primary</Button>}
+      trigger={<Button>Primary</Button>}
       variant="primary"
       size="xs"
       side="top"
@@ -69,13 +69,23 @@ export const App = () => {
 | `rounded`    | `none` \| `sm` \| `md` \| `lg` \| `full`                           | Sets the border radius of the Popover.                | `md`      |
 | `fontSize`   | `xs` \| `sm` \| `md` \| `lg` \| `xl`                               | Sets the font size of the Popover content.            | `md`      |
 | `fontWeight` | `thin` \| `light` \| `normal` \| `medium` \| `bold` \| `extrabold` | Sets the font weight of the Popover content.          | `normal`  |
-| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Popover.                | `<div />` |
+| `trigger`    | `React.ReactNode`                                                  | The element that triggers the Popover. An element becomes the trigger itself and must be focusable (use a button); any other node is wrapped in a button. | `<div />` |
 | `side`       | `top` \| `right` \| `bottom` \| `left`                             | Sets the position of the Popover.                     | `bottom`  |
 | `align`      | `start` \| `center` \| `end`                                       | Sets the alignment of the Popover.                    | `center`  |
 | `sideOffset` | `number`                                                           | Sets the offset from the trigger element.             | `4`       |
+| `open`       | `boolean`                                                          | Controls whether the Popover is open or closed.       | `-`       |
+| `defaultOpen` | `boolean`                                                         | Whether the Popover starts open when uncontrolled.    | `-`       |
+| `onOpenChange` | `(open: boolean) => void`                                        | Callback when the open state changes.                 | `-`       |
+| `modal`      | `boolean`                                                          | Whether the Popover is modal.                         | `-`       |
 | `ref`        | `React.Ref`                                                        | Allows accessing the underlying DOM element.          | `-`       |
 | `className`  | `string`                                                           | Additional CSS classes for custom styling.            | `-`       |
 | `style`      | `React.CSSProperties`                                              | Additional style for custom styling.                  | `-`       |
+
+---
+
+## **Migration**
+
+When `trigger` is an element, it becomes the trigger itself and must be focusable: use a button (for example `<Button>`) instead of a `span`, an icon or `<Button as="div">`. A string, `null` or any other node is still wrapped in the trigger button.
 
 ---
 
@@ -85,7 +95,7 @@ You can extend the default styles by passing custom styles using className or st
 
 ```jsx
 <Popover
-  trigger={<Button as="div">Open Popover</Button>}
+  trigger={<Button>Open Popover</Button>}
   style={{
     backgroundColor: "red"
   }}
@@ -112,7 +122,7 @@ import "./custom.css"
 
 export const App = () => {
   return (
-    <Popover trigger={<Button as="div">Open Popover</Button>}>
+    <Popover trigger={<Button>Open Popover</Button>}>
       Custom styled popover
     </Popover>
   )
