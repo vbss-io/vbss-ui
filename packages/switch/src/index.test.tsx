@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { createRef } from "react"
+import { createRef, FormEvent } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Switch, switchLabelStyles, switchStyles, switchThumbStyles } from "./index"
 
@@ -163,8 +163,20 @@ describe("Switch", () => {
 
     it("calls onChange with the new checked value", async () => {
       const user = userEvent.setup()
-      const onChange = vi.fn()
-      render(<Switch onChange={onChange as never} />)
+      const received: boolean[] = []
+      const onChange = (checked: boolean) => {
+        received.push(checked)
+      }
+      render(<Switch onChange={onChange} />)
+      await user.click(screen.getByRole("switch"))
+      expect(received).toEqual([true])
+    })
+
+    it("rejects an onChange typed as a form event handler at compile time", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn((event: FormEvent<HTMLButtonElement>) => event)
+      // @ts-expect-error onChange receives the checked state, not an event
+      render(<Switch onChange={onChange} />)
       await user.click(screen.getByRole("switch"))
       expect(onChange).toHaveBeenCalledWith(true)
     })
@@ -173,7 +185,7 @@ describe("Switch", () => {
       const user = userEvent.setup()
       const onChange = vi.fn()
       const onCheckedChange = vi.fn()
-      render(<Switch onChange={onChange as never} onCheckedChange={onCheckedChange} />)
+      render(<Switch onChange={onChange} onCheckedChange={onCheckedChange} />)
       await user.click(screen.getByRole("switch"))
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(onChange).toHaveBeenCalledWith(true)

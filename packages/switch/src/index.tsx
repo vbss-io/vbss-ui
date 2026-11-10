@@ -4,9 +4,10 @@ import { cva, VariantProps } from "class-variance-authority"
 import { ComponentPropsWithoutRef, ElementType, forwardRef, ReactNode, useId } from "react"
 import "./index.css"
 
-type SwitchProps = ComponentPropsWithoutRef<typeof Root> &
+type SwitchProps = Omit<ComponentPropsWithoutRef<typeof Root>, "onChange"> &
   VariantProps<typeof switchStyles> &
   VariantProps<typeof switchLabelStyles> & {
+    onChange?: (checked: boolean) => void
     inverted?: boolean
     iconOn?: ReactNode
     iconOff?: ReactNode
@@ -42,10 +43,8 @@ export const Switch = forwardRef(
     const generatedId = useId()
     const inputId = props.id ?? generatedId
 
-    const notifyChange = onChange as unknown as ((checked: boolean) => void) | undefined
-
     const handleCheckedChange = (checked: boolean) => {
-      notifyChange?.(checked)
+      onChange?.(checked)
       onCheckedChange?.(checked)
     }
 
