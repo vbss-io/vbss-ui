@@ -1,25 +1,26 @@
 import { Content, Portal, Root, Trigger } from "@radix-ui/react-popover"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentPropsWithoutRef, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentProps, ComponentPropsWithoutRef, ElementType, forwardRef, isValidElement, ReactNode } from "react"
 import "./index.css"
 
 export type PopoverProps = ComponentPropsWithoutRef<typeof Content> &
-  VariantProps<typeof popoverStyles> & {
+  VariantProps<typeof popoverStyles> &
+  Pick<ComponentProps<typeof Root>, "open" | "defaultOpen" | "onOpenChange" | "modal"> & {
     trigger?: ReactNode
   }
 
 export type ExtendablePopoverProps<C extends ElementType> = ExtendableComponentProps<C, PopoverProps>
 
-export type PopoverComponent = ForwardRefExoticComponent<ExtendablePopoverProps<ElementType> & RefAttributes<ElementType>>
+export type PopoverComponent = PolymorphicComponent<"div", PopoverProps>
 
 /**
  * A customizable and accessible Popover component that displays content in a floating container next to a trigger element.
  */
-export const Popover: PopoverComponent = forwardRef(
+export const Popover = forwardRef(
   <C extends ElementType>(
     {
-      trigger = <div />,
+      trigger,
       side,
       variant,
       size,
@@ -29,12 +30,18 @@ export const Popover: PopoverComponent = forwardRef(
       className,
       align = "center",
       sideOffset = 4,
+      open,
+      defaultOpen,
+      onOpenChange,
+      modal,
       ...props
     }: ExtendablePopoverProps<C>,
     ref?: PolymorphicRef<C>
   ) => (
-    <Root>
-      <Trigger className="popoverTrigger">{trigger}</Trigger>
+    <Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} modal={modal}>
+      <Trigger className="popoverTrigger" asChild={isValidElement(trigger)}>
+        {trigger === undefined ? <div /> : trigger}
+      </Trigger>
       <Portal>
         <Content
           side={side}
@@ -49,16 +56,16 @@ export const Popover: PopoverComponent = forwardRef(
       </Portal>
     </Root>
   )
-)
+) as PopoverComponent
 
 Popover.displayName = "Popover"
 
 export const popoverStyles = cva(
-  "z-50 overflow-hiddenanimate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  "z-50 overflow-hidden animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   {
     variants: {
       variant: {
-        primary: "bg-primary bg-primary text-white",
+        primary: "bg-primary text-white",
         secondary: "bg-secondary text-white",
         outline: "bg-background border border-primary text-primary",
       },
