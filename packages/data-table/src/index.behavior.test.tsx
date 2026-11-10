@@ -1,8 +1,8 @@
 import { render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useState } from "react"
+import { createRef, useState } from "react"
 import { describe, expect, it, vi } from "vitest"
-import { DataTable, type DataTableColumn, type SortState } from "./index"
+import { DataTable, type DataTableColumn, type DataTableComponent, type SortState } from "./index"
 
 interface Product {
   sku: string
@@ -361,6 +361,196 @@ describe("DataTable behavior", () => {
 
     it("exposes its displayName", () => {
       expect((DataTable as { displayName?: string }).displayName).toBe("DataTable")
+    })
+  })
+
+  describe("cells keyed by column position", () => {
+    type Wide = { a: string; b: string; c: string; d: string }
+    const row: Wide = { a: "va", b: "vb", c: "vc", d: "vd" }
+
+    it("keeps cells aligned with headers when column ids are className, style and numeric", () => {
+      const wide: DataTableColumn<Wide>[] = [
+        { id: "2", header: "H2", accessor: (r) => r.a },
+        { id: "className", header: "HC", accessor: (r) => r.b },
+        { id: "1", header: "H1", accessor: (r) => r.c },
+        { id: "style", header: "HS", accessor: (r) => r.d },
+      ]
+      render(<DataTable columns={wide} data={[row]} />)
+      const headers = screen.getAllByRole("columnheader").map((cell) => cell.textContent)
+      const cells = within(screen.getAllByRole("row")[1])
+        .getAllByRole("cell")
+        .map((cell) => cell.textContent)
+      expect(headers).toEqual(["H2", "HC", "H1", "HS"])
+      expect(cells).toEqual(["va", "vb", "vc", "vd"])
+    })
+
+    it("does not turn a column cell into the row class or style", () => {
+      const wide: DataTableColumn<Wide>[] = [
+        { id: "className", header: "HC", accessor: (r) => r.a },
+        { id: "style", header: "HS", accessor: (r) => r.b },
+      ]
+      render(<DataTable columns={wide} data={[row]} />)
+      const dataRow = screen.getAllByRole("row")[1]
+      expect(dataRow).not.toHaveClass("va")
+      expect(dataRow).not.toHaveAttribute("style")
+      expect(within(dataRow).getAllByRole("cell")).toHaveLength(2)
+    })
+  })
+
+  describe("sortability of columns with ReactNode content", () => {
+    const jsxColumn: DataTableColumn<Product> = {
+      id: "link",
+      header: "Link",
+      accessor: (r) => <a href={`/p/${r.sku}`}>{r.name}</a>,
+      sortable: true,
+    }
+
+    it("does not expose a sort control on a column whose accessor returns JSX without sortAccessor", () => {
+      render(<DataTable columns={[jsxColumn]} data={products} />)
+      const headerCell = screen.getByRole("columnheader", { name: "Link" })
+      expect(screen.queryByRole("button")).not.toBeInTheDocument()
+      expect(headerCell.querySelector("[tabindex]")).toBeNull()
+      expect(headerCell.querySelector("[aria-label]")).toBeNull()
+      expect(headerCell.querySelector("[aria-hidden='true']")).toBeNull()
+    })
+
+    it("ignores an initialSort that points to a JSX column without sortAccessor", () => {
+      render(<DataTable columns={[jsxColumn]} data={products} initialSort={{ columnId: "link", direction: "desc" }} />)
+      expect(firstColumn()).toEqual(["Cherry", "apple", "Banana"])
+    })
+
+    it("sorts a JSX column when a sortAccessor is given", async () => {
+      const user = userEvent.setup()
+      render(<DataTable columns={[{ ...jsxColumn, sortAccessor: (r) => r.name.toLowerCase() }]} data={products} />)
+      await user.click(screen.getByRole("button", { name: /^Link:/ }))
+      expect(firstColumn()).toEqual(["apple", "Banana", "Cherry"])
+    })
+
+    it("is not sortable when only some rows return a primitive", () => {
+      const mixed: DataTableColumn<Product> = {
+        id: "mixed",
+        header: "Mixed",
+        accessor: (r) => (r.sku === "a" ? <b>{r.name}</b> : r.name),
+        sortable: true,
+      }
+      render(<DataTable columns={[mixed]} data={products} />)
+      expect(screen.queryByRole("button")).not.toBeInTheDocument()
+    })
+  })
+
+  describe("sort accessible name", () => {
+    const base: DataTableColumn<Product> = { id: "name", header: <em>Name</em>, accessor: (r) => r.name, sortable: true }
+
+    it("uses headerLabel for a JSX header", () => {
+      render(<DataTable columns={[{ ...base, headerLabel: "Product name" }]} data={products} />)
+      expect(screen.getByRole("button", { name: "Product name: Activate to sort" })).toBeInTheDocument()
+    })
+
+    it("falls back to the column id for a JSX header without headerLabel", () => {
+      render(<DataTable columns={[base]} data={products} />)
+      const control = screen.getByRole("button", { name: "name: Activate to sort" })
+      expect(control.getAttribute("aria-label")).not.toContain("[object Object]")
+    })
+
+    it("uses the header itself when it is a string or a number", () => {
+      render(
+        <DataTable
+          columns={[
+            { ...base, id: "s", header: "Text" },
+            { ...base, id: "n", header: 42 },
+          ]}
+          data={products}
+        />
+      )
+      expect(screen.getByRole("button", { name: "Text: Activate to sort" })).toBeInTheDocument()
+      expect(screen.getByRole("button", { name: "42: Activate to sort" })).toBeInTheDocument()
+    })
+
+    it("prefers headerLabel over a string header", () => {
+      render(<DataTable columns={[{ ...base, header: "Name", headerLabel: "Label" }]} data={products} />)
+      expect(screen.getByRole("button", { name: "Label: Activate to sort" })).toBeInTheDocument()
+    })
+  })
+
+  describe("pageSize without a controlled page", () => {
+    const many: Product[] = Array.from({ length: 5 }, (_, index) => ({
+      sku: `s${index}`,
+      name: `Item ${index + 1}`,
+      price: index,
+      addedAt: new Date(2024, 0, index + 1),
+    }))
+
+    it("shows only the first rows and logs nothing", async () => {
+      const user = userEvent.setup()
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined)
+      const error = vi.spyOn(console, "error").mockImplementation(() => undefined)
+      render(<DataTable columns={columns} data={many} pageSize={2} />)
+      expect(firstColumn()).toEqual(["Item 1", "Item 2"])
+      await user.click(header("Price"))
+      expect(firstColumn()).toEqual(["Item 1", "Item 2"])
+      expect(warn).not.toHaveBeenCalled()
+      expect(error).not.toHaveBeenCalled()
+      warn.mockRestore()
+      error.mockRestore()
+    })
+  })
+
+  describe("sort change resets the page", () => {
+    it("reports page 1 when the sort is controlled and the page is controlled", async () => {
+      const user = userEvent.setup()
+      const onSortChange = vi.fn()
+      const onPageChange = vi.fn()
+      render(
+        <DataTable
+          columns={columns}
+          data={products}
+          pageSize={2}
+          page={2}
+          onPageChange={onPageChange}
+          sort={null}
+          onSortChange={onSortChange}
+        />
+      )
+      await user.click(header("Name"))
+      expect(onSortChange).toHaveBeenCalledWith({ columnId: "name", direction: "asc" })
+      expect(onPageChange).toHaveBeenCalledTimes(1)
+      expect(onPageChange).toHaveBeenCalledWith(1)
+    })
+
+    it("does not require onPageChange when the sort is controlled", async () => {
+      const user = userEvent.setup()
+      const onSortChange = vi.fn()
+      render(<DataTable columns={columns} data={products} pageSize={2} page={2} sort={null} onSortChange={onSortChange} />)
+      await user.click(header("Name"))
+      expect(onSortChange).toHaveBeenCalledTimes(1)
+    })
+
+    it("keeps an uncontrolled page on 1 when the sort is controlled", async () => {
+      const user = userEvent.setup()
+      render(<DataTable columns={columns} data={products} pageSize={2} sort={null} onSortChange={vi.fn()} />)
+      await user.click(header("Name"))
+      expect(firstColumn()).toEqual(["Cherry", "apple"])
+    })
+  })
+
+  describe("ref typing", () => {
+    it("accepts a ref object typed as the rendered table", () => {
+      const ref = createRef<HTMLTableElement>()
+      render(<DataTable ref={ref} columns={columns} data={products} />)
+      expect(ref.current).toBe(screen.getByRole("table"))
+    })
+
+    it("rejects a ref object typed as another element", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a table ref cannot be a div ref
+      render(<DataTable ref={ref} columns={columns} data={products} />)
+      expect(screen.getByRole("table")).toBeInTheDocument()
+    })
+
+    it("is assignable to the exported DataTableComponent type", () => {
+      const Typed: DataTableComponent = DataTable
+      render(<Typed columns={columns} data={products} />)
+      expect(screen.getByRole("table")).toBeInTheDocument()
     })
   })
 })
