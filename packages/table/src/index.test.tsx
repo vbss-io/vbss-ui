@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react"
+import { createRef } from "react"
 import { describe, expect, it } from "vitest"
 import { footerStyle, headerStyle, heightTable, rowStyle, Table, tableStyles, variantTable } from "./index"
 
@@ -71,12 +72,23 @@ describe("Table", () => {
       expect(screen.queryByText("ignored")).toBeNull()
     })
 
-    it("applies the row className and style to its cells", () => {
-      render(<Table rows={[{ a: "x", b: "y", className: "row-class", style: { color: "red" } }]} />)
+    it("applies the row className and style to the row, not to its cells", () => {
+      const { container } = render(<Table rows={[{ a: "x", b: "y", className: "row-class", style: { color: "red" } }]} />)
+      const row = container.querySelector(".btr") as HTMLElement
+      expect(row).toHaveClass("row-class", "btr", "border-b")
+      expect(row).toHaveStyle({ color: "rgb(255, 0, 0)" })
       screen.getAllByRole("cell").forEach((cell) => {
-        expect(cell).toHaveClass("row-class")
-        expect(cell).toHaveStyle({ color: "rgb(255, 0, 0)" })
+        expect(cell).not.toHaveClass("row-class")
+        expect(cell.getAttribute("style")).toBeNull()
       })
+    })
+
+    it("styles only the rows that carry className or style", () => {
+      const { container } = render(<Table rows={[{ a: "x", className: "first" }, { a: "y" }]} />)
+      const [first, second] = Array.from(container.querySelectorAll(".btr"))
+      expect(first).toHaveClass("first")
+      expect(second).not.toHaveClass("first")
+      expect(second.getAttribute("style")).toBeNull()
     })
 
     it("applies the header className and style", () => {
@@ -103,6 +115,19 @@ describe("Table", () => {
         />
       )
       expect(received).toBe(screen.getByRole("table"))
+    })
+
+    it("accepts a ref object typed as the rendered table", () => {
+      const ref = createRef<HTMLTableElement>()
+      render(<Table ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("table"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit a table
+      render(<Table ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("table"))
     })
 
     it("passes native table attributes through", () => {
@@ -142,11 +167,32 @@ describe("Table", () => {
       }
     )
 
-    it("applies the outline footer style only to the outline variant", () => {
-      const { container, rerender } = render(<Table variant="outline" footer={{ content: ["a"] }} />)
-      expect(container.querySelector("tfoot")).toHaveClass(...footerStyle.outline.split(" "))
-      rerender(<Table variant="primary" footer={{ content: ["a"] }} />)
-      expect(container.querySelector("tfoot")).not.toHaveClass("text-primary")
+    it("styles the ghost header with a transparent background", () => {
+      render(<Table variant="ghost" headers={headers} />)
+      expect(headerStyle.ghost).toContain("bg-transparent")
+      screen.getAllByRole("columnheader").forEach((header) => expect(header).toHaveClass("bg-transparent"))
+    })
+
+    it.each([
+      ["primary", ["bg-primary", "text-white"]],
+      ["secondary", ["bg-secondary", "text-white"]],
+      ["outline", ["border-primary", "text-primary"]],
+      ["ghost", ["bg-transparent"]],
+    ] as const)("styles the %s footer to match its header", (variant, expected) => {
+      const { container } = render(<Table variant={variant} footer={{ content: ["a"] }} />)
+      expect(footerStyle[variant]).toBe(expected.join(" "))
+      expect(container.querySelector("tfoot")).toHaveClass(...expected)
+    })
+
+    it("does not leak a footer style of another variant", () => {
+      const { container } = render(<Table variant="primary" footer={{ content: ["a"] }} />)
+      expect(container.querySelector("tfoot")).not.toHaveClass("text-primary", "bg-secondary")
+    })
+
+    it("offers the full radius as rounded-3xl", () => {
+      const { container } = render(<Table rounded="full" />)
+      expect(tableStyles({ rounded: "full" })).toContain("rounded-3xl")
+      expect(container.querySelector(".tableContainer")).toHaveClass("rounded-3xl")
     })
 
     it("applies rounded and outline to the container", () => {

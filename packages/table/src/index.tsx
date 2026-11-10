@@ -1,14 +1,6 @@
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import {
-  ComponentProps,
-  CSSProperties,
-  ElementType,
-  forwardRef,
-  ForwardRefExoticComponent,
-  ReactNode,
-  RefAttributes,
-} from "react"
+import { ComponentProps, CSSProperties, ElementType, forwardRef, ReactNode } from "react"
 import "./index.css"
 
 type TableHeaderProps = {
@@ -39,12 +31,12 @@ type TableProps = ComponentProps<"table"> &
 
 export type ExtendableTableProps<C extends ElementType> = ExtendableComponentProps<C, TableProps>
 
-export type TableComponent = ForwardRefExoticComponent<ExtendableTableProps<ElementType> & RefAttributes<ElementType>>
+export type TableComponent = PolymorphicComponent<"table", TableProps>
 
 /**
  * A customizable and accessible Table component.
  */
-export const Table: TableComponent = forwardRef(
+export const Table = forwardRef(
   <C extends ElementType>(
     {
       variant = "primary",
@@ -87,20 +79,23 @@ export const Table: TableComponent = forwardRef(
           )}
           <tbody className={cn("tbody [&_tr:last-child]:border-0")}>
             {rows?.map((row, index) => (
-              <tr className={cn("btr border-b transition-colors", variant && rowStyle[variant])} key={`body-${index}`}>
+              <tr
+                className={cn(
+                  "btr border-b transition-colors",
+                  variant && rowStyle[variant],
+                  typeof row.className === "string" && row.className
+                )}
+                style={typeof row.style === "object" ? (row.style as CSSProperties) : undefined}
+                key={`body-${index}`}
+              >
                 {Object.keys(row)
                   .filter((r) => r !== "className" && r !== "style")
                   .map((key, index) => (
                     <td
                       key={`body-row-${index}`}
-                      className={cn(
-                        "btd px-4 align-middle [&:has([role=checkbox])]:pr-0",
-                        heightTable({ height }),
-                        typeof row.className === "string" && row.className
-                      )}
-                      style={typeof row?.style === "object" ? (row.style as CSSProperties) : {}}
+                      className={cn("btd px-4 align-middle [&:has([role=checkbox])]:pr-0", heightTable({ height }))}
                     >
-                      {!["className", "style"].includes(key) && (row[key] as string | ReactNode)}
+                      {row[key] as string | ReactNode}
                     </td>
                   ))}
               </tr>
@@ -132,7 +127,7 @@ export const Table: TableComponent = forwardRef(
       </div>
     )
   }
-)
+) as TableComponent
 
 Table.displayName = "Table"
 
@@ -184,6 +179,7 @@ export const tableStyles = cva("", {
       md: "rounded-md",
       lg: "rounded-lg",
       xl: "rounded-xl",
+      full: "rounded-3xl",
     },
     outline: {
       true: "border border-primary",
@@ -199,6 +195,7 @@ export const headerStyle: { [key: string]: string } = {
   primary: "bg-primary text-white",
   secondary: "bg-secondary text-white",
   outline: "bg-transparent text-primary",
+  ghost: "bg-transparent",
 }
 
 export const rowStyle: { [key: string]: string } = {
@@ -209,5 +206,8 @@ export const rowStyle: { [key: string]: string } = {
 }
 
 export const footerStyle: { [key: string]: string } = {
+  primary: "bg-primary text-white",
+  secondary: "bg-secondary text-white",
   outline: "border-primary text-primary",
+  ghost: "bg-transparent",
 }
