@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useState } from "react"
+import { createRef, useState } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { Input, inputErrorStyles, inputIconStyles, inputLabelStyles, inputStyles } from "./index"
 
@@ -39,6 +39,26 @@ describe("Input", () => {
       render(<Input id="email" label="Email" />)
       expect(screen.getByRole("textbox")).toHaveAttribute("id", "email")
       expect(screen.getByText("Email")).toHaveAttribute("for", "email")
+    })
+
+    it("keeps a stable generated id between rerenders and links the label", () => {
+      const { rerender } = render(<Input label="Name" />)
+      const first = screen.getByLabelText("Name").getAttribute("id")
+      expect(first).toBeTruthy()
+      rerender(<Input label="Name" placeholder="again" />)
+      rerender(<Input label="Name" placeholder="third" />)
+      expect(screen.getByLabelText("Name")).toHaveAttribute("id", first as string)
+      expect(screen.getByText("Name")).toHaveAttribute("for", first as string)
+    })
+
+    it("generates a different id for each input", () => {
+      render(
+        <>
+          <Input label="A" />
+          <Input label="B" />
+        </>
+      )
+      expect(screen.getByLabelText("A").id).not.toBe(screen.getByLabelText("B").id)
     })
 
     it("renders the number type", () => {
@@ -94,6 +114,29 @@ describe("Input", () => {
     it("applies the custom className", () => {
       render(<Input className="custom-input" />)
       expect(screen.getByRole("textbox")).toHaveClass("custom-input")
+    })
+
+    it("applies the disabled variant classes when disabled", () => {
+      render(<Input disabled />)
+      expect(screen.getByRole("textbox")).toHaveClass("cursor-not-allowed", "disabled:pointer-events-none", "disabled:opacity-50")
+    })
+
+    it("does not apply the disabled variant classes when enabled", () => {
+      render(<Input />)
+      expect(screen.getByRole("textbox")).not.toHaveClass("cursor-not-allowed")
+    })
+
+    it.each([
+      ["no extras", {}],
+      ["buttonProps", { buttonProps: { children: "Go" } }],
+      ["icons without switch", { iconOn: <i />, iconOff: <i /> }],
+      ["password switch", { type: "password" as const, showPasswordSwitch: true }],
+      ["everything", { type: "password" as const, showPasswordSwitch: true, buttonProps: { children: "Go" }, disabled: true }],
+    ])("does not emit undefined or false classes with %s", (_name, extra) => {
+      const { container } = render(<Input {...extra} />)
+      const tokens = (container.querySelector("input") as HTMLInputElement).className.split(/\s+/)
+      expect(tokens).not.toContain("undefined")
+      expect(tokens).not.toContain("false")
     })
 
     it("applies font settings to label and error", () => {
@@ -218,9 +261,61 @@ describe("Input", () => {
       expect(container.querySelector(".inputIconOffContainer")).toHaveClass("pointer-events-none")
     })
 
-    it("reserves right padding when a toggle icon is present", () => {
+    it("reserves right padding when the password switch is rendered", () => {
       render(<Input type="password" showPasswordSwitch />)
       expect(document.querySelector("input")).toHaveClass("pr-8")
+    })
+
+    it("renders no padding nor toggle for icons without showPasswordSwitch", () => {
+      const { container } = render(<Input type="password" iconOn={<i data-testid="on" />} iconOff={<i data-testid="off" />} />)
+      expect(container.querySelector("input")).not.toHaveClass("pr-8")
+      expect(screen.queryByTestId("on")).toBeNull()
+      expect(screen.queryByTestId("off")).toBeNull()
+      expect(screen.queryByRole("button")).toBeNull()
+    })
+
+    it("renders the toggle as a named button that reflects the visibility", async () => {
+      const user = userEvent.setup()
+      render(<Input type="password" showPasswordSwitch />)
+      const toggle = screen.getByRole("button", { name: "Show password" })
+      expect(toggle).toHaveAttribute("type", "button")
+      expect(toggle).toHaveAttribute("aria-pressed", "false")
+      await user.click(toggle)
+      const hide = screen.getByRole("button", { name: "Hide password" })
+      expect(hide).toHaveAttribute("aria-pressed", "true")
+      expect(screen.queryByRole("button", { name: "Show password" })).toBeNull()
+    })
+
+    it("reaches the toggle with Tab and toggles with Enter and Space", async () => {
+      const user = userEvent.setup()
+      const { container } = render(<Input type="password" showPasswordSwitch />)
+      const input = container.querySelector("input") as HTMLInputElement
+      await user.tab()
+      expect(input).toHaveFocus()
+      await user.tab()
+      expect(screen.getByRole("button", { name: "Show password" })).toHaveFocus()
+      await user.keyboard("{Enter}")
+      expect(input).toHaveAttribute("type", "text")
+      expect(screen.getByRole("button", { name: "Hide password" })).toHaveFocus()
+      await user.keyboard(" ")
+      expect(input).toHaveAttribute("type", "password")
+    })
+
+    it("disables the toggle button when the input is disabled", () => {
+      render(<Input type="password" showPasswordSwitch disabled />)
+      expect(screen.getByRole("button", { name: "Show password" })).toBeDisabled()
+    })
+
+    it("does not submit a surrounding form when toggled", async () => {
+      const user = userEvent.setup()
+      const onSubmit = vi.fn((event: { preventDefault: () => void }) => event.preventDefault())
+      render(
+        <form onSubmit={onSubmit}>
+          <Input type="password" showPasswordSwitch />
+        </form>
+      )
+      await user.click(screen.getByRole("button", { name: "Show password" }))
+      expect(onSubmit).not.toHaveBeenCalled()
     })
   })
 
@@ -256,6 +351,21 @@ describe("Input", () => {
     it("sizes the button after the input height", () => {
       render(<Input height="xl" buttonProps={{ children: "Go" }} />)
       expect(screen.getByRole("button", { name: "Go" })).toHaveClass("h-12")
+    })
+  })
+
+  describe("polymorphic ref", () => {
+    it("accepts a ref object typed as the input element", () => {
+      const ref = createRef<HTMLInputElement>()
+      render(<Input ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("textbox"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit an input
+      render(<Input ref={ref} />)
+      expect(ref.current).toBe(screen.getByRole("textbox"))
     })
   })
 })

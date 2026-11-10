@@ -1,7 +1,7 @@
 import { Button, ExtendableButtonProps } from "@vbss-ui/button"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentProps, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useState } from "react"
+import { ComponentProps, ElementType, forwardRef, ReactNode, useId, useState } from "react"
 import EyeSlash from "./eye-slash.svg"
 import Eye from "./eye.svg"
 import "./index.css"
@@ -19,12 +19,12 @@ type InputProps = ComponentProps<"input"> &
 
 export type ExtendableInputProps<C extends ElementType> = ExtendableComponentProps<C, InputProps>
 
-export type InputComponent = ForwardRefExoticComponent<ExtendableInputProps<ElementType> & RefAttributes<ElementType>>
+export type InputComponent = PolymorphicComponent<"input", InputProps>
 
 /**
  * A customizable and accessible Input component.
  */
-export const Input: InputComponent = forwardRef(
+export const Input = forwardRef(
   <C extends ElementType>(
     {
       variant,
@@ -49,7 +49,8 @@ export const Input: InputComponent = forwardRef(
     const [showPassword, setShowPassword] = useState(false)
     const isPassword = type === "password"
     const inputType = isPassword ? (showPassword ? "text" : "password") : type
-    const inputId = props.id ?? Math.random().toString()
+    const generatedId = useId()
+    const inputId = props.id ?? generatedId
 
     const switchPasswordVisibility = (): void => {
       setShowPassword(!showPassword)
@@ -72,33 +73,36 @@ export const Input: InputComponent = forwardRef(
               ref={ref}
               value={props.value}
               className={cn(
-                `input w-full ${buttonProps && "!rounded-e-none"} ${(showPasswordSwitch || iconOn || iconOff) && "pr-8"}`,
+                "input w-full",
+                buttonProps && "!rounded-e-none",
+                showPasswordSwitch && "pr-8",
                 inputStyles({
                   variant,
                   height,
                   rounded,
                   fontSize,
                   fontWeight,
+                  disabled,
                   className,
                 })
               )}
               {...props}
             />
-            {showPasswordSwitch && !showPassword && (
-              <div
-                className={`inputIconOnContainer ${disabled ? "pointer-events-none" : "cursor-pointer"} select-none absolute right-2 top-1/2 -translate-y-1/2`}
+            {showPasswordSwitch && (
+              <button
+                type="button"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+                disabled={disabled}
+                className={`${showPassword ? "inputIconOffContainer" : "inputIconOnContainer"} ${disabled ? "pointer-events-none" : "cursor-pointer"} select-none absolute right-2 top-1/2 -translate-y-1/2`}
                 onClick={switchPasswordVisibility}
               >
-                <div className={cn("inputIconOn", inputIconStyles({ height }))}>{iconOn ? iconOn : <Eye />}</div>
-              </div>
-            )}
-            {showPasswordSwitch && showPassword && (
-              <div
-                className={`inputIconOffContainer ${disabled ? "pointer-events-none" : "cursor-pointer"} select-none absolute right-2 top-1/2 -translate-y-1/2`}
-                onClick={switchPasswordVisibility}
-              >
-                <div className={cn("inputIconOff", inputIconStyles({ height }))}>{iconOff ? iconOff : <EyeSlash />}</div>
-              </div>
+                {showPassword ? (
+                  <span className={cn("inputIconOff", inputIconStyles({ height }))}>{iconOff ? iconOff : <EyeSlash />}</span>
+                ) : (
+                  <span className={cn("inputIconOn", inputIconStyles({ height }))}>{iconOn ? iconOn : <Eye />}</span>
+                )}
+              </button>
             )}
           </div>
           {buttonProps && (
@@ -109,7 +113,7 @@ export const Input: InputComponent = forwardRef(
       </div>
     )
   }
-)
+) as InputComponent
 
 Input.displayName = "Input"
 
