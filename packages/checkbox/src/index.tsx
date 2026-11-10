@@ -1,7 +1,7 @@
 import { CheckedState, Indicator, Root } from "@radix-ui/react-checkbox"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ComponentPropsWithoutRef, ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentPropsWithoutRef, ElementType, forwardRef, ReactNode, useId } from "react"
 import Check from "./check.svg"
 import "./index.css"
 
@@ -17,12 +17,14 @@ type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof Root>, "onCheckedChang
 
 export type ExtendableCheckboxProps<C extends ElementType> = ExtendableComponentProps<C, CheckboxProps>
 
-export type SwitchComponent = ForwardRefExoticComponent<ExtendableCheckboxProps<ElementType> & RefAttributes<ElementType>>
+export type CheckboxComponent = PolymorphicComponent<"button", CheckboxProps>
+
+export type SwitchComponent = CheckboxComponent
 
 /**
  * A customizable and accessible Checkbox component with label support.
  */
-export const Checkbox: SwitchComponent = forwardRef(
+export const Checkbox = forwardRef(
   <C extends ElementType>(
     {
       variant,
@@ -40,18 +42,12 @@ export const Checkbox: SwitchComponent = forwardRef(
     }: ExtendableCheckboxProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
-    const checkboxId = props.id ?? Math.random().toString()
+    const generatedId = useId()
+    const checkboxId = props.id ?? generatedId
 
-    // Handle onChangeChecked: convert CheckedState to boolean
     const handleCheckedChange = (checked: CheckedState) => {
-      // Call the new API with boolean value
-      if (onChangeChecked) {
-        onChangeChecked(checked === true)
-      }
-      // Maintain backward compatibility with old API
-      if (onCheckedChange) {
-        onCheckedChange(checked)
-      }
+      onChangeChecked?.(checked === true)
+      onCheckedChange?.(checked)
     }
 
     return (
@@ -78,14 +74,14 @@ export const Checkbox: SwitchComponent = forwardRef(
           </Indicator>
         </Root>
         {label && (
-          <label htmlFor={checkboxId} className={cn(`checkboxLabel text-${size}`, checkboxLabelStyles({ fontSize, fontWeight }))}>
+          <label htmlFor={checkboxId} className={cn("checkboxLabel", checkboxLabelStyles({ fontSize, fontWeight }))}>
             {label}
           </label>
         )}
       </div>
     )
   }
-)
+) as CheckboxComponent
 
 Checkbox.displayName = "Checkbox"
 

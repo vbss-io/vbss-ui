@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
-import { Checkbox, checkboxLabelStyles, checkboxStyles } from "./index"
+import { Checkbox, CheckboxComponent, checkboxLabelStyles, checkboxStyles, SwitchComponent } from "./index"
 
 const classesOf = (styles: string) => styles.split(" ").filter(Boolean)
 
@@ -167,6 +168,72 @@ describe("Checkbox behavior", () => {
 
     it("exposes its displayName", () => {
       expect(Checkbox.displayName).toBe("Checkbox")
+    })
+  })
+
+  describe("generated id", () => {
+    it("keeps the generated id between rerenders and links the label", () => {
+      const { rerender } = render(<Checkbox label="Stable" />)
+      const first = screen.getByRole("checkbox").id
+      rerender(<Checkbox label="Stable" />)
+      rerender(<Checkbox label="Stable" />)
+      expect(first).not.toBe("")
+      expect(screen.getByRole("checkbox").id).toBe(first)
+      expect(screen.getByLabelText("Stable")).toBe(screen.getByRole("checkbox"))
+    })
+
+    it("gives two checkboxes distinct generated ids", () => {
+      render(
+        <>
+          <Checkbox label="One" />
+          <Checkbox label="Two" />
+        </>
+      )
+      expect(screen.getByLabelText("One").id).not.toBe(screen.getByLabelText("Two").id)
+    })
+  })
+
+  describe("label classes", () => {
+    it("does not add a text-undefined class when size is omitted", () => {
+      render(<Checkbox label="Plain" />)
+      const classes = Array.from(screen.getByText("Plain").classList)
+      expect(classes.filter((name) => name.startsWith("text-undefined"))).toEqual([])
+    })
+
+    it.each(["xs", "sm", "md", "lg", "xl"] as const)("keeps the label text size only from fontSize when size is %s", (size) => {
+      const fontSize = size === "xl" ? "xs" : "xl"
+      render(<Checkbox label="Sized" size={size} fontSize={fontSize} />)
+      const label = screen.getByText("Sized")
+      expect(label).toHaveClass(`text-${fontSize}`)
+      expect(label).not.toHaveClass(`text-${size}`)
+    })
+
+    it("uses the default fontSize class on the label", () => {
+      render(<Checkbox label="Default" size="md" />)
+      const label = screen.getByText("Default")
+      expect(label).toHaveClass("text-base")
+      expect(label).not.toHaveClass("text-md")
+    })
+  })
+
+  describe("ref typing", () => {
+    it("accepts a ref object typed as the rendered button", () => {
+      const ref = createRef<HTMLButtonElement>()
+      render(<Checkbox ref={ref} aria-label="Typed" />)
+      expect(ref.current).toBe(screen.getByRole("checkbox"))
+    })
+
+    it("rejects a ref typed for another element at compile time", () => {
+      const ref = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit a button
+      render(<Checkbox ref={ref} aria-label="Wrong" />)
+      expect(screen.getByRole("checkbox")).toBeInTheDocument()
+    })
+
+    it("keeps SwitchComponent as an alias of CheckboxComponent", () => {
+      const alias: SwitchComponent = Checkbox
+      const named: CheckboxComponent = alias
+      expect(named).toBe(Checkbox)
     })
   })
 })
