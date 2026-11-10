@@ -24,7 +24,7 @@
 
 /* Calendar icon */
 .datePickerIcon {
-  pointer-events: none;
+  cursor: pointer;
   position: absolute;
   right: 0.5rem;
   top: 50%;

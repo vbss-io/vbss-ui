@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { createRef } from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { ptBR } from "date-fns/locale"
 import { DatePicker, datePickerLabelStyles } from "./index"
@@ -106,6 +107,77 @@ describe("DatePicker", () => {
     })
   })
 
+  describe("native input props", () => {
+    it("forwards id, name, required, autoComplete and data attributes to the input", () => {
+      render(<DatePicker id="dob" name="birth" required autoComplete="bday" data-testid="dob-input" />)
+      expect(input()).toHaveAttribute("id", "dob")
+      expect(input()).toHaveAttribute("name", "birth")
+      expect(input()).toBeRequired()
+      expect(input()).toHaveAttribute("autocomplete", "bday")
+      expect(screen.getByTestId("dob-input")).toBe(input())
+    })
+
+    it("calls the consumer onBlur", async () => {
+      const user = userEvent.setup()
+      const onBlur = vi.fn()
+      render(<DatePicker onBlur={onBlur} />)
+      await user.click(input())
+      await user.tab()
+      expect(onBlur).toHaveBeenCalled()
+    })
+
+    it("calls the consumer onFocus and still opens the calendar", async () => {
+      const user = userEvent.setup()
+      const onFocus = vi.fn()
+      render(<DatePicker onFocus={onFocus} />)
+      await user.click(input())
+      expect(onFocus).toHaveBeenCalledTimes(1)
+      await waitFor(() => expect(calendar()).toBeInTheDocument())
+    })
+
+    it("calls the consumer onClick", async () => {
+      const user = userEvent.setup()
+      const onClick = vi.fn()
+      render(<DatePicker onClick={onClick} />)
+      await user.click(input())
+      expect(onClick).toHaveBeenCalledTimes(1)
+    })
+
+    it("does not let native props override the value or the type", () => {
+      render(<DatePicker value={new Date(2024, 0, 15)} format="yyyy-MM-dd" type="number" />)
+      expect(input()).toHaveAttribute("type", "text")
+      expect(input()).toHaveValue("2024-01-15")
+    })
+
+    it("types the ref by the input element", () => {
+      const ref = createRef<HTMLInputElement>()
+      render(<DatePicker ref={ref} />)
+      expect(ref.current).toBe(input())
+      const wrong = createRef<HTMLDivElement>()
+      // @ts-expect-error a div ref does not fit the rendered input
+      render(<DatePicker ref={wrong} />)
+      expect(wrong.current).not.toBeNull()
+    })
+  })
+
+  describe("label", () => {
+    it("is linked to the input by a generated id", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker label="Birth date" />)
+      const label = screen.getByText("Birth date")
+      expect(label).toHaveAttribute("for", input().id)
+      expect(input().id).not.toBe("")
+      await user.click(label)
+      expect(input()).toHaveFocus()
+    })
+
+    it("is linked to the input by the id given by the consumer", () => {
+      render(<DatePicker label="Birth date" id="dob" />)
+      expect(screen.getByText("Birth date")).toHaveAttribute("for", "dob")
+      expect(input()).toHaveAttribute("id", "dob")
+    })
+  })
+
   describe("input styling", () => {
     it("applies variant, height and rounded to the input", () => {
       render(<DatePicker variant="outline" height="lg" rounded="full" />)
@@ -194,6 +266,44 @@ describe("DatePicker", () => {
   })
 
   describe("uncontrolled mode", () => {
+    it("reports a calendar selection and keeps it in its own state", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker defaultValue={new Date(2024, 0, 5)} onChange={onChange} format="yyyy-MM-dd" />)
+      await openCalendar(user)
+      await user.click(day(/January 15th, 2024/))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(dayOf(onChange.mock.calls[0][0])).toEqual([2024, 0, 15])
+      expect(input()).toHaveValue("2024-01-15")
+    })
+
+    it("reports a typed date", () => {
+      const onChange = vi.fn()
+      render(<DatePicker defaultValue={new Date(2024, 0, 5)} onChange={onChange} format="MM/dd/yyyy" />)
+      fireEvent.change(input(), { target: { value: "03/04/2024" } })
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(dayOf(onChange.mock.calls[0][0])).toEqual([2024, 2, 4])
+    })
+
+    it("reports null when the text is erased", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker defaultValue={new Date(2024, 0, 15)} onChange={onChange} format="MM/dd/yyyy" />)
+      await user.clear(input())
+      expect(onChange).toHaveBeenCalledWith(null)
+      expect(input()).toHaveValue("")
+    })
+
+    it("reports null from the clear button", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker defaultValue={new Date(2024, 0, 15)} onChange={onChange} allowClear />)
+      await user.click(screen.getByRole("button", { name: "Clear date" }))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(null)
+      expect(input()).toHaveValue("")
+    })
+
     it("starts from defaultValue", () => {
       render(<DatePicker defaultValue={new Date(2024, 0, 15)} format="yyyy-MM-dd" />)
       expect(input()).toHaveValue("2024-01-15")
@@ -253,6 +363,107 @@ describe("DatePicker", () => {
       await openCalendar(user)
       await user.click(screen.getByRole("button", { name: "Outside" }))
       await expectClosed()
+    })
+
+    it("stays open when the input is clicked again", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await openCalendar(user)
+      await user.click(input())
+      await user.click(input())
+      expect(calendar()).toBeInTheDocument()
+      expect(input()).toHaveAttribute("aria-expanded", "true")
+    })
+
+    it("opens when the input receives focus from the keyboard", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await user.tab()
+      expect(input()).toHaveFocus()
+      await waitFor(() => expect(calendar()).toBeInTheDocument())
+      expect(input()).toHaveFocus()
+    })
+
+    it("keeps the typing focus on the input after the calendar opens", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker format="MM/dd/yyyy" />)
+      await openCalendar(user)
+      await user.type(input(), "01/15/2024")
+      expect(input()).toHaveValue("01/15/2024")
+    })
+
+    it("opens and closes from the calendar button", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await user.click(screen.getByRole("button", { name: "Open calendar" }))
+      await waitFor(() => expect(calendar()).toBeInTheDocument())
+      await user.click(screen.getByRole("button", { name: "Open calendar" }))
+      await expectClosed()
+    })
+
+    it("does not open from a disabled calendar button", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker disabled />)
+      const button = screen.getByRole("button", { name: "Open calendar" })
+      expect(button).toBeDisabled()
+      await user.click(button)
+      expect(calendar()).not.toBeInTheDocument()
+    })
+
+    it("closes when clicking outside after being opened by the calendar button", async () => {
+      const user = userEvent.setup()
+      render(
+        <>
+          <button>Outside</button>
+          <DatePicker />
+        </>
+      )
+      await user.click(screen.getByRole("button", { name: "Open calendar" }))
+      await waitFor(() => expect(calendar()).toBeInTheDocument())
+      await user.click(screen.getByRole("button", { name: "Outside" }))
+      await expectClosed()
+    })
+
+    it("puts the popup semantics on the input and not on its container", async () => {
+      const user = userEvent.setup()
+      const { container } = render(<DatePicker />)
+      expect(input()).toHaveAttribute("aria-haspopup", "dialog")
+      expect(input()).toHaveAttribute("aria-expanded", "false")
+      await openCalendar(user)
+      expect(input()).toHaveAttribute("aria-expanded", "true")
+      expect(screen.getByRole("dialog")).toHaveAttribute("id", input().getAttribute("aria-controls"))
+      const wrapper = container.querySelector(".datePickerTriggerContainer")!
+      expect(wrapper).not.toHaveAttribute("aria-haspopup")
+      expect(wrapper).not.toHaveAttribute("aria-expanded")
+      expect(wrapper).not.toHaveAttribute("type")
+    })
+
+    it("renders the calendar button as a non-submitting named button", () => {
+      render(<DatePicker />)
+      const button = screen.getByRole("button", { name: "Open calendar" })
+      expect(button).toHaveAttribute("type", "button")
+      expect(button).toHaveClass("datePickerIcon")
+    })
+
+    it("opens the calendar on the month of the current value", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker value={new Date(2023, 5, 15)} />)
+      await openCalendar(user)
+      expect(within(calendar()!).getByText(/June 2023/)).toBeInTheDocument()
+    })
+
+    it("opens the calendar on the month of the default value", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker defaultValue={new Date(2023, 5, 15)} />)
+      await openCalendar(user)
+      expect(within(calendar()!).getByText(/June 2023/)).toBeInTheDocument()
+    })
+
+    it("opens the calendar on the current month when there is no value", async () => {
+      const user = userEvent.setup()
+      render(<DatePicker />)
+      await openCalendar(user)
+      expect(within(calendar()!).getByText(/January 2024/)).toBeInTheDocument()
     })
 
     it("renders the calendar in a portal by default", async () => {
@@ -388,6 +599,34 @@ describe("DatePicker", () => {
       render(<DatePicker value={new Date(2024, 0, 15)} onChange={onChange} format="MM/dd/yyyy" />)
       fireEvent.change(input(), { target: { value: "" } })
       expect(onChange).toHaveBeenCalledWith(null)
+    })
+
+    it("reports a single day while a full date is typed key by key in controlled mode", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="MM/dd/yyyy" />)
+      await user.type(input(), "01/15/2024")
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(dayOf(onChange.mock.calls[0][0])).toEqual([2024, 0, 15])
+      expect(input()).toHaveValue("01/15/2024")
+    })
+
+    it("does not reformat the text while a full date is typed key by key in uncontrolled mode", async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(<DatePicker onChange={onChange} format="MM/dd/yyyy" />)
+      await user.type(input(), "01/15/2024")
+      expect(input()).toHaveValue("01/15/2024")
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(dayOf(onChange.mock.calls[0][0])).toEqual([2024, 0, 15])
+    })
+
+    it("ignores text that parses but is not written exactly in the format", () => {
+      const onChange = vi.fn()
+      render(<DatePicker value={null} onChange={onChange} format="MM/dd/yyyy" />)
+      fireEvent.change(input(), { target: { value: "1/5/2024" } })
+      expect(onChange).not.toHaveBeenCalled()
+      expect(input()).toHaveValue("1/5/2024")
     })
 
     it("clears the date when the text is erased in uncontrolled mode", async () => {
