@@ -1,0 +1,91 @@
+name: Web Checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [prd]
+  pull_request:
+    branches: [main, prd]
+
+concurrency:
+  group: web-checks-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: web-static
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install (frozen, no scripts)
+        run: npm ci --ignore-scripts
+      - name: Lock guard (lockfile vs base)
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          BASE=origin/main
+          if [ "$EVENT_NAME" = "push" ]; then
+            if [ -n "$BEFORE_SHA" ] && ! echo "$BEFORE_SHA" | grep -Eq '^0+$' && git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+              BASE="$BEFORE_SHA"
+            else
+              BASE=HEAD~1
+            fi
+          fi
+          echo "lock-guard base: $BASE"
+          node .github/lock-guard.mjs --base "$BASE"
+      - name: Lock guard (installed tree)
+        run: node .github/lock-guard.mjs --base HEAD --installed .
+      - name: Audit production dependencies
+        run: npm run audit-gate
+      - name: Lint (docs)
+        run: npx eslint apps/docs --ext ts,tsx --report-unused-disable-directives --max-warnings 0
+      - name: Typecheck (tests config)
+        run: npm run typecheck:tests
+      - name: Build docs with workspace dependencies
+        run: npx lerna run build --scope @vbss-ui/docs --include-dependencies --concurrency 2
+
+  coverage:
+    name: web-coverage (docs)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install (frozen, no scripts)
+        run: npm ci --ignore-scripts
+      - name: Docs coverage with the 90/80/90/90 gate
+        run: |
+          set -o pipefail
+          node scripts/test-coverage.mjs apps/docs | tee coverage-docs.log
+      - name: Require the docs unit to have run and passed the gate
+        run: |
+          grep -Eq '^@vbss-ui/docs +[0-9]+ files ' coverage-docs.log
+          grep -Fq "coverage gate passed" coverage-docs.log
+
+  web-checks:
+    name: web-checks
+    needs: [static, coverage]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every prerequisite job to pass
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          echo "$NEEDS" | jq -r 'to_entries[] | "\(.key)=\(.value.result)"'
+          echo "$NEEDS" | jq -e 'all(.[]; .result == "success")'
