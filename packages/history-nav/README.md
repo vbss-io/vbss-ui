@@ -103,6 +103,8 @@ export const App = () => {
 | `as`           | `React.ElementType`                  | The element or component used to render the container.                                 | `'div'`   |
 | `gap`          | `xs` \| `sm` \| `md` \| `lg` \| `xl` | Sets the gap between buttons.                                                          | `md`      |
 | `buttonsProps` | `ButtonProps`                        | Props passed to the underlying buttons.  See [Button Props](https://ui.vbss.io/button) | `-`       |
+| `leftButtonProps` | `ButtonProps`                     | Props passed to the left button, applied after `buttonsProps`. Use `aria-label` to change "Go back". | `-`       |
+| `rightButtonProps` | `ButtonProps`                    | Props passed to the right button, applied after `buttonsProps`. Use `aria-label` to change "Go forward". | `-`       |
 | `leftOnClick`  | `() => void`                         | Function called when the left button is clicked.                                       | `-`       |
 | `rightOnClick` | `() => void`                         | Function called when the right button is clicked.                                      | `-`       |
 | `leftIcon`     | `React.ReactNode`                    | Icon displayed in the left button.                                                     | `-`       |
