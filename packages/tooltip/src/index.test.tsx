@@ -1,11 +1,13 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { Button } from "@vbss-ui/button"
+import { act, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
-import { Tooltip, tooltipStyles } from "./index"
+import { Tooltip, TooltipProvider, tooltipStyles } from "./index"
 
 const renderTooltip = (props: Partial<Parameters<typeof Tooltip>[0]> = {}) =>
   render(
-    <Tooltip trigger={<span>Hover me</span>} {...props}>
+    <Tooltip trigger={<button type="button">Hover me</button>} {...props}>
       Helpful text
     </Tooltip>
   )
@@ -28,9 +30,29 @@ describe("Tooltip", () => {
       expect(visibleContent()).toBeNull()
     })
 
-    it("renders the trigger content inside the trigger button", () => {
+    it("renders a string trigger inside the trigger button", () => {
+      renderTooltip({ trigger: "Hover me" })
+      const trigger = screen.getByRole("button")
+      expect(trigger).toHaveClass("tooltipTrigger")
+      expect(trigger).toHaveTextContent("Hover me")
+    })
+
+    it("uses a React element trigger as the trigger itself", () => {
       renderTooltip()
-      expect(screen.getByRole("button")).toContainElement(screen.getByText("Hover me"))
+      const trigger = screen.getByRole("button", { name: "Hover me" })
+      expect(trigger).toHaveClass("tooltipTrigger")
+      expect(trigger).toHaveAttribute("data-state", "closed")
+      expect(screen.getAllByRole("button")).toHaveLength(1)
+    })
+
+    it("does not nest buttons when the trigger is a disabled Button", () => {
+      const error = vi.spyOn(console, "error").mockImplementation(() => undefined)
+      renderTooltip({ trigger: <Button disabled>X</Button> })
+      const buttons = screen.getAllByRole("button")
+      expect(buttons).toHaveLength(1)
+      expect(buttons[0]).toBeDisabled()
+      expect(buttons[0]).toHaveClass("tooltipTrigger")
+      expect(error.mock.calls.flat().join(" ")).not.toContain("validateDOMNesting")
     })
 
     it("renders a default empty trigger when none is given", () => {
@@ -40,6 +62,80 @@ describe("Tooltip", () => {
 
     it("exposes the display name", () => {
       expect(Tooltip.displayName).toBe("Tooltip")
+    })
+  })
+
+  describe("provider and open state", () => {
+    it("opens without waiting when delayDuration is 0", async () => {
+      const user = userEvent.setup()
+      renderTooltip({ delayDuration: 0 })
+      await user.hover(screen.getByText("Hover me"))
+      expect(await screen.findByRole("tooltip", {}, { timeout: 300 })).toHaveTextContent("Helpful text")
+    })
+
+    it("keeps the default delay when delayDuration is not given", async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true })
+      try {
+        const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+        renderTooltip()
+        await user.hover(screen.getByText("Hover me"))
+        expect(screen.queryByRole("tooltip")).toBeNull()
+        await act(async () => {
+          await vi.advanceTimersByTimeAsync(800)
+        })
+        expect(screen.getByRole("tooltip")).toHaveTextContent("Helpful text")
+      } finally {
+        vi.useRealTimers()
+      }
+    })
+
+    it("is controlled by open and reports changes through onOpenChange", async () => {
+      const user = userEvent.setup()
+      const onOpenChange = vi.fn()
+      const { rerender } = renderTooltip({ open: false, onOpenChange })
+      await user.tab()
+      expect(onOpenChange).toHaveBeenCalledWith(true)
+      expect(screen.queryByRole("tooltip")).toBeNull()
+      rerender(
+        <Tooltip trigger={<button type="button">Hover me</button>} open onOpenChange={onOpenChange}>
+          Helpful text
+        </Tooltip>
+      )
+      expect(await screen.findByRole("tooltip")).toHaveTextContent("Helpful text")
+    })
+
+    it("starts open with defaultOpen", async () => {
+      renderTooltip({ defaultOpen: true })
+      expect(await screen.findByRole("tooltip")).toHaveTextContent("Helpful text")
+    })
+
+    it("does not leak root props to the content element", async () => {
+      renderTooltip({ open: true, delayDuration: 0, skipDelayDuration: 0, defaultOpen: true, onOpenChange: vi.fn() })
+      await screen.findByRole("tooltip")
+      const content = visibleContent() as HTMLElement
+      ;["open", "delayduration", "skipdelayduration", "defaultopen", "provider"].forEach((name) =>
+        expect(content).not.toHaveAttribute(name)
+      )
+    })
+
+    it("uses the surrounding provider when provider is false", async () => {
+      const user = userEvent.setup()
+      render(
+        <TooltipProvider delayDuration={0}>
+          <Tooltip trigger={<button type="button">Hover me</button>} provider={false}>
+            Helpful text
+          </Tooltip>
+        </TooltipProvider>
+      )
+      await user.hover(screen.getByText("Hover me"))
+      expect(await screen.findByRole("tooltip", {}, { timeout: 300 })).toHaveTextContent("Helpful text")
+    })
+
+    it("passes skipDelayDuration to its own provider", async () => {
+      const user = userEvent.setup()
+      renderTooltip({ skipDelayDuration: 0, delayDuration: 0 })
+      await user.hover(screen.getByText("Hover me"))
+      expect(await screen.findByRole("tooltip", {}, { timeout: 300 })).toBeInTheDocument()
     })
   })
 
@@ -109,6 +205,31 @@ describe("Tooltip", () => {
       renderTooltip({ side: "bottom" })
       await openByFocus(user)
       expect(visibleContent()).toHaveAttribute("data-side", "bottom")
+    })
+
+    it("accepts a ref object typed as the content element", async () => {
+      const user = userEvent.setup()
+      const ref = createRef<HTMLDivElement>()
+      render(
+        <Tooltip ref={ref} trigger={<button type="button">Hover me</button>}>
+          Helpful text
+        </Tooltip>
+      )
+      await openByFocus(user)
+      expect(ref.current).toBe(visibleContent())
+    })
+
+    it("rejects a ref typed for another element at compile time", async () => {
+      const user = userEvent.setup()
+      const ref = createRef<HTMLButtonElement>()
+      render(
+        // @ts-expect-error a button ref does not fit the div content
+        <Tooltip ref={ref} trigger={<button type="button">Hover me</button>}>
+          Helpful text
+        </Tooltip>
+      )
+      await openByFocus(user)
+      expect(ref.current).toBe(visibleContent())
     })
 
     it("forwards the ref to the content element", async () => {

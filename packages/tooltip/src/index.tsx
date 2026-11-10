@@ -1,25 +1,30 @@
 import { Content, Provider, Root, Trigger } from "@radix-ui/react-tooltip"
-import { cn, ExtendableComponentProps, PolymorphicRef } from "@vbss-ui/lib"
+import { cn, ExtendableComponentProps, PolymorphicComponent, PolymorphicRef } from "@vbss-ui/lib"
 import { cva, VariantProps } from "class-variance-authority"
-import { ElementType, forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import { ComponentPropsWithoutRef, ElementType, forwardRef, isValidElement, ReactNode } from "react"
 import "./index.css"
 
-type TooltipProps = React.ComponentPropsWithoutRef<typeof Content> &
-  VariantProps<typeof tooltipStyles> & {
+type TooltipProps = ComponentPropsWithoutRef<typeof Content> &
+  VariantProps<typeof tooltipStyles> &
+  Pick<ComponentPropsWithoutRef<typeof Root>, "open" | "defaultOpen" | "onOpenChange" | "delayDuration"> &
+  Pick<ComponentPropsWithoutRef<typeof Provider>, "skipDelayDuration"> & {
     trigger?: ReactNode
+    provider?: boolean
   }
 
 export type ExtendableTooltipProps<C extends ElementType> = ExtendableComponentProps<C, TooltipProps>
 
-export type TooltipComponent = ForwardRefExoticComponent<ExtendableTooltipProps<ElementType> & RefAttributes<ElementType>>
+export type TooltipComponent = PolymorphicComponent<"div", TooltipProps>
+
+export const TooltipProvider = Provider
 
 /**
  * A customizable and accessible Tooltip component.
  */
-export const Tooltip: TooltipComponent = forwardRef(
+export const Tooltip = forwardRef(
   <C extends ElementType>(
     {
-      trigger = <div />,
+      trigger,
       side,
       variant,
       size,
@@ -28,13 +33,25 @@ export const Tooltip: TooltipComponent = forwardRef(
       fontSize,
       fontWeight,
       className,
+      provider = true,
+      delayDuration,
+      skipDelayDuration,
+      open,
+      defaultOpen,
+      onOpenChange,
       ...props
     }: ExtendableTooltipProps<C>,
     ref?: PolymorphicRef<C>
-  ) => (
-    <Provider>
-      <Root>
-        <Trigger className="tooltipTrigger">{trigger}</Trigger>
+  ) => {
+    const root = (
+      <Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} delayDuration={delayDuration}>
+        {isValidElement(trigger) ? (
+          <Trigger asChild className="tooltipTrigger">
+            {trigger}
+          </Trigger>
+        ) : (
+          <Trigger className="tooltipTrigger">{trigger ?? <div />}</Trigger>
+        )}
         <Content
           side={side}
           sideOffset={sideOffset}
@@ -45,9 +62,10 @@ export const Tooltip: TooltipComponent = forwardRef(
           {props.children}
         </Content>
       </Root>
-    </Provider>
-  )
-)
+    )
+    return provider ? <Provider skipDelayDuration={skipDelayDuration}>{root}</Provider> : root
+  }
+) as TooltipComponent
 
 Tooltip.displayName = "Tooltip"
 
